@@ -4,15 +4,16 @@ import dsk from "../imgs/dkslogo.jpg"; // replace with your actual logo path
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     document.body.classList.toggle("menu-open");
   };
 
-  // optional: close when overlay clicked
   const closeMenu = () => {
     setIsOpen(false);
+    setDropdownOpen(false);
     document.body.classList.remove("menu-open");
   };
 
@@ -29,9 +30,31 @@ const Navbar = () => {
           {/* ===== NAV LINKS ===== */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a href="/" onClick={closeMenu}>Home</a>
-            <a href="#services" onClick={closeMenu}>Services</a>
             <a href="#about" onClick={closeMenu}>About us</a>
+
+            {/* ===== SERVICES WITH DROPDOWN ===== */}
+            <div
+              className="dropdown"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <a href="#services" className="dropdown-toggle" onClick={(e) => e.preventDefault()}>
+                Services ▾
+              </a>
+              {dropdownOpen && (
+                <div className="dropdown-menu">
+                  <a href="#education" onClick={closeMenu}>Education</a>
+                  <a href="#health" onClick={closeMenu}>Health</a>
+                  <a href="#food" onClick={closeMenu}>Food</a>
+                  <a href="#businesses" onClick={closeMenu}>Businesses</a>
+                  <a href="#tourism" onClick={closeMenu}>Tourism</a>
+                  <a href="#brands" onClick={closeMenu}>Our Brands</a>
+                </div>
+              )}
+            </div>
+
             <a href="#contact" onClick={closeMenu}>Contact</a>
+
             <div className="nav-buttons">
               <button className="btn sign" onClick={closeMenu}>Sign in</button>
               <button className="btn log" onClick={closeMenu}>Log in</button>
