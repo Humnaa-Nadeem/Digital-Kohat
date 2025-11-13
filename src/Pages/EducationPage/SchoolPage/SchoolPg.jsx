@@ -1,6 +1,16 @@
+import Navbar from "../../../components/navbar/Navbar"
 import "./Schoolpg.css"
 export const SchoolPage = () => {
     return (
-        <>School Page</>
+        <>
+            <header>
+                <Navbar />
+            </header>
+            <main>
+                <section>
+                    <h2>This is school page</h2>
+                </section>
+            </main>
+        </>
     )
 }
