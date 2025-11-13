@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import "react-router-dom";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { EduHomePage } from './Pages/EducationPage/EduHomePage/EduHomePage';
+import { SchoolPage } from './Pages/EducationPage/SchoolPage/SchoolPg';
+import { CollegesPage } from './Pages/EducationPage/CollegesPage/CollegesPg';
+import { UniPage } from './Pages/EducationPage/UniPage/UniPg';
 
 // This is the routing system.
 const allRoutes = createBrowserRouter([{
@@ -14,8 +17,20 @@ const allRoutes = createBrowserRouter([{
 }
   ,
 {
-  path: "/education",
+  path: "/education", //Education Sector , Home Page:
   element: <EduHomePage />
+},
+{
+  path: "/edu/schools", //Education Sector , Schools Page
+  element: <SchoolPage />
+},
+{
+  path: "/edu/colleges", //Education Sector , Colleges Page
+  element: <CollegesPage />
+},
+{
+  path: "/edu/uni", //Education Sector , Universities Page
+  element: <UniPage />
 }])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
