@@ -28,7 +28,7 @@ const Navbar = () => {
 
           {/* ===== NAV LINKS ===== */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
-            <a href="#home" onClick={closeMenu}>Home</a>
+            <a href="/" onClick={closeMenu}>Home</a>
             <a href="#services" onClick={closeMenu}>Services</a>
             <a href="#about" onClick={closeMenu}>About us</a>
             <a href="#contact" onClick={closeMenu}>Contact</a>

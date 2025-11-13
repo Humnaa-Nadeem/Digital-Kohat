@@ -3,12 +3,39 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { EduHomePage } from './Pages/EducationPage/EduHomePage/EduHomePage';
+import { SchoolPage } from './Pages/EducationPage/SchoolPage/SchoolPg';
+import { CollegesPage } from './Pages/EducationPage/CollegesPage/CollegesPg';
+import { UniPage } from './Pages/EducationPage/UniPage/UniPg';
+
+// This is the routing system.
+const allRoutes = createBrowserRouter([{
+  path: "/",
+  element: <App />
+}
+  ,
+{
+  path: "/education", //Education Sector , Home Page:
+  element: <EduHomePage />
+},
+{
+  path: "/edu/schools", //Education Sector , Schools Page
+  element: <SchoolPage />
+},
+{
+  path: "/edu/colleges", //Education Sector , Colleges Page
+  element: <CollegesPage />
+},
+{
+  path: "/edu/uni", //Education Sector , Universities Page
+  element: <UniPage />
+}])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <RouterProvider router={allRoutes} />
 );
 
 // If you want to start measuring performance in your app, pass a function

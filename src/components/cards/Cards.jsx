@@ -6,12 +6,14 @@ import hospitalImg from "../imgs/hospitals.svg";
 import businessImg from "../imgs/business.png";
 import techImg from "../imgs/technicians.svg";
 import tourismImg from "../imgs/tourism.png";
+import { useNavigate } from "react-router-dom";
 
 const services = [
   {
     title: "Schools",
     desc: "Search for quality learning institutions or register your own educational center.",
     img: schoolImg,
+    link: "/education"
   },
   {
     title: "Restaurants",
@@ -40,6 +42,8 @@ const services = [
   },
 ];
 const Cards = () => {
+  // We use Navigate to redirect to other page
+  const navigate = useNavigate();
   return (
 
     <section className="services-section">
@@ -54,7 +58,7 @@ const Cards = () => {
             <div className="card-content">
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
-              <button className="learn-btn">Learn more...</button>
+              <button className="learn-btn" onClick={() => navigate(service.link)}>Learn more...</button>
             </div>
           </div>
         ))}
