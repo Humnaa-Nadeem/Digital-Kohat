@@ -4,6 +4,10 @@
     object-fit: cover;
     position: relative;
     margin: 15px 0px 0px 0px;
+    background-image: url('https://images.pexels.com/photos/10819621/pexels-photo-10819621.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .edu-pg-grd-sec img {

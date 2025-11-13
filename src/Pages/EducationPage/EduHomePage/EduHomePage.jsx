@@ -46,7 +46,6 @@ export const EduHomePage = () => {
             </header>
             <main>
                 <section className="edu-pg-grd-sec">
-                    <img src="https://images.pexels.com/photos/10819621/pexels-photo-10819621.jpeg" />
                     <div className="txt-over-img">
                         <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
                         <p className="pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae</p>
