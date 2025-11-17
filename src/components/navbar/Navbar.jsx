@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Navbar.css";
 import dsk from "../imgs/dkslogo.jpg"; // replace with your actual logo path
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,9 @@ const Navbar = () => {
     document.body.classList.remove("menu-open");
   };
 
+  // Navigation
+  const navigate = useNavigate();
+
   return (
     <>
       <nav className="navbar">
@@ -29,6 +33,7 @@ const Navbar = () => {
           {/* ===== NAV LINKS ===== */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a href="/" onClick={closeMenu}>Home</a>
+            {/* <a onClick={() => {navigate("/"); closeMenu()}}>Home</a> */}
             <a href="#services" onClick={closeMenu}>Services</a>
             <a href="#about" onClick={closeMenu}>About us</a>
             <a href="#contact" onClick={closeMenu}>Contact</a>

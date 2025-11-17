@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import Navbar from "../../../components/navbar/Navbar"
 import "./EduHomePage.css";
 import "react-router-dom";
-import { FaRegBuilding, FaSchool, FaUniversity } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-// import Footer from "../../../components/footer/Footer";
+import { categories, OtherResources } from "../../../Store/store";
+import Footer from "../../../components/footer/Footer";
 export const EduHomePage = () => {
     // To show page from the top:
     useEffect(() => {
@@ -12,33 +12,6 @@ export const EduHomePage = () => {
     }, [])
     // Navigate use to redirect to other pages:
     const navigate = useNavigate();
-    // Array of card data:
-    const categories = [
-        {
-            title: "Explore School",
-            description:
-                "Explore top-rated schools offering excellent primary and secondary education with strong foundations.",
-            icon: <FaSchool className="icons" />,
-            btn: "Visit Schools",
-            link: "/edu/schools"
-        },
-        {
-            title: "College's List",
-            description:
-                "Find the best colleges that prepare students for higher learning, skill development, and innovation.",
-            icon: <FaRegBuilding className="icons" />,
-            btn: "Visit colleges",
-            link: "/edu/colleges"
-        },
-        {
-            title: "Universities",
-            description:
-                "Discover globally recognized universities offering advanced degrees and research opportunities.",
-            icon: <FaUniversity className="icons" />,
-            btn: "Visit Universities",
-            link: "/edu/uni"
-        },
-    ];
     return (
         <>
             <header>
@@ -46,13 +19,31 @@ export const EduHomePage = () => {
             </header>
             <main>
                 <section className="edu-pg-grd-sec">
-                    <div className="txt-over-img">
+                    {/* Education Institute Part like schools , colleges & Uni */}
+                    <div className="content-cont">
                         <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
                         <p className="pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae</p>
                         <div className="card-Container">
                             {categories.map((v, i) => {
                                 return (
-                                    <div className="card">
+                                    <div className="card" key={i}>
+                                        <div className="crd-icn-title-div">
+                                            {v.icon}
+                                            <h2>{v.title}</h2>
+                                        </div>
+                                        <p>{v.description}</p>
+                                        <button className="edu-pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        {/* Other Resources Part */}
+                        <h2 className="other-resoures-h2">Explore <strong>Other Resources</strong> to get Educated:</h2>
+                        <p className="pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae</p>
+                        <div className="card-Container lst-crd-cont">
+                            {OtherResources.map((v, i) => {
+                                return (
+                                    <div className="card" key={i}>
                                         <div className="crd-icn-title-div">
                                             {v.icon}
                                             <h2>{v.title}</h2>
@@ -66,9 +57,9 @@ export const EduHomePage = () => {
                     </div>
                 </section>
             </main>
-            {/* <footer>
+            <footer>
                 <Footer />
-            </footer> */}
+            </footer>
         </>
     )
 }
