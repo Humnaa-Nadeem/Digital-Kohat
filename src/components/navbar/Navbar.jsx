@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Navbar.css";
+import dsk from "../imgs/dkslogo.jpg"; // replace with your actual logo path
+import { useNavigate } from "react-router-dom";
 import dsk from "../imgs/dkslogo.jpg";
 
 const Navbar = () => {
@@ -17,6 +19,8 @@ const Navbar = () => {
     document.body.classList.remove("menu-open");
   };
 
+  // Navigation
+  const navigate = useNavigate();
   // Handles both hover and click toggle
   const handleDropdownEnter = () => setDropdownOpen(true);
   const handleDropdownLeave = () => setTimeout(() => setDropdownOpen(false), 200);
@@ -38,6 +42,8 @@ const Navbar = () => {
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a href="/" onClick={closeMenu}>Home</a>
+            {/* <a onClick={() => {navigate("/"); closeMenu()}}>Home</a> */}
+            <a href="#services" onClick={closeMenu}>Services</a>
             <a href="#about" onClick={closeMenu}>About us</a>
 
             {/* SERVICES DROPDOWN */}
