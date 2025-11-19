@@ -12,7 +12,7 @@ export const services = [
         title: "Education",
         desc: "Search for quality learning institutions or register your own educational center.",
         img: schoolImg,
-        link: "/education" //Added link to navigate to education sector home page
+        link: "/edu" //Added link to navigate to education sector home page
     },
     {
         title: "Restaurants",
@@ -41,7 +41,7 @@ export const services = [
     },
 ];
 
-// Data of education home page for D/F education Institute:
+// Data of education home page for D/F education Institute (School , College , Uni):
 export const categories = [
     {
         title: "Explore School",
@@ -96,3 +96,223 @@ export const OtherResources = [
         link: "/edu/uni"
     },
 ];
+
+//Array of Schools to form school list from;
+
+export const Schools = [
+    {
+        SchoolName: "School_1",
+        id: 1
+    },
+    {
+        SchoolName: "School_2",
+        id: 2
+    },
+    {
+        SchoolName: "School_3",
+        id: 3
+    },
+    {
+        SchoolName: "School_4",
+        id: 4
+    },
+    {
+        SchoolName: "School_5",
+        id: 5
+    },
+    {
+        SchoolName: "School_6",
+        id: 6
+    },
+    {
+        SchoolName: "School_7",
+        id: 7
+    },
+];
+
+// Array that contain the Schools Details;
+
+export const Schools_Details = [
+    {
+        id: 1,
+        Title: "Green Valley International School",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private, Co-educational",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 2,
+        Title: "Allhumdulilah Green Valley International School 2",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 10"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 3,
+        Title: "Allhumdulilah Green Valley International School 3",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 10"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 4,
+        Title: "Allhumdulilah Green Valley International School 4",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 10"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 5,
+        Title: "Allhumdulilah Green Valley International School 5",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 10"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 6,
+        Title: "Allhumdulilah Green Valley International School 6",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 10"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 7,
+        Title: "Allhumdulilah Green Valley International School 7",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Schools_Info: [{
+            Foundation: "1998",
+            School_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Playgroup to Grade 10"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    }
+]

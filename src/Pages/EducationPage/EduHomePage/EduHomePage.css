@@ -37,6 +37,12 @@
     color: rgb(5, 230, 5);
 }
 
+.rgstr{
+    color: blue;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .other-resoures-h2 {
     margin-top: 100px;
 }
