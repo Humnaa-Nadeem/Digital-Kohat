@@ -1,0 +1,252 @@
+/* Specific education catagory page styling */
+/* Institute and cata(catagory) can be school , college , online courses etc*/
+.edu-cata-pg-sec {
+    padding: 40px 5px 0px 5px;
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    gap: 20px;
+}
+
+.lft-sec,
+.main-sec {
+    padding: 10px 0px;
+}
+
+/* Left Sector Styling (List container) */
+
+.sector {
+    background-color: forestgreen;
+    color: white;
+    font-weight: 700;
+    font-size: 27px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 80%;
+    padding: 5px 0px 5px 25px;
+    margin: 4px 4px 40px 0px;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+    cursor: pointer;
+}
+
+.institute-hd-lst {
+    margin-top: 20px;
+    background-color: azure;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.institute-hd {
+    margin: 0;
+    padding: 8px 0px 0px 8px;
+}
+
+.institute-lst {
+    margin: 0px;
+    padding: 5px 10px 0px 30px;
+}
+
+.institute-lst li {
+    width: 155px;
+    margin: 6px 0px;
+    overflow-x: scroll;
+    cursor: pointer;
+}
+
+.institute-lst li:hover{
+    text-decoration: 2px solid underline;
+    color: blue;
+}
+
+.institute-lst li::-webkit-scrollbar {
+    display: none;
+}
+
+/* Main Sector Styling */
+.main-sec {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}
+
+.cata-pg-banner {
+    height: 200px;
+    width: 88%;
+    margin-top: 10px;
+    background-image: url("https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 8px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.cata-pg-main-hd {
+    text-align: center;
+    color: yellow;
+    margin: 10px 0px;
+}
+
+.cata-pg-banner p {
+    width: 88%;
+    color: yellow;
+    text-align: center;
+}
+
+.cata-card-cont {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 20px 5px 5px 5px;
+    margin-bottom: 50px;
+}
+
+.cata-pg-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    height: 280px;
+}
+
+.cata-pg-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cata-pg-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.cata-pg-card-content {
+    padding: 10px;
+}
+
+.cata-pg-card-content h3 {
+    margin: 0px 0px 6px 0px;
+    font-size: 20px;
+    color: #333;
+}
+
+.cata-pg-card-content p {
+    margin: 0px 0px 5px 0px;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.34;
+}
+
+.cata-pg-card-btn {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 4px;
+    background: #007aff;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.cata-pg-card-btn:hover {
+    background: #005bb5;
+}
+
+.showLst {
+    display: none;
+}
+
+/* Styling for catagory single page */
+
+.cata-web-hrdr {
+    background-color: azure;
+    width: 93%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.section {
+    background: white;
+    padding: 20px;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.contact {
+    margin-bottom: 60px;
+}
+
+
+.section h2 {
+    margin-top: 0;
+    color: #2a6fdb;
+}
+
+
+.info-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+.info-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Responsiveness : MEDIA QUERRY */
+
+@media (max-width: 789px) {
+    .edu-cata-pg-sec {
+        display: flex;
+        padding: 40px 5px 0px 5px;
+    }
+
+    .lft-sec {
+        position: absolute;
+        left: -500px;
+    }
+
+    .mid-sec {
+        width: 100%;
+    }
+
+    .showLst {
+        position: absolute;
+        top: -20px;
+        right: 10px;
+        width: 30px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        color: #fff;
+        padding: 2px 3px 5px 3px;
+        cursor: pointer;
+        z-index: 1;
+        background-color: green;
+    }
+
+    .showList {
+        left: 0px;
+        background-color: #fff;
+        z-index: 2;
+    }
+
+    .institute-hd-lst {
+        background-color: white;
+    }
+
+}

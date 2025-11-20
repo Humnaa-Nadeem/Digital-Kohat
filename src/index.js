@@ -17,7 +17,7 @@ const allRoutes = createBrowserRouter([{
 }
   ,
 {
-  path: "/education", //Education Sector , Home Page:
+  path: "/edu", //Education Sector , Home Page:
   element: <EduHomePage />
 },
 {
