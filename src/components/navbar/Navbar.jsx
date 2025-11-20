@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Navbar.css";
 import dsk from "../imgs/dkslogo.jpg"; // replace with your actual logo path
 import { useNavigate } from "react-router-dom";
-import dsk from "../imgs/dkslogo.jpg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
