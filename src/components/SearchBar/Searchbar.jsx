@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./SearchBar.css";
-export const SearchBar = () => {
+export const SearchBar = ({ SearchedInst, AllInst }) => {
+
+    // Storing Data:
+    let [AllInstitute, setAllInstitute] = useState(AllInst);
     let [filteredItem, setFiltereditem] = useState();
-    let [inputValue, setInputValue] = useState();
-    // Arr that will contain past searched key-word;
-    let [Arr, setArr] = useState(["I love coding", "Coding is fun", "Let's Code together", "Why It is", "CSS", "JavaScript"]);
+    let [inputValue, setInputValue] = useState("");
+    let pastRes = ["I love coding", "Coding is fun", "Let's Code together", "Why It is", "CSS", "JavaScript", "Kust 1"];
+    let [PastResArr, setPastResArr] = useState(pastRes);
+
     // Filtering keywords from past history according to user Search;
     const filterSearch = (search) => {
         if (search) {
-            const result = Arr.filter((v) =>
+            const result = PastResArr.filter((v) =>
                 v.toLowerCase().includes(search.toLowerCase())
             );
             setFiltereditem(result);
@@ -16,17 +20,35 @@ export const SearchBar = () => {
             setFiltereditem(undefined)
         }
     };
-    // When user select from past results
+
+    // Displaying Filtered Result:
     const OptionSlctd = (option) => {
         setInputValue(option);
+        let SearchedRes = AllInstitute.filter((v) => { if (v.InstName.toLowerCase().includes(option.toLowerCase())) { return v; } });
+        SearchedInst(SearchedRes);
         setFiltereditem(undefined);
     }
+
+    // Handling Enter key Event:
+    const HandEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            OptionSlctd(inputValue);
+        };
+    }
+
+    // 
+    useEffect(() => {
+        if (inputValue === "") {
+            SearchedInst(AllInstitute);
+        }
+    }, [inputValue]);
+
     return (
         <>
             <div className="Search-Area">
                 <div className="Search-bar">
-                    <input placeholder="Search here" name="SearchBar" value={inputValue} onChange={(e) => { filterSearch(e.target.value); setInputValue(e.target.value) }} autoComplete="none" />
-                    <button className="search-btn">🔍</button>
+                    <input placeholder="Search here" name="SearchBar" value={inputValue} onChange={(e) => { filterSearch(e.target.value); setInputValue(e.target.value) }} autoComplete="none" onKeyDown={(e) => { HandEnterKeyPress(e) }} />
+                    <button className="search-btn" onClick={() => { OptionSlctd(inputValue) }}>🔍</button>
                 </div>
                 {/* Results */}
                 {(filteredItem)
@@ -37,7 +59,7 @@ export const SearchBar = () => {
                                 <li key={index} onClick={() => { OptionSlctd(item) }}>{item}</li>
                             ))
                         ) : (
-                            <li>No results found</li>
+                            <li onClick={() => { OptionSlctd(inputValue) }}>{inputValue}</li>
                         )}
                     </ul>
                     :

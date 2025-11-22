@@ -1,18 +1,28 @@
 import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
-import img from "../../../components/imgs/school.svg"
-import "./Schoolpg.css";
+import "./EduCatagories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Schools, Schools_Details } from "../../../Store/store";
-export const SchoolPage = () => {
+import { UniCardDta, Unis_Details, Universities } from "../../../Store/store";
+export const UniPage = () => {
+
+    // Data Storing;
+    let [UniList, setUnilist] = useState(Universities);
+    let [AboutUni, setAboutUni] = useState(Unis_Details);
+    let [UniCrds, setUniCrds] = useState(UniCardDta);
+
+    // To maintain Responsivness [For Small Screen]
     let [showList, setShowlist] = useState(false);
+
+    // Navigation
     let navigate = useNavigate();
+
     // Getting Querry Parameter's Value
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
+
     return (
         <>
             <header>
@@ -20,40 +30,43 @@ export const SchoolPage = () => {
             </header>
             <main>
                 <section className="edu-cata-pg-sec">
-                    <div className={(showList) ? "lft-sec showList" : "lft-sec"} >
+                    {/* LEFT SIDE OF PAGE */}
+                    <div className={(showList) ? "lft-sec showList" : "lft-sec"} > {/* 👈 Show in Small Screen */}
                         <div className="sector" onClick={() => { navigate(`/edu`) }}>Education</div>
                         <div className="institute-hd-lst">
-                            <h2 className="institute-hd">Schools</h2>
-                            {/* 👇 Here to show the list of Schools */}
+                            <h2 className="institute-hd">Universities</h2>
+                            {/* 👇 Here to show the list of Universities */}
                             <ul className="institute-lst">
                                 {
-                                    Schools.map((v, i) => {
+                                    UniList.map((v, i) => {
                                         return (
-                                            <li onClick={() => { navigate(`/edu/schools?id=${v.id}`) }} key={i}>{v.SchoolName}</li>
+                                            <li onClick={() => { navigate(`/edu/uni?id=${v.id}`) }} key={i}>{v.UniName}</li>
                                         )
                                     })
                                 }
-                                <li onClick={() => { navigate("/edu/schools") }}>Back To Schools</li>
+                                <li onClick={() => { navigate("/edu/uni") }}>Back To Universities</li>
                             </ul>
                         </div>
                     </div>
+                    {/* MAIN PART OF PAGE */}
                     <div className="main-sec">
                         <div className="showLst" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
-                        <SearchBar />
+                        <SearchBar SearchedInst={setUniCrds} AllInst={UniCrds} /> {/* Inst = Institute */}
                         <div className="cata-pg-banner">
-                            <h1 className="cata-pg-main-hd">Top Rated Schools in Your City</h1>
+                            <h1 className="cata-pg-main-hd">Top Rated Universities in Your City</h1>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem voluptatum quia excepturi consequatur sequi optio cupiditate</p>
                         </div>
                         {
                             (id)
                                 ?
                                 // Filtering School Info on the basis of Id
-                                Schools_Details.filter((v, i) => v.id === Number(id))
-                                    // After Filtration, fill placeholder
+                                AboutUni.filter((v, i) => v.id === Number(id))
+                                    // After Filtration, filling placeholder
                                     .map((v, i) => {
                                         return (
-                                            <>
-                                                <div className="cata-web-hrdr">
+                                            <React.Fragment key={i}>
+                                                {/* UNIVERSITY Single web Page */}
+                                                <div className="cata-web-hrdr" key={i}>
                                                     <h1>{v.Title}</h1>
                                                     <p className="tagline">{v.tag_line}</p>
                                                 </div>
@@ -62,14 +75,14 @@ export const SchoolPage = () => {
                                                     <p>{v.A_UsPara}</p>
                                                 </section>
                                                 <section className="section">
-                                                    <h2>School Details</h2>
-                                                    {v.Schools_Info.map((j, i) => {
+                                                    <h2>University Details</h2>
+                                                    {v.Institute_Info.map((j, i) => {
                                                         return (
                                                             <ul className="info-list" key={i}>
                                                                 <li><strong>Founded: </strong>{j.Foundation}</li>
-                                                                <li><strong>School Type: </strong>{j.School_Type}</li>
+                                                                <li><strong>School Type: </strong>{j.Institute_Type}</li>
                                                                 <li><strong>Medium: </strong>{j.Medium}</li>
-                                                                <li><strong>Classes Offered: </strong>{j.Classes_Offered}</li>
+                                                                <li><strong>Program Offered: </strong>{j.Program_Offered}</li>
                                                             </ul>
                                                         )
                                                     })}
@@ -107,36 +120,26 @@ export const SchoolPage = () => {
                                                         )
                                                     })}
                                                 </section>
-                                            </>
+                                            </React.Fragment>
                                         )
                                     })
-
                                 :
+                                // Universities Cards
                                 <div className="cata-card-cont">
-                                    <div className="cata-pg-card">
-                                        <img src={img} alt="Placeholder Image" />
-                                        <div className="cata-pg-card-content">
-                                            <h3>School Name</h3>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                                            <button className="cata-pg-card-btn">Read More</button>
-                                        </div>
-                                    </div>
-                                    <div className="cata-pg-card">
-                                        <img src={img} alt="Placeholder Image" />
-                                        <div className="cata-pg-card-content">
-                                            <h3>School Name</h3>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                                            <button className="cata-pg-card-btn">Read More</button>
-                                        </div>
-                                    </div>
-                                    <div className="cata-pg-card">
-                                        <img src={img} alt="Placeholder Image" />
-                                        <div className="cata-pg-card-content">
-                                            <h3>School Name</h3>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                                            <button className="cata-pg-card-btn">Read More</button>
-                                        </div>
-                                    </div>
+                                    {
+                                        UniCrds.map((v, i) => {
+                                            return (
+                                                <div className="cata-pg-card" key={i}>
+                                                    <img src={v.img} alt="Placeholder Image" />
+                                                    <div className="cata-pg-card-content">
+                                                        <h3>{v.InstName}</h3>
+                                                        <p>{v.Desc}</p>
+                                                        <button onClick={() => { navigate(`/edu/uni?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                         }
                     </div>
@@ -149,49 +152,3 @@ export const SchoolPage = () => {
 
     )
 }
-
-
-
-// <div class="container">
-//     <h1>School Name</h1>
-
-//     <div class="info-block">
-//         <h2>About Us</h2>
-//         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-//     </div>
-
-//     <div class="info-block">
-//         <h2>Contact Information</h2>
-//         <p><strong>Address:</strong> 123 School Road, City, Country</p>
-//         <p><strong>Phone:</strong> +92 300 1234567</p>
-//         <p><strong>Email:</strong> info@schoolname.edu.pk</p>
-//         <p><strong>Website:</strong> <a href="https://www.schoolname.edu.pk">www.schoolname.edu.pk</a></p>
-//     </div>
-
-//     <div class="info-block">
-//         <h2>Facilities</h2>
-//         <ul>
-//             <li>Modern Classrooms</li>
-//             <li>Science & IT Labs</li>
-//             <li>Library</li>
-//             <li>Sports Complex</li>
-//         </ul>
-//     </div>
-
-//     <div class="info-block">
-//         <h2>Location</h2>
-//         <div class="map">
-//             <iframe
-//                 src="https://maps.google.com/maps?q=24.8607,67.0011&z=15&output=embed"
-//                 allowfullscreen>
-//             </iframe>
-//         </div>
-//     </div>
-
-//     <div class="info-block">
-//         <h2>Admission Inquiry</h2>
-//         <p>For admissions, please contact the admissions office:</p>
-//         <p><strong>Phone:</strong> +92 300 7654321</p>
-//         <p><strong>Email:</strong> admissions@schoolname.edu.pk</p>
-//     </div>
-// </div>
