@@ -10,18 +10,15 @@ const Footer = () => {
         {/* Left Section */}
         <div className="footer-left">
 
-  <div className="footer-logo">
-          <img src={dkslogo} alt="Logo" className="footer-img" />
-         <h2 className="footer-heading">
-            Digital Smart <br /> Cities Hub
-          </h2>
-        
-        </div>
- <div className="smc"><p>(SMC-PVT LTD)</p></div>
+          <div className="footer-logo">
+            <img src={dkslogo} alt="Logo" className="footer-img" />
+            <h2 className="footer-heading">
+              Digital Smart <br /> Cities Hub
+            </h2>
 
-
-         
-
+          </div>
+          <div className="smc"><p>(SMC-PVT LTD)</p>
+          </div>
           <div className="contact-info">
             <p>
               <FaEnvelope className="footer-icon" /> digitalkohat@gmail.com
@@ -40,7 +37,7 @@ const Footer = () => {
               <li>Features</li>
               <li>About Us</li>
               <li>Contact</li>
-              
+
             </ul>
           </div>
           <div>
@@ -65,7 +62,7 @@ const Footer = () => {
             <FaFacebookF />
             <FaInstagram />
             <FaYoutube />
-             <FaFacebookF />
+            <FaFacebookF />
           </div>
         </div>
       </div>
@@ -74,13 +71,13 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>© 2025 Digital Smart Cities Hub (SMC-PVT LTD). All Rights Reserved.</p>
-        
+
         <div className="footer-terms">
-        
+
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default Footer;

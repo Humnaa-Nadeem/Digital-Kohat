@@ -88,7 +88,7 @@ export const OtherResources = [
         link: "/edu/colleges"
     },
     {
-        title: "Universities",
+        title: "Online Training",
         description:
             "Discover globally recognized universities offering advanced degrees and research opportunities.",
         icon: <icon.FaUniversity className="icons" />,
@@ -97,8 +97,9 @@ export const OtherResources = [
     },
 ];
 
-//Array of Schools to form school list from;
+// &&&&&&&&&&&& *SCHOOLS DATA* &&&&&&&&&&&& \\
 
+// Array of Schools to form school list from;
 export const Schools = [
     {
         SchoolName: "School_1",
@@ -130,17 +131,61 @@ export const Schools = [
     },
 ];
 
-// Array that contain the Schools Details;
+// Data for schools card;
+export const ScoolCardDta = [{
+    img: schoolImg,
+    InstName: "Ideal Public School", //Inst = Institue(School/College/Uni);
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "1",
+    btn_txt: "Read More"
+}, {
+    img: schoolImg,
+    InstName: "Ideal Public School 2",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "2",
+    btn_txt: "Read More"
+}, {
+    img: schoolImg,
+    InstName: "Ideal Public School 3",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "3",
+    btn_txt: "Read More"
+}, {
+    img: schoolImg,
+    InstName: "Ideal Public School 4",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "4",
+    btn_txt: "Read More"
+}, {
+    img: schoolImg,
+    InstName: "Ideal Public School 5",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "5",
+    btn_txt: "Read More"
+}, {
+    img: schoolImg,
+    InstName: "Ideal Public School 6",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "6",
+    btn_txt: "Read More"
+}, {
+    img: schoolImg,
+    InstName: "Ideal Public School 7",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "7",
+    btn_txt: "Read More"
+}];
 
+// Array that contain the Schools Details;
 export const Schools_Details = [
     {
         id: 1,
         Title: "Green Valley International School",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private, Co-educational",
+            Institute_Type: "Private, Co-educational",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 12"
         }],
@@ -161,12 +206,12 @@ export const Schools_Details = [
     },
     {
         id: 2,
-        Title: "Allhumdulilah Green Valley International School 2",
+        Title: "Green Valley International School 2",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private",
+            Institute_Type: "Private",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 10"
         }],
@@ -187,12 +232,12 @@ export const Schools_Details = [
     },
     {
         id: 3,
-        Title: "Allhumdulilah Green Valley International School 3",
+        Title: "Green Valley International School 3",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private",
+            Institute_Type: "Private",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 10"
         }],
@@ -213,12 +258,12 @@ export const Schools_Details = [
     },
     {
         id: 4,
-        Title: "Allhumdulilah Green Valley International School 4",
+        Title: "Green Valley International School 4",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private",
+            Institute_Type: "Private",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 10"
         }],
@@ -239,12 +284,12 @@ export const Schools_Details = [
     },
     {
         id: 5,
-        Title: "Allhumdulilah Green Valley International School 5",
+        Title: "Green Valley International School 5",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private",
+            Institute_Type: "Private",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 10"
         }],
@@ -265,12 +310,12 @@ export const Schools_Details = [
     },
     {
         id: 6,
-        Title: "Allhumdulilah Green Valley International School 6",
+        Title: "Green Valley International School 6",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private",
+            Institute_Type: "Private",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 10"
         }],
@@ -291,12 +336,12 @@ export const Schools_Details = [
     },
     {
         id: 7,
-        Title: "Allhumdulilah Green Valley International School 7",
+        Title: "Green Valley International School 7",
         tag_line: "“Shaping Future Leaders with Excellence”",
         A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
-        Schools_Info: [{
+        Institute_Info: [{
             Foundation: "1998",
-            School_Type: "Private",
+            Institute_Type: "Private",
             Medium: "English",
             Classes_Offered: "Playgroup to Grade 10"
         }],
@@ -315,4 +360,534 @@ export const Schools_Details = [
             }
         ]
     }
-]
+];
+
+// &&&&&&&&&&&& *COLLEGES DATA* &&&&&&&&&&&& \\
+
+//Array of Colleges to form College list from;
+export const Colleges = [
+    {
+        CollegeName: "College_1",
+        id: 1
+    },
+    {
+        CollegeName: "College_2",
+        id: 2
+    },
+    {
+        CollegeName: "College_3",
+        id: 3
+    },
+    {
+        CollegeName: "College_4",
+        id: 4
+    },
+    {
+        CollegeName: "College_5",
+        id: 5
+    },
+    {
+        CollegeName: "College_6",
+        id: 6
+    },
+    {
+        CollegeName: "College_7",
+        id: 7
+    },
+];
+
+// Data for schools card;
+export const CollegeCardDta = [{
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 1",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "1",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 2",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "2",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 3",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "3",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 4",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "4",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 5",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "5",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 6",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "6",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    Name: "Shaheen Group of Colleges 7",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "7",
+    btn_txt: "Read More"
+}];
+
+// Array that contain the Colleges Details;
+export const Colleges_Details = [
+    {
+        id: 1,
+        Title: "Green Valley International College",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private, Co-educational",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 2,
+        Title: "Green Valley International College 2",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 3,
+        Title: "Green Valley International College 3",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 4,
+        Title: "Green Valley International College 4",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 5,
+        Title: "Green Valley International College 5",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 6,
+        Title: "Green Valley International College 6",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 7,
+        Title: "Green Valley International College 7",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Classes_Offered: "Grand 11 to Grade 12"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    }
+];
+
+// &&&&&&&&&&&& *UNIVERSITIES DATA* &&&&&&&&&&&& \\
+
+//Array of Universities to form Uni list from;
+export const Universities = [
+    {
+        UniName: "KUST_1",
+        id: 1
+    },
+    {
+        UniName: "KUST_2",
+        id: 2
+    },
+    {
+        UniName: "KUST_3",
+        id: 3
+    },
+    {
+        UniName: "KUST_4",
+        id: 4
+    },
+    {
+        UniName: "KUST_5",
+        id: 5
+    },
+    {
+        UniName: "KUST_6",
+        id: 6
+    },
+    {
+        UniName: "KUST_7",
+        id: 7
+    },
+];
+
+// Data for Universities card;
+export const UniCardDta = [{
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 1",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "1",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 2",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "2",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 3",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "3",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 4",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "4",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 5",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "5",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 6",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "6",
+    btn_txt: "Read More"
+}, {
+    img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+    InstName: "KUST 7",
+    Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    id: "7",
+    btn_txt: "Read More"
+}];
+
+// Array that contain the Universities Details;
+export const Unis_Details = [
+    {
+        id: 1,
+        Title: "KUST",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private, Co-educational",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 2,
+        Title: "KUST 2",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 3,
+        Title: "KUST 3",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 4,
+        Title: "KUST 4",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 5,
+        Title: "KUST 5",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 6,
+        Title: "KUST 6",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    },
+    {
+        id: 7,
+        Title: "KUST 7",
+        tag_line: "“Shaping Future Leaders with Excellence”",
+        A_UsPara: "Green Valley International School is committed to delivering high-quality education, focusing on academic excellence, character building, and personal growth.",
+        Institute_Info: [{
+            Foundation: "1998",
+            Institute_Type: "Private",
+            Medium: "English",
+            Program_Offered: "CS , BIO-TECH , PHYSICS , DPT etc"
+        }],
+        Facilities: ["Digital Classrooms", "Science & Computer Labs", "Library with 10,000+ Books", "Sports Ground & Indoor Sports Complex"
+            , "Cafeteria & Medical Room", "Transportation Available"
+        ],
+        Achievements: [
+            "100% Board Exam Results (Last 5 Years)", "International Science Olympiad Winners", "National Sports Participation", "Top Ranked in Education Survey 2024"
+        ],
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "info@gvis.edu.pk",
+                Phone: "+92 331 1234567",
+                website: "www.gvis.edu.pk",
+            }
+        ]
+    }
+];
