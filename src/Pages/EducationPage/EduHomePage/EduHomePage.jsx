@@ -75,9 +75,7 @@ export const EduHomePage = () => {
                         </section>
                 }
             </main>
-            <footer>
-                <Footer />
-            </footer>
+            <Footer />
         </>
     )
 }

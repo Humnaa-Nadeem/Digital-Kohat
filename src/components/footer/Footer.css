@@ -228,7 +228,7 @@
 .social-icons svg {
   background-color: #ffffff10;
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 2.1rem;
   padding: 8px;
   border-radius: 50%;
   cursor: pointer;
@@ -357,7 +357,6 @@ hr {
   }
 
   .social-icons svg {
-    font-size: 1.1rem;
     padding: 7px;
   }
 

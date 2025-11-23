@@ -399,43 +399,43 @@ export const Colleges = [
 // Data for schools card;
 export const CollegeCardDta = [{
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 1",
+    InstName: "Shaheen Group of Colleges 1",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "1",
     btn_txt: "Read More"
 }, {
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 2",
+    InstName: "Shaheen Group of Colleges 2",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "2",
     btn_txt: "Read More"
 }, {
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 3",
+    InstName: "Shaheen Group of Colleges 3",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "3",
     btn_txt: "Read More"
 }, {
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 4",
+    InstName: "Shaheen Group of Colleges 4",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "4",
     btn_txt: "Read More"
 }, {
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 5",
+    InstName: "Shaheen Group of Colleges 5",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "5",
     btn_txt: "Read More"
 }, {
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 6",
+    InstName: "Shaheen Group of Colleges 6",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "6",
     btn_txt: "Read More"
 }, {
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
-    Name: "Shaheen Group of Colleges 7",
+    InstName: "Shaheen Group of Colleges 7",
     Desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
     id: "7",
     btn_txt: "Read More"

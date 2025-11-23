@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./form.css"
 export const Form = ({setShowform}) => {
+
     // State that store data
     let [data, setData] = useState({
         name: "",
@@ -12,12 +13,14 @@ export const Form = ({setShowform}) => {
         duration: "",
         catagoryTitle: ""
     });
+
     // Storing data while typing:
     const changeHandler = (e) => {
         let name = e.target.name;
         let value = e.target.value;
         setData(prev => ({ ...prev, [name]: value }))
     }
+
     // Form data after Submission
     const formSubmission = (e) => {
         e.preventDefault();
@@ -44,6 +47,7 @@ export const Form = ({setShowform}) => {
             alert("Please first select any catagory")
         }
     }
+
     // Clearing form;
     const clearFun = () => {
         setData({
@@ -127,7 +131,7 @@ export const Form = ({setShowform}) => {
                         </div>
                     }
                     <div className="button-group">
-                        <button type="submit" className="rgstr-pg-btn">Submit</button>
+                        <button type="submit" className="rgstr-pg-sbmt-btn">Submit</button>
                     </div>
                 </form>
             </div>

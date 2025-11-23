@@ -2,10 +2,15 @@ import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import "./EduCatagories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CollegeCardDta, Colleges, Colleges_Details } from "../../../Store/store";
 export const CollegesPage = () => {
+
+    // To show page from the top:
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, []);
 
     // Data Storing;
     let [collegeList, setCollegelist] = useState(Colleges);
@@ -38,17 +43,17 @@ export const CollegesPage = () => {
                                 {
                                     collegeList.map((v, i) => {
                                         return (
-                                            <li onClick={() => { navigate(`/edu/colleges?id=${v.id}`) }} key={i}>{v.CollegeName}</li>
+                                            <li onClick={() => { navigate(`/edu/colleges?id=${v.id}`); setShowlist(false) }} key={i}>{v.CollegeName}</li>
                                         )
                                     })
                                 }
-                                <li onClick={() => { navigate("/edu/colleges") }}>Back To Colleges</li>
+                                <li onClick={() => { navigate("/edu/colleges"); setShowlist(false) }}>Back To Colleges</li>
                             </ul>
                         </div>
                     </div>
                     {/* MAIN PART OF PAGE */}
                     <div className="main-sec">
-                        <div className="showLst" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
+                        <div className="showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                         <SearchBar SearchedInst={setCollegeCrds} AllInst={CollegeCrds} /> {/* Inst = Institute */}
                         <div className="cata-pg-banner">
                             <h1 className="cata-pg-main-hd">Top Rated Colleges in Your City</h1>
@@ -144,9 +149,7 @@ export const CollegesPage = () => {
                     </div>
                 </section >
             </main >
-            <footer>
-                <Footer />
-            </footer>
+            <Footer />
         </>
 
     )
