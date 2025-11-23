@@ -1,7 +1,6 @@
 /* Specific education catagory page styling */
 /* Institute and cata(catagory) can be school , college , online courses etc*/
 .edu-cata-pg-sec {
-    /* padding: 40px 5px 0px 0px; */
     display: grid;
     grid-template-columns: 0.2fr 1fr;
     gap: 20px;
