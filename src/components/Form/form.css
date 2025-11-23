@@ -7,6 +7,7 @@
     justify-content: center;
     margin-bottom: 50px;
 }
+
 /* FORM Styling */
 .rgstr-form {
     width: 60%;
@@ -20,6 +21,7 @@
 }
 
 .rgst-frm {
+    color: #267252;
     margin: 0px;
     font-size: 1.8rem;
 }
@@ -37,7 +39,7 @@ label {
 }
 
 input,
-select{
+select {
     padding: 12px 14px;
     border-radius: 4px;
     border: none;
@@ -55,37 +57,39 @@ select:focus {
     border-color: #6a88ff;
 }
 
-.rgstr-pg-btn {
+.rgstr-pg-sbmt-btn {
     padding: 12px 20px;
     border-radius: 10px;
     border: none;
     font-weight: 600;
     cursor: pointer;
-    background: linear-gradient(135deg, #6a88ff 0%, #8f6bff 100%);
+    background: linear-gradient(90deg, #02ac65, #00c97d);
     color: white;
     box-shadow: 0 6px 16px rgba(106, 136, 255, 0.18);
     transition: 0.2s;
 }
 
 
-.rgstr-pg-btn:hover {
-    background: linear-gradient(135deg, #505f98de 0%, #8a6ee0 100%);
+.rgstr-pg-sbmt-btn:hover {
+    transform: scale(1.08);
+    background: linear-gradient(90deg, #267252, #32b57e);
+    box-shadow: 0 6px 15px rgba(0, 181, 106, 0.4);
 }
 
-.rgstr-pg-btn:active{
+.rgstr-pg-sbmt-btn:active {
     background: linear-gradient(135deg, #0335ff 0%, #0335ff 100%);
 }
 
 /* Cross Btn Styling  */
 
-.crs{
+.crs {
     width: 35px;
     height: 35px;
     position: absolute;
     top: 10px;
     right: 10px;
     padding-bottom: 6px;
-    background-color: black;
+    background-color: #32b57e;
     color: whitesmoke;
     cursor: pointer;
     display: flex;
@@ -94,11 +98,11 @@ select:focus {
     font-size: 1.9rem;
 }
 
-.crs:hover{
+.crs:hover {
     background-color: red;
 }
 
-.crs:active{
+.crs:active {
     border: 2px solid black;
     background-color: whitesmoke;
     color: black;

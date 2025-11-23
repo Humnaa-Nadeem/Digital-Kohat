@@ -2,10 +2,15 @@ import Navbar from "../../../components/navbar/Navbar";
 import Footer from "../../../components/footer/Footer";
 import "./EduCatagories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Schools, Schools_Details, ScoolCardDta } from "../../../Store/store";
 export const SchoolPage = () => {
+
+    // To show page from the top:
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, []);
 
     // Data Storing;
     let [SchoolList, setSchoollist] = useState(Schools);
@@ -38,11 +43,11 @@ export const SchoolPage = () => {
                                 {
                                     SchoolList.map((v, i) => {
                                         return (
-                                            <li onClick={() => { navigate(`/edu/schools?id=${v.id}`) }} key={i}>{v.SchoolName}</li>
+                                            <li onClick={() => { navigate(`/edu/schools?id=${v.id}`); setShowlist(false) }} key={i}>{v.SchoolName}</li>
                                         )
                                     })
                                 }
-                                <li onClick={() => { navigate("/edu/schools") }}>Back To Schools</li>
+                                <li onClick={() => { navigate("/edu/schools"); setShowlist(false) }}>Back To Schools</li>
                             </ul>
                         </div>
                     </div>
@@ -144,9 +149,7 @@ export const SchoolPage = () => {
                     </div>
                 </section >
             </main >
-            <footer>
-                <Footer />
-            </footer>
+            <Footer />
         </>
 
     )
