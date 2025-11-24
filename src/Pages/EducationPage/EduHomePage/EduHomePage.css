@@ -1,15 +1,15 @@
-.edu-pg-grd-sec {
+.edu-pg-sec {
     margin-top: 3px;
     object-fit: cover;
     position: relative;
     margin: 15px 0px 0px 0px;
 }
 
-.edu-pg-grd-sec::-webkit-scrollbar {
+.edu-pg-sec::-webkit-scrollbar {
     display: none;
 }
 
-.edu-pg-grd-sec img {
+.edu-pg-sec img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -55,12 +55,12 @@
     rotate: 270deg;
 }
 
-.rsgrt-btn:hover{
+.rsgrt-btn:hover {
     background-color: white;
     color: black;
 }
 
-.rsgrt-btn:active{
+.rsgrt-btn:active {
     background-color: #267252;
     color: whitesmoke;
 }
@@ -71,7 +71,7 @@
     margin-top: 100px;
 }
 
-.pg-desc {
+.edu-pg-desc {
     width: 80%;
     text-align: center;
 }

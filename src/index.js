@@ -1,14 +1,15 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "react-router-dom";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// Importing d/fPages
 import { EduHomePage } from './Pages/EducationPage/EduHomePage/EduHomePage';
 import { SchoolPage } from './Pages/EducationPage/EduCatagoriesPg/SchoolPg';
 import { CollegesPage } from './Pages/EducationPage/EduCatagoriesPg/CollegesPg';
 import { UniPage } from './Pages/EducationPage/EduCatagoriesPg/UniPg';
+import { TechniciansHomePg, TechniciansPg } from './Pages/TechniciansPage/TechniciansHomePg/TechniciansHomePg';
 
 // This is the routing system.
 const allRoutes = createBrowserRouter([{
@@ -30,6 +31,10 @@ const allRoutes = createBrowserRouter([{
 {
   path: "/edu/uni", //Education Sector , Universities Page
   element: <UniPage />
+},
+{
+  path: "/technicians", //Technicians Sector , Home Page:
+  element: <TechniciansHomePg />
 }]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

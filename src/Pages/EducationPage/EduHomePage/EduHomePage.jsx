@@ -33,13 +33,13 @@ export const EduHomePage = () => {
                         <Form setShowform={setShowform} />
                         :
                         // Home Page
-                        <section className="edu-pg-grd-sec">
+                        <section className="edu-pg-sec">
                             {/* Registartion Button */}
                             <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
                             {/* Education Institute Part like schools , colleges & Uni */}
                             <div className="content-cont">
                                 <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
-                                <p className="pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae.</p>
+                                <p className="edu-pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae.</p>
                                 <div className="card-Container">
                                     {categories.map((v, i) => {
                                         return (
@@ -56,7 +56,7 @@ export const EduHomePage = () => {
                                 </div>
                                 {/* Other Resources Part */}
                                 <h2 className="other-resoures-h2">Explore <strong>Other Resources</strong> to get Educated:</h2>
-                                <p className="pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae. </p>
+                                <p className="edu-pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident repellendus omnis ex quis sit hic, non qui. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae. </p>
                                 <div className="card-Container lst-crd-cont">
                                     {OtherResources.map((v, i) => {
                                         return (

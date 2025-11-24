@@ -6,13 +6,13 @@ import businessImg from "../components/imgs/business.png";
 import techImg from "../components/imgs/technicians.svg";
 import tourismImg from "../components/imgs/tourism.png";
 
-// Data of services that web offer;
+// Data of services that web offer; url = mainUrl
 export const services = [
     {
         title: "Education",
         desc: "Search for quality learning institutions or register your own educational center.",
         img: schoolImg,
-        link: "/edu" //Added link to navigate to education sector home page
+        link: "/edu"
     },
     {
         title: "Restaurants",
@@ -33,6 +33,7 @@ export const services = [
         title: "Technicians",
         desc: "Hire skilled workers or offer your professional services with ease.",
         img: techImg,
+        link: "/technicians"
     },
     {
         title: "Tourism",
@@ -41,7 +42,9 @@ export const services = [
     },
 ];
 
-// Data of education home page for D/F education Institute (School , College , Uni):
+// **************************************** Eduction-Sector Data *****************************************************\\ 
+
+// Data for D/F education Institute (School , College , Uni): &&&&& Data for Url = mainUrl/edu
 export const categories = [
     {
         title: "Explore School",
@@ -69,7 +72,7 @@ export const categories = [
     },
 ];
 
-// Data of education home page for online courses etc:
+// Data of education home page for online courses etc: &&&&& Data for Url = mainUrl/edu
 export const OtherResources = [
     {
         title: "Online Courses",
@@ -99,7 +102,7 @@ export const OtherResources = [
 
 // &&&&&&&&&&&& *SCHOOLS DATA* &&&&&&&&&&&& \\
 
-// Array of Schools to form school list from;
+// Array of Schools to form school list from; &&&&& Data for Url = mainUrl/edu/schools
 export const Schools = [
     {
         SchoolName: "School_1",
@@ -131,7 +134,7 @@ export const Schools = [
     },
 ];
 
-// Data for schools card;
+// Data for schools card; &&&&& Data for Url = mainUrl/edu/schools
 export const ScoolCardDta = [{
     img: schoolImg,
     InstName: "Ideal Public School", //Inst = Institue(School/College/Uni);
@@ -176,7 +179,7 @@ export const ScoolCardDta = [{
     btn_txt: "Read More"
 }];
 
-// Array that contain the Schools Details;
+// Array that contain the Schools Details; &&&&& Data for Url = mainUrl/edu/schools?id=[schoolId]
 export const Schools_Details = [
     {
         id: 1,
@@ -364,7 +367,7 @@ export const Schools_Details = [
 
 // &&&&&&&&&&&& *COLLEGES DATA* &&&&&&&&&&&& \\
 
-//Array of Colleges to form College list from;
+//Array of Colleges to form College list from; &&&&& Data for Url = mainUrl/edu/colleges
 export const Colleges = [
     {
         CollegeName: "College_1",
@@ -396,7 +399,7 @@ export const Colleges = [
     },
 ];
 
-// Data for schools card;
+// Data for Colleges card; &&&&& Data for Url = mainUrl/edu/Colleges
 export const CollegeCardDta = [{
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
     InstName: "Shaheen Group of Colleges 1",
@@ -441,7 +444,7 @@ export const CollegeCardDta = [{
     btn_txt: "Read More"
 }];
 
-// Array that contain the Colleges Details;
+// Array that contain the Colleges Details; &&&&& Data for Url = mainUrl/edu/colleges?id=[collegeId]
 export const Colleges_Details = [
     {
         id: 1,
@@ -629,7 +632,7 @@ export const Colleges_Details = [
 
 // &&&&&&&&&&&& *UNIVERSITIES DATA* &&&&&&&&&&&& \\
 
-//Array of Universities to form Uni list from;
+//Array of Universities to form Uni list from; &&&&& Data for Url = mainUrl/edu/Uni
 export const Universities = [
     {
         UniName: "KUST_1",
@@ -661,7 +664,7 @@ export const Universities = [
     },
 ];
 
-// Data for Universities card;
+// Data for Universities card; &&&&& Data for Url = mainUrl/edu/Uni
 export const UniCardDta = [{
     img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
     InstName: "KUST 1",
@@ -706,7 +709,7 @@ export const UniCardDta = [{
     btn_txt: "Read More"
 }];
 
-// Array that contain the Universities Details;
+// Array that contain the Universities Details; &&&&& Data for Url = mainUrl/edu/Uni?id=[UniId]
 export const Unis_Details = [
     {
         id: 1,
@@ -889,5 +892,59 @@ export const Unis_Details = [
                 website: "www.gvis.edu.pk",
             }
         ]
+    }
+];
+
+// **************************************** Technicians-Sector Data *****************************************************\\
+
+// Data for D/F Technicial problem solver : &&&&& Data for Url = mainUrl/technicians;
+export const Techicians_categories = [
+    {
+        title: "Electrical & Electronics",
+        description:
+            "Hire skilled electricians for wiring, repairs, installations, and safe electrical troubleshooting.",
+        img: "https://images.pexels.com/photos/6636477/pexels-photo-6636477.jpeg",
+        btn: "Electrical Experts",
+        link: "/technicians/Electronic"
+    },
+    {
+        title: "Plumbing and Gas",
+        description:
+            "Get expert plumbers for pipe repairs, drainage issues, gas fitting, leak detection, and maintenance.",
+        img: "https://images.pexels.com/photos/16752780/pexels-photo-16752780.jpeg",
+        btn: "Plumbing Experts",
+        link: "/technicians/Plumbing"
+    },
+    {
+        title: "Painting and Construction",
+        description:
+            "Find skilled painters and builders for walls, interiors, finishing work, renovations, and upgrades.",
+        img: "https://images.pexels.com/photos/5505125/pexels-photo-5505125.jpeg",
+        btn: "Painting Experts",
+        link: "/technicians/Painting"
+    },
+    {
+        title: "Carpentry and Furniture",
+        description:
+            "Hire professional carpenters for furniture making, wood repairs, fittings, custom work, and designs.",
+        img: "https://images.pexels.com/photos/34862868/pexels-photo-34862868.jpeg",
+        btn: "Carpentry Experts",
+        link: "/technicians/Carpentry"
+    },
+    {
+        title: "Cleaning and Maintenance",
+        description:
+            "Book cleaning experts for homes, offices, deep cleaning, repairs, routine care, and daily maintenance.",
+        img: "https://images.pexels.com/photos/11349879/pexels-photo-11349879.jpeg",
+        btn: "Cleaning Experts",
+        link: "/technicians/Cleaning"
+    },
+    {
+        title: "Gardening and Outdoor",
+        description:
+            "Find garden professionals for lawn care, plant work, landscaping, trimming, outdoor upkeep, and design.",
+        img: "https://images.pexels.com/photos/589/garden-grass-meadow-green.jpg",
+        btn: "Gardening Experts",
+        link: "/technicians/Gardening"
     }
 ];

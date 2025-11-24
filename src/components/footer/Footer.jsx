@@ -1,4 +1,3 @@
-import React from "react";
 import "./Footer.css";
 import { FaFacebookF, FaInstagram, FaYoutube, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import dkslogo from "../imgs/dkslogo.jpg"; // replace with your actual logo path

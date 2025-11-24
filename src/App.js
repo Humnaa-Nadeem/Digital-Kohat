@@ -1,8 +1,5 @@
-import React from "react";
-
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
-
 import Hero2 from "./components/hero2/Hero2";
 import Cards from "./components/cards/Cards";
 import WhyChooseUs from "./components/whychooseus/Whychooseus";
