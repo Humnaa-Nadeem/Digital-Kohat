@@ -20,7 +20,7 @@
     margin-top: 20px;
 }
 
-.rgst-frm {
+.rgst-frm-heading {
     color: #267252;
     margin: 0px;
     font-size: 1.8rem;
@@ -111,7 +111,13 @@ select:focus {
 /* RESPONSIVENESS : MEDIA QUERRY */
 
 @media (max-width: 980px) {
-    .rgstr-form {
+    .rgst-frm-heading {
         width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .rgst-frm-heading {
+        font-size: 1.6rem;
     }
 }

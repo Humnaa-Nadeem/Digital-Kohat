@@ -67,7 +67,7 @@ export const Form = ({setShowform}) => {
             <div className="form-cont">
                 <form onSubmit={(e) => formSubmission(e)} className="rgstr-form">
                 <div className="crs" onClick={() => setShowform(false)}>&times;</div>
-                    <h2 className="rgst-frm">Registration Form:</h2>
+                    <h2 className="rgst-frm-heading">Registration Form:</h2>
                     {/* Permanent Fields */}
                     <div className="label-cont">
                         <label htmlFor="name">Full name</label>
