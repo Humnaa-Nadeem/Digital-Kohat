@@ -1,3 +1,4 @@
+// This page also use the styling of "EduHomePage.css";
 import { useEffect, useState } from "react";
 import Navbar from "../../../components/navbar/Navbar"
 import "./TechniciansHomePg.css";

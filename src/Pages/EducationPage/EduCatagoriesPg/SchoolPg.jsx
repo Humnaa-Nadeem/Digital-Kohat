@@ -54,10 +54,10 @@ export const SchoolPage = () => {
                     {/* MAIN PART OF PAGE */}
                     <div className="main-sec">
                         <div className="showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
-                        <SearchBar SearchedInst={setSchoolCrds} AllInst={SchoolCrds} /> {/* Inst = Institute */}
                         <div className="cata-pg-banner">
                             <h1 className="cata-pg-main-hd">Top Rated Schools in Your City</h1>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem voluptatum quia excepturi consequatur sequi optio cupiditate</p>
+                            <SearchBar SearchedInst={setSchoolCrds} AllInst={SchoolCrds} /> {/* Inst = Institute */}
                         </div>
                         {
                             (id)
@@ -126,7 +126,6 @@ export const SchoolPage = () => {
                                             </React.Fragment>
                                         )
                                     })
-
                                 :
                                 // Schools Cards
                                 <div className="cata-card-cont">

@@ -948,3 +948,226 @@ export const Techicians_categories = [
         link: "/technicians/Gardening"
     }
 ];
+
+// Electronic and Electrical
+// Electrical Experts
+export const ElectricalExperts = [
+    {
+        ExpertName: "VoltMaster",
+        id: 1
+    },
+    {
+        ExpertName: "CircuitSage",
+        id: 2
+    },
+    {
+        ExpertName: "OhmGenius",
+        id: 3
+    },
+    {
+        ExpertName: "ElectroWizard",
+        id: 4
+    },
+    {
+        ExpertName: "PowerCraftPro",
+        id: 5
+    },
+    {
+        ExpertName: "SparkEngineer",
+        id: 6
+    },
+    {
+        ExpertName: "AmpTech Specialist",
+        id: 7
+    }
+];
+
+// Data for Universities card; &&&&& Data for Url = mainUrl/edu/Uni
+export const E_ExpertCrdDta = [
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "VoltMaster",
+        Desc: "Expert in high-voltage systems, safety, and electrical infrastructure design.",
+        id: "1",
+        btn_txt: "Read More"
+    },
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "CircuitSage",
+        Desc: "Specialist in circuit diagnostics, PCB troubleshooting, and embedded electronics.",
+        id: "2",
+        btn_txt: "Read More"
+    },
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "OhmGenius",
+        Desc: "Skilled in resistance analysis, system optimization, and control electronics.",
+        id: "3",
+        btn_txt: "Read More"
+    },
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "ElectroWizard",
+        Desc: "Professional in power distribution, electrical automation, and smart grid systems.",
+        id: "4",
+        btn_txt: "Read More"
+    },
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "PowerCraft Pro",
+        Desc: "Experienced in industrial electrification, machinery wiring, and power systems.",
+        id: "5",
+        btn_txt: "Read More"
+    },
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "SparkEngineer",
+        Desc: "Focused on fault detection, repair services, and safe electrical installation.",
+        id: "6",
+        btn_txt: "Read More"
+    },
+    {
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        InstName: "AmpTech Specialist",
+        Desc: "Expert in amperage management, power load balancing, and energy systems.",
+        id: "7",
+        btn_txt: "Read More"
+    }
+];
+
+// Array that contain the Universities Details; &&&&& Data for Url = mainUrl/edu/Uni?id=[UniId]
+export const E_ExpertDetails = [
+    {
+        id: 1,
+        Title: "VoltMaster",
+        img: "https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg",
+        tag_line: "“Certified Electrical Expert”",
+        Rates: {
+            CallOut_fee: "PKR 1500",
+            Hourly: "PKR 1000"
+        },
+        Services: ["Short circuit", "Solar Installation", "AC Setting", "Battery Integration"],
+        Experience: "10+ years as a professional Electricals.",
+        Contact_Info: [
+            {
+                Address: "123 Green Valley Road, Islamabad",
+                Email: "ElectricalExpert@example.com",
+                Phone: "+92 331 1234567"
+            }
+        ]
+    },
+    {
+        id: 2,
+        Title: "CircuitSage",
+        img: "https://images.pexels.com/photos/5864163/pexels-photo-5864163.jpeg",
+        tag_line: "“Expert Electric Troubleshooter”",
+        Rates: {
+            CallOut_fee: "PKR 1400",
+            Hourly: "PKR 900"
+        },
+        Services: ["Wiring Repair", "DB Installation", "Circuit Breaker Fix", "UPS Setup"],
+        Experience: "8 years of electrical maintenance.",
+        Contact_Info: [
+            {
+                Address: "PWD Housing Society, Islamabad",
+                Email: "powerfixpro@example.com",
+                Phone: "+92 345 5678923"
+            }
+        ]
+    },
+    {
+        id: 3,
+        Title: "OhmGenius",
+        img: "https://images.pexels.com/photos/4254166/pexels-photo-4254166.jpeg",
+        tag_line: "“Licensed Domestic Electrician”",
+        Rates: {
+            CallOut_fee: "PKR 1600",
+            Hourly: "PKR 1100"
+        },
+        Services: ["Fan Installation", "Switch Board Repair", "LED Panel Fitting", "Home Wiring"],
+        Experience: "6+ years of domestic installations.",
+        Contact_Info: [
+            {
+                Address: "G-13 Sector, Islamabad",
+                Email: "electrocraft@example.com",
+                Phone: "+92 300 4567812"
+            }
+        ]
+    },
+    {
+        id: 4,
+        Title: "ElectroWizard",
+        img: "https://images.pexels.com/photos/5071130/pexels-photo-5071130.jpeg",
+        tag_line: "“Advanced Circuit Specialist”",
+        Rates: {
+            CallOut_fee: "PKR 1800",
+            Hourly: "PKR 1300"
+        },
+        Services: ["Panel Board Setup", "Main Line Fixing", "Short Circuit Repair", "Load Balancing"],
+        Experience: "12 years in commercial electrical systems.",
+        Contact_Info: [
+            {
+                Address: "Blue Area, Islamabad",
+                Email: "circuitpro@example.com",
+                Phone: "+92 333 1122334"
+            }
+        ]
+    },
+    {
+        id: 5,
+        Title: "PowerCraftPro",
+        img: "https://images.pexels.com/photos/5864163/pexels-photo-5864163.jpeg",
+        tag_line: "“Safety Certified Electrician”",
+        Rates: {
+            CallOut_fee: "PKR 1300",
+            Hourly: "PKR 900"
+        },
+        Services: ["Earthing Setup", "Safety Inspection", "Voltage Optimization", "Breaker Testing"],
+        Experience: "7 years of safe installation experience.",
+        Contact_Info: [
+            {
+                Address: "F-6 Sector, Islamabad",
+                Email: "electroguard@example.com",
+                Phone: "+92 321 9988776"
+            }
+        ]
+    },
+    {
+        id: 6,
+        Title: "SparkEngineer",
+        img: "https://images.pexels.com/photos/4386464/pexels-photo-4386464.jpeg",
+        tag_line: "“Home & Industrial Electrician”",
+        Rates: {
+            CallOut_fee: "PKR 1700",
+            Hourly: "PKR 1200"
+        },
+        Services: ["Industrial Wiring", "Motor Repair", "Equipment Setup", "Three-Phase Installation"],
+        Experience: "14 years industrial expertise.",
+        Contact_Info: [
+            {
+                Address: "I-9 Industrial Area, Islamabad",
+                Email: "wattworks@example.com",
+                Phone: "+92 315 5566778"
+            }
+        ]
+    },
+    {
+        id: 7,
+        Title: "AmpTech Specialist",
+        img: "https://images.pexels.com/photos/4792479/pexels-photo-4792479.jpeg",
+        tag_line: "“Quick Response Electrician”",
+        Rates: {
+            CallOut_fee: "PKR 1200",
+            Hourly: "PKR 850"
+        },
+        Services: ["Emergency Repair", "Switch/Socket Fixing", "Light Replacement", "Breaker Tripping Issues"],
+        Experience: "5+ years of quick service experience.",
+        Contact_Info: [
+            {
+                Address: "Bahria Town Phase 4, Islamabad",
+                Email: "sparkforce@example.com",
+                Phone: "+92 331 6677882"
+            }
+        ]
+    }
+];

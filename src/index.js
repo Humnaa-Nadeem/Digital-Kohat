@@ -10,6 +10,7 @@ import { SchoolPage } from './Pages/EducationPage/EduCatagoriesPg/SchoolPg';
 import { CollegesPage } from './Pages/EducationPage/EduCatagoriesPg/CollegesPg';
 import { UniPage } from './Pages/EducationPage/EduCatagoriesPg/UniPg';
 import { TechniciansHomePg, TechniciansPg } from './Pages/TechniciansPage/TechniciansHomePg/TechniciansHomePg';
+import { ElectronicCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg/Electronics';
 
 // This is the routing system.
 const allRoutes = createBrowserRouter([{
@@ -35,6 +36,10 @@ const allRoutes = createBrowserRouter([{
 {
   path: "/technicians", //Technicians Sector , Home Page:
   element: <TechniciansHomePg />
+},
+{
+  path: "/technicians/Electronic", //Technicians Sector , Home Page:
+  element: <ElectronicCata />
 }]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

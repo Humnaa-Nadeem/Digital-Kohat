@@ -85,7 +85,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -121,8 +121,7 @@
 }
 
 .cata-pg-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
 }
 
 .cata-pg-card img {
