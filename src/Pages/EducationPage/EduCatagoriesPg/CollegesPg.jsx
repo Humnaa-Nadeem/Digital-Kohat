@@ -4,7 +4,7 @@ import "./EduCatagories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CollegeCardDta, Colleges, Colleges_Details } from "../../../Store/store";
+import { CollegeCardDta, Colleges, Colleges_Details } from "../../../Store/Edu_store";
 export const CollegesPage = () => {
 
     // To show page from the top:
@@ -35,7 +35,7 @@ export const CollegesPage = () => {
                 <section className="edu-cata-pg-sec">
                     {/* LEFT SIDE OF PAGE */}
                     <div className={(showList) ? "lft-sec showList" : "lft-sec"} > {/* 👈 Show in Small Screen */}
-                        <div className="sector" onClick={() => { navigate(`/edu`) }}>Education</div>
+                        <h2 className="sector" onClick={() => { navigate(`/edu`) }}>Education</h2>
                         <div className="institute-hd-lst">
                             <h2 className="institute-hd">Colleges</h2>
                             {/* 👇 Here to show the list of Colleges */}
@@ -54,10 +54,10 @@ export const CollegesPage = () => {
                     {/* MAIN PART OF PAGE */}
                     <div className="main-sec">
                         <div className="showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
-                        <SearchBar SearchedInst={setCollegeCrds} AllInst={CollegeCrds} /> {/* Inst = Institute */}
                         <div className="cata-pg-banner">
                             <h1 className="cata-pg-main-hd">Top Rated Colleges in Your City</h1>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem voluptatum quia excepturi consequatur sequi optio cupiditate</p>
+                            <SearchBar SearchedInst={setCollegeCrds} AllInst={CollegeCrds} /> {/* Inst = Institute */}
                         </div>
                         {
                             (id)

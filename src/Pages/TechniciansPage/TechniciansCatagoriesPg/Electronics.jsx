@@ -3,12 +3,12 @@ import Footer from "../../../components/footer/Footer"
 import Navbar from "../../../components/navbar/Navbar"
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import "./TechiciansCataPgs.css";
-import { E_ExpertCrdDta, E_ExpertDetails, ElectricalExperts } from "../../../Store/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import { E_ExpertCrdDta, E_ExpertDetails, ElectricalExperts } from "../../../Store/Techcn_Store";
 export const ElectronicCata = () => {
 
-    // 
+    // To show page from top
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
@@ -33,13 +33,13 @@ export const ElectronicCata = () => {
             </header>
             <main>
                 <section className="Tech-Cata-Pg-Sec">
+                    {/* Page Banner */}
                     <div className="Tech-cata-pg-banner">
                         <h1 className="tech-cata-h1">Search for all your wanted Techicians : </h1>
                         <p className="tech-cata-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, quisquam consectetur repudiandae Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <SearchBar SearchedInst={setCrdsdta} AllInst={Crdsdta} />
                         <div className="Usr-Icon-TagsCont">
                             <span className="usrIcon" onClick={() => { setUsertags(!userTags) }}><FaUser /></span>
-                            {console.log(userTags)}
                             <ul className={(userTags) ? "tags-cont flexDsply" : "tags-cont"}>
                                 <li>Dashboard</li>
                                 <li>Appointments</li>
@@ -50,7 +50,9 @@ export const ElectronicCata = () => {
                             </ul>
                         </div>
                     </div>
+                    {/* Page Body */}
                     <div className="tech-cata-fltr-crdsCont">
+                        {/* Toggle Button To show list in small Screen */}
                         <div className="tech-toggle-btn" onClick={() => { setShowlist(!showList) }}>
                             {
                                 (showList)
@@ -60,31 +62,35 @@ export const ElectronicCata = () => {
                                     <>&#9776;</>
                             }
                         </div>
+                        {/* SideBar */}
                         <div className={(showList) ? "tech-cata-fltr display" : "tech-cata-fltr"}>
-                            <h2 className="sector-hdng" onClick={() => { navigate("/technicians") }}>
+                            <h2 className="sector-hdng" onClick={() => { navigate("/tech") }}>
                                 Techinicains
                             </h2>
-                            {/* 👇 Here to show the list of Electrical Expertss */}
+                            {/* 👇 Here to show the list of Electrical Experts */}
                             <ul className="list">
                                 {
                                     ElectricalExperts.map((v, i) => {
                                         return (
-                                            <li onClick={() => { navigate(`/technicians/Electronic?id=${v.id}`); setShowlist(false) }} key={i}>{v.ExpertName}</li>
+                                            <li onClick={() => { navigate(`/tech/Electrical?id=${v.id}`); setShowlist(false) }} key={i}>{v.ExpertName}</li>
                                         )
                                     })
                                 }
-                                <li onClick={() => { navigate("/technicians/Electronic"); setShowlist(false) }}>Back To Cards</li>
+                                <li onClick={() => { navigate("/tech/Electrical"); setShowlist(false) }}>Back To Cards</li>
                                 <li onClick={() => { setShowlist(false) }} className="user-tag">Dashboard</li>
                                 <li onClick={() => { setShowlist(false) }} className="user-tag">Appointment</li>
                                 <li onClick={() => { setShowlist(false) }} className="user-tag">Bookings</li>
                             </ul>
                         </div>
+                        {/* Cards Container & Resume type Single Page */}
                         <div className="tech-cata-crdCont">
                             {
                                 (id)
                                     ?
+                                    // Filtration & Show filtered data
                                     E_ExpertDetails.filter((v, i) => v.id === Number(id)).map((v, i) => {
                                         return (
+                                            // Resume type Single Page
                                             <div className="resume-box" key={i}>
                                                 <div>
                                                     <img
@@ -136,6 +142,7 @@ export const ElectronicCata = () => {
                                         )
                                     })
                                     :
+                                    // Card Container
                                     <div className="cata-card-cont">
                                         {Crdsdta.map((v, i) => {
                                             return (
@@ -144,7 +151,7 @@ export const ElectronicCata = () => {
                                                     <div className="cata-pg-card-content">
                                                         <h3>{v.InstName}</h3>
                                                         <p>{v.Desc}</p>
-                                                        <button onClick={() => { navigate(`/technicians/Electronic?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
+                                                        <button onClick={() => { navigate(`/tech/Electrical?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
                                                     </div>
                                                 </div>
                                             )

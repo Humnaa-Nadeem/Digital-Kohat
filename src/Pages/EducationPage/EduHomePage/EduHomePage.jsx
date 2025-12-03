@@ -3,7 +3,7 @@ import Navbar from "../../../components/navbar/Navbar"
 import "./EduHomePage.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { categories, OtherResources } from "../../../Store/store";
+import { categories, OtherResources } from "../../../Store/Edu_store";
 import Footer from "../../../components/footer/Footer";
 import { Form } from "../../../components/Form/form";
 export const EduHomePage = () => {

@@ -1,6 +1,7 @@
+import { services } from "../../Store/WebServices";
 import "./Cards.css";
 import { useNavigate } from "react-router-dom";
-import { services } from "../../Store/store";
+// import { services } from "../../Store/Edu_store";
 const Cards = () => {
   // We use Navigate to redirect to other page
   const navigate = useNavigate();

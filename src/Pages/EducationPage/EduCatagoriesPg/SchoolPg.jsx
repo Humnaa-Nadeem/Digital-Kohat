@@ -4,7 +4,7 @@ import "./EduCatagories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Schools, Schools_Details, ScoolCardDta } from "../../../Store/store";
+import { Schools, Schools_Details, ScoolCardDta } from "../../../Store/Edu_store";
 export const SchoolPage = () => {
 
     // To show page from the top:
@@ -35,7 +35,7 @@ export const SchoolPage = () => {
                 <section className="edu-cata-pg-sec">
                     {/* LEFT SIDE OF PAGE */}
                     <div className={(showList) ? "lft-sec showList" : "lft-sec"} > {/* 👈 Show in Small Screen */}
-                        <div className="sector" onClick={() => { navigate(`/edu`) }}>Education</div>
+                        <h2 className="sector" onClick={() => { navigate(`/edu`) }}>Education</h2>
                         <div className="institute-hd-lst">
                             <h2 className="institute-hd">Schools</h2>
                             {/* 👇 Here to show the list of Schools */}

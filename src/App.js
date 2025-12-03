@@ -9,16 +9,19 @@ import Hero1 from "./components/hero1/Hero1";
 
 function App() {
   return (
-    <div className="App">
-     
-      <Navbar/>
-      <Hero1/>
-      <Cards/>
-      <WhyChooseUs/>
-      <Hero2/>
-     <Location/>
-     <Footer/>
-    </div>
+    <>
+      <header>
+        <Navbar />
+        <Hero1 />
+      </header>
+      <main>
+        <Cards />
+        <WhyChooseUs />
+        <Hero2 />
+        <Location />
+      </main>
+      <Footer />
+    </>
   );
 }
 

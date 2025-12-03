@@ -4,9 +4,9 @@ import Navbar from "../../../components/navbar/Navbar"
 import "./TechniciansHomePg.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Techicians_categories } from "../../../Store/store";
 import Footer from "../../../components/footer/Footer";
 import { Form } from "../../../components/Form/form";
+import { Techicians_categories } from "../../../Store/Techcn_Store";
 export const TechniciansHomePg = () => {
 
     // To show page from the top:
