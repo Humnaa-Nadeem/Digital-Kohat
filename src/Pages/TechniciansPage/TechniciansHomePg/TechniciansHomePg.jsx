@@ -22,43 +22,37 @@ export const TechniciansHomePg = () => {
 
     return (
         <>
-            <header>
-                <Navbar />
-            </header>
-            <main>
-                {
-                    (showForm)
-                        ?
-                        //  Registration Form
-                        <Form setShowform={setShowform} />
-                        :
-                        // Home Page
-                        <section className="Tech-pg-sec">
-                            {/* Registartion Button */}
-                            {/* <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button> */}
-                            {/* Techicians Catagories */}
-                            <div className="content-cont">
-                                <h1>Let's Find your wanted <strong>Technicians</strong></h1>
-                                <p className="tech-pg-desc">Find the right technician for your needs with ease. Our platform connects you to trusted professionals ready to handle electrical work, plumbing, repairs, installations, and much more. Whether you need quick assistance or expert service, we ensure reliable technicians are always within reach.</p>
-                                <div className="card-Container">
-                                    {Techicians_categories.map((v, i) => {
-                                        return (
-                                            <div className="card tech-cards" key={i}>
-                                                <div className="crd-img-title-div" style={{ flexDirection: "column" }}>
-                                                    <img src={v.img} />
-                                                    <h2>{v.title}</h2>
-                                                </div>
-                                                <p>{v.description}</p>
-                                                <button className="edu-pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
+            {
+                (showForm)
+                    ?
+                    //  Registration Form
+                    <Form setShowform={setShowform} />
+                    :
+                    // Home Page
+                    <section className="Tech-pg-sec">
+                        {/* Registartion Button */}
+                        <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
+                        {/* Techicians Catagories */}
+                        <div className="content-cont">
+                            <h1>Let's Find your wanted <strong>Technicians</strong></h1>
+                            <p className="tech-pg-desc">Find the right technician for your needs with ease. Our platform connects you to trusted professionals ready to handle electrical work, plumbing, repairs, installations, and much more. Whether you need quick assistance or expert service, we ensure reliable technicians are always within reach.</p>
+                            <div className="card-Container">
+                                {Techicians_categories.map((v, i) => {
+                                    return (
+                                        <div className="card tech-cards" key={i}>
+                                            <div className="crd-img-title-div" style={{ flexDirection: "column" }}>
+                                                <img src={v.img} />
+                                                <h2>{v.title}</h2>
                                             </div>
-                                        )
-                                    })}
-                                </div>
+                                            <p>{v.description}</p>
+                                            <button className="edu-pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        </section>
-                }
-            </main>
-            <Footer />
+                        </div>
+                    </section>
+            }
         </>
     )
 }

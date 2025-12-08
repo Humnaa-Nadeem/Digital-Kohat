@@ -21,88 +21,69 @@ import { GardOutdoorCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg
 import { OnlineTrainingPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineTraining';
 import { TutorsPage } from './Pages/EducationPage/EduCatagoriesPg/Tutors';
 import { OnlineCoursesPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineCourses';
+import { SignUpForm } from './components/SignUpForm/SignUpForm';
+import { EduLayout } from './Layouts/EduLayout';
+import { TechLayout } from './Layouts/TechLayout';
+import { PageNotFoundPg } from './Pages/404Page/404Page';
 
 // ================================
 // Routing System
 // Using react-router-dom's createBrowserRouter
 // ================================
-
 const allRoutes = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    // Main App/Home Page
   },
+
+  // -------------------------
+  // Authentication / User
+  // -------------------------
+  {
+    path: "/form",
+    element: <SignUpForm />,
+  },
+
+  // -------------------------
+  // Page Not Found [404 Error]
+  // -------------------------
+  {
+    path: "*",
+    element: <PageNotFoundPg />
+  },
+  // -------------------------
+  // Education Sector
+  // -------------------------
   {
     path: "/edu",
-    element: <EduHomePage />,
-    // Education Sector → Home Page
+    element: <EduLayout />,
+    children: [
+      { index: true, element: <EduHomePage /> }, //Eduction Home Page
+      { path: "schools", element: <SchoolPage /> },//Schools Page
+      { path: "colleges", element: <CollegesPage /> },//Colleges Page
+      { path: "uni", element: <UniPage /> },//Universities Page
+      { path: "online-courses", element: <OnlineCoursesPage /> },//Online Courses Page
+      { path: "tutors", element: <TutorsPage /> },//Tutor Page
+      { path: "training", element: <OnlineTrainingPage /> },//Online Training Page
+    ],
   },
-  {
-    path: "/edu/schools",
-    element: <SchoolPage />,
-    // Education Sector → Schools Page
-  },
-  {
-    path: "/edu/colleges",
-    element: <CollegesPage />,
-    // Education Sector → Colleges Page
-  },
-  {
-    path: "/edu/uni",
-    element: <UniPage />,
-    // Education Sector → Universities Page
-  },
-  {
-    path: "/edu/onlineCourses",
-    element: <OnlineCoursesPage />
-    // Education Sector → Online Courses Page
-  },
-  {
-    path: "/edu/tutors",
-    element: <TutorsPage />
-    // Education Sector → Tutors Page
-  },
-  {
-    path: "/edu/onlineTraining",
-    element: <OnlineTrainingPage />
-    // Education Sector → Online Trainings Page
-  },
+
+  // -------------------------
+  // Technicians Sector
+  // -------------------------
   {
     path: "/tech",
-    element: <TechniciansHomePg />,
-    // Technicians Sector → Home Page
+    element: <TechLayout />,
+    children: [
+      { index: true, element: <TechniciansHomePg /> },//Technicians Home Page
+      { path: "electrical", element: <ElectronicCata /> },//Electricals Page
+      { path: "plumb-gas", element: <PlumbingGasCata /> },//Plumbers Page
+      { path: "const-paint", element: <PaintingConstructCata /> },//Painters etc Page
+      { path: "carp-furn", element: <CarpFurnitureCata /> },//Carpenter etc Page
+      { path: "clean-maint", element: <CleanMaintCata /> }, //Maintainers page
+      { path: "gard-outdoor", element: <GardOutdoorCata /> },//Gardeners Page
+    ],
   },
-  {
-    path: "/tech/Electrical",
-    element: <ElectronicCata />,
-    // Technicians Sector → Electrical/Electronic Experts
-  },
-  {
-    path: "/tech/Plumb-Gas",
-    element: <PlumbingGasCata />,
-    // Technicians Sector → Plumbing & Gas Experts
-  },
-  {
-    path: "/tech/const-paint",
-    element: <PaintingConstructCata />
-    // Technicians Sector → Construction & Painting Experts
-  },
-  {
-    path: "/tech/carp-furn",
-    element: <CarpFurnitureCata />
-    // Technicians Sector → Construction & Painting Experts
-  },
-  {
-    path: "/tech/clean-maint",
-    element: <CleanMaintCata />
-    // Technicians Sector → Cleaning & Maintaning Experts
-  },
-  {
-    path: "/tech/gard-outdoor",
-    element: <GardOutdoorCata />
-    // Technicians Sector → Gardening and OutDoor Experts
-  }
 ]);
 
 

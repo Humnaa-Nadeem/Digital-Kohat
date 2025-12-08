@@ -78,7 +78,7 @@ const Navbar = () => {
             <a href="#contact" onClick={closeMenu}>Contact</a>
 
             <div className="nav-buttons">
-              <button className="btn sign" onClick={closeMenu}>Sign in</button>
+              <button className="btn sign" onClick={() => {closeMenu(); navigate("/form")}}>Sign Up</button>
               <button className="btn log" onClick={closeMenu}>Log in</button>
             </div>
           </div>

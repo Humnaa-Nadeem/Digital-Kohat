@@ -1,5 +1,3 @@
-import Navbar from "../../../components/navbar/Navbar";
-import Footer from "../../../components/footer/Footer";
 import "./EduCatagories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
@@ -28,113 +26,105 @@ export const OnlineTrainingPage = () => {
     const id = query.get("id");
 
     return (
-        <>
-            <header>
-                <Navbar />
-            </header>
-            <main>
-                <section className="edu-cata-pg-sec">
-                    {/* LEFT SIDE OF PAGE */}
-                    <div className={(showList) ? "lft-sec showList" : "lft-sec"} >
-                        <h2 className="sector" onClick={() => { navigate(`/edu`) }}>Education</h2>
-                        <div className="institute-hd-lst">
-                            <h2 className="institute-hd">Online Training</h2>
-                            {/* 👇 Here to show the list of Online Trainings */}
-                            <ul className="institute-lst">
-                                {
-                                    trainingList.map((v, i) => {
-                                        return (
-                                            <li onClick={() => { navigate(`/edu/onlineTraining?id=${v.id}`); setShowList(false) }} key={i}>{v.TrainingName}</li>
-                                        )
-                                    })
-                                }
-                                <li onClick={() => { navigate("/edu/onlineTraining"); setShowList(false) }}>Back To Online Training</li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* MAIN PART OF PAGE */}
-                    <div className="main-sec">
-                        <div className="showLstBtn" onClick={() => { setShowList(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
-                        <div className="cata-pg-banner">
-                            <h1 className="cata-pg-main-hd">Top Online Trainings for Skill Development</h1>
-                            <p>Enhance your skills and career prospects with our curated online training programs.</p>
-                            <SearchBar SearchedInst={setTrainingCards} AllInst={TrainingCards} />
-                        </div>
+        <section className="edu-cata-pg-sec">
+            {/* LEFT SIDE OF PAGE */}
+            <div className={(showList) ? "lft-sec showList" : "lft-sec"} >
+                <h2 className="sector" onClick={() => { navigate(`/edu`) }}>Education</h2>
+                <div className="institute-hd-lst">
+                    <h2 className="institute-hd">Online Training</h2>
+                    {/* 👇 Here to show the list of Online Trainings */}
+                    <ul className="institute-lst">
                         {
-                            (id)
-                                ?
-                                // Filtering Online Training Info on the basis of Id
-                                TrainingDetails.filter((v, i) => v.id === Number(id))
-                                    .map((v, i) => {
-                                        return (
-                                            <>
-                                                {/* Online Training Single Page */}
-                                                <div className="cata-web-hrdr" key={i}>
-                                                    <h1>{v.Title}</h1>
-                                                    <p className="tagline">{v.tag_line}</p>
-                                                </div>
-                                                <section className="section">
-                                                    <h2>About Us</h2>
-                                                    <p>{v.About}</p>
-                                                </section>
-                                                <section className="section">
-                                                    <h2>Modules</h2>
-                                                    {v.Modules.map((j, i) => {
-                                                        return (
-                                                            <ul className="info-list" key={i}>
-                                                                <li>{j}</li>
-                                                            </ul>
-                                                        )
-                                                    })}
-                                                </section>
-                                                <section className="section">
-                                                    <h2>Achievements</h2>
-                                                    {v.Achievements.map((j, i) => {
-                                                        return (
-                                                            <ul className="info-list" key={i}>
-                                                                <li>{j}</li>
-                                                            </ul>
-                                                        )
-                                                    })}
-                                                </section>
-                                                <section className="section contact">
-                                                    <h2>Contact Information</h2>
-                                                    {v.Contact_Info.map((j, i) => {
-                                                        return (
-                                                            <ul className="info-list" key={i}>
-                                                                <li><strong>Email: </strong>{j.Email}</li>
-                                                                <li><strong>Phone: </strong>{j.Phone}</li>
-                                                                <li><strong>Website: </strong><a href={j.website} target="_blank">{j.website}</a></li>
-                                                            </ul>
-                                                        )
-                                                    })}
-                                                </section>
-                                            </>
-                                        )
-                                    })
-                                :
-                                // Online Training Cards
-                                <div className="cata-card-cont">
-                                    {
-                                        TrainingCards.map((v, i) => {
-                                            return (
-                                                <div className="cata-pg-card" key={i}>
-                                                    <img src={v.img} alt="Placeholder Image" />
-                                                    <div className="cata-pg-card-content">
-                                                        <h3>{v.InstName}</h3>
-                                                        <p>{v.Desc}</p>
-                                                        <button onClick={() => { navigate(`/edu/onlineTraining?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
+                            trainingList.map((v, i) => {
+                                return (
+                                    <li onClick={() => { navigate(`?id=${v.id}`); setShowList(false) }} key={i}>{v.TrainingName}</li>
+                                )
+                            })
                         }
-                    </div>
-                </section >
-            </main >
-            <Footer />
-        </>
+                        <li onClick={() => { navigate("/edu/onlineTraining"); setShowList(false) }}>Back To Online Training</li>
+                    </ul>
+                </div>
+            </div>
+            {/* MAIN PART OF PAGE */}
+            <div className="main-sec">
+                <div className="showLstBtn" onClick={() => { setShowList(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
+                <div className="cata-pg-banner">
+                    <h1 className="cata-pg-main-hd">Top Online Trainings for Skill Development</h1>
+                    <p>Enhance your skills and career prospects with our curated online training programs.</p>
+                    <SearchBar SearchedInst={setTrainingCards} AllInst={TrainingCards} />
+                </div>
+                {
+                    (id)
+                        ?
+                        // Filtering Online Training Info on the basis of Id
+                        TrainingDetails.filter((v, i) => v.id === Number(id))
+                            .map((v, i) => {
+                                return (
+                                    <>
+                                        {/* Online Training Single Page */}
+                                        <div className="cata-web-hrdr" key={i}>
+                                            <h1>{v.Title}</h1>
+                                            <p className="tagline">{v.tag_line}</p>
+                                        </div>
+                                        <section className="section">
+                                            <h2>About Us</h2>
+                                            <p>{v.About}</p>
+                                        </section>
+                                        <section className="section">
+                                            <h2>Modules</h2>
+                                            {v.Modules.map((j, i) => {
+                                                return (
+                                                    <ul className="info-list" key={i}>
+                                                        <li>{j}</li>
+                                                    </ul>
+                                                )
+                                            })}
+                                        </section>
+                                        <section className="section">
+                                            <h2>Achievements</h2>
+                                            {v.Achievements.map((j, i) => {
+                                                return (
+                                                    <ul className="info-list" key={i}>
+                                                        <li>{j}</li>
+                                                    </ul>
+                                                )
+                                            })}
+                                        </section>
+                                        <section className="section contact">
+                                            <h2>Contact Information</h2>
+                                            {v.Contact_Info.map((j, i) => {
+                                                return (
+                                                    <ul className="info-list" key={i}>
+                                                        <li><strong>Email: </strong>{j.Email}</li>
+                                                        <li><strong>Phone: </strong>{j.Phone}</li>
+                                                        <li><strong>Website: </strong><a href={j.website} target="_blank">{j.website}</a></li>
+                                                    </ul>
+                                                )
+                                            })}
+                                        </section>
+                                    </>
+                                )
+                            })
+                        :
+                        // Online Training Cards
+                        <div className="cata-card-cont">
+                            {
+                                TrainingCards.map((v, i) => {
+                                    return (
+                                        <div className="cata-pg-card" key={i}>
+                                            <img src={v.img} alt="Placeholder Image" />
+                                            <div className="cata-pg-card-content">
+                                                <h3>{v.InstName}</h3>
+                                                <p>{v.Desc}</p>
+                                                <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                }
+            </div>
+        </section >
     )
 }

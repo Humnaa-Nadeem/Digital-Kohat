@@ -19,7 +19,7 @@ const Cards = () => {
             <div className="card-content">
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
-              <button className="learn-btn" onClick={() => navigate(service.link)}>Learn more...</button>
+              <button className="learn-btn" onClick={() => navigate((service.link) ? service.link : "*")}>Learn more...</button>
             </div>
           </div>
         ))}
