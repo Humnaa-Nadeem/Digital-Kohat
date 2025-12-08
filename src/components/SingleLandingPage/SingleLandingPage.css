@@ -208,7 +208,6 @@
     flex-direction: column;
     align-items: baseline;
     justify-content: center;
-    overflow-y: scroll;
 }
 
 .dash-card::-webkit-scrollbar {
@@ -306,7 +305,8 @@
 }
 
 .S_gallery-flex img {
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     margin-bottom: 25px;
     display: inline-block;
     border-radius: 30px;
@@ -488,17 +488,39 @@
 }
 
 @media (max-width: 440px) {
+    body{
+        overflow-x: hidden;
+    }
+
+   .dash-card{
+    width: 96%;
+   }
+
+    .SP_Sec_hd {
+        font-size: 1.8rem;
+        width: 70%;
+    }
+
     .S_about img {
         display: none;
     }
 
     .S_event-card,
     .staff-card {
-        width: auto;
+        width: 100%;
     }
 
     .S_staff {
         padding: 90px 10px;
+    }
+
+    .S_card a {
+        font-size: 0.7rem;
+    }
+
+    .S_gallery{
+        padding: 60px 10px;
+        align-items: center;
     }
 }
 
