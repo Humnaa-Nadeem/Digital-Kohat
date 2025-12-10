@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./form.css"
-export const Form = ({setShowform}) => {
+export const Form = ({ setShowform }) => {
 
     // State that store data
     let [data, setData] = useState({
@@ -66,7 +66,7 @@ export const Form = ({setShowform}) => {
         <>
             <div className="form-cont">
                 <form onSubmit={(e) => formSubmission(e)} className="rgstr-form">
-                <div className="crs" onClick={() => setShowform(false)}>&times;</div>
+                    <div className="crs" onClick={() => setShowform(false)}>&times;</div>
                     <h2 className="rgstr-frm-heading">Registration Form:</h2>
                     {/* Permanent Fields */}
                     <div className="label-cont">
@@ -84,8 +84,8 @@ export const Form = ({setShowform}) => {
                     </div>
 
                     <div className="label-cont">
-                        <label htmlFor="payment">Select Catagory</label>
-                        <select id="payment" name="Catagory" value={data.Catagory} onChange={(e) => { changeHandler(e) }}>
+                        <label htmlFor="catagory">Select Catagory</label>
+                        <select id="catagory" name="Catagory" value={data.Catagory} onChange={(e) => { changeHandler(e) }}>
                             <option>Catagory</option>
                             <option>School</option>
                             <option>College</option>
@@ -95,31 +95,36 @@ export const Form = ({setShowform}) => {
                             <option>Online Training</option>
                         </select>
                     </div>
-                    {/* Dynamic Fields */}
+                    {/* Dynamic Fields : Changing on the basis of select named as "Catagory" 👆 */}
                     {(data.Catagory === "" || data.Catagory === "Catagory")
                         ?
-                        <></>
+                        <></> //No Option Selected or Catagory ooption is selected;
                         :
+                        // If any option is selected other than "catagory" (OPTION 1 👆) ;
                         <div className="label-cont">
-                            <label htmlFor="catagoryTitle">{data.Catagory} Name :</label>
-                            <input id="catagoryTitle" name="catagoryTitle" type="text" placeholder={`${data.Catagory} name`} value={data.catagoryTitle} onChange={(e) => changeHandler(e)} required />
+                            {/* Name field which will be always required FOR ALL option*/}
+                            <label htmlFor="catagoryTitle">{data.Catagory} Name :</label> {/* Placing the option value like {School} Name | {College } Name | {Tutor} Name */}
+                            <input id="catagoryTitle" name="catagoryTitle" type="text" placeholder={`${data.Catagory} name`} value={data.catagoryTitle} onChange={(e) => changeHandler(e)} required /> {/* Getting Name */}
                             <br></br>
+                            {/* In case Online Course or Online Training is Selected */}
                             {(data.Catagory === "Online Course" || data.Catagory === "Online Training") ?
                                 <>
-                                    {/* ONLINE COURSES AND ONLINE TRAINING (OC & OT)*/}
+                                    {/* Required field for Both OC(online course) & OT(online training) */}
+                                    {/* ONLINE COURSES AND ONLINE TRAINING (OC & OT) Erolling Date*/}
                                     <label htmlFor="duration">Enrolling Date :</label>
                                     <input id="duration" name="duration" type="date" value={data.duration} onChange={(e) => changeHandler(e)} required />
                                 </>
                                 :
+                                // If OC OR OT is not selected:
                                 <>
-                                    {/* OTHER THAN OC & OT */}
-                                    <label htmlFor="Address">Address :</label>
-                                    <input id="Address" name="address" type="text" placeholder="street , city , district, kp pakistan" value={data.address} onChange={(e) => changeHandler(e)} required />
+                                    {/* IF OPTIONS OC & OT ARE NOT SELECTED MEANS SCHOOL , COLLEGE , UNIVERSITY ETC ARE SELECTED*/}
+                                    <label htmlFor="Address">Address :</label> {/* Address is required for school , colleges etc */}
+                                    <input id="Address" name="address" type="text" placeholder="street , city , district, kp pakistan" value={data.address} onChange={(e) => changeHandler(e)} required /> {/* Getting Address */}
                                     <br></br>
+                                    {/* IN SCHOOLS , COLLEGES , TUTOR AND UNI ETC , IF UNI IS SELECTED THEN 👇 */}
                                     {(data.Catagory === "University")
                                         ?
                                         <>
-                                            {/* FOR UNIVERSITY */}
                                             <label htmlFor="progrm">Enter the Program Name :</label>
                                             <input id="progrm" name="program" type="text" placeholder="Computer Science" value={data.program} onChange={(e) => changeHandler(e)} required />
                                         </>

@@ -6,18 +6,12 @@ import * as icon from "react-icons/fa";
 // EDUCATION HOME - Schools , colleges & Uni
 // ========================================
 export const categories = [
-    { title: "Explore School", description: "Explore top-rated schools offering excellent primary and secondary education with strong foundations.", icon: <icon.FaSchool className="icons" />, btn: "Visit Schools", link: "schools" },
-    { title: "College's List", description: "Find the best colleges that prepare students for higher learning, skill development, and innovation.", icon: <icon.FaRegBuilding className="icons" />, btn: "Visit colleges", link: "colleges" },
-    { title: "Universities", description: "Discover globally recognized universities offering advanced degrees and research opportunities.", icon: <icon.FaUniversity className="icons" />, btn: "Visit Universities", link: "uni" },
-];
-
-// ========================================
-// EDUCATION HOME - Online Courses & Tutors
-// ========================================
-export const OtherResources = [
-    { title: "Online Courses", description: "Explore top-rated courses offering excellent primary and secondary skills with strong foundations and high scope in future.", icon: <icon.FaNetworkWired className="icons" />, btn: "Online Courses", link: "onlineCourses" },
-    { title: "Tutor Listing", description: "Find the best colleges that prepare students for higher learning, skill development, and innovation.", icon: <icon.FaChalkboardTeacher className="icons" />, btn: "Tutor List", link: "tutors" },
-    { title: "Online Training", description: "Discover globally recognized universities offering advanced degrees and research opportunities.", icon: <icon.FaUniversity className="icons" />, btn: "Trainings", link: "onlineTraining" },
+    { title: "Explore School", icon: <icon.FaSchool className="icons" />, btn: "Visit Schools", link: "schools" },
+    { title: "College's List", icon: <icon.FaRegBuilding className="icons" />, btn: "Visit colleges", link: "colleges" },
+    { title: "Universities", icon: <icon.FaUniversity className="icons" />, btn: "Visit Universities", link: "uni" },
+    { title: "Online Courses", icon: <icon.FaNetworkWired className="icons" />, btn: "Online Courses", link: "onlineCourses" },
+    { title: "Tutor Listing", icon: <icon.FaChalkboardTeacher className="icons" />, btn: "Tutor List", link: "tutors" },
+    { title: "Online Training", icon: <icon.FaUniversity className="icons" />, btn: "Trainings", link: "onlineTraining" },
 ];
 
 // &&&&&&&&&&&& *SCHOOLS DATA* &&&&&&&&&&&& \\
@@ -268,3 +262,42 @@ export const OnlineTraining_Details = [
     { id: 7, Title: "Project Management Professional", tag_line: "“Manage Projects Effectively & Efficiently”", About: "Learn project management frameworks, Agile, Scrum, risk management, and leadership to successfully manage projects.", Modules: ["Project Planning", "Agile & Scrum", "Risk Management", "Leadership Skills"], Achievements: ["PMP Certification Preparation", "Real Project Exercises", "Career Support"], Contact_Info: [{ Email: "pmp@onlinetraining.com", Phone: "+92 306 7778899", website: "www.pmponlinetraining.com" }] }
 ];
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Extra Stored for my Ownself ( Awais Anwar ) so dont remove it i will remove it after using it:
+//  export const categories = [
+//     { title: "Explore School", backgroundImg: "https://images.pexels.com/photos/192729/pexels-photo-192729.jpeg", icon: <icon.FaSchool className="icons" />, btn: "Visit Schools", link: "schools" },
+//     { title: "College's List", backgroundImg: "https://images.pexels.com/photos/192729/pexels-photo-192729.jpeg", icon: <icon.FaRegBuilding className="icons" />, btn: "Visit colleges", link: "colleges" },
+//     { title: "Universities", backgroundImg: "https://images.pexels.com/photos/192729/pexels-photo-192729.jpeg", icon: <icon.FaUniversity className="icons" />, btn: "Visit Universities", link: "uni" },
+//     { title: "Online Courses", backgroundImg: "https://images.pexels.com/photos/192729/pexels-photo-192729.jpeg", icon: <icon.FaNetworkWired className="icons" />, btn: "Online Courses", link: "onlineCourses" },
+//     { title: "Tutor Listing", backgroundImg: "https://images.pexels.com/photos/192729/pexels-photo-192729.jpeg", icon: <icon.FaChalkboardTeacher className="icons" />, btn: "Tutor List", link: "tutors" },
+//     { title: "Online Training", backgroundImg: "https://images.pexels.com/photos/192729/pexels-photo-192729.jpeg", icon: <icon.FaUniversity className="icons" />, btn: "Trainings", link: "onlineTraining" },
+// ];
