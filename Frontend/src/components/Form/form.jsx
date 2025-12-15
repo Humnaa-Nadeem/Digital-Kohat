@@ -1,145 +1,94 @@
 import { useState } from "react";
-import "./form.css"
-export const Form = ({ setShowform }) => {
+import "./form.css";
 
-    // State that store data
-    let [data, setData] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        Catagory: "",
-        program: "",
-        address: "",
-        duration: "",
-        catagoryTitle: ""
-    });
+const serviceFields = {
+  Education: [
+    { label: "School/College/University Name", name: "categoryName", required: true },
+    { label: "Program (if University)", name: "program", required: false },
+    { label: "Address", name: "address", required: true },
+  ],
+  Tourism: [
+    { label: "Tourism Place Name", name: "categoryName", required: true },
+    { label: "Duration of Tour", name: "duration", required: false },
+  ],
+  Restaurant: [
+    { label: "Restaurant Name", name: "categoryName", required: true },
+    { label: "Address", name: "address", required: false },
+  ],
+  Hospital: [
+    { label: "Hospital Name", name: "categoryName", required: true },
+    { label: "Address", name: "address", required: true },
+  ],
+  Technician: [
+    { label: "Technician Name", name: "categoryName", required: true },
+    { label: "Service Area / Address", name: "address", required: false },
+  ],
+};
 
-    // Storing data while typing:
-    const changeHandler = (e) => {
-        let name = e.target.name;
-        let value = e.target.value;
-        setData(prev => ({ ...prev, [name]: value }))
+export const Form = ({ setShowform, serviceType }) => {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: serviceType || "",
+  });
+
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const formSubmission = (e) => {
+    e.preventDefault();
+
+    if (!data.name || !data.email || !data.phone) {
+      return alert("Please fill all required fields!");
     }
 
-    // Form data after Submission
-    const formSubmission = (e) => {
-        e.preventDefault();
-        if (data.Catagory !== "" && data.Catagory !== "Catagory") {
-            if (data.Catagory === "Online Course" || data.Catagory === "Online Training") {
-                data.address = "";
-                data.program = "";
-                console.log("OC & OT Data");
-                console.log(data);
-                clearFun();
-            } else if (data.Catagory !== "University") {
-                console.log(data.Catagory);
-                data.duration = ""
-                data.program = ""
-                console.log("School, college etc");
-                console.log(data);
-                clearFun();
-            } else {
-                console.log("Uni Data")
-                console.log(data);
-                clearFun();
-            }
-        } else {
-            alert("Please first select any catagory")
-        }
-    }
+    // Generate a fake user ID
+    const userId = Date.now();
+    const registeredUser = { id: userId, ...data };
+    localStorage.setItem("registeredUser", JSON.stringify(registeredUser));
 
-    // Clearing form;
-    const clearFun = () => {
-        setData({
-            name: "",
-            email: "",
-            phone: "",
-            Catagory: "",
-            program: "",
-            address: "",
-            duration: "",
-            catagoryTitle: ""
-        })
-    }
+    console.log("Registered user:", registeredUser);
+    alert(`Registered successfully! Your ID is ${userId}`);
 
-    return (
-        <>
-            <div className="form-cont">
-                <form onSubmit={(e) => formSubmission(e)} className="rgstr-form">
-                    <div className="crs" onClick={() => setShowform(false)}>&times;</div>
-                    <h2 className="rgstr-frm-heading">Registration Form:</h2>
-                    {/* Permanent Fields */}
-                    <div className="label-cont">
-                        <label htmlFor="name">Full name</label>
-                        <input id="name" name="name" type="text" placeholder="Jane Doe" value={data.name} onChange={(e) => changeHandler(e)} required />
-                    </div>
-                    <div className="label-cont">
-                        <label htmlFor="phone">Phone</label>
-                        <input id="phone" name="phone" type="tel" min={10} placeholder="+92 300 0000000" value={data.phone} onChange={(e) => changeHandler(e)} required />
-                    </div>
+    setShowform(false);
+  };
 
-                    <div className="label-cont">
-                        <label htmlFor="email">Email</label>
-                        <input id="email" name="email" type="email" placeholder="jane@example.com" value={data.email} onChange={(e) => changeHandler(e)} required />
-                    </div>
+  return (
+    <div className="form-cont">
+      <form onSubmit={formSubmission} className="rgstr-form">
+        <div className="crs" onClick={() => setShowform(false)}>
+          &times;
+        </div>
+        <h2 className="rgstr-frm-heading">Register for {serviceType}</h2>
 
-                    <div className="label-cont">
-                        <label htmlFor="catagory">Select Catagory</label>
-                        <select id="catagory" name="Catagory" value={data.Catagory} onChange={(e) => { changeHandler(e) }}>
-                            <option>Catagory</option>
-                            <option>School</option>
-                            <option>College</option>
-                            <option>University</option>
-                            <option>Tutor</option>
-                            <option>Online Course</option>
-                            <option>Online Training</option>
-                        </select>
-                    </div>
-                    {/* Dynamic Fields : Changing on the basis of select named as "Catagory" 👆 */}
-                    {(data.Catagory === "" || data.Catagory === "Catagory")
-                        ?
-                        <></> //No Option Selected or Catagory ooption is selected;
-                        :
-                        // If any option is selected other than "catagory" (OPTION 1 👆) ;
-                        <div className="label-cont">
-                            {/* Name field which will be always required FOR ALL option*/}
-                            <label htmlFor="catagoryTitle">{data.Catagory} Name :</label> {/* Placing the option value like {School} Name | {College } Name | {Tutor} Name */}
-                            <input id="catagoryTitle" name="catagoryTitle" type="text" placeholder={`${data.Catagory} name`} value={data.catagoryTitle} onChange={(e) => changeHandler(e)} required /> {/* Getting Name */}
-                            <br></br>
-                            {/* In case Online Course or Online Training is Selected */}
-                            {(data.Catagory === "Online Course" || data.Catagory === "Online Training") ?
-                                <>
-                                    {/* Required field for Both OC(online course) & OT(online training) */}
-                                    {/* ONLINE COURSES AND ONLINE TRAINING (OC & OT) Erolling Date*/}
-                                    <label htmlFor="duration">Enrolling Date :</label>
-                                    <input id="duration" name="duration" type="date" value={data.duration} onChange={(e) => changeHandler(e)} required />
-                                </>
-                                :
-                                // If OC OR OT is not selected:
-                                <>
-                                    {/* IF OPTIONS OC & OT ARE NOT SELECTED MEANS SCHOOL , COLLEGE , UNIVERSITY ETC ARE SELECTED*/}
-                                    <label htmlFor="Address">Address :</label> {/* Address is required for school , colleges etc */}
-                                    <input id="Address" name="address" type="text" placeholder="street , city , district, kp pakistan" value={data.address} onChange={(e) => changeHandler(e)} required /> {/* Getting Address */}
-                                    <br></br>
-                                    {/* IN SCHOOLS , COLLEGES , TUTOR AND UNI ETC , IF UNI IS SELECTED THEN 👇 */}
-                                    {(data.Catagory === "University")
-                                        ?
-                                        <>
-                                            <label htmlFor="progrm">Enter the Program Name :</label>
-                                            <input id="progrm" name="program" type="text" placeholder="Computer Science" value={data.program} onChange={(e) => changeHandler(e)} required />
-                                        </>
-                                        :
-                                        <></>
-                                    }
-                                </>
-                            }
-                        </div>
-                    }
-                    <div className="button-group">
-                        <button type="submit" className="rgstr-pg-sbmt-btn">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </>
-    )
-}
+        <label>Name</label>
+        <input name="name" type="text" value={data.name} onChange={changeHandler} required />
+
+        <label>Phone</label>
+        <input name="phone" type="tel" value={data.phone} onChange={changeHandler} required />
+
+        <label>Email</label>
+        <input name="email" type="email" value={data.email} onChange={changeHandler} required />
+
+        {/* Dynamic fields */}
+        {serviceFields[serviceType]?.map((field, index) => (
+          <div key={index}>
+            <label>{field.label}</label>
+            <input
+              name={field.name}
+              type="text"
+              value={data[field.name] || ""}
+              onChange={changeHandler}
+              required={field.required}
+            />
+          </div>
+        ))}
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+};

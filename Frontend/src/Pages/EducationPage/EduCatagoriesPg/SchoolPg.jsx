@@ -76,6 +76,7 @@ export const SchoolPage = () => {
                                 }
                             </div>
                         </div>
+                        
                     </section >
             }
         </>

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "./Navbar.css";
-import dsk from "../imgs/dkslogo.jpg"; // replace with your actual logo path
+import dsk from "../imgs/dkslogo.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -18,9 +19,6 @@ const Navbar = () => {
     document.body.classList.remove("menu-open");
   };
 
-  // Navigation
-  const navigate = useNavigate();
-  // Handles both hover and click toggle
   const handleDropdownEnter = () => setDropdownOpen(true);
   const handleDropdownLeave = () => setTimeout(() => setDropdownOpen(false), 200);
   const toggleDropdownClick = (e) => {
@@ -40,8 +38,7 @@ const Navbar = () => {
 
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
-            <a href="/" onClick={closeMenu}>Home</a>
-            {/* <a onClick={() => {navigate("/"); closeMenu()}}>Home</a> */}
+            <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
             <a href="#services" onClick={closeMenu}>Services</a>
             <a href="#about" onClick={closeMenu}>About us</a>
 
@@ -62,14 +59,15 @@ const Navbar = () => {
               {dropdownOpen && (
                 <div
                   className="dropdown-menu"
-                  onMouseEnter={() => setDropdownOpen(true)} // keep open when inside
-                  onMouseLeave={() => setDropdownOpen(false)} // close when leaving
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
                 >
-                  <a href="#education" onClick={closeMenu}>Education</a>
-                  <a href="#health" onClick={closeMenu}>Health</a>
-                  <a href="#food" onClick={closeMenu}>Food</a>
-                  <a href="#businesses" onClick={closeMenu}>Businesses</a>
-                  <a href="#tourism" onClick={closeMenu}>Tourism</a>
+                   <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
+                   <a href="#Resturants" onClick={closeMenu}>Resturants</a>
+                  <a href="#Hospital" onClick={closeMenu}>Hostpital</a>
+                  <a href="#Business" onClick={closeMenu}>Business</a>
+                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians</a>
+                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism</a>
                   <a href="#brands" onClick={closeMenu}>Our Brands</a>
                 </div>
               )}
@@ -78,16 +76,13 @@ const Navbar = () => {
             <a href="#contact" onClick={closeMenu}>Contact</a>
 
             <div className="nav-buttons">
-              <button className="btn sign" onClick={() => {closeMenu(); navigate("/form")}}>Sign Up</button>
+              <button className="btn sign" onClick={() => { closeMenu(); navigate("/form"); }}>Sign Up</button>
               <button className="btn log" onClick={closeMenu}>Log in</button>
             </div>
           </div>
 
           {/* HAMBURGER */}
-          <div
-            className={`hamburger ${isOpen ? "active" : ""}`}
-            onClick={toggleMenu}
-          >
+          <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
             <span></span><span></span><span></span>
           </div>
         </div>
