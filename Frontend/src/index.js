@@ -35,6 +35,8 @@ import { Restaurants } from './Pages/TourismPage/Restaurants';
 import { Parks } from './Pages/TourismPage/Parks';
 import { Guide } from './Pages/TourismPage/Guide';
 import { Gallery } from './Pages/TourismPage/Gallery';
+import { Aboutus } from './Pages/AboutUsPage/Aboutus';
+import Contactus from './Pages/ContactUs/ContactUs';
 // import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
 
 
@@ -53,11 +55,17 @@ import { Gallery } from './Pages/TourismPage/Gallery';
         path: "/form",
         element: <SignUpForm />,
       },
-
-      // Page Not Found
+      
+      // About Us Page
       {
-        path: "*",
-        element: <PageNotFoundPg />,
+        path: "/AboutUs",
+        element: <Aboutus />,
+      },
+
+      //Contact Us Page 
+       {
+        path: "/ContactUs",
+        element: <Contactus/>,
       },
 
       // Education Sector
@@ -108,7 +116,12 @@ import { Gallery } from './Pages/TourismPage/Gallery';
 
     { path: "gallery", element: <Gallery /> },   
   ],
-}
+},
+// Page Not Found
+      {
+        path: "*",
+        element: <PageNotFoundPg />,
+      },
 
     ]);
 

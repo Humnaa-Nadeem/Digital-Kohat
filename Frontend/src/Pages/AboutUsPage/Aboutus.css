@@ -1,0 +1,286 @@
+/* =========================
+   GLOBAL WRAPPER
+========================= */
+
+/* --- ABOUT US (FIRST SECTION ONLY) --- */
+*{
+  margin-top: 30px;
+}
+.aboutus-intro {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 90px 6%;
+  background: linear-gradient(185deg, #00c68a, #009f6e);
+  width: 100%;
+  border-radius: 0 0 40px 40px;
+  color: #fff;
+}
+
+/* Image container */
+.aboutus-intro .section-image {
+  flex: 0 0 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutus-intro .section-image img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  animation: fadeInLeft 1.2s ease-out;
+  transition: transform 0.4s ease;
+}
+
+.aboutus-intro .section-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Text container */
+.aboutus-intro .section-text {
+  flex: 0 0 50%;
+}
+
+.aboutus-intro .section-text h2 {
+  margin-bottom: 20px;
+  border-left: 8px solid #f2f4f3;
+  padding-left: 40px;
+  font-size: 40px;
+}
+
+.aboutus-intro .section-text p {
+  margin-top: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* =========================
+   VISION & MISSION SECTIONS
+========================= */
+.vision-section,
+.mission-section {
+  display: flex;
+  width: 90%;
+  margin-left: 50px;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+  padding: 80px 4%;
+  border-radius: 20px;
+
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(2px);
+ 
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.vision-section:hover,
+.mission-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+/* Shine animation overlay */
+.vision-section::before,
+.mission-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: all 0.6s ease;
+}
+
+.vision-section:hover::before,
+.mission-section:hover::before {
+  animation: shine 1s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* Text container */
+.vision-section .section-text,
+.mission-section .section-text {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 15px;
+  z-index: 1;
+  position: relative;
+}
+
+/* Heading style */
+.vision-section .section-text h2,
+.mission-section .section-text h2 {
+  border-left: 8px solid #111111;
+  padding-left: 15px;
+  font-weight: 700;
+  font-size: 2.8rem;
+  color:  #05a978;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+}
+
+/* Paragraph style - black text with subtle shadow for premium look */
+.vision-section .section-text p,
+.mission-section .section-text p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #111; /* black text */
+  font-weight: 500;
+  text-shadow: 
+      1px 1px 2px rgba(0,0,0,0.15),
+      2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Image container */
+.vision-section .section-image,
+.mission-section .section-image {
+  flex: 0 0 50%; /* slightly bigger images */
+  display: flex;
+  justify-content: center;
+}
+
+.vision-section .section-image img,
+.mission-section .section-image img {
+  width: 100%;
+  max-width: 390px; /* increased size */
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.vision-section .section-image img:hover,
+.mission-section .section-image img:hover {
+  transform: scale(1.08); /* zoom in only */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   VALUES SECTION
+========================= */
+.values-section {
+  padding: 70px 10%;
+  background: #fff;
+  text-align: center;
+}
+
+.values-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  border-left: 8px solid #00c68a;
+  padding-left: 15px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 40px;
+}
+
+.value-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 60px 25px 30px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.value-icon {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 70px;
+  background: #111;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: 0.4s ease;
+}
+
+.value-card:hover .value-icon {
+  transform: translateX(-50%) scale(1.15) rotate(10deg);
+  background: #00c68a;
+}
+
+.value-card h3 {
+  font-size: 1.3rem;
+  margin-top: 40px;
+  margin-bottom: 12px;
+}
+
+.value-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1024px) {
+  .vision-section,
+  .mission-section,
+  .aboutus-intro {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .section-image img {
+    max-width: 70%;
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .vision-section .section-text h2,
+  .mission-section .section-text h2,
+  .aboutus-intro .section-text h2 {
+    font-size: 2.2rem;
+  }
+
+  .section-text p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-image img {
+    max-width: 90%;
+  }
+}

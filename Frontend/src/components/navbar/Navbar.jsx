@@ -40,7 +40,7 @@ const Navbar = () => {
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
             <a href="#services" onClick={closeMenu}>Services</a>
-            <a href="#about" onClick={closeMenu}>About us</a>
+            <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
 
             {/* SERVICES DROPDOWN */}
             <div
@@ -73,7 +73,7 @@ const Navbar = () => {
               )}
             </div>
 
-            <a href="#contact" onClick={closeMenu}>Contact</a>
+            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>Contact</a>
 
             <div className="nav-buttons">
               <button className="btn sign" onClick={() => { closeMenu(); navigate("/form"); }}>Sign Up</button>
