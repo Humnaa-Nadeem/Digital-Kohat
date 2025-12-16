@@ -6,6 +6,8 @@ import WhyChooseUs from "./components/whychooseus/Whychooseus";
 import Location from "./components/location/Location";
 import Footer from "./components/footer/Footer";
 import Hero1 from "./components/hero1/Hero1";
+import Vision from "./components/vision/Vision";
+
 
 function App() {
   return (
@@ -13,11 +15,13 @@ function App() {
       <header>
         <Navbar />
         <Hero1 />
+        <Vision/>
       </header>
       <main>
         <Cards />
         <WhyChooseUs />
         <Hero2 />
+       
         <Location />
       </main>
       <Footer />
