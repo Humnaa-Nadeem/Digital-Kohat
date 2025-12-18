@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Navbar.css";
-import dsk from "../imgs/dkslogo.jpg";
+import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
         <div className="nav-container">
           {/* LOGO */}
           <div className="nav-logo">
-            <img src={dsk} alt="Logo" className="logo-img" />
+            <img src={navlogo} alt="Logo" className="logo-img" />
             <h2>DIGITAL SMART CITIES HUB</h2>
           </div>
 

@@ -1,29 +1,51 @@
-/* =========================
-   GLOBAL WRAPPER
-========================= */
-
-
-.aboutus-intro {
+/* =========================    ABOUT HERO / INTRO ========================= */
+.aboutus-intro,
+.about-hero {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
   padding: 90px 6%;
-  background: linear-gradient(185deg, #00c68a, #009f6e);
+  background: linear-gradient(185deg, #02a877, #0c7052);
   width: 100%;
-  border-radius: 0 0 40px 40px;
+ 
   color: #fff;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Image container */
-.aboutus-intro .section-image {
+.about-hero-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+}
+
+.about-text {
+  flex: 0 0 50%;
+}
+
+.about-text h2 {
+  margin-bottom: 20px;
+  border-left: 8px solid #f2f4f3;
+  padding-left: 40px;
+  font-size: 40px;
+}
+
+.about-text p {
+  margin-top: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.about-image {
   flex: 0 0 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.aboutus-intro .section-image img {
+.about-image img {
   width: 100%;
   max-width: 450px;
   border-radius: 10px;
@@ -33,94 +55,101 @@
   transition: transform 0.4s ease;
 }
 
-.aboutus-intro .section-image img:hover {
+.about-image img:hover {
   transform: scale(1.05);
 }
 
-/* Text container */
-.aboutus-intro .section-text {
-  flex: 0 0 50%;
+/* Zebra lines */
+.zebra-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.05) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
-.aboutus-intro .section-text h2 {
-  margin-bottom: 20px;
-  border-left: 8px solid #f2f4f3;
-  padding-left: 40px;
-  font-size: 40px;
+/* ================= HERO SCATTERED ICONS ================= */
+.scattered-icons > * {
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(255,255,255,0.3);
+  animation: floatIcons 4s ease-in-out infinite alternate;
 }
 
-.aboutus-intro .section-text p {
-  margin-top: 10px;
-  line-height: 1.6;
-  font-weight: 500;
+.scattered-icons svg:nth-child(1) { top: 10%; left: 7%; }
+.scattered-icons svg:nth-child(2) { top: 80%; left: 35%; }
+.scattered-icons svg:nth-child(3) { top: 85%; left: 7%; }
+.scattered-icons svg:nth-child(4) { top: 10%; left: 65%; }
+.scattered-icons svg:nth-child(5) { top: 50%; left: 95%; }
+.scattered-icons svg:nth-child(6) { top: 36%; left: 30%; }
+.scattered-icons svg:nth-child(7) { top: 90%; left: 75%; }
+
+@keyframes floatIcons {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(15deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
-/* --- ANIMATIONS --- */
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* =========================
-   VISION & MISSION SECTIONS
-========================= */
-.vision-section,
-.mission-section {
+/* =========================    VISION & MISSION SECTIONS ========================= */
+.vision-section, .mission-section {
   display: flex;
   width: 90%;
-  margin-left: 50px;
+  margin: 50px auto;
   flex-direction: row;
   align-items: center;
   gap: 50px;
   padding: 80px 4%;
   border-radius: 20px;
-
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(2px);
- 
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease;
 }
 
-.vision-section:hover,
-.mission-section:hover {
+.vision-section:hover, .mission-section:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0,0,0,0.25);
 }
 
-/* Shine animation overlay */
-.vision-section::before,
-.mission-section::before {
-  content: "";
+/* Vision / Mission Blurry Icons */
+.vision-blur-icons, .mission-blur-icons {
   position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
-  transform: skewX(-25deg);
-  transition: all 0.6s ease;
+  z-index: 0;
 }
 
-.vision-section:hover::before,
-.mission-section:hover::before {
-  animation: shine 1s forwards;
+.vision-blur-icons svg, .mission-blur-icons svg {
+  position: absolute;
+  font-size: 2rem;
+  color: rgb(163, 208, 194);
+  animation: floatIcons 6s ease-in-out infinite alternate;
 }
 
-@keyframes shine {
-  0% { left: -75%; }
-  100% { left: 125%; }
-}
+.vision-blur-icons svg:nth-child(1) { top: 10%; left: 0%; }
+.vision-blur-icons svg:nth-child(2) { top: 90%; left: 90%; }
+.vision-blur-icons svg:nth-child(3) { top: 80%; left: 40%; }
+.vision-blur-icons svg:nth-child(4) { top: 80%; left: 0%; }
+.vision-blur-icons svg:nth-child(5) { top: 35%; left: 23%; }
+
+.mission-blur-icons svg:nth-child(1) { top: 10%; left: 0%; }
+.mission-blur-icons svg:nth-child(2) { top: 90%; left: 90%; }
+.mission-blur-icons svg:nth-child(3) { top: 80%; left: 40%; }
+.mission-blur-icons svg:nth-child(4) { top: 88%; left: 0%; }
+.mission-blur-icons svg:nth-child(5) { top: 30%; left: 80%; }
 
 /* Text container */
-.vision-section .section-text,
-.mission-section .section-text {
+.vision-section .section-text, .mission-section .section-text {
   flex: 1;
   background: rgba(255,255,255,0.05);
   padding: 20px;
@@ -130,56 +159,48 @@
 }
 
 /* Heading style */
-.vision-section .section-text h2,
-.mission-section .section-text h2 {
+.vision-section .section-text h2, .mission-section .section-text h2 {
   border-left: 8px solid #111111;
   padding-left: 15px;
   font-weight: 700;
   font-size: 2.8rem;
-  color:  #05a978;
+  color: #05a978;
   text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
   margin-bottom: 20px;
 }
 
-/* Paragraph style - black text with subtle shadow for premium look */
-.vision-section .section-text p,
-.mission-section .section-text p {
+/* Paragraph style */
+.vision-section .section-text p, .mission-section .section-text p {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #111; /* black text */
+  color: #111;
   font-weight: 500;
-  text-shadow: 
-      1px 1px 2px rgba(0,0,0,0.15),
-      2px 2px 4px rgba(0,0,0,0.1);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.15), 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Image container */
-.vision-section .section-image,
-.mission-section .section-image {
-  flex: 0 0 50%; /* slightly bigger images */
+.vision-section .section-image, .mission-section .section-image {
+  flex: 0 0 50%;
   display: flex;
   justify-content: center;
 }
 
-.vision-section .section-image img,
-.mission-section .section-image img {
+.vision-section .section-image img, .mission-section .section-image img {
   width: 100%;
-  max-width: 390px; /* increased size */
+  max-width: 390px;
   border-radius: 20px;
   border: 2px solid rgba(255,255,255,0.5);
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: fadeInRight 1.2s ease-out;
 }
 
-.vision-section .section-image img:hover,
-.mission-section .section-image img:hover {
-  transform: scale(1.08); /* zoom in only */
+.vision-section .section-image img:hover, .mission-section .section-image img:hover {
+  transform: scale(1.08);
   box-shadow: 0 15px 35px rgba(0,0,0,0.35);
 }
 
-/* =========================
-   VALUES SECTION
-========================= */
+/* =========================    VALUES SECTION ========================= */
 .values-section {
   padding: 70px 10%;
   background: #fff;
@@ -247,37 +268,142 @@
   color: #444;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 1024px) {
-  .vision-section,
-  .mission-section,
-  .aboutus-intro {
-    flex-direction: column;
-    text-align: center;
-  }
+/* ================= HUB SECTION ================= */
+.hub-section {
+  padding: 110px 10%;
+  background: #f7fffc;
+  text-align: center;
+}
 
-  .section-image img {
-    max-width: 70%;
-    margin: 20px auto;
-  }
+.hub-section h2 {
+  font-size: 2.7rem;
+  margin-bottom: 80px;
+  border-left: 8px solid #00c68a;
+  padding-left: 15px;
+  display: inline-block;
+}
+
+.hub-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+/* Center Hub */
+.hub-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  background: #00c68a;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.hub-center svg {
+  font-size: 3rem;
+}
+
+.hub-center span {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Pulse */
+.hub-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,198,138,0.4);
+  border-radius: 50%;
+  animation: hubPulse 2.5s infinite;
+}
+
+@keyframes hubPulse {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+
+/* Nodes */
+.hub-node {
+  position: absolute;
+  width: 110px;
+  padding: 18px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: floatNode 5s infinite ease-in-out;
+  z-index: 3;
+}
+
+.hub-node svg {
+  font-size: 2rem;
+  color: #00c68a;
+}
+
+.hub-node span {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+@keyframes floatNode {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Node positions (6 nodes around center) */
+.n1 { top: -15%; left: 45%; transform: translate(-50%, -50%); }
+.n2 { top: 15%; left: 65%; transform: translate(-50%, -50%); }
+.n3 { top: 100%; left: 45%; transform: translate(-50%, -50%); }
+.n4 { top: 40%; left: 14%; transform: translate(-50%, -50%); }
+.n5 { top: 70%; left: 25%; transform: translate(-50%, -50%); }
+.n6 { top: 40%; left: 75%; transform: translate(-50%, -50%); }
+
+/* Hub Lines */
+.hub-line {
+  position: absolute;
+  background: #00c68a;
+  z-index: 1;
+  transform-origin: top left;
+}
+
+.l1 { top: 50%; left: 50%; width: 2px; height: 50%; transform: rotate(0deg); }
+.l2 { top: 50%; left: 50%; width: 2px; height: 50%; transform: rotate(90deg); }
+.l3 { top: 50%; left: 50%; width: 2px; height: 50%; transform: rotate(180deg); }
+.l4 { top: 50%; left: 50%; width: 2px; height: 50%; transform: rotate(270deg); }
+.l5 { top: 50%; left: 50%; width: 2px; height: 40%; transform: rotate(45deg); }
+.l6 { top: 50%; left: 50%; width: 2px; height: 40%; transform: rotate(225deg); }
+
+/* =========================    ANIMATIONS ========================= */
+@keyframes fadeInLeft { from {opacity:0; transform:translateX(-40px);} to{opacity:1; transform:translateX(0);} }
+@keyframes fadeInRight { from {opacity:0; transform:translateX(40px);} to{opacity:1; transform:translateX(0);} }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .vision-section, .mission-section, .about-hero-content { flex-direction: column; text-align: center; }
+  .section-image img { max-width: 70%; margin: 20px auto; }
 }
 
 @media (max-width: 768px) {
-  .vision-section .section-text h2,
-  .mission-section .section-text h2,
-  .aboutus-intro .section-text h2 {
-    font-size: 2.2rem;
-  }
-
-  .section-text p {
-    font-size: 1rem;
-  }
+  .vision-section .section-text h2, .mission-section .section-text h2, .about-text h2 { font-size: 2.2rem; }
+  .section-text p, .about-text p { font-size: 1rem; }
+  .hub-container { height: auto; }
+  .hub-node { position: static; margin: 20px auto; }
+  .hub-line { display: none; }
 }
 
 @media (max-width: 480px) {
-  .section-image img {
-    max-width: 90%;
-  }
+  .section-image img, .about-image img { max-width: 90%; }
+  .about-text h2 { font-size: 1.8rem; }
+  .values-section h2, .hub-section h2 { font-size: 2rem; }
 }

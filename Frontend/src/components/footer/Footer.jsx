@@ -1,6 +1,6 @@
 import "./Footer.css";
 import { FaFacebookF, FaInstagram, FaYoutube, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import dkslogo from "../imgs/dkslogo.jpg"; // replace with your actual logo path
+import footerlogo from "../imgs/footerlogo.jpg"; // replace with your actual logo path
 
 const Footer = () => {
   return (
@@ -10,14 +10,11 @@ const Footer = () => {
         <div className="footer-left">
 
           <div className="footer-logo">
-            <img src={dkslogo} alt="Logo" className="footer-img" />
-            <h2 className="footer-heading">
-              Digital Smart <br /> Cities Hub
-            </h2>
+            <img src={footerlogo} alt="Logo" className="footer-img" />
+         
 
           </div>
-          <div className="smc"><p>(SMC-PVT LTD)</p>
-          </div>
+         
           <div className="contact-info">
             <p>
               <FaEnvelope className="footer-icon" /> digitalkohat@gmail.com

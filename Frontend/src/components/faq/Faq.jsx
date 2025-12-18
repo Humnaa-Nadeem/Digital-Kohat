@@ -1,6 +1,6 @@
 // Smart FAQ.jsx
 import React, { useState } from "react";
-import "./Faq.css";
+import "./FAQ.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const sfaqData = [

@@ -35,7 +35,8 @@ import { Restaurants } from './Pages/TourismPage/Restaurants';
 import { Parks } from './Pages/TourismPage/Parks';
 import { Guide } from './Pages/TourismPage/Guide';
 import { Gallery } from './Pages/TourismPage/Gallery';
-import { Aboutus } from './Pages/AboutUsPage/Aboutus';
+import Aboutus from "./Pages/AboutUsPage/Aboutus";
+
 import Contactus from './Pages/ContactUs/ContactUs';
 // import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
 

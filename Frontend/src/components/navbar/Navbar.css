@@ -60,12 +60,12 @@
 
 .logo-img {
   height: 54px;
-  width: 55px;
-  border-radius: 50%;
+  width: 100px;
+ 
 }
 
 .nav-logo h2 {
-  color: rgb(31, 142, 92);
+  color: #1f8e5c;
   font-size: 1.1rem;
   font-weight: 700;
 }
