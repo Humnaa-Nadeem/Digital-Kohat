@@ -1,14 +1,14 @@
 /* ===================== LAYOUT ===================== */
-.Tourism-cata-pg-sec {
+/* .Tourism-cata-pg-sec {
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
   min-height: 100vh;
   border-radius: 4px;
-}
+} */
 
 /* ===================== LEFT SIDEBAR ===================== */
-.lft-sec {
+/* .lft-sec {
   width: 260px;
   background: #f7f7f7;
   padding: 20px;
@@ -42,17 +42,17 @@
 
 .institute-hd-lst li:hover {
   color: #00a86b;
-}
+}*/
 
 /* ===================== MAIN CONTENT ===================== */
-.main-sec {
+/* .main-sec {
   flex: 1;
   padding: 20px 30px;
-  min-width: 0; /* important for grid responsiveness */
-}
+  min-width: 0; 
+} */
 
 /* ===================== TOGGLE BUTTON ===================== */
-.showLstBtn {
+/* .showLstBtn {
   display: none;
   position: fixed;
   top: 20px;
@@ -60,16 +60,16 @@
   font-size: 28px;
   cursor: pointer;
   z-index: 999;
-}
+} */
 
 /* ===================== BANNER ===================== */
-.cata-pg-banner {
+/* .cata-pg-banner {
   text-align: center;
   margin-bottom: 30px;
-}
+} */
 
 /* ===================== SEARCH BAR ===================== */
-.search-bar {
+/* .search-bar {
   display: flex;
   align-items: center;
   width: 100%;
@@ -100,17 +100,17 @@
 
 .search-bar button:hover {
   background-color: #00875a;
-}
+} */
 
 /* ===================== CARDS CONTAINER ===================== */
-.cata-card-cont {
+/* .cata-card-cont {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-}
+} */
 
 /* ===================== TOURISM CARD ===================== */
-.card {
+/* .card {
   position: relative;
   background-size: cover;
   background-position: center;
@@ -133,19 +133,19 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  pointer-events: none; /* Allows clicks to pass through */
+  pointer-events: none; 
 }
 
 .card h2,
 .card p,
 .card button {
   position: relative;
-  z-index: 1; /* Above overlay */
+  z-index: 1; 
 }
 
 .card button {
   margin-top: 10px;
-}
+} */
 
 /* ===================== TOURISM CARD BUTTON ===================== */
 .tourism-pg-crd-btn {
@@ -174,44 +174,6 @@
 @media screen and (max-width: 1024px) {
   .Tourism-cata-pg-sec {
     flex-wrap: wrap;
-  }
-
-  .lft-sec {
-    position: absolute;
-    top: 0;
-    left: -300px; /* hide sidebar initially */
-    height: 100vh;
-    z-index: 1000;
-  }
-
-  .lft-sec.showList {
-    left: 0;
-  }
-
-  .showLstBtn {
-    display: block;
-  }
-
-  .main-sec {
-    flex: 1 1 100%;
-    padding: 20px;
-    margin-left: 0;
-    min-width: 0;
-  }
-
-  .cata-card-cont {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-
-  .search-bar {
-    max-width: 100%;
-    margin: 15px auto;
-  }
-
-  .search-bar input,
-  .search-bar button {
-    font-size: 14px;
-    padding: 8px 12px;
   }
 }
 

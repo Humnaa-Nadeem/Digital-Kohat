@@ -74,7 +74,6 @@ export const TourismHome = () => {
                   }}
                   onClick={() => handleCardClick(v)}
                 >
-                  <div className="overlay"></div>
                   <h2 className="Tourism_Cata_Title">{v.title}</h2>
                   <p>{v.description}</p>
                   <button className="tourism-pg-crd-btn">{v.btn}</button>
