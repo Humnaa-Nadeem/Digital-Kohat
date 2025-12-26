@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./Aboutus.css";
 import { FaUsers, FaCity, FaClipboardCheck, FaLaptopCode, FaHandsHelping, FaShieldAlt } from "react-icons/fa";
-// import { Navbar } from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 

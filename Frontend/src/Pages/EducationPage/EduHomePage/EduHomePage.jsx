@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../../CatagoriesMainPg.css";
 import "./EduHomePage.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -27,21 +28,21 @@ export const EduHomePage = () => {
                     <Form setShowform={setShowform} />
                     :
                     // Home Page
-                    <section className="edu-pg-sec">
+                    <section className="pg-sec">
                         {/* Registartion Button */}
                         <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
                         {/* Education Institute Part like schools , colleges & Uni */}
                         <div className="content-cont">
                             <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
-                            <p className="edu-pg-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium velit recusandae esse ipsum, enim inventore nihil nam beatae, corporis in quidem provident</p>
+                            <p className="pg-desc">Let find the best education in a <b>Kohat</b> where students can easily find good schools, colleges, and learning centers nearby. This platform helps parents and students get clear details about courses and facilities so they can choose the right place for study with confidence.</p>
                             <div className="card-Container">
                                 {categories.map((v, i) => {
                                     return (
-                                        <div className="card" key={i}>
+                                        <div className="card EduHomeCard" key={i}>
                                             <span className="Icon_Cont">{v.icon}</span>
-                                            <h2 className="Edu_Cata_Title">{v.title}</h2>
+                                            <h2 className="Cata_Title">{v.title}</h2>
                                             <p>{v.description}</p>
-                                            <button className="edu-pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
+                                            <button className="pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
                                         </div>
                                     )
                                 })}

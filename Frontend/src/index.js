@@ -104,7 +104,6 @@ const allRoutes = createBrowserRouter([
 
 
 
-
   // Tourism Sector
   {
     path: "/tourism",

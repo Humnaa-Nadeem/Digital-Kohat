@@ -1,78 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./SearchBar.css";
-
 export const SearchBar = ({ SearchedInst, AllInst }) => {
-  const [filteredItem, setFiltereditem] = useState([]);
-  const [inputValue, setInputValue] = useState("");
 
-  // Filter live results as user types
-  const filterSearch = (search) => {
-    if (!search) {
-      setFiltereditem([]);
-      SearchedInst(AllInst); // reset
-      return;
+    // Storing Data:
+    let [AllInstitute, setAllInstitute] = useState(AllInst);
+    let [filteredItem, setFiltereditem] = useState();
+    let [inputValue, setInputValue] = useState("");
+    let pastRes = ["It's okay", "Coding is fun", "Let's Code together", "Why It is", "CSS", "JavaScript", "Kust 1"];
+    let [PastResArr, setPastResArr] = useState(pastRes);
+
+    // Filtering keywords from past history according to user Search;
+    const filterSearch = (search) => {
+        if (search) {
+            const result = PastResArr.filter((v) =>
+                v.toLowerCase().includes(search.toLowerCase())
+            );
+            setFiltereditem(result);
+        } else {
+            setFiltereditem(undefined)
+        }
+    };
+
+    // Displaying Filtered Result:
+    const OptionSlctd = (option) => {
+        console.log(AllInstitute);
+        setInputValue(option);
+        let SearchedRes = AllInstitute.filter((v) => { if (v.InstName.toLowerCase().includes(option.toLowerCase())) { return v; } });
+        SearchedInst(SearchedRes);
+        setFiltereditem(undefined);
     }
 
-    const searchTerm = search.toLowerCase();
-    const results = AllInst.filter(
-      (v) =>
-        (v.name || "").toLowerCase().includes(searchTerm) ||
-        (v.type || "").toLowerCase().includes(searchTerm) ||
-        (v.location || "").toLowerCase().includes(searchTerm) ||
-        (v.description || "").toLowerCase().includes(searchTerm)
-    );
-
-    setFiltereditem(results);
-    SearchedInst(results);
-  };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-    filterSearch(value);
-  };
-
-  const handleSelect = (item) => {
-    const name = item.name || item.title || "";
-    setInputValue(name);
-    SearchedInst([item]); // set single result
-    setFiltereditem([]); // hide dropdown
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && filteredItem.length > 0) {
-      handleSelect(filteredItem[0]);
+    // Handling Enter key Event:
+    const HandEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            OptionSlctd(inputValue);
+        };
     }
-  };
 
-  return (
-    <div className="Search-Area">
-      <div className="Search-bar">
-        <input
-          placeholder="Search here"
-          value={inputValue}
-          onChange={handleInputChange}
-          autoComplete="off"
-          onKeyDown={handleKeyPress}
-        />
-        <button
-          className="search-btn"
-          onClick={() => filteredItem[0] && handleSelect(filteredItem[0])}
-        >
-          🔍
-        </button>
-      </div>
+    // 
+    useEffect(() => {
+        if (inputValue === "") {
+            SearchedInst(AllInstitute);
+        }
+    }, [inputValue]);
 
-      {/* Dropdown Suggestions */}
-      {filteredItem.length > 0 && (
-        <ul className="result-cont">
-          {filteredItem.map((item, index) => (
-            <li key={index} onClick={() => handleSelect(item)}>
-              {item.name || item.title} - {item.type}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
+    return (
+        <>
+            <div className="Search-Area">
+                <div className="Search-bar">
+                    <input placeholder="Search here" name="SearchBar" value={inputValue} onChange={(e) => { filterSearch(e.target.value); setInputValue(e.target.value) }} autoComplete="none" onKeyDown={(e) => { HandEnterKeyPress(e) }} />
+                    <button className="search-btn" onClick={() => { OptionSlctd(inputValue) }}>🔍</button>
+                </div>
+                {/* Results */}
+                {(filteredItem)
+                    ?
+                    <ul className="result-cont">
+                        {filteredItem.length > 0 ? (
+                            filteredItem.map((item, index) => (
+                                <li key={index} onClick={() => { OptionSlctd(item) }}>{item}</li>
+                            ))
+                        ) : (
+                            <li onClick={() => { OptionSlctd(inputValue) }}>{inputValue}</li>
+                        )}
+                    </ul>
+                    :
+                    <></>
+                }
+            </div>
+        </>
+    )
+}

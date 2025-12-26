@@ -66,9 +66,9 @@ export const SignUpForm = () => {
 
     return (
         <>
-            {/* <header>
+            <header>
                 <Navbar />
-             </header> */}
+            </header>
             <main>
                 <section>
                     <div className="form-cont">

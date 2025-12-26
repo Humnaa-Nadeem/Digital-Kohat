@@ -33,7 +33,7 @@ const Navbar = () => {
           {/* LOGO */}
           <div className="nav-logo">
             <img src={dsk} alt="Logo" className="logo-img" />
-            <h2>DIGITAL KOHAT</h2>
+            <h2>DIGITAL SMART CITIES HUB</h2>
           </div>
 
           {/* LINKS */}
