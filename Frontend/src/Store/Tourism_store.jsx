@@ -5,6 +5,9 @@ import tourismImg from "../components/imgs/tourism.png";
 import restaurantImg from "../components/imgs/restaurant.jpg";
 import hotelImg from "../components/imgs/hotel.jpg";
 import galleryImg from "../components/imgs/gallery.jpg";
+import imgSahil from "../components/imgs/sahil.jpeg";
+import imgSaqibullah from "../components/imgs/Saqibullah.jpg";
+import imgguidelady from "../components/imgs/guideimg.jpg";
 
 export const tourismCategories = [
   {
@@ -634,6 +637,66 @@ export const GuideContent = [
       ...defaultCommonInfo,
       basicInfo: { placeName: "Travel Guide: Food & Dining", city: "Kohat", category: "Culinary", shortIntroduction: "A foodie's roadmap to the best traditional dishes in the city." },
       thingsToDo: ["Try Chapli Kebab at Main Bazaar", "Traditional Breakfast at Cantonment", "Kahwa session at night"]
+    }
+  })
+];
+
+/* -----------------------------
+   TOUR GUIDES DATA (PEOPLE)
+-------------------------------- */
+export const TourGuidesList = [
+  { id: 1, name: "Salma" },
+  { id: 2, name: "Syed Sahil Shah" },
+  { id: 3, name: "Saqibullah" }
+];
+
+export const TourGuidesCardsData = [
+  createLandingData({
+    id: 1,
+    name: "Salma",
+    type: "Tour Guide",
+    tagline: "Expert in Historical & Natural Sites of Kohat",
+    about: "With over 10 years of experience, I specialize in taking tourists through the hidden gems of Kohat, from the historical Fort to the serene Tanda Dam.",
+    aboutImage: imgguidelady,
+    bgImage: imgguidelady,
+    contact: { phone: "+92 321 1234567", email: "salma.guide@example.com" },
+    rating: 4.9,
+    reviewsCount: 45,
+    commonInfo: {
+      basicInfo: { shortIntroduction: "Friendly and knowledgeable guide with deep roots in Kohat.", city: "Kohat", category: "History & Nature" },
+      visitingInfo: { entryFee: "Rs. 2000 / Day", openingTime: "08:00 AM", closingTime: "06:00 PM" }
+    }
+  }),
+  createLandingData({
+    id: 2,
+    name: "Syed Sahil Shah",
+    type: "Tour Guide",
+    tagline: "Nature & Adventure Specialist",
+    about: "Specializing in mountain trekking and wildlife photography. I know every trail in the Kohat hills and the best spots for bird watching at Tanda Dam.",
+    aboutImage: imgSahil,
+    bgImage: imgSahil,
+    contact: { phone: "+92 333 9876543", email: "sahilkhan536ah@gmail.com" },
+    rating: 4.8,
+    reviewsCount: 32,
+    commonInfo: {
+      basicInfo: { shortIntroduction: "Adventurous guide for those who love to explore the wild side of Kohat.", city: "Kohat", category: "Adventure" },
+      visitingInfo: { entryFee: "Rs. 2500 / Day", openingTime: "06:00 AM", closingTime: "07:00 PM" }
+    }
+  }),
+  createLandingData({
+    id: 3,
+    name: "Saqibullah",
+    type: "Tour Guide",
+    tagline: "Cultural & Culinary Guide",
+    about: "Let me take you on a journey through the flavors of Kohat. From the best Chapli Kebab stands to deep historical insights into the local tribal culture.",
+    aboutImage: imgSaqibullah,
+    bgImage: imgSaqibullah,
+    contact: { phone: "+92 345 5554433", email: "saqibullah925@gmail.com" },
+    rating: 4.7,
+    reviewsCount: 28,
+    commonInfo: {
+      basicInfo: { shortIntroduction: "Passionate storyteller and foodie who loves sharing Kohat's heritage.", city: "Kohat", category: "Culture & Food" },
+      visitingInfo: { entryFee: "Rs. 1500 / Half Day", openingTime: "09:00 AM", closingTime: "10:00 PM" }
     }
   })
 ];

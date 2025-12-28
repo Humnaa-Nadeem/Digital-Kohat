@@ -256,6 +256,20 @@
     color: #027646;
 }
 
+.card-tagline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 12px;
+}
+
+.card-tagline svg {
+    color: #027646;
+}
+
 .card-short-desc {
     font-size: 14px;
     color: #555;

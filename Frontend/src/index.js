@@ -40,6 +40,7 @@ import { Gallery } from './Pages/TourismPage/TourismCategoriespg/Gallery';
 import { Aboutus } from './Pages/AboutUsPage/Aboutus';
 import Contactus from './Pages/ContactUs/ContactUs';
 import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
+import { TourGuides } from './Pages/TourismPage/TourismCategoriespg/TourGuides';
 
 
 
@@ -115,6 +116,7 @@ const allRoutes = createBrowserRouter([
       { path: "restaurants", element: <Restaurants /> },
       { path: "parks", element: <Parks /> },
       { path: "guide", element: <Guide /> },
+      { path: "guides", element: <TourGuides /> },
       { path: "gallery", element: <Gallery /> },
       { path: "landing", element: <TourismLandingPage /> },
 
