@@ -1,9 +1,9 @@
-// Smart FAQ.jsx
+
 import React, { useState } from "react";
-import "./FAQ.css";
+import "./Freq.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const sfaqData = [
+const sfreqData = [
   {
     question: "What is Digital Smart Cities Hub?",
     answer:
@@ -31,7 +31,7 @@ const sfaqData = [
   },
 ];
 
-const FAQ = () => {
+const Freq = () => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -43,7 +43,7 @@ const FAQ = () => {
       <h2 className="sfaq-title">Frequently Asked Questions</h2>
 
       <div className="sfaq-container">
-        {sfaqData.map((item, index) => (
+        {sfreqData.map((item, index) => (
           <div
             key={index}
             className={`sf+aq-card ${activeIndex === index ? "active" : ""}`}
@@ -72,4 +72,4 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+export default Freq;

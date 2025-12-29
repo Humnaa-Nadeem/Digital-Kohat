@@ -7,7 +7,7 @@ import Location from "./components/location/Location";
 import Footer from "./components/footer/Footer";
 import Hero1 from "./components/hero1/Hero1";
 import Vision from "./components/vision/Vision";
-import FAQ from "./components/faq/FAQ";
+import Freq from "./components/freq/Freq";
 
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         <Cards />
         <WhyChooseUs />
         <Hero2 />
-       <FAQ/>
+       <Freq/>
         <Location />
       </main>
       <Footer />
