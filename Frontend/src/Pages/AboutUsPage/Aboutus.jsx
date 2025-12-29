@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./Aboutus.css";
 import femaleImg from "../../components/imgs/female.jpg";
 import maleImg from "../../components/imgs/male.jpg";
@@ -21,8 +21,9 @@ import {
   FaGlobe
 } from "react-icons/fa";
 
-import Navbar from "../../components/navbar/Navbar";
+
 import Footer from "../../components/footer/Footer";
+import Navbar from "../../components/navbar/Navbar";
 
 /* ✅ LOCAL IMAGES */
 import aboutImg from "../../components/imgs/aboutimg.jpg";

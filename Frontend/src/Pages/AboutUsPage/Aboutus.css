@@ -1,6 +1,128 @@
-/* =========================    ABOUT HERO / INTRO ========================= */
-.aboutus-intro,
+/* =========================
+   ABOUT HERO SECTION
+========================= */
 .about-hero {
+  position: relative;
+  padding: 90px 6%;
+  background: linear-gradient(185deg, #02a877, #0c7052); /* green gradient */
+  color: #fff;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* Zebra / zigzag overlay */
+.about-hero .zebra-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.05) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ================= HERO FLOATING ICONS ================= */
+.about-hero .scattered-icons > * {
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(173, 255, 168, 0.3); /* light green */
+  animation: floatIcons 4s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.about-hero .scattered-icons svg:nth-child(1) { top: 10%; left: 5%; }
+.about-hero .scattered-icons svg:nth-child(2) { top: 70%; left: 30%; }
+.about-hero .scattered-icons svg:nth-child(3) { top: 80%; left: 10%; }
+.about-hero .scattered-icons svg:nth-child(4) { top: 15%; left: 65%; }
+.about-hero .scattered-icons svg:nth-child(5) { top: 50%; left: 90%; }
+.about-hero .scattered-icons svg:nth-child(6) { top: 35%; left: 25%; }
+.about-hero .scattered-icons svg:nth-child(7) { top: 85%; left: 75%; }
+
+@keyframes floatIcons {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(15deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* ================= HERO CONTENT ================= */
+.about-hero-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Text */
+.about-text {
+  flex: 0 0 50%;
+}
+
+.about-text h2 {
+  margin-bottom: 20px;
+  border-left: 8px solid #00c68a; /* light green vertical line */
+  padding-left: 20px;
+  font-size: 3rem;
+}
+
+.about-text p {
+  margin-top: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Image */
+.about-image {
+  flex: 0 0 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+  transition: transform 0.4s ease;
+}
+
+.about-image img:hover {
+  transform: scale(1.05);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .about-hero-content { flex-direction: column; text-align: center; }
+  .about-image img { max-width: 70%; margin: 20px auto; }
+}
+
+@media (max-width: 768px) {
+  .about-text h2 { font-size: 2.2rem; padding-left: 15px; }
+  .about-text p { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .about-image img { max-width: 90%; }
+  .about-text h2 { font-size: 1.8rem; }
+}
+
+/* =========================
+   GLOBAL WRAPPER
+========================= */
+
+.aboutus-intro {
+
   display: flex;
   flex-direction: row;
   align-items: center;
