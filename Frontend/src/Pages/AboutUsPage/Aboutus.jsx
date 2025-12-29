@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import "./Aboutus.css";
+import femaleImg from "../../components/imgs/female.jpg";
+import maleImg from "../../components/imgs/male.jpg";
+
 import {
   FaUsers,
   FaCity,
@@ -148,7 +151,117 @@ const Aboutus = () => {
           </p>
         </div>
       </div>
+<h2 className="org-heading">
+  <span className="org-line"></span>
+  TEAM MEMBERS
+</h2>
 
+<div className="org-tree">
+
+  {/* LEVEL 1 */}                                             
+  <div className="org-node single">
+    <div className="person-card">
+      <div className="card-bar"></div>
+      <img src={femaleImg} alt="Sahiba Akber" />
+      <h4>Sahiba Akber</h4>
+      <p>Founder</p>
+    </div>
+  </div>                                               
+
+  {/* Horizontal line below Sahiba */}
+  <div className="line-horizontal"></div>
+
+  {/* LEVEL 2 - two members with vertical lines from horizontal */}
+  <div className="org-node two">
+    <div className="child-block">
+      <div className="line-vertical"></div>
+      <div className="person-card">
+        <div className="card-bar"></div>
+        <img src={maleImg} alt="Syed Bilal Ahmed" />
+        <h4>Syed Bilal Ahmed</h4>
+        <p>HR</p>
+      </div>
+    </div>
+    <div className="child-block">
+      <div className="line-vertical"></div>
+      <div className="person-card">
+        <div className="card-bar"></div>
+        <img src={maleImg} alt="Saad Iqbal" />
+        <h4>Saad Iqbal</h4>
+        <p>Manager</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Horizontal line below Level 2 */}
+  <div className="line-horizontal"></div>
+
+  {/* LEVEL 3 - two designers */}
+  <div className="org-node two">
+    <div className="child-block">
+      <div className="line-vertical"></div>
+      <div className="person-card">
+        <div className="card-bar"></div>
+        <img src={femaleImg} alt="Humna Nadeem" />
+        <h4>Humna Nadeem</h4>
+        <p>Graphic Designer</p>
+      </div>
+    </div>
+    <div className="child-block">
+      <div className="line-vertical"></div>
+      <div className="person-card">
+        <div className="card-bar"></div>
+        <img src={femaleImg} alt="Abeera Bangash" />
+        <h4>Abeera Bangash</h4>
+        <p>Graphic Designer</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Horizontal line below designers */}
+  <div className="line-horizontal"></div>
+
+  {/* LEVEL 4 - 4 frontend developers */}
+ <div className="org-node four">
+  {["Humna Nadeem", "Awais Anwar", "Syed Sahil Shah", "Syed Bilal Ahmed"].map((name, i) => (
+    <div key={i} className="child-block">
+      <div className="line-vertical tall"></div>
+      <div className="person-card">
+        <div className="card-bar"></div>
+        <img
+          src={name === "Humna Nadeem" ? femaleImg : maleImg}
+          alt={name}
+        />
+        <h4>{name}</h4>
+        <p>Frontend Developer</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+  {/* Horizontal line below frontend */}
+  <div className="line-horizontal"></div>
+
+  {/* LEVEL 5 - 4 backend developers */}
+  <div className="org-node four">
+    {["Awais Anwar", "Sadiq Shah", "Sahil Shah", "Saqlain"].map((name, i) => (
+      <div key={i} className="child-block">
+        <div className="line-vertical tall"></div>
+        <div className="person-card">
+          <div className="card-bar"></div>
+          <img src={maleImg} alt={name} />
+          <h4>{name}</h4>
+          <p>Backend Developer</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Optional left vertical line next to entire tree */}
+  <div className="line-vertical left-side"></div>
+
+</div>
+<br /><br /><br />
       {/* ================= VALUES ================= */}
       <div className="values-section fade-section">
         <h2>VALUES</h2>
@@ -190,7 +303,9 @@ const Aboutus = () => {
           <span className="hub-line l6"></span>
         </div>
       </div>
+<br /><br />
 
+<br /><br /> <br />
       <Footer />
     </div>
   );

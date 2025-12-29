@@ -10,11 +10,15 @@ import {
   FaPenFancy,
   FaFacebookF,
   FaTwitter,
+   FaYoutube,
   FaLinkedinIn,
   FaInstagram,
   FaMobileAlt,
+  FaTiktok,
+  FaWhatsapp,
   FaLaptop,
 } from "react-icons/fa";
+
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 
@@ -66,7 +70,10 @@ const ContactUs = () => {
 
       {/* CONTACT FORM */}
       <section className="contact-form-wrapper fade-section">
-        <h2>Send Us a Message</h2>
+       <h2 className="form-headingg">
+  <span></span>Send Us a Message
+</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-input">
@@ -102,9 +109,139 @@ const ContactUs = () => {
         </form>
       </section>
 
+
+     
+ {/* Social Media Links */}
+<section className="dsch-pretty-social-wrapper fade-section">
+  <h2 className="dsch-pretty-social-heading">
+    <span></span>
+    Connect With Us
+  </h2>
+
+  <div className="dsch-pretty-social-grid">
+    <a
+      href="https://www.instagram.com/the.dsc.hub?igsh=NjN5c3V5MjNoOWpp"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="dsch-pretty-social-card insta"
+    >
+      <div className="dsch-pretty-icon-circle">
+        <FaInstagram />
+      </div>
+      <div className="dsch-pretty-text">
+        <h4>Instagram</h4>
+        <p>Follow our updates</p>
+      </div>
+    </a>
+
+    <a
+      href="https://www.facebook.com/profile.php?id=61585451393565"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="dsch-pretty-social-card fb"
+    >
+      <div className="dsch-pretty-icon-circle">
+        <FaFacebookF />
+      </div>
+      <div className="dsch-pretty-text">
+        <h4>Facebook</h4>
+        <p>Join our community</p>
+      </div>
+    </a>
+
+    <a
+      href="https://www.linkedin.com/in/digital-smart-cities-hub-b354a3394"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="dsch-pretty-social-card linkedin"
+    >
+      <div className="dsch-pretty-icon-circle">
+        <FaLinkedinIn />
+      </div>
+      <div className="dsch-pretty-text">
+        <h4>LinkedIn</h4>
+        <p>Professional network</p>
+      </div>
+    </a>
+
+    <a
+      href="https://www.tiktok.com/@the.dsc.hub?_r=1&_t=ZS-92IgxSLr04r"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="dsch-pretty-social-card tiktok"
+    >
+      <div className="dsch-pretty-icon-circle">
+        <FaTiktok />
+      </div>
+      <div className="dsch-pretty-text">
+        <h4>TikTok</h4>
+        <p>Watch our content</p>
+      </div>
+    </a>
+
+    <a
+      href="https://www.youtube.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="dsch-pretty-social-card youtube"
+    >
+      <div className="dsch-pretty-icon-circle">
+        <FaYoutube />
+      </div>
+      <div className="dsch-pretty-text">
+        <h4>YouTube</h4>
+        <p>Watch & subscribe</p>
+      </div>
+    </a>
+
+    <a
+      href="https://whatsapp.com/channel/0029VbBL7YwC6Zvdg6XMux1t"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="dsch-pretty-social-card whatsapp"
+    >
+      <div className="dsch-pretty-icon-circle">
+        <FaWhatsapp />
+      </div>
+      <div className="dsch-pretty-text">
+        <h4>WhatsApp</h4>
+        <p>Instant updates</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+
+
+
+
+
+      {/* MAP */}
+      <section className="contact-map-wrapper fade-section">
+<h2 className="map-heading">
+  <span></span>Our Location
+</h2>
+
+        <div className="map-container">
+          <iframe
+            title="KUST Map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.157596916694!2d71.44370301472682!3d33.523287952867086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d8ec241a467237%3A0xf7409abf0918f110!2sKohat%20University%20of%20Science%20%26%20Technology!5e0!3m2!1sen!2s!4v1468696336911!5m2!1sen!2s"
+            allowFullScreen
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
+
+ 
+
+
       {/* CONTACT INFO CARDS */}
-      <section className="contact-info-wrapper fade-section">
-        <h2>Contact Info</h2>
+    <section className="contact-info-wrapper fade-section">
+  <h2 className="contactt-heading">
+    <span className="contactt-line"></span>
+    Contact Info
+  </h2>
         <div className="info-cards">
           <div className="info-card">
             <FaMapMarkerAlt className="info-icon" />
@@ -129,53 +266,14 @@ const ContactUs = () => {
         </div>
       </section>
 
-      {/* MAP */}
-      <section className="contact-map-wrapper fade-section">
-        <h2>Our Location</h2>
-        <div className="map-container">
-          <iframe
-            title="KUST Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.157596916694!2d71.44370301472682!3d33.523287952867086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d8ec241a467237%3A0xf7409abf0918f110!2sKohat%20University%20of%20Science%20%26%20Technology!5e0!3m2!1sen!2s!4v1468696336911!5m2!1sen!2s"
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
-        </div>
-      </section>
-        {/* EXTRA ANIMATED SECTION */}
+
+
+
+  {/* EXTRA ANIMATED SECTION */}
       <section className="contact-extra-wrapper fade-section">
         <h2>Get In Touch Today!</h2>
         <p>We are ready to assist you with any inquiries. Don’t hesitate to contact us.</p>
         <div className="extra-animation"></div>
-      </section>
-
-      {/* FAQ */}
-      <section className="contact-faq-wrapper fade-section">
-        <h2>Quick Help</h2>
-        <div className="faq-cards">
-          <div className="faq-card">
-            <h3>Admissions</h3>
-            <p>Need help with admission procedures? Contact our admission office directly.</p>
-          </div>
-          <div className="faq-card">
-            <h3>Departments</h3>
-            <p>Want to reach a department? Check our directory for direct contact info.</p>
-          </div>
-          <div className="faq-card">
-            <h3>Support</h3>
-            <p>Facing technical issues? Our IT support team is here to help.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* SOCIAL */}
-      <section className="contact-social-wrapper fade-section">
-        <h2>Connect With Us</h2>
-        <div className="social-icons">
-          <a href="#"><FaFacebookF /></a>
-          <a href="#"><FaTwitter /></a>
-          <a href="#"><FaLinkedinIn /></a>
-          <a href="#"><FaInstagram /></a>
-        </div>
       </section>
 
     
