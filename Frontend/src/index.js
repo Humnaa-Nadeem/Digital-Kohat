@@ -89,7 +89,7 @@ const allRoutes = createBrowserRouter([
       { path: "schools", element: <SchoolPage /> },
       { path: "colleges", element: <CollegesPage /> },
       { path: "uni", element: <UniPage /> },
-      { path: "online-courses", element: <OnlineCoursesPage /> },
+      { path: "onlineCourses", element: <OnlineCoursesPage /> },
       { path: "tutors", element: <TutorsPage /> },
       { path: "training", element: <OnlineTrainingPage /> },
     ],

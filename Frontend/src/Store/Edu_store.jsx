@@ -11,7 +11,7 @@ export const categories = [
     { title: "Universities", icon: <icon.FaUniversity className="icons" />, btn: "Visit Universities", link: "uni" },
     { title: "Online Courses", icon: <icon.FaNetworkWired className="icons" />, btn: "Online Courses", link: "onlineCourses" },
     { title: "Tutor Listing", icon: <icon.FaChalkboardTeacher className="icons" />, btn: "Tutor List", link: "tutors" },
-    { title: "Online Training", icon: <icon.FaUniversity className="icons" />, btn: "Trainings", link: "onlineTraining" },
+    { title: "Online Training", icon: <icon.FaUniversity className="icons" />, btn: "Trainings", link: "training" },
 ];
 
 // &&&&&&&&&&&& *SCHOOLS DATA* &&&&&&&&&&&& \\

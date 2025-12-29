@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../../CatagoriesMainPg.css";
+import "../../CatagoriesHomePgs.css";
 import "./EduHomePage.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";

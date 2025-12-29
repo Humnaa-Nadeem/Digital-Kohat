@@ -41,7 +41,7 @@ export const OnlineTrainingPage = () => {
                                 )
                             })
                         }
-                        <li onClick={() => { navigate("/edu/onlineTraining"); setShowList(false) }}>Back To Online Training</li>
+                        <li onClick={() => { navigate("/edu/training"); setShowList(false) }}>Back To Online Training</li>
                     </ul>
                 </div>
             </div>
