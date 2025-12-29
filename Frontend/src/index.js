@@ -1,36 +1,17 @@
 import ReactDOM from 'react-dom/client';
+import "leaflet/dist/leaflet.css";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // ================================
-// IMPORTING LAYOUTS
-// ================================
-import { EduLayout } from './Layouts/EduLayout';
-import { TechLayout } from './Layouts/TechLayout';
-import { TourismLayout } from './Layouts/TourismLayout';
-
-// ================================
-// GENERAL IMPORTS
-// ================================
-import { SignUpForm } from './components/SignUpForm/SignUpForm';
-import { PageNotFoundPg } from './Pages/404Page/404Page';
-
-// ================================
 // IMPORTING PAGES
 // ================================
-
-//******** Eduction Sector Imports *******/
 import { EduHomePage } from './Pages/EducationPage/EduHomePage/EduHomePage';
 import { SchoolPage } from './Pages/EducationPage/EduCatagoriesPg/SchoolPg';
 import { CollegesPage } from './Pages/EducationPage/EduCatagoriesPg/CollegesPg';
 import { UniPage } from './Pages/EducationPage/EduCatagoriesPg/UniPg';
-import { OnlineTrainingPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineTraining';
-import { TutorsPage } from './Pages/EducationPage/EduCatagoriesPg/Tutors';
-import { OnlineCoursesPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineCourses';
-
-//******** Technicians Sector Imports *******/
 import { TechniciansHomePg } from './Pages/TechniciansPage/TechniciansHomePg/TechniciansHomePg';
 import { ElectronicCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg/Electronics';
 import { PlumbingGasCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg/PlumAndGas';
@@ -38,18 +19,28 @@ import { PaintingConstructCata } from './Pages/TechniciansPage/TechniciansCatago
 import { CarpFurnitureCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg/Carpentry&Furniture';
 import { CleanMaintCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg/Cleaning&Maintaining';
 import { GardOutdoorCata } from './Pages/TechniciansPage/TechniciansCatagoriesPg/Gardening&Outdoor';
+import { OnlineTrainingPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineTraining';
+import { TutorsPage } from './Pages/EducationPage/EduCatagoriesPg/Tutors';
+import { OnlineCoursesPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineCourses';
+import { SignUpForm } from './components/SignUpForm/SignUpForm';
+import { EduLayout } from './Layouts/EduLayout';
+import { TechLayout } from './Layouts/TechLayout';
+import { PageNotFoundPg } from './Pages/404Page/404Page';
+//tourism imports
+import { TourismLayout } from './Layouts/TourismLayout';
+import { TourismHome } from './Pages/TourismPage/TourismHomepg/TourismHome';
 
-//******** Tourism Sector Imports *******/
-import { TourismHome } from './Pages/TourismPage/TourismHome';
-import { Places } from './Pages/TourismPage/Places';
-import { Hotels } from './Pages/TourismPage/Hotels';
-import { Restaurants } from './Pages/TourismPage/Restaurants';
-import { Parks } from './Pages/TourismPage/Parks';
-import { Guide } from './Pages/TourismPage/Guide';
-import { Gallery } from './Pages/TourismPage/Gallery';
+import { Places } from './Pages/TourismPage/TourismCategoriespg/Places';
+import { Hotels } from './Pages/TourismPage/TourismCategoriespg/Hotels';
+import { Restaurants } from './Pages/TourismPage/TourismCategoriespg/Restaurants';
+
+import { Parks } from './Pages/TourismPage/TourismCategoriespg/Parks';
+import { Guide } from './Pages/TourismPage/TourismCategoriespg/Guide';
+import { Gallery } from './Pages/TourismPage/TourismCategoriespg/Gallery';
 import { Aboutus } from './Pages/AboutUsPage/Aboutus';
 import Contactus from './Pages/ContactUs/ContactUs';
-// import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
+import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
+import { TourGuides } from './Pages/TourismPage/TourismCategoriespg/TourGuides';
 
 
 
@@ -64,6 +55,7 @@ const allRoutes = createBrowserRouter([
 
   // Authentication / User
   {
+
     path: "/form",
     element: <SignUpForm />,
   },
@@ -113,7 +105,6 @@ const allRoutes = createBrowserRouter([
 
 
 
-
   // Tourism Sector
   {
     path: "/tourism",
@@ -125,10 +116,15 @@ const allRoutes = createBrowserRouter([
       { path: "restaurants", element: <Restaurants /> },
       { path: "parks", element: <Parks /> },
       { path: "guide", element: <Guide /> },
-
+      { path: "guides", element: <TourGuides /> },
       { path: "gallery", element: <Gallery /> },
+      { path: "landing", element: <TourismLandingPage /> },
+
+      // NEW: Dynamic route for individual service provider / tourism landing page
+      { path: ":id", element: <TourismLandingPage /> },
     ],
   },
+
   // Page Not Found
   {
     path: "*",
