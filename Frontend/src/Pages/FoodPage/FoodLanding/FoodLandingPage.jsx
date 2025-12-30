@@ -1,14 +1,62 @@
 import "./FoodLandingPage.css";
 import { useNavigate } from "react-router-dom";
-import { FaPhone, FaEnvelope, FaGlobe, FaClock, FaStar, FaMapMarkerAlt } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaGlobe, FaClock, FaStar, FaMapMarkerAlt, FaTruck, FaShoppingCart, FaTrash } from "react-icons/fa";
+import { useState } from "react";
 
 export const FoodLandingPage = ({ id, Alldata }) => {
     const navigate = useNavigate();
+    const [cart, setCart] = useState([]);
+    const [orderStatus, setOrderStatus] = useState(null);
 
     // Getting the specific data
     const item = Alldata.find(v => v.id === Number(id));
 
     if (!item) return <div className="error-msg">Information not found.</div>;
+
+    const addToCart = (product) => {
+        setCart(prev => {
+            const existing = prev.find(i => i.id === product.id);
+            if (existing) {
+                return prev.map(i => i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i);
+            }
+            return [...prev, { ...product, quantity: 1 }];
+        });
+    };
+
+    const removeFromCart = (productId) => {
+        setCart(prev => prev.filter(i => i.id !== productId));
+    };
+
+    const calculateTotal = () => {
+        return cart.reduce((acc, curr) => acc + (Number(curr.price) * curr.quantity), 0);
+    };
+
+    const handlePlaceOrder = (e) => {
+        e.preventDefault();
+        const orderData = {
+            shopName: item.name,
+            items: cart,
+            total: calculateTotal(),
+            timestamp: new Date().toISOString()
+        };
+
+        console.log("Order Placed:", orderData);
+
+        // FUTURE DASHBOARD INTEGRATION (Currently Commented Out)
+        /*
+        try {
+            // await api.post('/orders', orderData);
+            // navigate('/dashboard/orders');
+            console.log("Transferring to dashboard...");
+        } catch (err) {
+            console.error("Order failed", err);
+        }
+        */
+
+        setOrderStatus("Order placed successfully! (Transferred to console for now)");
+        setCart([]);
+        setTimeout(() => setOrderStatus(null), 5000);
+    };
 
     return (
         <section className="FoodLanding">
@@ -46,11 +94,18 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                     <p>{item.quickInfo?.basicProfile?.location || "Kohat"}</p>
                                 </div>
                             </div>
+                            <div className="InfoCard">
+                                <FaTruck className="info-icon" />
+                                <div>
+                                    <h4>Delivery</h4>
+                                    <p>{item.deliveryAvailability || "Not Specified"}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div className="ContactSidebar">
-                        <h3>Book a Table / Order</h3>
+                        <h3>Contact & Order Info</h3>
                         <div className="ContactLinks">
                             <a href={`tel:${item.contact?.phone}`} className="contact-item">
                                 <FaPhone /> {item.contact?.phone}
@@ -77,7 +132,133 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                     </div>
                 </div>
 
-                {/* MENU / SPECIALTIES SECTION */}
+                {/* MENU & ORDER SYSTEM SIDE-BY-SIDE */}
+                <div className="MenuOrderLayout">
+                    {/* LEFT SIDE: MENU */}
+                    <section className="MenuSide">
+                        <div className="MenuHeader">
+                            <h2>Our Signature Menu</h2>
+                            <p>Explore our curated selection of fine dishes and deals.</p>
+                        </div>
+
+                        <div className="MenuCategoriesList">
+                            {item.categorizedMenu ? (
+                                item.categorizedMenu.map((cat, catIdx) => (
+                                    <div key={catIdx} className="MenuCategoryBlock">
+                                        <h3 className="CategoryTitle">{cat.categoryName}</h3>
+                                        <div className="MenuItemsGrid">
+                                            {cat.items.map((menuItem) => (
+                                                <div key={menuItem.id} className="MenuItemCardNew">
+                                                    <div className="ItemImageWrapper">
+                                                        <img src={menuItem.img} alt={menuItem.name} />
+                                                        {menuItem.tags && menuItem.tags.map((tag, tIdx) => (
+                                                            <span key={tIdx} className={`item-tag tag-${tag.toLowerCase()}`}>{tag}</span>
+                                                        ))}
+                                                    </div>
+                                                    <div className="ItemDetails">
+                                                        <div className="ItemTitlePrice">
+                                                            <h4>{menuItem.name}</h4>
+                                                            <span className="ItemPrice">Rs. {menuItem.price}</span>
+                                                        </div>
+                                                        <p className="ItemDesc">{menuItem.desc}</p>
+
+                                                        {menuItem.variants && (
+                                                            <div className="ItemVariants">
+                                                                <span>Variants:</span>
+                                                                <div className="VariantBadges">
+                                                                    {menuItem.variants.map((v, vIdx) => (
+                                                                        <span key={vIdx} className="v-badge">{v}</span>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        <button
+                                                            className="AddToCartBtn"
+                                                            onClick={() => addToCart(menuItem)}
+                                                        >
+                                                            Add to Order
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="LegacyMenu">
+                                    {/* Fallback for old menu structure if any */}
+                                    {item.menu && item.menu.map((m) => (
+                                        <div key={m.id} className="MenuItem">
+                                            <div className="item-info">
+                                                <h4>{m.name}</h4>
+                                                <p>{m.description}</p>
+                                                <span className="price">Rs. {m.price}</span>
+                                            </div>
+                                            <button onClick={() => addToCart(m)}>Add to Order</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+
+                    {/* RIGHT SIDE: STICKY ORDER SYSTEM */}
+                    <aside className="OrderSidebar">
+                        <div className="StickyOrderCard">
+                            <h2 className="sidebar-title">Your Order</h2>
+                            {cart.length === 0 ? (
+                                <div className="EmptyCartState">
+                                    <FaShoppingCart className="empty-icon" />
+                                    <p>Your cart is empty. Browse the menu to add delicious items!</p>
+                                </div>
+                            ) : (
+                                <div className="ActiveCart">
+                                    <div className="CartItemsList">
+                                        {cart.map((c) => (
+                                            <div key={c.id} className="SideCartItem">
+                                                <div className="item-txt">
+                                                    <span className="item-name">{c.name}</span>
+                                                    <span className="item-qty">x {c.quantity}</span>
+                                                </div>
+                                                <div className="item-price-remove">
+                                                    <span>Rs. {Number(c.price) * c.quantity}</span>
+                                                    <button className="small-remove" onClick={() => removeFromCart(c.id)}>
+                                                        <FaTrash />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="CartTotalBox">
+                                        <span>Total Amount</span>
+                                        <strong>Rs. {calculateTotal()}</strong>
+                                    </div>
+                                    <hr />
+                                    <div className="CheckoutForm">
+                                        <h3>Checkout Details</h3>
+                                        <form className="order-form-side" onSubmit={handlePlaceOrder}>
+                                            <input type="text" placeholder="Full Name" required />
+                                            <input type="tel" placeholder="Phone Number" required />
+                                            <textarea placeholder="Delivery Address" required></textarea>
+                                            <select required>
+                                                <option value="">Payment Method</option>
+                                                <option value="cod">Cash on Delivery</option>
+                                                <option value="online">Online Payment</option>
+                                            </select>
+                                            {orderStatus && <p className="success-msg-side">{orderStatus}</p>}
+                                            <button className="submit-order-btn" type="submit">
+                                                Confirm & Order
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </aside>
+                </div>
+
+                {/* SPECIALTIES SECTION */}
                 <section className="MenuSection">
                     <h2 className="section-title">Specialties & Facilities</h2>
                     <div className="ChipsContainer">
@@ -122,16 +303,31 @@ export const FoodLandingPage = ({ id, Alldata }) => {
 
                 {/* REVIEWS SECTION */}
                 <section className="ReviewsSection">
-                    <h2 className="section-title">Customer Reviews</h2>
+                    <h2 className="section-title">Customer Feedback</h2>
                     <div className="ReviewsGrid">
-                        {item.quickInfo?.parentReviews?.map((rev, i) => (
-                            <div key={i} className="ReviewCard">
-                                <p>"{rev}"</p>
-                                <div className="stars">
-                                    <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+                        {(item.detailedReviews || item.quickInfo?.parentReviews)?.map((rev, i) => {
+                            const isDetailed = typeof rev === 'object';
+                            return (
+                                <div key={i} className="ReviewCard">
+                                    <div className="ReviewHeader">
+                                        <img
+                                            src={isDetailed ? rev.img : "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"}
+                                            alt={isDetailed ? rev.name : "Customer"}
+                                            className="ReviewerImg"
+                                        />
+                                        <div className="ReviewerInfo">
+                                            <h4>{isDetailed ? rev.name : "Verified Customer"}</h4>
+                                            <div className="stars">
+                                                {[...Array(isDetailed ? rev.rating : 5)].map((_, sIdx) => (
+                                                    <FaStar key={sIdx} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p className="ReviewText">"{isDetailed ? rev.comment : rev}"</p>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </section>
             </div>

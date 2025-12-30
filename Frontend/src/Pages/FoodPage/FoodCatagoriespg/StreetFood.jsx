@@ -46,7 +46,7 @@ export const StreetFoodPage = () => {
                             <div className="food-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                             <div className="food-cata-banner">
                                 <h1 className="cata-pg-main-hd">Taste the Vibrant Street Flavors</h1>
-                                <p>Explosive flavors, spicy chaats, and local snacks. Experience the soul of Kohat's food culture on every corner.</p>
+                                <p>Explosive flavors, spicy chaats, and local snacks. Experience the soul of Kohat's food culture on every corner house.</p>
                                 <SearchBar SearchedInst={setCrds} AllInst={StreetFoodCardsData} />
                             </div>
                             <div className="food-card-cont">

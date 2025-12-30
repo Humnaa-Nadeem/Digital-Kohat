@@ -49,8 +49,8 @@ export const FineDiningPage = () => {
                         <div className="food-main-sec">
                             <div className="food-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                             <div className="food-cata-banner">
-                                <h1 className="cata-pg-main-hd">Top Fine Dining in Kohat</h1>
-                                <p>Experience premium dining with exquisite cuisines and elegant atmosphere in the heart of your city.</p>
+                                <h1 className="cata-pg-main-hd">Experience Exquisite Fine Dining</h1>
+                                <p>Premium cuisines, elegant ambiance, and world-class service. Luxury dining at its finest in the heart of Kohat.</p>
                                 <SearchBar SearchedInst={setCrds} AllInst={FineDiningCardsData} />
                             </div>
 

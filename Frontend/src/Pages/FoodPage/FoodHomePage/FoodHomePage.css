@@ -1,67 +1,339 @@
-.Food-pg-sec .img-container {
-    width: 100%;
-    height: 180px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
+/* Global Overrides for Food Page */
+.FoodHomePremium {
+    background-color: #f8f9fb;
+    font-family: 'Outfit', sans-serif;
 }
 
-.Food-pg-sec .img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.Food-pg-sec .card:hover .img-container img {
-    transform: scale(1.1);
-}
-
-.icon-overlay {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 8px;
-    border-radius: 50%;
+/* Luxury Hero Section */
+.FoodHeroPremium {
+    height: 80vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=1920');
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: white;
 }
 
-.icon-overlay .icons {
-    font-size: 1.2rem;
-    color: #267252;
-    /* Primary green theme color */
+.HeroOverlay {
+    padding: 20px;
+    max-width: 1000px;
+    animation: fadeInUp 1s ease-out;
 }
 
-.food-cards {
+.HeroBadge {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    display: inline-block;
+}
+
+.HeroContent h1 {
+    font-size: 4.5rem;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    font-weight: 800;
+}
+
+.HeroContent h1 strong {
+    color: #fbc531;
+}
+
+.HeroLead {
+    font-size: 1.4rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.HeroBtnGroup {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: #fbc531;
+    color: #2c3e50;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.btn-primary:hover {
+    background: #e1b12c;
+    transform: translateY(-3px);
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #2c3e50;
+    transform: translateY(-3px);
+}
+
+/* Merchant Section */
+.MerchantSection {
+    padding: 80px 20px;
+    background: white;
+}
+
+.MerchantContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.MerchantCard {
+    background: #2c3e50;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    color: white;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.MerchantInfo {
+    padding: 60px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+    justify-content: center;
+}
+
+.MerchantInfo h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.MerchantInfo h2 strong {
+    color: #fbc531;
+}
+
+.MerchantInfo p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.MerchantPerks {
+    list-style: none;
+    padding: 0;
+}
+
+.MerchantPerks li {
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #fbc531;
+}
+
+.MerchantFormWrapper {
+    background: white;
+    padding: 50px;
+}
+
+/* Category Grid */
+.FoodCategoriesPremium {
+    padding: 100px 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.SectionTitleCenter {
     text-align: center;
-    padding: 20px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
+    margin-bottom: 60px;
 }
 
-.food-cards:hover {
-    transform: translateY(-5px);
-}
-
-.food-cards h2 {
-    margin-top: 15px;
+.SectionTitleCenter h2 {
+    font-size: 3rem;
     color: #2c3e50;
-    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
-.food-cards p {
+.SectionTitleCenter h2 strong {
+    color: #27ae60;
+}
+
+.SectionTitleCenter p {
+    font-size: 1.2rem;
     color: #7f8c8d;
-    font-size: 0.95rem;
-    line-height: 1.5;
+}
+
+.CategoriesGridPremium {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.CategoryCardPremium {
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: 0.4s;
+    cursor: pointer;
+    border: 1px solid #f0f0f0;
+}
+
+.CategoryCardPremium:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.CategoryThumb {
+    height: 250px;
+    position: relative;
+}
+
+.CategoryThumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.CategoryIcon {
+    position: absolute;
+    bottom: -25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background: #27ae60;
+    color: white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
+}
+
+.CategoryDetails {
+    padding: 40px 30px 30px;
+}
+
+.CategoryDetails h3 {
+    font-size: 1.6rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.CategoryDetails p {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.explore-btn {
+    background: #f1f2f6;
+    color: #2c3e50;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.CategoryCardPremium:hover .explore-btn {
+    background: #27ae60;
+    color: white;
+}
+
+/* Partner CTA */
+.PartnerCta {
+    padding: 100px 20px;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.CtaContent {
+    position: relative;
+    z-index: 2;
+}
+
+.PartnerCta h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.PartnerCta h2 strong {
+    color: #fbc531;
+}
+
+.PartnerCta p {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.cta-btn {
+    background: white;
+    color: #27ae60;
+    padding: 18px 50px;
+    border-radius: 50px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cta-btn:hover {
+    background: #fbc531;
+    color: #2c3e50;
+    transform: scale(1.05);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .HeroContent h1 {
+        font-size: 3rem;
+    }
+
+    .MerchantCard {
+        grid-template-columns: 1fr;
+    }
+
+    .HeroBtnGroup {
+        flex-direction: column;
+    }
 }

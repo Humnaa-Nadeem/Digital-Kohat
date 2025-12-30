@@ -45,8 +45,8 @@ export const CafesPage = () => {
                         <div className="food-main-sec">
                             <div className="food-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                             <div className="food-cata-banner">
-                                <h1 className="cata-pg-main-hd">Best Cafes in Your City</h1>
-                                <p>Relax and enjoy the best coffee, desserts, and cozy vibes at the most popular spots in town.</p>
+                                <h1 className="cata-pg-main-hd">Relax in Our Cozy Cafes</h1>
+                                <p>Unwind with the perfect cup of coffee, sweet treats, and a great atmosphere in Kohat's favorite spots.</p>
                                 <SearchBar SearchedInst={setCrds} AllInst={CafesCardsData} />
                             </div>
                             <div className="food-card-cont">

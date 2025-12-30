@@ -45,8 +45,8 @@ export const BakeriesPage = () => {
                         <div className="food-main-sec">
                             <div className="food-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                             <div className="food-cata-banner">
-                                <h1 className="cata-pg-main-hd">Sweet Delights & Fresh Bakes</h1>
-                                <p>From freshly baked bread to decadent pastries and traditional mithai, find the best bakeries in Kohat.</p>
+                                <h1 className="cata-pg-main-hd">Freshly Baked Happiness</h1>
+                                <p>Cakes, pastries, and artisanal breads baked fresh daily. Experience the sweet side of Kohat's heritage.</p>
                                 <SearchBar SearchedInst={setCrds} AllInst={BakeriesCardsData} />
                             </div>
                             <div className="food-card-cont">
