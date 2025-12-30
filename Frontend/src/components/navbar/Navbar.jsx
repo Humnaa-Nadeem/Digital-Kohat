@@ -64,11 +64,11 @@ const Navbar = () => {
                 >
                    <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
                     <a  onClick={()=>{ navigate ("/food");closeMenu();}}>food</a>
-                  <a href="#Hospital" onClick={closeMenu}>Hostpital</a>
-                  <a href="#Business" onClick={closeMenu}>Business</a>
-                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians</a>
-                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism</a>
-                  <a href="#brands" onClick={closeMenu}>Our Brands</a>
+                  <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
+                  <a onClick={() => { navigate("/business"); closeMenu(); }}>Business/shops</a>
+                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians/Labours</a>
+                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism/Traveling</a>
+                  <a onClick={() => { navigate("/brands"); closeMenu(); }}>Our Brands</a>
                 </div>
               )}
             </div>

@@ -12,8 +12,8 @@ import tourismImg from "../components/imgs/tourism.png";
 export const services = [
     { title: "Education", desc: "Search for quality learning institutions or register your own educational center.", img: schoolImg, link: "/edu" },
     { title: "Food", desc: "Discover or share the best dining spots and food services around you.", img: restaurantImg, link: "/food" },
-    { title: "Hospitals", desc: "Find trusted medical care or connect your healthcare services with the community.", img: hospitalImg, link: "/hospitals" },
-    { title: "Businesses", desc: "Explore or promote local shops and businesses in your area.", img: businessImg, link: "/businesses" },
-    { title: "Technicians", desc: "Hire skilled workers or offer your professional services with ease.", img: techImg, link: "/tech" },
-    { title: "Tourism", desc: "Plan visits or showcase local attractions and tourism spots.", img: tourismImg, link: "/tourism" },
+    { title: "Health", desc: "Find trusted medical care or connect your healthcare services with the community.", img: hospitalImg, link: "/hospital" },
+    { title: "Business/shops", desc: "Explore or promote local shops and businesses in your area.", img: businessImg, link: "/business" },
+    { title: "Technicians/Labours", desc: "Hire skilled workers or offer your professional services with ease.", img: techImg, link: "/tech" },
+    { title: "Tourism/Traveling", desc: "Plan visits or showcase local attractions and tourism spots.", img: tourismImg, link: "/tourism" },
 ];
