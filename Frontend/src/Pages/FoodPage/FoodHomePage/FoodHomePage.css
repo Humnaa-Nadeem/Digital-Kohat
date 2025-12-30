@@ -1,0 +1,67 @@
+.Food-pg-sec .img-container {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.Food-pg-sec .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.Food-pg-sec .card:hover .img-container img {
+    transform: scale(1.1);
+}
+
+.icon-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon-overlay .icons {
+    font-size: 1.2rem;
+    color: #267252;
+    /* Primary green theme color */
+}
+
+.food-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.food-cards:hover {
+    transform: translateY(-5px);
+}
+
+.food-cards h2 {
+    margin-top: 15px;
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.food-cards p {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}

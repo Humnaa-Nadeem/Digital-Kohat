@@ -63,7 +63,7 @@ const Navbar = () => {
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
                    <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
-                   <a href="#Resturants" onClick={closeMenu}>Resturants</a>
+                    <a  onClick={()=>{ navigate ("/food");closeMenu();}}>food</a>
                   <a href="#Hospital" onClick={closeMenu}>Hostpital</a>
                   <a href="#Business" onClick={closeMenu}>Business</a>
                   <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians</a>

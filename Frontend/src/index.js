@@ -38,6 +38,15 @@ import { Gallery } from './Pages/TourismPage/TourismCategoriespg/Gallery';
 import { TourGuides } from './Pages/TourismPage/TourismCategoriespg/TourGuides';
 import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
 
+// Food Pages
+import { FoodHomePage } from './Pages/FoodPage/FoodHomePage/FoodHomePage';
+import { FineDiningPage } from './Pages/FoodPage/FoodCatagoriespg/FineDining';
+import { CafesPage } from './Pages/FoodPage/FoodCatagoriespg/Cafes';
+import { FastFoodPage } from './Pages/FoodPage/FoodCatagoriespg/FastFood';
+import { LocalFoodPage } from './Pages/FoodPage/FoodCatagoriespg/LocalFood';
+import { BakeriesPage } from './Pages/FoodPage/FoodCatagoriespg/Bakeries';
+import { StreetFoodPage } from './Pages/FoodPage/FoodCatagoriespg/StreetFood';
+
 // Common Pages
 import Aboutus from "./Pages/AboutUsPage/Aboutus";
 import Contactus from './Pages/ContactUs/ContactUs';
@@ -47,6 +56,7 @@ import { SignUpForm } from './components/SignUpForm/SignUpForm';
 import { EduLayout } from './Layouts/EduLayout';
 import { TechLayout } from './Layouts/TechLayout';
 import { TourismLayout } from './Layouts/TourismLayout';
+import { FoodLayout } from './Layouts/FoodLayout';
 
 // 404 Page
 import { PageNotFoundPg } from './Pages/404Page/404Page';
@@ -112,6 +122,21 @@ const allRoutes = createBrowserRouter([
       { path: "landing", element: <TourismLandingPage /> },
       // Dynamic route for individual service provider
       { path: ":id", element: <TourismLandingPage /> },
+    ],
+  },
+
+  // Food Sector
+  {
+    path: "/food",
+    element: <FoodLayout />,
+    children: [
+      { index: true, element: <FoodHomePage /> },
+      { path: "fine-dining", element: <FineDiningPage /> },
+      { path: "cafes", element: <CafesPage /> },
+      { path: "fast-food", element: <FastFoodPage /> },
+      { path: "local-food", element: <LocalFoodPage /> },
+      { path: "bakeries", element: <BakeriesPage /> },
+      { path: "street-food", element: <StreetFoodPage /> },
     ],
   },
 
