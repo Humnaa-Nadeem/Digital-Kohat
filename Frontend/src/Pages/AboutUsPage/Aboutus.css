@@ -3,7 +3,7 @@
 ========================= */
 .about-hero {
   position: relative;
-  padding: 90px 6%;
+  padding: 100px 8% !important;
   background: linear-gradient(185deg, #02a877, #0c7052); /* green gradient */
   color: #fff;
   overflow: hidden;
@@ -71,6 +71,7 @@
   border-left: 8px solid #00c68a; /* light green vertical line */
   padding-left: 20px;
   font-size: 3rem;
+   color: #e6e6e6;
 }
 
 .about-text p {
@@ -78,6 +79,7 @@
   line-height: 1.6;
   font-weight: 500;
   font-size: 1.1rem;
+  color: #e6e6e6;
 }
 
 /* Image */
@@ -127,7 +129,7 @@
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  padding: 90px 6%;
+  padding: 100px 8% !important;
   background: linear-gradient(185deg, #02a877, #0c7052);
   width: 100%;
  

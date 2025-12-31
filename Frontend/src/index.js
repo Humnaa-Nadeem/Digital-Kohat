@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
 
 // ================================
 // IMPORTING PAGES
@@ -57,6 +57,16 @@ import { EduLayout } from './Layouts/EduLayout';
 import { TechLayout } from './Layouts/TechLayout';
 import { TourismLayout } from './Layouts/TourismLayout';
 import { FoodLayout } from './Layouts/FoodLayout';
+import { HospitalLayout } from './Layouts/HospitalLayout';
+
+// Hospital Pages
+import { HospHomePage } from './Pages/HospitalPage/HospHomePg/HospHomePg';
+import { HospitalsPage } from './Pages/HospitalPage/HosCategoriesPg/Hospitals';
+import { ClinicsPage } from './Pages/HospitalPage/HosCategoriesPg/Clinics';
+import { PharmaciesPage } from './Pages/HospitalPage/HosCategoriesPg/Pharmacies';
+import { DiagnosticsPage } from './Pages/HospitalPage/HosCategoriesPg/Diagnostics';
+import { AmbulancePage } from './Pages/HospitalPage/HosCategoriesPg/Ambulance';
+import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialists';
 
 // 404 Page
 import { PageNotFoundPg } from './Pages/404Page/404Page';
@@ -64,7 +74,7 @@ import { PageNotFoundPg } from './Pages/404Page/404Page';
 // ================================
 // ROUTING SYSTEM
 // ================================
-const allRoutes = createBrowserRouter([
+const routes = [
   { path: "/", element: <App /> },
 
   // Authentication / User
@@ -140,9 +150,28 @@ const allRoutes = createBrowserRouter([
     ],
   },
 
+  // Hospital / Health Sector
+  {
+    path: "/hospital",
+    element: <HospitalLayout />,
+    children: [
+      { index: true, element: <HospHomePage /> },
+      { path: "hospitals", element: <HospitalsPage /> },
+      { path: "clinics", element: <ClinicsPage /> },
+      { path: "pharmacies", element: <PharmaciesPage /> },
+      { path: "diagnostics", element: <DiagnosticsPage /> },
+      { path: "ambulance", element: <AmbulancePage /> },
+      { path: "specialists", element: <SpecialistsPage /> },
+    ],
+  },
+
   // Page Not Found
   { path: "*", element: <PageNotFoundPg /> },
-]);
+];
+
+const isVercel = (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app'));
+
+const allRoutes = isVercel ? createHashRouter(routes) : createBrowserRouter(routes);
 
 // ================================
 // Render App
