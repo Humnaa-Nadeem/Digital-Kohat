@@ -47,18 +47,39 @@ export const BakeriesPage = () => {
                             <div className="food-cata-banner">
                                 <h1 className="cata-pg-main-hd">Freshly Baked Happiness</h1>
                                 <p>Cakes, pastries, and artisanal breads baked fresh daily. Experience the sweet side of Kohat's heritage.</p>
-                                <SearchBar SearchedInst={setCrds} AllInst={BakeriesCardsData} />
+                                <div className="food-search-wrapper">
+                                    <SearchBar SearchedInst={setCrds} AllInst={BakeriesCardsData} />
+                                </div>
                             </div>
                             <div className="food-card-cont">
                                 {
                                     Crds.map((v, i) => {
+
+                                        const handleOrder = (item) => {
+                                            // Redirecting to landing page so user can enter their details (Name, Address, etc.)
+                                            navigate(`?id=${item.id}#order-section`);
+                                            alert(`Please enter your delivery details on the next page to proceed with your order for ${item.InstName}.`);
+                                        }
+
+
                                         return (
                                             <div className="food-pg-card" key={i}>
                                                 <img src={v.img} alt={v.InstName} />
                                                 <div className="food-pg-card-content">
                                                     <h3>{v.InstName}</h3>
                                                     <p>{v.Desc}</p>
-                                                    <button onClick={() => { navigate(`?id=${v.id}`) }} className="food-pg-card-btn">{v.btn_txt}</button>
+                                                    <div className="food-card-actions">
+                                                        <button onClick={() => { navigate(`?id=${v.id}`) }} className="food-pg-card-btn">{v.btn_txt}</button>
+
+                                                        <button
+                                                            className="food-pg-card-btn order-btn"
+                                                            onClick={() => handleOrder(v)}
+                                                            style={{ marginTop: '10px', backgroundColor: '#e74c3c', color: 'white' }}
+                                                        >
+                                                            Order Now
+                                                        </button>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         )

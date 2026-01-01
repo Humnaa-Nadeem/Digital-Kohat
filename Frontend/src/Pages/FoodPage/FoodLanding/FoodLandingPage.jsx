@@ -33,28 +33,35 @@ export const FoodLandingPage = ({ id, Alldata }) => {
 
     const handlePlaceOrder = (e) => {
         e.preventDefault();
+        const formData = new FormData(e.target);
+
         const orderData = {
+            orderID: `ORD-${Math.floor(Math.random() * 1000000)}`,
             shopName: item.name,
-            items: cart,
+            items: cart.map(i => ({ name: i.name, qty: i.quantity, subtotal: Number(i.price) * i.quantity })),
             total: calculateTotal(),
-            timestamp: new Date().toISOString()
+            paymentMethod: e.target.paymentMethod.value === "cod" ? "Cash on Delivery" : "Online Payment",
+            status: "Pending",
+            timestamp: new Date().toLocaleString(),
+            userDetails: {
+                name: e.target.fullName.value,
+                phone: e.target.phone.value,
+                address: e.target.address.value
+            }
         };
 
-        console.log("Order Placed:", orderData);
+        console.log("================ ORDER DETAILS (LANDING) ================");
+        console.log("Status: Processing Order for " + item.name);
+        console.table(orderData);
+        console.log("Detailed Shop Items:", orderData.items);
+        console.log("Full JSON for Admin:", JSON.stringify(orderData, null, 2));
+        console.log("==========================================================");
 
-        // FUTURE DASHBOARD INTEGRATION (Currently Commented Out)
-        /*
-        try {
-            // await api.post('/orders', orderData);
-            // navigate('/dashboard/orders');
-            console.log("Transferring to dashboard...");
-        } catch (err) {
-            console.error("Order failed", err);
-        }
-        */
-
-        setOrderStatus("Order placed successfully! (Transferred to console for now)");
+        setOrderStatus(`Order placed successfully for Rs. ${orderData.total}! Details sent to console.`);
         setCart([]);
+
+        alert(`Order Confirmed at ${item.name}!\nTotal: Rs. ${orderData.total}\nPayment: ${orderData.paymentMethod}\n\nOur team will contact you soon!`);
+
         setTimeout(() => setOrderStatus(null), 5000);
     };
 
@@ -204,7 +211,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                     </section>
 
                     {/* RIGHT SIDE: STICKY ORDER SYSTEM */}
-                    <aside className="OrderSidebar">
+                    <aside className="OrderSidebar" id="order-section">
                         <div className="StickyOrderCard">
                             <h2 className="sidebar-title">Your Order</h2>
                             {cart.length === 0 ? (
@@ -238,10 +245,10 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                     <div className="CheckoutForm">
                                         <h3>Checkout Details</h3>
                                         <form className="order-form-side" onSubmit={handlePlaceOrder}>
-                                            <input type="text" placeholder="Full Name" required />
-                                            <input type="tel" placeholder="Phone Number" required />
-                                            <textarea placeholder="Delivery Address" required></textarea>
-                                            <select required>
+                                            <input type="text" name="fullName" placeholder="Full Name" required />
+                                            <input type="tel" name="phone" placeholder="Phone Number" required />
+                                            <textarea name="address" placeholder="Delivery Address" required></textarea>
+                                            <select name="paymentMethod" required>
                                                 <option value="">Payment Method</option>
                                                 <option value="cod">Cash on Delivery</option>
                                                 <option value="online">Online Payment</option>

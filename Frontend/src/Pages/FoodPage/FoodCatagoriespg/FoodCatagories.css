@@ -97,6 +97,8 @@
     border-radius: 30px;
     background-size: cover;
     background-position: center;
+    background-color: #267252;
+    /* Fallback color */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -138,11 +140,40 @@
     margin-bottom: 30px;
 }
 
-.food-cata-banner .SearchAndFilter {
-    position: relative;
-    z-index: 2;
-    width: 100%;
+/* Search Bar Responsiveness */
+.food-search-wrapper {
+    width: 60%;
     max-width: 600px;
+    position: relative;
+    z-index: 5;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Target the SearchBar component's internal class via the wrapper */
+.food-search-wrapper .Search-Area {
+    width: 100% !important;
+    /* Force width to fill wrapper */
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.food-search-wrapper input {
+    color: #333 !important;
+    /* Force dark text color */
+}
+
+.food-search-wrapper input::placeholder {
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .food-search-wrapper {
+        width: 90%;
+    }
 }
 
 /* Premium Cards */
