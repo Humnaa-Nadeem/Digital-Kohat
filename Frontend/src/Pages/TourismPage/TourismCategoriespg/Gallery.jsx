@@ -2,12 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GalleryImages } from "../../../Store/Tourism_store";
 import "./TourismCategories.css";
+import { getMergedData } from "../../../utils/dataMerger";
 
 export const Gallery = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   const navigate = useNavigate();
   const [showList, setShowList] = useState(false);
+
+  // Merge static gallery with registered 'Gallery' items
+  const rawImages = getMergedData(GalleryImages, "Tourism", "Gallery");
+
+  // Normalize data structure since registered items have 'img' instead of 'src'
+  const images = rawImages.map(item => ({
+    ...item,
+    src: item.src || item.img // Handle both formats
+  }));
 
   return (
     <section className="Tourism-Cata-Pg-Sec">
@@ -36,7 +46,7 @@ export const Gallery = () => {
 
         {/* Gallery cards */}
         <div className="cata-card-cont">
-          {GalleryImages.map((img) => (
+          {images.map((img) => (
             <div className="cata-pg-card premium-card" key={img.id}>
               <div className="card-img-container" style={{ height: "250px" }}>
                 <img src={img.src} alt={`Gallery ${img.id}`} />

@@ -5,11 +5,12 @@ import { HotelsList, HotelCardsData } from "../../../Store/Tourism_store";
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaClock, FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
 import "./TourismCategories.css";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const Hotels = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const [cards, setCards] = useState(HotelCardsData);
+  const [cards, setCards] = useState(() => getMergedData(HotelCardsData, "Tourism", "Hotels"));
   const [showList, setShowList] = useState(false);
 
   const navigate = useNavigate();
@@ -22,9 +23,9 @@ export const Hotels = () => {
   };
 
   // Helper to check if item is active
-  const isActive = (cardId) => cardId === id;
+  const isActive = (cardId) => String(cardId) === String(id);
 
-  const selectedHotel = HotelCardsData.find((h) => h.id === Number(id));
+  const selectedHotel = getSelectedItem(HotelCardsData, "Tourism", "Hotels", id);
 
   return (
     <>
@@ -40,7 +41,7 @@ export const Hotels = () => {
             <div className="institute-hd-lst">
               <h2 className="institute-hd">Hotels & Stays</h2>
               <ul className="institute-lst">
-                {HotelsList.map((hotel) => (
+                {getMergedData(HotelsList, "Tourism", "Hotels").map((hotel) => (
                   <li
                     key={hotel.id}
                     onClick={() => handleCardClick(hotel.id)}

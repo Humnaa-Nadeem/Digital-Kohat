@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PlacesList, PlacesCardsData } from "../../../Store/Tourism_store";
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaClock, FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const Places = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const [placeCards, setPlaceCards] = useState(PlacesCardsData);
+  const [placeCards, setPlaceCards] = useState(() => getMergedData(PlacesCardsData, "Tourism", "Places"));
   const [showList, setShowList] = useState(false);
   const [activePlace, setActivePlace] = useState(null);
 
@@ -23,7 +24,7 @@ export const Places = () => {
     setActivePlace(index);
   };
 
-  const selectedPlace = PlacesCardsData.find((p) => p.id === Number(id));
+  const selectedPlace = getSelectedItem(PlacesCardsData, "Tourism", "Places", id);
 
   return (
     <>
@@ -39,7 +40,7 @@ export const Places = () => {
             <div className="institute-hd-lst">
               <h2 className="institute-hd">Famous Places</h2>
               <ul className="institute-lst">
-                {PlacesList.map((place, i) => (
+                {getMergedData(PlacesList, "Tourism", "Places").map((place, i) => (
                   <li
                     key={place.id}
                     className={activePlace === i ? "active" : ""}

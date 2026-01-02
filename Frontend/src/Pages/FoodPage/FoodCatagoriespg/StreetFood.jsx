@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StreetFoodList, StreetFoodCardsData, Food_Details } from "../../../Store/Food_store";
 import { FoodLandingPage } from "../FoodLanding/FoodLandingPage";
+import { getMergedData, getFullMergedData } from "../../../utils/dataMerger";
 
 export const StreetFoodPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
 
-    let [List, setList] = useState(StreetFoodList);
-    let [Crds, setCrds] = useState(StreetFoodCardsData);
+    let [List, setList] = useState(() => getMergedData(StreetFoodList, "Food", "Street Food"));
+    let [Crds, setCrds] = useState(() => getMergedData(StreetFoodCardsData, "Food", "Street Food"));
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
 
@@ -24,7 +25,7 @@ export const StreetFoodPage = () => {
             {
                 (id)
                     ?
-                    <FoodLandingPage id={id} Alldata={Food_Details} />
+                    <FoodLandingPage id={id} Alldata={getFullMergedData(Food_Details, "Food")} />
                     :
                     <section className="food-cata-pg-sec">
                         <div className={(showList) ? "food-lft-sec food-showList" : "food-lft-sec"} >

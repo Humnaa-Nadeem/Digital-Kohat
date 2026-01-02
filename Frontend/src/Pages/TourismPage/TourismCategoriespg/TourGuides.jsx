@@ -5,11 +5,12 @@ import { TourGuidesList, TourGuidesCardsData } from "../../../Store/Tourism_stor
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
 import "./TourismCategories.css";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const TourGuides = () => {
     useEffect(() => window.scrollTo(0, 0), []);
 
-    const [cards, setCards] = useState(TourGuidesCardsData);
+    const [cards, setCards] = useState(() => getMergedData(TourGuidesCardsData, "Tourism", "Tour Guides"));
     const [showList, setShowList] = useState(false);
 
     const navigate = useNavigate();
@@ -21,9 +22,9 @@ export const TourGuides = () => {
         navigate(`?id=${cardId}`);
     };
 
-    const isActive = (cardId) => cardId === String(id);
+    const isActive = (cardId) => String(cardId) === String(id);
 
-    const selectedGuide = TourGuidesCardsData.find((g) => g.id === Number(id));
+    const selectedGuide = getSelectedItem(TourGuidesCardsData, "Tourism", "Tour Guides", id);
 
     return (
         <>
@@ -38,7 +39,7 @@ export const TourGuides = () => {
                         <div className="institute-hd-lst">
                             <h2 className="institute-hd">Professional Guides</h2>
                             <ul className="institute-lst">
-                                {TourGuidesList.map((guide) => (
+                                {getMergedData(TourGuidesList, "Tourism", "Tour Guides").map((guide) => (
                                     <li
                                         key={guide.id}
                                         onClick={() => handleCardClick(guide.id)}

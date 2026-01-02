@@ -9,7 +9,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
     const [orderStatus, setOrderStatus] = useState(null);
 
     // Getting the specific data
-    const item = Alldata.find(v => v.id === Number(id));
+    const item = Alldata.find(v => String(v.id) === String(id));
 
     if (!item) return <div className="error-msg">Information not found.</div>;
 

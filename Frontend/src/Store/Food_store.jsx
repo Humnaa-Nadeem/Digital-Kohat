@@ -1,4 +1,4 @@
-import { FaUtensils, FaCoffee, FaPizzaSlice, FaHamburger, FaBirthdayCake, FaIceCream } from "react-icons/fa";
+import { FaUtensils, FaCoffee, FaPizzaSlice, FaHamburger, FaBirthdayCake, FaIceCream, FaBreadSlice } from "react-icons/fa";
 
 // ========================================
 // FOOD CATEGORIES
@@ -31,7 +31,7 @@ export const Food_categories = [
     {
         title: "Local Cuisine",
         img: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600",
-        icon: <FaHamburger className="icons" />,
+        icon: <FaBreadSlice className="icons" />,
         btn: "Traditional Food",
         link: "/food/local-food",
         description: "Explore the authentic flavors and traditional dishes of Kohat."
