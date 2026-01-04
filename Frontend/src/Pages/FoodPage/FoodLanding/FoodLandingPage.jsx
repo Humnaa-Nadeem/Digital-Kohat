@@ -1,12 +1,18 @@
 import "./FoodLandingPage.css";
 import { useNavigate } from "react-router-dom";
-import { FaPhone, FaEnvelope, FaGlobe, FaClock, FaStar, FaMapMarkerAlt, FaTruck, FaShoppingCart, FaTrash } from "react-icons/fa";
+import {
+    FaPhone, FaEnvelope, FaGlobe, FaClock, FaStar, FaMapMarkerAlt,
+    FaTruck, FaShoppingCart, FaTrash, FaCheckCircle, FaUtensils,
+    FaChair, FaCalendarAlt, FaUserFriends, FaStickyNote, FaInfoCircle
+} from "react-icons/fa";
 import { useState } from "react";
 
 export const FoodLandingPage = ({ id, Alldata }) => {
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const [orderStatus, setOrderStatus] = useState(null);
+    const [reservationStatus, setReservationStatus] = useState(null);
+    const [activeTab, setActiveTab] = useState('delivery'); // 'delivery' or 'booking'
 
     // Getting the specific data
     const item = Alldata.find(v => String(v.id) === String(id));
@@ -41,6 +47,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
             items: cart.map(i => ({ name: i.name, qty: i.quantity, subtotal: Number(i.price) * i.quantity })),
             total: calculateTotal(),
             paymentMethod: e.target.paymentMethod.value === "cod" ? "Cash on Delivery" : "Online Payment",
+            specialInstructions: e.target.specialInstructions.value,
             status: "Pending",
             timestamp: new Date().toLocaleString(),
             userDetails: {
@@ -51,26 +58,51 @@ export const FoodLandingPage = ({ id, Alldata }) => {
         };
 
         console.log("================ ORDER DETAILS (LANDING) ================");
-        console.log("Status: Processing Order for " + item.name);
         console.table(orderData);
-        console.log("Detailed Shop Items:", orderData.items);
-        console.log("Full JSON for Admin:", JSON.stringify(orderData, null, 2));
         console.log("==========================================================");
 
-        setOrderStatus(`Order placed successfully for Rs. ${orderData.total}! Details sent to console.`);
+        setOrderStatus(`Order placed successfully! Total: Rs. ${orderData.total}`);
         setCart([]);
-
-        alert(`Order Confirmed at ${item.name}!\nTotal: Rs. ${orderData.total}\nPayment: ${orderData.paymentMethod}\n\nOur team will contact you soon!`);
-
+        alert(`Order Confirmed at ${item.name}!\nTotal: Rs. ${orderData.total}\nInstruction: ${orderData.specialInstructions || "None"}`);
         setTimeout(() => setOrderStatus(null), 5000);
+    };
+
+    const handleTableBooking = (e) => {
+        e.preventDefault();
+        const bookingData = {
+            bookingID: `BK-${Math.floor(Math.random() * 1000000)}`,
+            shopName: item.name,
+            date: e.target.date.value,
+            time: e.target.time.value,
+            guests: e.target.guests.value,
+            specialRequest: e.target.specialRequest.value,
+            customerName: e.target.resName.value,
+            contact: e.target.resContact.value
+        };
+
+        console.log("================ TABLE RESERVATION ================");
+        console.table(bookingData);
+        console.log("===================================================");
+
+        setReservationStatus(`Table Booked for ${bookingData.guests} guests on ${bookingData.date} at ${bookingData.time}.`);
+        alert(`Table Reserved Successfully!\nReference ID: ${bookingData.bookingID}`);
+        e.target.reset();
+        setTimeout(() => setReservationStatus(null), 5000);
     };
 
     return (
         <section className="FoodLanding">
             {/* HERO SECTION */}
-            <div className="FoodHero" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${item.img || item.aboutImage})` }}>
+            <div className="FoodHero" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${item.img || item.aboutImage})` }}>
                 <div className="HeroContent">
-                    <span className="category-tag">{item.type}</span>
+                    <div className="HeroBadges">
+                        <span className="category-tag">{item.type}</span>
+                        {item.verifiedBadge && <span className="badge verified"><FaCheckCircle /> Verified</span>}
+                        {item.hygieneRating && <span className="badge hygiene">Hygiene: {item.hygieneRating}</span>}
+                        <span className={`badge status ${item.isOpen ? 'open' : 'closed'}`}>
+                            {item.isOpen ? 'Open Now' : 'Closed'}
+                        </span>
+                    </div>
                     <h1>{item.name}</h1>
                     <p className="tagline">{item.tagline}</p>
                     <div className="hero-actions">
@@ -108,6 +140,15 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                     <p>{item.deliveryAvailability || "Not Specified"}</p>
                                 </div>
                             </div>
+                            {item.inspectionStatus && (
+                                <div className="InfoCard">
+                                    <FaInfoCircle className="info-icon" />
+                                    <div>
+                                        <h4>Inspection</h4>
+                                        <p>{item.inspectionStatus}</p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -168,7 +209,6 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                                             <span className="ItemPrice">Rs. {menuItem.price}</span>
                                                         </div>
                                                         <p className="ItemDesc">{menuItem.desc}</p>
-
                                                         {menuItem.variants && (
                                                             <div className="ItemVariants">
                                                                 <span>Variants:</span>
@@ -179,11 +219,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                                                 </div>
                                                             </div>
                                                         )}
-
-                                                        <button
-                                                            className="AddToCartBtn"
-                                                            onClick={() => addToCart(menuItem)}
-                                                        >
+                                                        <button className="AddToCartBtn" onClick={() => addToCart(menuItem)}>
                                                             Add to Order
                                                         </button>
                                                     </div>
@@ -194,7 +230,6 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                 ))
                             ) : (
                                 <div className="LegacyMenu">
-                                    {/* Fallback for old menu structure if any */}
                                     {item.menu && item.menu.map((m) => (
                                         <div key={m.id} className="MenuItem">
                                             <div className="item-info">
@@ -210,62 +245,118 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                         </div>
                     </section>
 
-                    {/* RIGHT SIDE: STICKY ORDER SYSTEM */}
+                    {/* RIGHT SIDE: STICKY SIDEBAR (Tabs) */}
                     <aside className="OrderSidebar" id="order-section">
+                        <div className="SidebarTabs">
+                            <button
+                                className={`tab-btn ${activeTab === 'delivery' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('delivery')}
+                            >
+                                <FaTruck /> Order Delivery
+                            </button>
+                            <button
+                                className={`tab-btn ${activeTab === 'booking' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('booking')}
+                            >
+                                <FaChair /> Book Table
+                            </button>
+                        </div>
+
                         <div className="StickyOrderCard">
-                            <h2 className="sidebar-title">Your Order</h2>
-                            {cart.length === 0 ? (
-                                <div className="EmptyCartState">
-                                    <FaShoppingCart className="empty-icon" />
-                                    <p>Your cart is empty. Browse the menu to add delicious items!</p>
-                                </div>
-                            ) : (
-                                <div className="ActiveCart">
-                                    <div className="CartItemsList">
-                                        {cart.map((c) => (
-                                            <div key={c.id} className="SideCartItem">
-                                                <div className="item-txt">
-                                                    <span className="item-name">{c.name}</span>
-                                                    <span className="item-qty">x {c.quantity}</span>
-                                                </div>
-                                                <div className="item-price-remove">
-                                                    <span>Rs. {Number(c.price) * c.quantity}</span>
-                                                    <button className="small-remove" onClick={() => removeFromCart(c.id)}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </div>
+                            {activeTab === 'delivery' ? (
+                                <>
+                                    <h2 className="sidebar-title">Your Order</h2>
+                                    {cart.length === 0 ? (
+                                        <div className="EmptyCartState">
+                                            <FaShoppingCart className="empty-icon" />
+                                            <p>Your cart is empty. Browse the menu to add delicious items!</p>
+                                        </div>
+                                    ) : (
+                                        <div className="ActiveCart">
+                                            <div className="CartItemsList">
+                                                {cart.map((c) => (
+                                                    <div key={c.id} className="SideCartItem">
+                                                        <div className="item-txt">
+                                                            <span className="item-name">{c.name}</span>
+                                                            <span className="item-qty">x {c.quantity}</span>
+                                                        </div>
+                                                        <div className="item-price-remove">
+                                                            <span>Rs. {Number(c.price) * c.quantity}</span>
+                                                            <button className="small-remove" onClick={() => removeFromCart(c.id)}>
+                                                                <FaTrash />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))}
-                                    </div>
-                                    <div className="CartTotalBox">
-                                        <span>Total Amount</span>
-                                        <strong>Rs. {calculateTotal()}</strong>
-                                    </div>
-                                    <hr />
-                                    <div className="CheckoutForm">
-                                        <h3>Checkout Details</h3>
-                                        <form className="order-form-side" onSubmit={handlePlaceOrder}>
-                                            <input type="text" name="fullName" placeholder="Full Name" required />
-                                            <input type="tel" name="phone" placeholder="Phone Number" required />
-                                            <textarea name="address" placeholder="Delivery Address" required></textarea>
-                                            <select name="paymentMethod" required>
-                                                <option value="">Payment Method</option>
-                                                <option value="cod">Cash on Delivery</option>
-                                                <option value="online">Online Payment</option>
-                                            </select>
-                                            {orderStatus && <p className="success-msg-side">{orderStatus}</p>}
-                                            <button className="submit-order-btn" type="submit">
-                                                Confirm & Order
-                                            </button>
-                                        </form>
-                                    </div>
+                                            <div className="CartTotalBox">
+                                                <span>Total Amount</span>
+                                                <strong>Rs. {calculateTotal()}</strong>
+                                            </div>
+                                            <hr />
+                                            <div className="CheckoutForm">
+                                                <h3>Checkout Details</h3>
+                                                <form className="order-form-side" onSubmit={handlePlaceOrder}>
+                                                    <input type="text" name="fullName" placeholder="Full Name" required />
+                                                    <input type="tel" name="phone" placeholder="Phone Number" required />
+                                                    <textarea name="address" placeholder="Delivery Address" required></textarea>
+                                                    <textarea name="specialInstructions" placeholder="Special Instructions (e.g. less spicy, extra sauce)" rows="2"></textarea>
+                                                    <select name="paymentMethod" required>
+                                                        <option value="">Payment Method</option>
+                                                        <option value="cod">Cash on Delivery</option>
+                                                        <option value="online">Online Payment</option>
+                                                    </select>
+                                                    {orderStatus && <p className="success-msg-side">{orderStatus}</p>}
+                                                    <button className="submit-order-btn" type="submit">
+                                                        Confirm & Order
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                /* BOOKING TAB */
+                                <div className="BookingSection">
+                                    <h2 className="sidebar-title">Reserve a Table</h2>
+                                    <p className="booking-desc">Book your spot at {item.name} in advance.</p>
+                                    <form className="booking-form" onSubmit={handleTableBooking}>
+                                        <div className="form-group">
+                                            <label><FaCalendarAlt /> Date</label>
+                                            <input type="date" name="date" required min={new Date().toISOString().split('T')[0]} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label><FaClock /> Time</label>
+                                            <input type="time" name="time" required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label><FaUserFriends /> Guests</label>
+                                            <input type="number" name="guests" min="1" max="20" placeholder="Number of Guests" required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label><FaStickyNote /> Special Request</label>
+                                            <textarea name="specialRequest" placeholder="Birthday, Anniversary, Corner Table..." rows="2"></textarea>
+                                        </div>
+                                        <hr />
+                                        <div className="form-group">
+                                            <input type="text" name="resName" placeholder="Your Name" required />
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="tel" name="resContact" placeholder="Contact Number" required />
+                                        </div>
+
+                                        {reservationStatus && <p className="success-msg-side">{reservationStatus}</p>}
+                                        <button className="submit-order-btn booking-btn" type="submit">
+                                            Confirm Reservation
+                                        </button>
+                                    </form>
                                 </div>
                             )}
                         </div>
                     </aside>
                 </div>
 
-                {/* SPECIALTIES SECTION */}
+                {/* VISUAL & FACILITIES SECTIONS */}
                 <section className="MenuSection">
                     <h2 className="section-title">Specialties & Facilities</h2>
                     <div className="ChipsContainer">
@@ -278,7 +369,6 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                     </div>
                 </section>
 
-                {/* GALLERY SECTION */}
                 <section className="GallerySection">
                     <h2 className="section-title">Photo Gallery</h2>
                     <div className="GalleryGrid">
@@ -290,7 +380,6 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                     </div>
                 </section>
 
-                {/* STAFF SECTION */}
                 {item.staff && item.staff.length > 0 && (
                     <section className="StaffSection">
                         <h2 className="section-title">Meet Our Team</h2>
@@ -308,7 +397,6 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                     </section>
                 )}
 
-                {/* REVIEWS SECTION */}
                 <section className="ReviewsSection">
                     <h2 className="section-title">Customer Feedback</h2>
                     <div className="ReviewsGrid">

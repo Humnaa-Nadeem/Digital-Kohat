@@ -5,21 +5,55 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FineDiningList, FineDiningCardsData, Food_Details } from "../../../Store/Food_store";
 import { FoodLandingPage } from "../FoodLanding/FoodLandingPage";
 import { getMergedData, getFullMergedData } from "../../../utils/dataMerger";
+import { FaFilter, FaSortAmountDown, FaStar, FaBicycle, FaClock } from "react-icons/fa";
 
 export const FineDiningPage = () => {
-
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
 
-    let [List, setList] = useState(() => getMergedData(FineDiningList, "Food", "Fine Dining"));
-    let [Crds, setCrds] = useState(() => getMergedData(FineDiningCardsData, "Food", "Fine Dining"));
-    let [showList, setShowlist] = useState(false);
-    let navigate = useNavigate();
+    const [allCrds] = useState(() => getMergedData(FineDiningCardsData, "Food", "Fine Dining"));
+    const [Crds, setCrds] = useState(allCrds);
+    const [showList, setShowlist] = useState(false);
 
+    // Filter & Sort State
+    const [sortBy, setSortBy] = useState("rating");
+    const [filterPrice, setFilterPrice] = useState("all");
+    const [filterCuisine, setFilterCuisine] = useState("all");
+    const [filterDelivery, setFilterDelivery] = useState(false);
+
+    const navigate = useNavigate();
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
+
+    const List = getMergedData(FineDiningList, "Food", "Fine Dining");
+
+    // Apply Sorting and Filtering
+    useEffect(() => {
+        let results = [...allCrds];
+
+        // Search filtering is handled by SearchBar, but we re-apply filters on top
+        if (filterPrice !== "all") {
+            results = results.filter(item => item.priceRange === filterPrice);
+        }
+        if (filterCuisine !== "all") {
+            results = results.filter(item => item.cuisine === filterCuisine);
+        }
+        if (filterDelivery) {
+            results = results.filter(item => item.deliveryAvailable === true);
+        }
+
+        // Sorting
+        results.sort((a, b) => {
+            if (sortBy === "rating") return b.rating - a.rating;
+            if (sortBy === "priceLow") return a.price - b.price;
+            if (sortBy === "priceHigh") return b.price - a.price;
+            return 0;
+        });
+
+        setCrds(results);
+    }, [filterPrice, filterCuisine, filterDelivery, sortBy, allCrds]);
 
     return (
         <>
@@ -32,17 +66,61 @@ export const FineDiningPage = () => {
                         {/* LEFT SIDE OF PAGE */}
                         <div className={(showList) ? "food-lft-sec food-showList" : "food-lft-sec"} >
                             <h2 className="food-sector-label" onClick={() => { navigate(`/food`) }}>Food Section</h2>
+
+                            {/* CATEGORIES LIST */}
                             <div className="institute-hd-lst">
                                 <h2 className="food-institute-hd">Fine Dining</h2>
                                 <ul className="food-institute-lst">
                                     {
-                                        List.map((v, i) => {
-                                            return (
-                                                <li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.name}</li>
-                                            )
-                                        })
+                                        List.map((v, i) => (
+                                            <li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.name}</li>
+                                        ))
                                     }
                                 </ul>
+                            </div>
+
+                            {/* FILTERS SECTION */}
+                            <div className="filter-sidebar-content">
+                                <h3 className="filter-hd"><FaFilter /> Filters</h3>
+
+                                <div className="filter-group">
+                                    <label>Price Range</label>
+                                    <select value={filterPrice} onChange={(e) => setFilterPrice(e.target.value)}>
+                                        <option value="all">All Prices</option>
+                                        <option value="$">$ (Budget)</option>
+                                        <option value="$$">$$ (Moderate)</option>
+                                        <option value="$$$">$$$ (Premium)</option>
+                                    </select>
+                                </div>
+
+                                <div className="filter-group">
+                                    <label>Cuisine</label>
+                                    <select value={filterCuisine} onChange={(e) => setFilterCuisine(e.target.value)}>
+                                        <option value="all">All Cuisines</option>
+                                        <option value="Continental">Continental</option>
+                                        <option value="Mughlai">Mughlai</option>
+                                        <option value="Steakhouse">Steakhouse</option>
+                                    </select>
+                                </div>
+
+                                <div className="filter-group-check">
+                                    <input
+                                        type="checkbox"
+                                        id="deliveryCheck"
+                                        checked={filterDelivery}
+                                        onChange={(e) => setFilterDelivery(e.target.checked)}
+                                    />
+                                    <label htmlFor="deliveryCheck"><FaBicycle /> Delivery Available</label>
+                                </div>
+
+                                <h3 className="filter-hd"><FaSortAmountDown /> Sort By</h3>
+                                <div className="filter-group">
+                                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                                        <option value="rating">Top Rated</option>
+                                        <option value="priceLow">Price: Low to High</option>
+                                        <option value="priceHigh">Price: High to Low</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
@@ -53,49 +131,56 @@ export const FineDiningPage = () => {
                                 <h1 className="cata-pg-main-hd">Experience Exquisite Fine Dining</h1>
                                 <p>Premium cuisines, elegant ambiance, and world-class service. Luxury dining at its finest in the heart of Kohat.</p>
                                 <div className="food-search-wrapper">
-                                    <SearchBar SearchedInst={setCrds} AllInst={FineDiningCardsData} />
+                                    <SearchBar SearchedInst={setCrds} AllInst={allCrds} />
                                 </div>
                             </div>
 
                             <div className="food-card-cont">
                                 {
-                                    Crds.map((v, i) => {
+                                    Crds.length > 0 ? (
+                                        Crds.map((v, i) => {
+                                            const handleOrder = (item) => {
+                                                navigate(`?id=${item.id}#order-section`);
+                                                alert(`Please enter details for ordering at ${item.InstName}.`);
+                                            }
 
-
-                                        const handleOrder = (item) => {
-                                            // Redirecting to landing page so user can enter their details (Name, Address, etc.)
-                                            navigate(`?id=${item.id}#order-section`);
-                                            alert(`Please enter your delivery details on the next page to proceed with your order for ${item.InstName}.`);
-                                        }
-
-
-
-                                        return (
-                                            <div className="food-pg-card" key={i}>
-                                                <img src={v.img} alt={v.InstName} />
-                                                <div className="food-pg-card-content">
-                                                    <h3>{v.InstName}</h3>
-                                                    <p>{v.Desc}</p>
-                                                    <div className="food-card-actions">
-                                                        <button onClick={() => { navigate(`?id=${v.id}`) }} className="food-pg-card-btn">
-                                                            {v.btn_txt}
-                                                        </button>
-
-
-                                                        <button
-                                                            className="food-pg-card-btn order-btn"
-                                                            onClick={() => handleOrder(v)}
-                                                            style={{ marginTop: '10px', backgroundColor: '#e74c3c', color: 'white' }}
-                                                        >
-                                                            Order Now
-                                                        </button>
-
-
+                                            return (
+                                                <div className="food-pg-card" key={i}>
+                                                    <div className="card-img-wrapper">
+                                                        <img src={v.img} alt={v.InstName} />
+                                                        <div className="card-badges">
+                                                            {v.deliveryAvailable && <span className="delivery-badge"><FaBicycle /> Delivery</span>}
+                                                            <span className="rating-badge"><FaStar /> {v.rating}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="food-pg-card-content">
+                                                        <div className="card-top-info">
+                                                            <h3>{v.InstName}</h3>
+                                                            <span className="price-label">{v.priceRange}</span>
+                                                        </div>
+                                                        <p className="cuisine-label">{v.cuisine}</p>
+                                                        <p className="card-desc">{v.Desc}</p>
+                                                        <div className="food-card-actions">
+                                                            <button onClick={() => { navigate(`?id=${v.id}`) }} className="food-pg-card-btn view-btn">
+                                                                View Menu
+                                                            </button>
+                                                            <button
+                                                                className="food-pg-card-btn order-btn"
+                                                                onClick={() => handleOrder(v)}
+                                                            >
+                                                                Order Now
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    })
+                                            )
+                                        })
+                                    ) : (
+                                        <div className="no-results">
+                                            <h3>No restaurants found matching your criteria.</h3>
+                                            <button onClick={() => { setFilterPrice("all"); setFilterCuisine("all"); setFilterDelivery(false); }}>Reset Filters</button>
+                                        </div>
+                                    )
                                 }
                             </div>
                         </div>
@@ -104,3 +189,4 @@ export const FineDiningPage = () => {
         </>
     )
 }
+

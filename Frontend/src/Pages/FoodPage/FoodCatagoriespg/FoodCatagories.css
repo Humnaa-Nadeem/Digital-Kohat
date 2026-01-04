@@ -301,3 +301,177 @@
         font-size: 2.5rem;
     }
 }
+
+/* Filters Sidebar */
+.filter-sidebar-content {
+    padding: 20px 25px;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+
+.filter-hd {
+    font-size: 1rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    font-weight: 600;
+}
+
+.filter-group select {
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #fdfdfd;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.filter-group select:focus {
+    border-color: #267252;
+}
+
+.filter-group-check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.filter-group-check input {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.filter-group-check label {
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #2c3e50;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Card Improvements */
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-badges {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.delivery-badge,
+.rating-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.delivery-badge {
+    background: #3498db;
+    color: white;
+}
+
+.rating-badge {
+    background: #f1c40f;
+    color: #2c3e50;
+}
+
+.card-top-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.price-label {
+    background: #f1f2f6;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #267252;
+    font-weight: 700;
+}
+
+.cuisine-label {
+    font-size: 0.85rem;
+    color: #267252;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.food-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.food-pg-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 5px !important;
+    font-size: 0.9rem !important;
+}
+
+.view-btn {
+    background: #f1f2f6 !important;
+}
+
+.order-btn {
+    background: #e74c3c !important;
+    color: white !important;
+}
+
+.order-btn:hover {
+    background: #c0392b !important;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+}
+
+.no-results button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background: #267252;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
