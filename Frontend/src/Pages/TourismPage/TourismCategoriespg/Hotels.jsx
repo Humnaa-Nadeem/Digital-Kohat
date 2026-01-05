@@ -68,7 +68,11 @@ export const Hotels = () => {
 
             <div className="cata-card-cont">
               {cards.map((hotel) => (
-                <div className="cata-pg-card premium-card" key={hotel.id}>
+                <div
+                  className="cata-pg-card premium-card"
+                  key={hotel.id}
+                  onClick={() => navigate(`/tourism/landing`, { state: { listing: hotel } })}
+                >
                   <div className="card-img-container">
                     <img src={hotel.img || hotel.bgImage} alt={hotel.name} />
                     <div className="card-rating">
@@ -95,13 +99,6 @@ export const Hotels = () => {
                     </div>
 
                     <p className="card-short-desc">{hotel.commonInfo?.basicInfo?.shortIntroduction || "Luxury stay experience in the heart of the city."}</p>
-
-                    <button
-                      className="explore-btn"
-                      onClick={() => navigate(`/tourism/landing`, { state: { listing: hotel } })}
-                    >
-                      Explore Destination
-                    </button>
                   </div>
                 </div>
               ))}

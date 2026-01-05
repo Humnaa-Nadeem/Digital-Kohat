@@ -82,7 +82,7 @@ export const FastFoodPage = () => {
                         </div>
                         <div className="food-card-cont">
                             {Crds.length > 0 ? Crds.map((v, i) => (
-                                <div className="food-pg-card" key={i}>
+                                <div className="food-pg-card" key={i} onClick={() => { navigate(`?id=${v.id}`) }}>
                                     <div className="card-img-wrapper">
                                         <img src={v.img} alt={v.InstName} />
                                         <div className="card-badges">
@@ -94,8 +94,7 @@ export const FastFoodPage = () => {
                                         <div className="card-top-info"><h3>{v.InstName}</h3><span className="price-label">{v.priceRange}</span></div>
                                         <p className="cuisine-label">{v.cuisine}</p><p className="card-desc">{v.Desc}</p>
                                         <div className="food-card-actions">
-                                            <button onClick={() => { navigate(`?id=${v.id}`) }} className="food-pg-card-btn view-btn">View Menu</button>
-                                            <button className="food-pg-card-btn order-btn" onClick={() => navigate(`?id=${v.id}#order-section`)}>Order Now</button>
+                                            <button className="food-pg-card-btn order-btn" onClick={(e) => { e.stopPropagation(); navigate(`?id=${v.id}#order-section`); }}>Order Now</button>
                                         </div>
                                     </div>
                                 </div>

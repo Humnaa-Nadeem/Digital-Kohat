@@ -65,7 +65,11 @@ export const TourGuides = () => {
 
                         <div className="cata-card-cont">
                             {cards.map((guide) => (
-                                <div className="cata-pg-card premium-card" key={guide.id}>
+                                <div
+                                    className="cata-pg-card premium-card"
+                                    key={guide.id}
+                                    onClick={() => navigate(`/tourism/landing`, { state: { listing: guide } })}
+                                >
                                     <div className="card-img-container">
                                         <img src={guide.img || guide.bgImage} alt={guide.name} />
                                         <div className="card-rating">
@@ -96,13 +100,6 @@ export const TourGuides = () => {
                                         </div>
 
                                         <p className="card-short-desc">{guide.commonInfo?.basicInfo?.shortIntroduction || "Experienced local guide specializing in cultural and adventure tours."}</p>
-
-                                        <button
-                                            className="explore-btn"
-                                            onClick={() => navigate(`/tourism/landing`, { state: { listing: guide } })}
-                                        >
-                                            View Profile
-                                        </button>
                                     </div>
                                 </div>
                             ))}

@@ -125,7 +125,7 @@
     justify-content: space-between;
     width: 300px;
     padding: 7px;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .cata-pg-card img {
@@ -167,12 +167,13 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
     width: 320px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
 }
 
 .premium-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
 .card-img-container {

@@ -145,7 +145,7 @@ export const FineDiningPage = () => {
                                             }
 
                                             return (
-                                                <div className="food-pg-card" key={i}>
+                                                <div className="food-pg-card" key={i} onClick={() => { navigate(`?id=${v.id}`) }}>
                                                     <div className="card-img-wrapper">
                                                         <img src={v.img} alt={v.InstName} />
                                                         <div className="card-badges">
@@ -161,12 +161,9 @@ export const FineDiningPage = () => {
                                                         <p className="cuisine-label">{v.cuisine}</p>
                                                         <p className="card-desc">{v.Desc}</p>
                                                         <div className="food-card-actions">
-                                                            <button onClick={() => { navigate(`?id=${v.id}`) }} className="food-pg-card-btn view-btn">
-                                                                View Menu
-                                                            </button>
                                                             <button
                                                                 className="food-pg-card-btn order-btn"
-                                                                onClick={() => handleOrder(v)}
+                                                                onClick={(e) => { e.stopPropagation(); handleOrder(v); }}
                                                             >
                                                                 Order Now
                                                             </button>

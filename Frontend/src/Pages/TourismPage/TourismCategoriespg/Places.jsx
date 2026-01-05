@@ -69,7 +69,11 @@ export const Places = () => {
 
             <div className="cata-card-cont">
               {placeCards.map((place) => (
-                <div className="cata-pg-card premium-card" key={place.id}>
+                <div
+                  className="cata-pg-card premium-card"
+                  key={place.id}
+                  onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
+                >
                   <div className="card-img-container">
                     <img src={place.img || place.bgImage} alt={place.name} />
                     <div className="card-rating">
@@ -98,13 +102,6 @@ export const Places = () => {
                     <p className="card-short-desc">
                       {place.commonInfo?.basicInfo?.shortIntroduction || "Discover the beauty and history of this amazing spot in Kohat."}
                     </p>
-
-                    <button
-                      onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
-                      className="explore-btn"
-                    >
-                      Explore Destination
-                    </button>
                   </div>
                 </div>
               ))}
