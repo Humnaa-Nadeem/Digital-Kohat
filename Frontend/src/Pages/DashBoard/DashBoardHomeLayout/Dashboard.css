@@ -1,4 +1,9 @@
 /* ---------------- TOP BAR ---------------- */
+.dshbrdlogo{
+    width: 54px;
+    border-radius: 50%;
+}
+
 .Dshbrdlgoutbtn {
     border: none;
     outline: none;
