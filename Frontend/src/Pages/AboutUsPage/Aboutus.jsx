@@ -30,7 +30,7 @@ import aboutImg from "../../components/imgs/aboutimg.jpg";
 import visionImg from "../../components/imgs/vision.jpg";
 import missionImg from "../../components/imgs/mission.jpg";
 
-const Aboutus = () => {
+export const Aboutus = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
@@ -318,5 +318,3 @@ const HubNode = ({ icon, label, className }) => (
     <span>{label}</span>
   </div>
 );
-
-export default Aboutus;

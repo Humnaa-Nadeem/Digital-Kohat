@@ -54,10 +54,6 @@ import { Guide } from './Pages/TourismPage/TourismCategoriespg/Guide';
 import { Gallery } from './Pages/TourismPage/TourismCategoriespg/Gallery';
 import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
 import { TourGuides } from './Pages/TourismPage/TourismCategoriespg/TourGuides';
-import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
-
-// :::::::: Dash Board :::::::
-import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
 
 // Food Pages
 import { FoodHomePage } from './Pages/FoodPage/FoodHomePage/FoodHomePage';
@@ -68,18 +64,6 @@ import { LocalFoodPage } from './Pages/FoodPage/FoodCatagoriespg/LocalFood';
 import { BakeriesPage } from './Pages/FoodPage/FoodCatagoriespg/Bakeries';
 import { StreetFoodPage } from './Pages/FoodPage/FoodCatagoriespg/StreetFood';
 
-// Common Pages
-import Aboutus from "./Pages/AboutUsPage/Aboutus";
-import Contactus from './Pages/ContactUs/ContactUs';
-import { SignUpForm } from './components/SignUpForm/SignUpForm';
-
-// Layouts
-import { EduLayout } from './Layouts/EduLayout';
-import { TechLayout } from './Layouts/TechLayout';
-import { TourismLayout } from './Layouts/TourismLayout';
-import { FoodLayout } from './Layouts/FoodLayout';
-import { HospitalLayout } from './Layouts/HospitalLayout';
-
 // Hospital Pages
 import { HospHomePage } from './Pages/HospitalPage/HospHomePg/HospHomePg';
 import { HospitalsPage } from './Pages/HospitalPage/HosCategoriesPg/Hospitals';
@@ -88,9 +72,12 @@ import { PharmaciesPage } from './Pages/HospitalPage/HosCategoriesPg/Pharmacies'
 import { DiagnosticsPage } from './Pages/HospitalPage/HosCategoriesPg/Diagnostics';
 import { AmbulancePage } from './Pages/HospitalPage/HosCategoriesPg/Ambulance';
 import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialists';
+import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
+import { FoodLayout } from './Layouts/FoodLayout';
+import HospitalLayout from './Layouts/HospitalLayout';
 
 // 404 Page
-import { PageNotFoundPg } from './Pages/404Page/404Page';
+// import { PageNotFoundPg } from './Pages/404Page/404Page';
 
 // ================================
 // ROUTING SYSTEM
