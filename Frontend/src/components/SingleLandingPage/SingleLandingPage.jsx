@@ -4,6 +4,8 @@ import { MdScience } from "react-icons/md";
 import { FaArtstation, } from "react-icons/fa";
 import { FaBaseball, } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { RatingSection } from "../RatingSection/RatingSection";
 export const SingleLandingPage = ({ id, Alldata }) => {
 
     // Getting the specfic data
@@ -142,28 +144,8 @@ export const SingleLandingPage = ({ id, Alldata }) => {
                 </div>
             </section>
 
-            {/* REACH US */}
-            <section className="S_reach-us SP_Sec">
-                <h2 className="SP_Sec_hd">Reach Us</h2>
-                <p>We’re here to help! Connect with us through any of the following channels:</p>
-                <div className="S_contact-cards">
-                    <div className="S_card">
-                        <i>✉</i>
-                        <h3>Email</h3>
-                        <p><a href={`mailto:${fltrdData.contact.email}`}>{fltrdData.contact.email}</a></p>
-                    </div>
-                    <div className="S_card">
-                        <i>📞</i>
-                        <h3>Phone</h3>
-                        <p><a href={`tel:${fltrdData.contact.phone}`}>{fltrdData.contact.phone}</a></p>
-                    </div>
-                    <div className="S_card">
-                        <i>🌐</i>
-                        <h3>Website</h3>
-                        <p><a href={fltrdData.contact.website} target="_blank" rel="noopener noreferrer">{fltrdData.contact.website}</a></p>
-                    </div>
-                </div>
-            </section>
+            {/* RATE US */}
+            <RatingSection ratingData={fltrdData.ratingData} />
         </section>
     )
 };

@@ -64,19 +64,19 @@ export const Form = ({ setShowform, serviceType }) => {
         </div>
         <h2 className="rgstr-frm-heading">Register for {serviceType}</h2>
 
-        <label>Name</label>
+        <label className="formLabel">Name</label>
         <input name="name" type="text" value={data.name} onChange={changeHandler} required />
 
-        <label>Phone</label>
+        <label className="formLabel">Phone</label>
         <input name="phone" type="tel" value={data.phone} onChange={changeHandler} required />
 
-        <label>Email</label>
+        <label className="formLabel">Email</label>
         <input name="email" type="email" value={data.email} onChange={changeHandler} required />
 
         {/* Dynamic fields */}
         {serviceFields[serviceType]?.map((field, index) => (
           <div key={index}>
-            <label>{field.label}</label>
+            <label className="formLabel">{field.label}</label>
             <input
               name={field.name}
               type="text"
@@ -86,7 +86,6 @@ export const Form = ({ setShowform, serviceType }) => {
             />
           </div>
         ))}
-
         <button type="submit">Submit</button>
       </form>
     </div>

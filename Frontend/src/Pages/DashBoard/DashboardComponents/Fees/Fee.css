@@ -1,0 +1,94 @@
+.Dshbrdfee-Sec {
+    position: relative;
+}
+
+.feeTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.feeTable th,
+.feeTable td {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #0d915a;
+}
+
+.feeTable .actionTd {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.feeTable .actionTd .tdBtns {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.actionTd .delActionTd:hover {
+    color: red;
+}
+
+.actionTd .edtActionTd:hover {
+    color: green;
+}
+
+.tableRowAdder {
+    margin-top: 20px;
+}
+
+/* Form */
+.feeFormCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.feeFormCont .adderForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.feeFormCont .smallInputCont {
+    width: 100%;
+}
+
+.AddFeeDtaBtn {
+    padding: 14px 34px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), #33c985);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+@media (max-width: 530px) {
+    .Dshbrdfee-Sec {
+        margin: 0;
+        padding: 40px 0px 20px 0px;
+        background-color: transparent;
+        box-shadow: 0px 0px 0px transparent;
+    }
+
+    .feeTable th,
+    .feeTable td{
+        padding: 5.5px;
+        font-size: 0.8rem;
+    }
+}
