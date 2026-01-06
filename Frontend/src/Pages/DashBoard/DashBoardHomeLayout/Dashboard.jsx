@@ -54,7 +54,7 @@ export const DashBoard = () => {
                     <div className="nav-container" style={{padding : "10px 2px"}}>
                         {/* LOGO */}
                         <div className="nav-logo">
-                            <img src={brandLogo} alt="Logo" className="logo-img" />
+                            <img src={brandLogo} alt="Logo" className="logo-img dshbrdlogo" />
                             <h2>DIGITAL SMART CITIES HUB</h2>
                         </div>
 
