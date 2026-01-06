@@ -68,7 +68,7 @@
 }
 
 .cata-pg-banner {
-    min-height: 31vh;
+    min-height: 35vh !important;
     width: 94%;
     margin-top: 10px;
     background-image: url("https://images.pexels.com/photos/27276221/pexels-photo-27276221.jpeg");
@@ -84,13 +84,14 @@
 
 .cata-pg-main-hd {
     text-align: center;
-    color: yellow;
+    color: #035231 !important;
+    text-shadow: -1.5px 0.5px yellow;
     margin: 10px 0px;
 }
 
 .cata-pg-banner p {
     width: 88%;
-    color: yellow;
+    color: rgb(255, 244, 232) !important;
     text-align: center;
     margin-bottom: 10px;
 }
@@ -123,7 +124,21 @@
 }
 
 .cata-pg-card-content {
+    position: relative;
     padding: 10px 10px 10px 0px;
+}
+
+.starsCont {
+    position: absolute;
+    top: -25px;
+    right: 5px;
+    padding: 2px 5px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.468);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 2px;
 }
 
 .cata-pg-card-content h3 {
@@ -264,7 +279,7 @@
 
 }
 
-@media (max-width: 580px) {
+@media (max-width: 680px) {
     .cata-pg-banner p {
         display: none;
     }

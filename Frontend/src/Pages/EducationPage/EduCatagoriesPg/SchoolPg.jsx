@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { School_Details, Schools, ScoolCardDta } from "../../../Store/Edu_store";
 import { SingleLandingPage } from "../../../components/SingleLandingPage/SingleLandingPage";
+import { FaStar } from "react-icons/fa";
 export const SchoolPage = () => {
 
     // To show page from the top:
@@ -24,6 +25,53 @@ export const SchoolPage = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
+
+    // Showing Real rating.
+    const showRating = (v) => {
+        // Calculate rating.
+        let ratingValue = v.ratingData["allratedStrs"] / v.ratingData["totalStrs"] * 100;
+        if (ratingValue <= 20) {
+            return (
+                <div className="starsCont">
+                    <FaStar color="yellow" />
+                </div>
+            )
+        } else if (ratingValue <= 40) {
+
+            return (
+                <div className="starsCont">
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                </div>
+            );
+        } else if (ratingValue <= 60) {
+            return (
+                <div className="starsCont">
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                </div>
+            )
+        } else if (ratingValue <= 80) {
+            return (
+                <div className="starsCont">
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                </div>
+            );
+        } else
+            return (
+                <div className="starsCont">
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                    <FaStar color="yellow" />
+                </div>
+            );
+    }
 
     return (
         <>
@@ -66,6 +114,7 @@ export const SchoolPage = () => {
                                             <div className="cata-pg-card" key={i}>
                                                 <img src={v.img} alt="Placeholder Image" />
                                                 <div className="cata-pg-card-content">
+                                                    {showRating(v)}
                                                     <h3>{v.InstName}</h3>
                                                     <p>{v.Desc}</p>
                                                     <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
@@ -76,7 +125,7 @@ export const SchoolPage = () => {
                                 }
                             </div>
                         </div>
-                        
+
                     </section >
             }
         </>

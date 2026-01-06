@@ -103,7 +103,7 @@
 
 /* Hover Effect */
 .card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-6px);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
 }
 
@@ -128,7 +128,7 @@
 
 .Cata_Title {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 750;
     margin-bottom: 20px;
     color: #1f2937;
 }

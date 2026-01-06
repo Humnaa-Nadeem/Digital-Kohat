@@ -1,0 +1,238 @@
+/* ---------------- TOP BAR ---------------- */
+.Dshbrdlgoutbtn {
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    padding: 7px 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.logout {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.066);
+    color: red;
+}
+
+.dshbord-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    transition: all 0.4s ease;
+}
+
+.Admin-Icon-TagsCont {
+    position: relative;
+    cursor: pointer;
+    padding-bottom: 5px;
+}
+
+.Admin-Icon-TagsCont:hover .Admin-Tags{
+    display: flex;
+}
+
+.adminIcon {
+    background-color: #0d915a;
+    color: #f1f5f9;
+}
+
+.Admin-Tags {
+    right: 0px;
+    bottom: -138px;
+    border: 2px solid black;
+    background-color: #000000c2;
+    padding: 8px 10px 15px 10px;
+}
+
+.tags-cont .DshbrdlogOut-tag:hover {
+    box-shadow: 0px 2px 0px red;
+    background-color: rgba(255, 0, 0, 0.313);
+}
+
+.layout {
+    display: flex;
+}
+
+/* ---------------- SIDEBAR ---------------- */
+.sidebar {
+    margin-top: 20px;
+    width: 240px;
+    padding-top: 20px;
+    border: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: flex-start;
+    font-size: 14px;
+}
+
+.sidebar li .DshbrdSidbrIcn {
+    font-size: 1.5rem;
+    transition: 0.4s ease-in-out;
+}
+
+.sidebar li:hover .DshbrdSidbrIcn {
+    color: #0d915a;
+    rotate: 360deg;
+}
+
+/* ---------------- CONTENT ---------------- */
+.content {
+    flex: 1;
+    background-color: #f1f5f9;
+    padding: 20px;
+}
+
+.content h1 {
+    margin-bottom: 10px;
+}
+
+/* ---------------- RESPONSIVE STYLING ---------------- */
+@media (max-width: 1100px) {
+    .sidebar {
+        width: auto;
+    }
+
+    .DshbrdtagName {
+        display: none;
+    }
+}
+
+
+@media (max-width: 1024px) {
+
+    .top-center {
+        font-size: 13px;
+    }
+
+    .DashBoardlogo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .brandName {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .topbar {
+        padding: 10px 15px;
+        justify-content: space-between;
+    }
+
+    .top-left {
+        gap: 8px;
+    }
+
+    .DashBoardlogo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .brandName {
+        font-size: 1.1rem;
+    }
+
+    .top-center {
+        font-size: 12px;
+        margin-top: 0;
+    }
+
+    .top-right {
+        gap: 8px;
+    }
+
+    .Dshbrdicon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 530px) {
+    .layout {
+        flex-direction: column;
+    }
+
+
+    .DashBoardlogo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .brandName {
+        font-size: 1rem;
+    }
+
+    .topbar {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 8px 12px;
+        gap: 5px;
+    }
+
+    .top-left {
+        flex: 0 0 auto;
+    }
+
+    .top-center {
+        display: none;
+    }
+
+    .top-right {
+        flex: 0 0 auto;
+        gap: 6px;
+    }
+
+    .DashBoardlogo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .brandName {
+        font-size: 1rem;
+    }
+
+    .sidebar ul {
+        width: auto;
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+    }
+
+    .sidebar li {
+        padding: 0;
+        margin: 0;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        font-size: 13px;
+        justify-content: center;
+    }
+
+
+    .Dshbrdicon {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1rem;
+    }
+}

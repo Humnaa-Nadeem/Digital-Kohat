@@ -3,6 +3,7 @@ import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { OnlineCourseCardDta, OnlineCourses, OnlineCourses_Details } from "../../../Store/Edu_store";
+import { FaStar } from "react-icons/fa";
 
 export const OnlineCoursesPage = () => {
 
@@ -129,6 +130,13 @@ export const OnlineCoursesPage = () => {
                                             <div className="cata-pg-card" key={i}>
                                                 <img src={v.img} alt="Placeholder Image" />
                                                 <div className="cata-pg-card-content">
+                                                    <div className="starsCont">
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                    </div>
                                                     <h3>{v.InstName}</h3>
                                                     <p>{v.Desc}</p>
                                                     <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>

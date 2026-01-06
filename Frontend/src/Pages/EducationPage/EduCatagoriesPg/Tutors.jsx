@@ -3,6 +3,7 @@ import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TutorCardDta, Tutors, Tutors_Details } from "../../../Store/Edu_store";
+import { FaStar } from "react-icons/fa";
 
 export const TutorsPage = () => {
 
@@ -69,12 +70,12 @@ export const TutorsPage = () => {
                                             src={v.img}
                                             alt={v.Name}
                                             style={{
-                                                width: "100px",       // width of the image
-                                                height: "100px",      // height of the image
-                                                objectFit: "cover",   // ensures image covers the box without distortion
-                                                borderRadius: "50%",  // makes it circular
-                                                marginTop: "20px",    // space from tagline
-                                                boxShadow: "0 4px 8px rgba(0,0,0,0.2)" // subtle shadow
+                                                width: "100px",
+                                                height: "100px",
+                                                objectFit: "cover",
+                                                borderRadius: "50%",
+                                                marginTop: "20px",
+                                                boxShadow: "0 4px 8px rgba(0,0,0,0.2)"
                                             }} />
                                     </div>
 
@@ -118,6 +119,13 @@ export const TutorsPage = () => {
                                         <div className="cata-pg-card" key={i}>
                                             <img src={v.img} alt="Tutor Image" />
                                             <div className="cata-pg-card-content">
+                                                <div className="starsCont">
+                                                    <FaStar color="yellow" />
+                                                    <FaStar color="yellow" />
+                                                    <FaStar color="yellow" />
+                                                    <FaStar color="yellow" />
+                                                    <FaStar color="yellow" />
+                                                </div>
                                                 <h3>{v.InstName}</h3>
                                                 <p>{v.Desc}</p>
                                                 <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
