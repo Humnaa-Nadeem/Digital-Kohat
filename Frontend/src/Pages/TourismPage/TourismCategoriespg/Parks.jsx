@@ -60,7 +60,7 @@ export const Parks = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Best Parks & Nature Spots in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Best Parks & Nature Spots in Kohat</h1>
               <p>Relax and enjoy nature in Kohat's parks and natural spots.</p>
               <SearchBar SearchedInst={setNatureCards} AllInst={NatureCardsData} />
             </div>

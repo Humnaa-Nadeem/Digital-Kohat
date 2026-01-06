@@ -60,7 +60,7 @@ export const Places = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Top Tourist Places in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Top Tourist Places in Kohat</h1>
               <p>
                 Discover beautiful landmarks, historical sites, and scenic spots.
               </p>

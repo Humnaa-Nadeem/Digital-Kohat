@@ -40,7 +40,7 @@ export const Gallery = () => {
 
         {/* Banner */}
         <div className="cata-pg-banner">
-          <h1 className="cata-pg-main-hd">Kohat Tourism Gallery</h1>
+          <h1 className="cata-pg-main-h tr-cata-pg-main-hd">Kohat Tourism Gallery</h1>
           <p>View amazing photos of Kohat tourist spots.</p>
         </div>
 

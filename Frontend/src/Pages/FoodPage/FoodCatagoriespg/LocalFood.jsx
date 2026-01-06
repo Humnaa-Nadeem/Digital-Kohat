@@ -73,7 +73,7 @@ export const LocalFoodPage = () => {
                     <div className="food-main-sec">
                         <div className="food-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                         <div className="food-cata-banner">
-                            <h1 className="cata-pg-main-hd">Traditional Flavors of Kohat</h1>
+                            <h1 className="cata-pg-main-hd fd-cata-pg-main-hd">Traditional Flavors of Kohat</h1>
                             <p>Discover the authentic taste of Kohat with our curated list of local favorites, from Chapli Kebabs to traditional Pulao.</p>
                             <div className="food-search-wrapper"><SearchBar SearchedInst={setCrds} AllInst={allCrds} /></div>
                         </div>

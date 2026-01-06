@@ -61,7 +61,7 @@ export const Hotels = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Best Hotels & Stays in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Best Hotels & Stays in Kohat</h1>
               <p>Find the most comfortable hotels, guest houses, and stays in Kohat.</p>
               <SearchBar SearchedInst={setCards} AllInst={HotelCardsData} />
             </div>

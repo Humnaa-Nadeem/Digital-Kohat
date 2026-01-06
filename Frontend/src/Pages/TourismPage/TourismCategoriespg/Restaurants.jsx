@@ -37,7 +37,8 @@ export const Restaurants = () => {
             <h2 className="sector" onClick={() => navigate(`/tourism`)}>
               Tourism
             </h2>
-            <div className="institute-hd-lst">
+            <div 
+          className="institute-hd-lst">
               <h2 className="institute-hd">Restaurants</h2>
               <ul className="institute-lst">
                 {getMergedData(RestaurantsList, "Tourism", "Restaurants").map((item, i) => (
@@ -60,7 +61,7 @@ export const Restaurants = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Top Restaurants in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Top Restaurants in Kohat</h1>
               <p>Discover the best local cuisine and dining spots in Kohat.</p>
               <SearchBar SearchedInst={setRestaurantCards} AllInst={RestaurantsCardsData} />
             </div>

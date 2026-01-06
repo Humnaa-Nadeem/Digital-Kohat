@@ -58,7 +58,7 @@ export const TourGuides = () => {
                         </div>
 
                         <div className="cata-pg-banner">
-                            <h1 className="cata-pg-main-hd">Professional Tour Guides</h1>
+                            <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Professional Tour Guides</h1>
                             <p>Hire experienced local guides to explore the best of Kohat.</p>
                             <SearchBar SearchedInst={setCards} AllInst={TourGuidesCardsData} />
                         </div>

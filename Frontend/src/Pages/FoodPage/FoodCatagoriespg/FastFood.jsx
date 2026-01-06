@@ -76,7 +76,7 @@ export const FastFoodPage = () => {
                     <div className="food-main-sec">
                         <div className="food-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
                         <div className="food-cata-banner">
-                            <h1 className="cata-pg-main-hd">Quick Bites & Fast Flavors</h1>
+                            <h1 className="cata-pg-main-hd fd-cata-pg-main-hd">Quick Bites & Fast Flavors</h1>
                             <p>Grab your favorite burgers, pizzas, and snacks in no time. Kohat's best fast food spots under one roof.</p>
                             <div className="food-search-wrapper"><SearchBar SearchedInst={setCrds} AllInst={allCrds} /></div>
                         </div>

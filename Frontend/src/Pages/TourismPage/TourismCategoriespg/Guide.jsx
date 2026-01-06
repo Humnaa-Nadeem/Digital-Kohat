@@ -48,7 +48,7 @@ export const Guide = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Travel Guide</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Travel Guide</h1>
               <p>Your complete travel guide for exploring Kohat.</p>
             </div>
 
