@@ -1,60 +1,15 @@
 .footer {
-  background-color: #111;
+  background-color: #111111;
   color: #e5e5e5;
   padding: 30px 7%;
   font-family: "Poppins", sans-serif;
 }
 
-.footer-logo {
-  display: flex;
-  align-items: center;
-  margin-right: 75px;
-  margin-top: -12px;
-  line-height: 1%;
-  gap: 10px;
-}
-
-.smc p {
-  margin-left: 24px;
-  margin-top: -18px;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
-  letter-spacing: 0.3px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-/* Soft green accent line on hover */
-.smc p::before {
-  content: "";
-  position: absolute;
-  left: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 0;
-  background: #00c68a;
-  border-radius: 2px;
-  transition: height 0.3s ease;
-}
-
-.smc p:hover::before {
-  height: 60%;
-}
-
-/* Optional hover brightness for text */
-.smc p:hover {
-  color: #00c68a;
-  text-shadow: 0 0 8px rgba(0, 198, 138, 0.4);
-}
-
-
 .footer-img {
-  height: 105px;
-  width: 105px;
-  border-radius: 50%;
+  height: 190px;
+  width: 260px;
+  margin-top: -10px;
+margin-left:-30px !important;
 }
 
 .footer-container {
@@ -97,7 +52,7 @@
   left: 50%;
   width: 0;
   height: 3px;
-  background: #00c68a;
+  background: #1f8e5c;
   transform: translateX(-50%);
   border-radius: 2px;
   transition: width 0.4s ease;
@@ -105,7 +60,7 @@
 
 /* On hover — underline expands + color glow */
 .footer-heading:hover {
-  color: #00c68a;
+  color: #1f8e5c;
   text-shadow: 0 0 12px rgba(0, 198, 138, 0.6);
 }
 
@@ -117,13 +72,13 @@
 .contact-info p {
   display: flex;
   margin-left: 10px;
-  margin-top: 20px;
+  margin-top: 1px;
   font-size: 0.95rem;
   color: #cfcfcf;
 }
 
 .footer-icon {
-  color: #00a86b;
+  color:  #1f8e5c;
   margin-right: 10px;
   font-size: 1rem;
 }
@@ -153,7 +108,7 @@
 }
 
 .footer-links li:hover {
-  color: #00a86b;
+  color:  #1f8e5c;
 }
 
 /* RIGHT SECTION */
@@ -166,6 +121,7 @@
   color: #ffffff;
   margin-bottom: 15px;
   font-weight: 600;
+  margin-left: 30px;
 }
 
 /* Subscribe Box */
@@ -187,7 +143,7 @@
   box-shadow: 0 4px 12px rgba(10, 60, 30, 0.6),
     0 0 10px rgba(20, 120, 80, 0.4);
   transform: translateY(-2px);
-  border-color: #1fa36b;
+  border-color:  #1f8e5c;
 }
 
 .subscribe-box input {
@@ -205,7 +161,7 @@
 }
 
 .subscribe-box button {
-  background-color: #00a86b;
+  background-color:  #1f8e5c;
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -216,7 +172,7 @@
 
 .subscribe-box button:hover {
   background-color: #ffffff;
-  color: #00a86b;
+  color:  #1f8e5c;
 }
 
 .social-icons {

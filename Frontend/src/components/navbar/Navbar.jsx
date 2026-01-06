@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Navbar.css";
-import dsk from "../imgs/dkslogo.jpg";
+import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -32,14 +32,14 @@ const Navbar = () => {
         <div className="nav-container">
           {/* LOGO */}
           <div className="nav-logo">
-            <img src={dsk} alt="Logo" className="logo-img" />
+            <img src={navlogo} alt="Logo" className="logo-img" />
             <h2>DIGITAL SMART CITIES HUB</h2>
           </div>
 
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
-            <a href="#services" onClick={closeMenu}>Services</a>
+         
             <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
 
             {/* SERVICES DROPDOWN */}
@@ -63,17 +63,17 @@ const Navbar = () => {
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
                    <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
-                   <a href="#Resturants" onClick={closeMenu}>Resturants</a>
-                  <a href="#Hospital" onClick={closeMenu}>Hostpital</a>
-                  <a href="#Business" onClick={closeMenu}>Business</a>
-                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians</a>
-                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism</a>
-                  <a href="#brands" onClick={closeMenu}>Our Brands</a>
+                    <a  onClick={()=>{ navigate ("/food");closeMenu();}}>food</a>
+                  <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
+                  <a onClick={() => { navigate("/business"); closeMenu(); }}>Business/shops</a>
+                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians/Labours</a>
+                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism/Traveling</a>
+                  <a onClick={() => { navigate("/brands"); closeMenu(); }}>Our Brands</a>
                 </div>
               )}
             </div>
 
-            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>Contact</a>
+            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>Contact Us</a>
 
             <div className="nav-buttons">
               <button className="btn sign" onClick={() => { closeMenu(); navigate("/form"); }}>Sign Up</button>

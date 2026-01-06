@@ -60,7 +60,7 @@ const Hero1 = () => {
               <div className="hero-content">
                 <h3 className="hero-subtitle">{slide.subtitle}</h3>
                 <h1 className="hero-title">{slide.title}</h1>
-                <button className="hero-btn">{slide.btn}</button>
+                <button className="hero-bttn">{slide.btn}</button>
               </div>
             </div>
           </div>

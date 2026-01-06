@@ -169,7 +169,7 @@
 }
 
 /* Button */
-.hero-btn {
+.hero-bttn {
   background: #00a86b;
   color: #fff;
   border: none;
@@ -181,7 +181,7 @@
   transition: all 0.3s ease;
 }
 
-.hero-btn:hover {
+.hero-bttn:hover {
   background: #0e0e0e;
   color: #f5f5f5;
   transform: translateY(-3px);
@@ -302,7 +302,7 @@
     font-size: 0.9rem;
   }
 
-  .hero-btn {
+  .hero-bttn {
     padding: 10px 22px;
     font-size: 0.9rem;
   }
@@ -326,9 +326,6 @@
   }
 }
 
-/* ======================================
-   ✅ FIX: Responsive Hero Image Adjustments
-   ====================================== */
 @media (max-width: 768px) {
   .hero-slider {
     height: 65vh;

@@ -5,11 +5,12 @@ import { HotelsList, HotelCardsData } from "../../../Store/Tourism_store";
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaClock, FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
 import "./TourismCategories.css";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const Hotels = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const [cards, setCards] = useState(HotelCardsData);
+  const [cards, setCards] = useState(() => getMergedData(HotelCardsData, "Tourism", "Hotels"));
   const [showList, setShowList] = useState(false);
 
   const navigate = useNavigate();
@@ -22,9 +23,9 @@ export const Hotels = () => {
   };
 
   // Helper to check if item is active
-  const isActive = (cardId) => cardId === id;
+  const isActive = (cardId) => String(cardId) === String(id);
 
-  const selectedHotel = HotelCardsData.find((h) => h.id === Number(id));
+  const selectedHotel = getSelectedItem(HotelCardsData, "Tourism", "Hotels", id);
 
   return (
     <>
@@ -40,7 +41,7 @@ export const Hotels = () => {
             <div className="institute-hd-lst">
               <h2 className="institute-hd">Hotels & Stays</h2>
               <ul className="institute-lst">
-                {HotelsList.map((hotel) => (
+                {getMergedData(HotelsList, "Tourism", "Hotels").map((hotel) => (
                   <li
                     key={hotel.id}
                     onClick={() => handleCardClick(hotel.id)}
@@ -67,7 +68,11 @@ export const Hotels = () => {
 
             <div className="cata-card-cont">
               {cards.map((hotel) => (
-                <div className="cata-pg-card premium-card" key={hotel.id}>
+                <div
+                  className="cata-pg-card premium-card"
+                  key={hotel.id}
+                  onClick={() => navigate(`/tourism/landing`, { state: { listing: hotel } })}
+                >
                   <div className="card-img-container">
                     <img src={hotel.img || hotel.bgImage} alt={hotel.name} />
                     <div className="card-rating">
@@ -94,13 +99,6 @@ export const Hotels = () => {
                     </div>
 
                     <p className="card-short-desc">{hotel.commonInfo?.basicInfo?.shortIntroduction || "Luxury stay experience in the heart of the city."}</p>
-
-                    <button
-                      className="explore-btn"
-                      onClick={() => navigate(`/tourism/landing`, { state: { listing: hotel } })}
-                    >
-                      Explore Destination
-                    </button>
                   </div>
                 </div>
               ))}
