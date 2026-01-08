@@ -152,7 +152,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                         </div>
                     </div>
 
-                    <div className="">
+                    <div className="ContactSidebar">
                         <h3>Contact & Order Info</h3>
                         <div className="ContactLinks">
                             <a href={`tel:${item.contact?.phone}`} className="contact-item">

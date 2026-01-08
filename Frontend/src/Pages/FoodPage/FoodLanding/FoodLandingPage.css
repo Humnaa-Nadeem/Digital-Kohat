@@ -95,7 +95,7 @@
 
 .section-title {
     font-size: 2rem;
-    color: #2c3e50;
+    color: #30353a;
     margin-bottom: 25px;
     position: relative;
     padding-bottom: 10px;
@@ -154,6 +154,7 @@
 
 .ContactLinks {
     display: flex;
+    margin-top: 10px;
     flex-direction: column;
     gap: 15px;
 }

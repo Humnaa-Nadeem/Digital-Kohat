@@ -1,0 +1,616 @@
+/* FoodDashboard.css */
+/* Cloned and modified structure from Dashboard.css but with fd- prefix */
+
+:root {
+    --fd-primary: #ff6b6b;
+    /* Warm Red for Food */
+    --fd-secondary: #ff9f43;
+    --fd-step-active: #ff6b6b;
+    --fd-step-inactive: #ddd;
+}
+
+.fd-dashboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f1e3;
+    overflow: hidden;
+    /* Fix scroll */
+}
+
+/* --- Validation & Header (Same structure as Edu) --- */
+.fd-main-header {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+}
+
+.fd-navbar {
+    width: 100%;
+}
+
+.fd-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 95%;
+}
+
+.fd-nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fd-dshbrdlogo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.fd-nav-logo h2 {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 700;
+}
+
+.fd-Admin-Icon-TagsCont {
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.fd-usrIcon {
+    font-size: 1.5rem;
+    color: #555;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    background: #eee;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fd-usrIcon:hover {
+    background: #ddd;
+}
+
+.fd-tags-cont {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    list-style: none;
+    padding: 10px;
+    width: 150px;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.fd-tags-cont.fd-flexDsply {
+    display: flex;
+}
+
+.fd-tags-cont li {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.fd-tags-cont li:hover {
+    background: #f0f0f0;
+}
+
+.fd-DshbrdlogOut-tag {
+    color: red;
+}
+
+/* --- Layout (Sidebar + Content) --- */
+.fd-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.fd-sidebar {
+    width: 250px;
+    background: #fff;
+    height: 100%;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    padding-top: 20px;
+    transition: width 0.3s ease;
+    flex-shrink: 0;
+}
+
+.fd-sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.fd-sidebar li {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #555;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+    white-space: nowrap;
+}
+
+.fd-sidebar li:hover {
+    background: #fff5f5;
+    color: var(--fd-primary);
+    border-left: 4px solid var(--fd-primary);
+}
+
+.fd-DshbrdSidbrIcn {
+    font-size: 1.2rem;
+    margin-right: 15px;
+    min-width: 24px;
+    /* Fix icon shrinking */
+}
+
+.fd-DshbrdtagName {
+    font-size: 1rem;
+}
+
+/* --- Content Section --- */
+.fd-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: #f7f1e3;
+}
+
+/* --- Stepper (Cloned from Edu) --- */
+.fd-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fd-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.fd-step.active {
+    opacity: 1;
+}
+
+.fd-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--fd-step-inactive);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    background: #fff;
+    transition: 0.3s;
+}
+
+.fd-step.active .fd-circle {
+    border-color: var(--fd-primary);
+    background: var(--fd-primary);
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+}
+
+.fd-step p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.fd-line {
+    width: 100px;
+    height: 2px;
+    background: var(--fd-step-inactive);
+    margin: 0 10px;
+    margin-bottom: 25px;
+    /* Adjust alignment with circle */
+}
+
+/* --- Content Cards/Forms --- */
+.fd-card,
+.fd-orders-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.fd-section-title {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+/* Form Groups */
+.fd-form-group {
+    margin-bottom: 20px;
+}
+
+.fd-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.fd-input,
+.fd-textarea,
+.fd-file-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    box-sizing: border-box;
+    /* IMPORTANTFIX */
+}
+
+.fd-input:focus,
+.fd-textarea:focus {
+    outline: none;
+    border-color: var(--fd-primary);
+}
+
+.fd-btn-primary {
+    padding: 12px 30px;
+    background: var(--fd-primary);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.fd-btn-primary:hover {
+    background: #ff5252;
+    box-shadow: 0 5px 15px rgba(255, 82, 82, 0.3);
+}
+
+/* Menu List */
+.fd-menu-actions {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fd-menu-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.fd-menu-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.fd-menu-details {
+    flex: 1;
+}
+
+.fd-menu-details h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+}
+
+.fd-menu-details p {
+    color: #777;
+    font-size: 0.9rem;
+    margin: 0 0 5px 0;
+}
+
+.fd-tags {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+
+.fd-tag {
+    background: #eee;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #555;
+}
+
+.fd-menu-btns {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.fd-btn-edit {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.fd-btn-delete {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Order Cards */
+.fd-order-card {
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    background: #fff;
+    flex-wrap: wrap;
+    /* responsive wrap */
+    gap: 15px;
+}
+
+.fd-order-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.fd-order-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.fd-order-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+}
+
+.fd-price-tag {
+    font-weight: bold;
+    color: var(--fd-primary);
+}
+
+.fd-status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.fd-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.fd-status-approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.fd-status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.fd-btn-approve {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.fd-btn-reject {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ---------------- RESPONSIVE MEDIA QUERIES ---------------- */
+
+/* Medium Screens (Tablet Like) */
+@media (max-width: 1100px) {
+    .fd-sidebar {
+        width: auto;
+        /* Shrink sidebar width */
+    }
+
+    .fd-DshbrdtagName {
+        display: none;
+        /* Hide Labels, Show Icons Only */
+    }
+
+    .fd-sidebar li {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .fd-DshbrdSidbrIcn {
+        margin-right: 0;
+    }
+}
+
+/* Small Screens (Mobile) */
+@media (max-width: 600px) {
+    .fd-dashboard-wrapper {
+        overflow-y: auto;
+        /* Allow full page scroll if needed */
+    }
+
+    .fd-layout {
+        flex-direction: column;
+        /* Stack sidebar on top/bottom */
+    }
+
+    /* Make sidebar a bottom or top navigation bar */
+    .fd-sidebar {
+        width: 100%;
+        height: auto;
+        border-top: 1px solid #eee;
+        padding: 5px 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+    }
+
+    .fd-sidebar ul {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin: 0;
+    }
+
+    .fd-sidebar li {
+        flex-direction: column;
+        padding: 8px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+    }
+
+    .fd-sidebar li:hover,
+    .fd-sidebar li.active {
+        background: transparent;
+        border-left: none;
+        border-bottom: 3px solid var(--fd-primary);
+    }
+
+    .fd-DshbrdSidbrIcn {
+        font-size: 1.4rem;
+        margin: 0;
+    }
+
+    .fd-content {
+        padding: 15px;
+        padding-bottom: 80px;
+        /* Space for bottom nav */
+    }
+
+    /* Stepper Mobile */
+    .fd-stepper {
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .fd-line {
+        width: 30px;
+    }
+
+    .fd-circle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    /* Menu Item Mobile */
+    .fd-menu-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+    }
+
+    .fd-menu-img {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 10px;
+    }
+
+    .fd-menu-details {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .fd-menu-btns {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .fd-btn-edit,
+    .fd-btn-delete {
+        flex: 1;
+    }
+
+    /* Order Card Mobile */
+    .fd-order-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .fd-order-status {
+        margin: 10px 0;
+    }
+
+    .fd-action-btns {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .fd-btn-approve,
+    .fd-btn-reject {
+        flex: 1;
+        text-align: center;
+    }
+}

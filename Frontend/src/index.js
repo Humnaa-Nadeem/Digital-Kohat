@@ -73,6 +73,7 @@ import { DiagnosticsPage } from './Pages/HospitalPage/HosCategoriesPg/Diagnostic
 import { AmbulancePage } from './Pages/HospitalPage/HosCategoriesPg/Ambulance';
 import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialists';
 import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
+import { FoodDashboard } from './Pages/DashBoard/FoodDashboard/FoodDashboard';
 import { FoodLayout } from './Layouts/FoodLayout';
 import HospitalLayout from './Layouts/HospitalLayout';
 
@@ -98,6 +99,10 @@ const routes = [
   {
     path: "/dashboard",
     element: <DashBoard />,
+  },
+  {
+    path: "/dashboard/fooddashboard",
+    element: <FoodDashboard />,
   },
 
   // Education Sector
