@@ -1,9 +1,8 @@
-/* FoodDashboard.css */
-/* Cloned and modified structure from Dashboard.css but with fd- prefix */
+
 
 :root {
     --fd-primary: #ff6b6b;
-    /* Warm Red for Food */
+    
     --fd-secondary: #ff9f43;
     --fd-step-active: #ff6b6b;
     --fd-step-inactive: #ddd;
@@ -16,7 +15,7 @@
     font-family: 'Poppins', sans-serif;
     background-color: #f7f1e3;
     overflow: hidden;
-    /* Fix scroll */
+    
 }
 
 /* --- Validation & Header (Same structure as Edu) --- */
@@ -463,6 +462,63 @@
     cursor: pointer;
 }
 
+
+/* Membership Styles */
+.fd-membership-info {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.fd-membership-card-display {
+    background: linear-gradient(135deg, #FFD700, #FDB931);
+    color: #333;
+    padding: 20px;
+    border-radius: 15px;
+    width: 300px;
+    height: 180px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fd-membership-card-display h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.fd-membership-id {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    font-family: monospace;
+}
+
+.fd-membership-expiry {
+    font-size: 0.9rem;
+    align-self: flex-end;
+}
+
+.fd-membership-stats {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.fd-membership-stats p {
+    font-size: 1.1rem;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+
+
 /* ---------------- RESPONSIVE MEDIA QUERIES ---------------- */
 
 /* Medium Screens (Tablet Like) */
@@ -612,5 +668,11 @@
     .fd-btn-reject {
         flex: 1;
         text-align: center;
+    }
+
+    /* Membership Card Mobile */
+    .fd-membership-info {
+        flex-direction: column;
+        align-items: center;
     }
 }
