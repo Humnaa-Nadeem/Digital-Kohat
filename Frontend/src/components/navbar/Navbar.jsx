@@ -2,6 +2,9 @@ import { useState } from "react";
 import "./Navbar.css";
 import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
+import LanguageSwitcher from "../LanguageSwitcher";
+// ❌ removed unused import
+// import GoogleTranslate from "../utils/GoogleTranslate";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +23,9 @@ const Navbar = () => {
   };
 
   const handleDropdownEnter = () => setDropdownOpen(true);
-  const handleDropdownLeave = () => setTimeout(() => setDropdownOpen(false), 200);
+  const handleDropdownLeave = () =>
+    setTimeout(() => setDropdownOpen(false), 200);
+
   const toggleDropdownClick = (e) => {
     e.preventDefault();
     setDropdownOpen((prev) => !prev);
@@ -39,8 +44,10 @@ const Navbar = () => {
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
-         
-            <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
+
+            <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>
+              About us
+            </a>
 
             {/* SERVICES DROPDOWN */}
             <div
@@ -62,28 +69,63 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
-                   <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
-                    <a  onClick={()=>{ navigate ("/food");closeMenu();}}>food</a>
-                  <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
-                  <a onClick={() => { navigate("/business"); closeMenu(); }}>Business/shops</a>
-                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians/Labours</a>
-                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism/Traveling</a>
-                  <a onClick={() => { navigate("/brands"); closeMenu(); }}>Our Brands</a>
+                  <a onClick={() => { navigate("/Edu"); closeMenu(); }}>
+                    Education
+                  </a>
+                  <a onClick={() => { navigate("/food"); closeMenu(); }}>
+                    Food
+                  </a>
+                  <a onClick={() => { navigate("/hospital"); closeMenu(); }}>
+                    Health
+                  </a>
+                  <a onClick={() => { navigate("/business"); closeMenu(); }}>
+                    Business/Shops
+                  </a>
+                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>
+                    Technicians/Labours
+                  </a>
+                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>
+                    Tourism/Traveling
+                  </a>
+                  <a onClick={() => { navigate("/brands"); closeMenu(); }}>
+                    Our Brands
+                  </a>
                 </div>
               )}
             </div>
 
-            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>Contact Us</a>
+            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>
+              Contact Us
+            </a>
 
+            {/* BUTTONS + LANGUAGE */}
             <div className="nav-buttons">
-              <button className="btn sign" onClick={() => { closeMenu(); navigate("/form"); }}>Sign Up</button>
-              <button className="btn log" onClick={closeMenu}>Log in</button>
+              <button
+                className="btn sign"
+                onClick={() => {
+                  closeMenu();
+                  navigate("/form");
+                }}
+              >
+                Sign Up
+              </button>
+
+              <button className="btn log" onClick={closeMenu}>
+                Log in
+              </button>
+
+              <LanguageSwitcher />
             </div>
           </div>
 
           {/* HAMBURGER */}
-          <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
-            <span></span><span></span><span></span>
+          <div
+            className={`hamburger ${isOpen ? "active" : ""}`}
+            onClick={toggleMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
       </nav>

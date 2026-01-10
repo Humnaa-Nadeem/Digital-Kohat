@@ -2,7 +2,11 @@ import "./Footer.css";
 import { FaFacebookF, FaInstagram, FaYoutube, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import footerlogo from "../imgs/footerlogo.jpg"; // replace with your actual logo path
 
+
+
 const Footer = () => {
+
+
   return (
     <footer className="footer">
       <div className="footer-container">

@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* ================================
+   🔥 GOOGLE TRANSLATE COMPLETE HIDE
+================================ */
+
+/* Hide the top Google banner iframe */
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Prevent page from being pushed down */
+body {
+  top: 0px !important;
+}
+
+/* Hide Google translate gadget */
+.goog-te-gadget {
+  display: none !important;
+}
+
+/* Hide the dropdown itself */
+.goog-te-combo {
+  display: none !important;
+}
+
+/* Hide Google logo + text */
+.goog-logo-link,
+.goog-te-gadget span {
+  display: none !important;
+}
+
+/* Extra safety */
+.skiptranslate {
+  display: none !important;
+}
