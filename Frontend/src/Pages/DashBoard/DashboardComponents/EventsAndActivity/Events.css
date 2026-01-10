@@ -1,0 +1,24 @@
+.activitiesCont {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 13px;
+    column-gap: 20px;
+    flex-wrap: wrap;
+}
+
+.activitiesCont .actitvityCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.DshbrdActivityLabel {
+    margin-left: 5px;
+}
+
+.DshbrdActivityLabel,
+.actitvityCont input {
+    cursor: pointer;
+}
