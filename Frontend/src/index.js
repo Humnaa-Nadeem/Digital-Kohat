@@ -76,6 +76,28 @@ import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
 import { FoodDashboard } from './Pages/DashBoard/FoodDashboard/FoodDashboard';
 import { FoodLayout } from './Layouts/FoodLayout';
 import HospitalLayout from './Layouts/HospitalLayout';
+import { BusinessLayout } from './Layouts/BusinessLayout';
+
+// :::::::: BUSINESS SECTOR :::::::
+import { BusinessHomePage } from './Pages/BusinessPage/BusinessHomePage/BusinessHomePage';
+import { ShopsRetailPg } from './Pages/BusinessPage/BusinessCategoriesPg/ShopsRetailPg';
+import { OfficesPg } from './Pages/BusinessPage/BusinessCategoriesPg/OfficesPg';
+import { EventsPg } from './Pages/BusinessPage/BusinessCategoriesPg/EventsPg';
+import { ManufacturingPg } from './Pages/BusinessPage/BusinessCategoriesPg/ManufacturingPg';
+import { FreelancersPg } from './Pages/BusinessPage/BusinessCategoriesPg/FreelancersPg';
+import { BusinessRegistration } from './Pages/BusinessPage/Registration/BusinessRegistration';
+
+// :::::::: PROVIDER DASHBOARD :::::::
+import ProviderDashboard from './Pages/DashBoard/ProviderDashboard/ProviderDashboard';
+import { ProviderOverview } from './Pages/DashBoard/ProviderDashboard/ProviderOverview';
+import CustomerRequests from './Pages/DashBoard/ProviderDashboard/Components/CustomerRequests';
+import BusinessProfile from './Pages/DashBoard/ProviderDashboard/Components/BusinessProfile';
+import ProviderServices from './Pages/DashBoard/ProviderDashboard/Components/ProviderServices';
+import ProviderReviews from './Pages/DashBoard/ProviderDashboard/Components/ProviderReviews';
+import ProviderSubscription from './Pages/DashBoard/ProviderDashboard/Components/ProviderSubscription';
+import ProviderSupport from './Pages/DashBoard/ProviderDashboard/Components/ProviderSupport';
+import { BusinessLogin } from './Pages/BusinessPage/Login/BusinessLogin';
+
 
 // 404 Page
 // import { PageNotFoundPg } from './Pages/404Page/404Page';
@@ -103,6 +125,21 @@ const routes = [
   {
     path: "/dashboard/fooddashboard",
     element: <FoodDashboard />,
+  },
+
+  // Provider Dashboard (Business Owner)
+  {
+    path: "/dashboard/provider",
+    element: <ProviderDashboard />,
+    children: [
+      { index: true, element: <ProviderOverview /> },
+      { path: "requests", element: <CustomerRequests /> },
+      { path: "profile", element: <BusinessProfile /> },
+      { path: "services", element: <ProviderServices /> },
+      { path: "reviews", element: <ProviderReviews /> },
+      { path: "subscription", element: <ProviderSubscription /> },
+      { path: "support", element: <ProviderSupport /> },
+    ]
   },
 
   // Education Sector
@@ -183,6 +220,24 @@ const routes = [
       { path: "specialists", element: <SpecialistsPage /> },
     ],
   },
+
+  // Business Sector
+  {
+    path: "/business",
+    element: <BusinessLayout />,
+    children: [
+      { index: true, element: <BusinessHomePage /> },
+      { path: "shops", element: <ShopsRetailPg /> },
+      { path: "offices", element: <OfficesPg /> },
+      { path: "events", element: <EventsPg /> },
+      { path: "manufacturing", element: <ManufacturingPg /> },
+      { path: "freelancers", element: <FreelancersPg /> },
+    ],
+  },
+
+  // Business Registration
+  { path: "/business/register", element: <BusinessRegistration /> },
+  { path: "/business/login", element: <BusinessLogin /> },
 
   // Page Not Found
   { path: "*", element: <PageNotFoundPg /> },
