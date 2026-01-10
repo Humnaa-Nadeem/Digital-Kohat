@@ -158,6 +158,17 @@ export const Food_Details = [
         aboutImage: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg",
         staff: [{ name: "Chef Haris", subject: "Executive Chef", description: "Master of continental cuisine.", image: "https://images.pexels.com/photos/2102934/pexels-photo-2102934.jpeg" }],
         events: [{ title: "Gourmet Week", description: "Special menu featuring international dishes.", icon: "FaUtensils" }],
+        promotions: [
+            { id: "p1", title: "Weekend Feast", type: "discount", value: "15%", code: "WEEKEND15", status: "active", usage: 45 },
+            { id: "p2", title: "Free Delivery", type: "shipping", value: "100%", threshold: 2000, status: "active", usage: 120 }
+        ],
+        finance: {
+            balance: 45000,
+            pendingPayout: 12000,
+            lastPayout: "2024-02-01",
+            subscriptionStatus: "Active",
+            subscriptionPlan: "Premium"
+        },
         quickInfo: {
             basicProfile: { name: "The Grand Regal", location: "Cantonment, Kohat", type: "Fine Dining" },
             administration: { owner: "Mr. Zahid Khan", phone: "0922-123456", email: "info@grandregal.com" },
@@ -171,19 +182,19 @@ export const Food_Details = [
         verifiedBadge: true,
         isOpen: true,
         detailedReviews: [
-            { name: "Ahmed Khan", img: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg", rating: 5, comment: "Absolutely marvelous experience. The steaks were cooked to perfection!" },
-            { name: "Sara Malik", img: "https://images.pexels.com/photos/3801456/pexels-photo-3801456.jpeg", rating: 5, comment: "The ambiance is unmatched in Kohat. Highly recommended for family dinners." }
+            { id: "r1", name: "Ahmed Khan", img: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg", rating: 5, comment: "Absolutely marvelous experience. The steaks were cooked to perfection!", date: "2024-02-10", response: "Thank you Ahmed! We are glad you enjoyed it." },
+            { id: "r2", name: "Sara Malik", img: "https://images.pexels.com/photos/3801456/pexels-photo-3801456.jpeg", rating: 5, comment: "The ambiance is unmatched in Kohat. Highly recommended for family dinners.", date: "2024-02-08", response: "" }
         ],
         categorizedMenu: [
             {
                 categoryName: "Signature Deals",
-                items: [{ id: 101, name: "Regal Platter for 4", price: "4500", img: "https://images.pexels.com/photos/323682/pexels-photo-323682.jpeg", desc: "A royal mix of BBQ, steaks, and aromatic rice.", tags: ["Popular", "Spicy"] }]
+                items: [{ id: 101, name: "Regal Platter for 4", price: "4500", img: "https://images.pexels.com/photos/323682/pexels-photo-323682.jpeg", desc: "A royal mix of BBQ, steaks, and aromatic rice.", tags: ["Popular", "Spicy"], isAvailable: true, prepTime: "45 mins", sku: "RP-004", addOns: ["Extra Rice", "Raita"] }]
             },
             {
                 categoryName: "Main Course",
                 items: [
-                    { id: 102, name: "Beef Wellington", price: "2800", img: "https://images.pexels.com/photos/11749407/pexels-photo-11749407.jpeg", desc: "Tender beef wrapped in puff pastry.", variants: ["Classic", "Extra Spicy"], tags: ["Signature"] },
-                    { id: 103, name: "Grilled Salmon", price: "2200", img: "https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg", desc: "Fresh Atlantic salmon grilled with lemon butter.", variants: ["Lemon Garlic", "Honey Glazed"] }
+                    { id: 102, name: "Beef Wellington", price: "2800", img: "https://images.pexels.com/photos/11749407/pexels-photo-11749407.jpeg", desc: "Tender beef wrapped in puff pastry.", variants: ["Classic", "Extra Spicy"], tags: ["Signature"], isAvailable: true, prepTime: "30 mins", sku: "BW-102", addOns: ["Mashed Potatoes", "Steamed Veggies"] },
+                    { id: 103, name: "Grilled Salmon", price: "2200", img: "https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg", desc: "Fresh Atlantic salmon grilled with lemon butter.", variants: ["Lemon Garlic", "Honey Glazed"], isAvailable: false, prepTime: "25 mins", sku: "GS-103", addOns: ["Asparagus"] }
                 ]
             },
             {

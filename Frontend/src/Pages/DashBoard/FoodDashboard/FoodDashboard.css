@@ -1,8 +1,6 @@
-
-
 :root {
     --fd-primary: #ff6b6b;
-    
+
     --fd-secondary: #ff9f43;
     --fd-step-active: #ff6b6b;
     --fd-step-inactive: #ddd;
@@ -15,7 +13,7 @@
     font-family: 'Poppins', sans-serif;
     background-color: #f7f1e3;
     overflow: hidden;
-    
+
 }
 
 /* --- Validation & Header (Same structure as Edu) --- */
@@ -675,4 +673,281 @@
         flex-direction: column;
         align-items: center;
     }
+}
+
+/* =========================================
+   ADVANCED DASHBOARD STYLES (ADDED)
+   ========================================= */
+
+/* --- New Tabs & Secondary Nav --- */
+.fd-tabs-secondary {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.fd-tab-btn {
+    background: #f0f0f0;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.fd-tab-btn.active,
+.fd-tab-btn:hover {
+    background: var(--fd-primary);
+    color: white;
+}
+
+/* --- Advanced Order Card --- */
+.fd-order-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.fd-order-body {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.fd-total-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--fd-primary);
+    margin: 10px 0;
+}
+
+.fd-order-actions {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.fd-btn-success {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.fd-btn-icon {
+    background: #ddd;
+    color: #333;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Menu Stats --- */
+.fd-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.fd-availability {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.fd-availability.available {
+    background: #e6fffa;
+    color: #2c7a7b;
+}
+
+.fd-availability.unavailable {
+    background: #fff5f5;
+    color: #c53030;
+}
+
+.fd-item-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #666;
+    flex-wrap: wrap;
+}
+
+.fd-meta-tag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fd-variants {
+    margin-top: 8px;
+    color: #888;
+}
+
+/* --- Deals Table --- */
+.fd-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.fd-table th,
+.fd-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.fd-table th {
+    background-color: #fafafa;
+    color: #555;
+    font-weight: 600;
+}
+
+.fd-badge-code {
+    background: #efecfd;
+    color: #5b4dbd;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+/* --- Reviews --- */
+.fd-review-item {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.fd-review-item:last-child {
+    border-bottom: none;
+}
+
+.fd-review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.fd-reviewer-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.fd-avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.fd-review-date {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.fd-rating-stars {
+    color: #f1c40f;
+    display: flex;
+}
+
+.fill-star {
+    fill: #f1c40f;
+}
+
+.empty-star {
+    color: #ddd;
+    fill: #ddd;
+}
+
+.fd-review-text {
+    line-height: 1.6;
+    color: #444;
+}
+
+.fd-admin-reply {
+    margin-top: 10px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-left: 3px solid var(--fd-primary);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.fd-reply-box {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+}
+
+.fd-btn-text,
+.fd-btn-text-danger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0;
+}
+
+.fd-btn-text {
+    color: var(--fd-primary);
+}
+
+.fd-btn-text-danger {
+    color: #999;
+}
+
+.fd-btn-text-danger:hover {
+    color: #e74c3c;
+}
+
+/* --- Finance --- */
+.fd-subsection {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px dashed #eee;
+}
+
+.fd-subscription-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.fd-status-active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.fd-btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
 }
