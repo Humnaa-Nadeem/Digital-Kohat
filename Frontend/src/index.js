@@ -74,6 +74,8 @@ import { AmbulancePage } from './Pages/HospitalPage/HosCategoriesPg/Ambulance';
 import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialists';
 import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
 import { FoodDashboard } from './Pages/DashBoard/FoodDashboard/FoodDashboard';
+import { TourismDashboard } from './Pages/DashBoard/TourismDashboard/TourismDashboard';
+import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismRegistration';
 import { FoodLayout } from './Layouts/FoodLayout';
 import HospitalLayout from './Layouts/HospitalLayout';
 import { BusinessLayout } from './Layouts/BusinessLayout';
@@ -122,10 +124,7 @@ const routes = [
     path: "/dashboard",
     element: <DashBoard />,
   },
-  {
-    path: "/dashboard/fooddashboard",
-    element: <FoodDashboard />,
-  },
+
 
   // Provider Dashboard (Business Owner)
   {
@@ -178,6 +177,8 @@ const routes = [
     element: <TourismLayout />,
     children: [
       { index: true, element: <TourismHome /> },
+      { path: "dashboard", element: <TourismDashboard /> },
+      { path: "register", element: <TourismRegistration /> },
       { path: "places", element: <Places /> },
       { path: "hotels", element: <Hotels /> },
       { path: "restaurants", element: <Restaurants /> },
@@ -203,6 +204,7 @@ const routes = [
       { path: "local-food", element: <LocalFoodPage /> },
       { path: "bakeries", element: <BakeriesPage /> },
       { path: "street-food", element: <StreetFoodPage /> },
+      { path: "fooddashboard", element: <FoodDashboard /> },
     ],
   },
 

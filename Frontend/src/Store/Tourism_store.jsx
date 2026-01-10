@@ -700,3 +700,41 @@ export const TourGuidesCardsData = [
     }
   })
 ];
+
+/* -----------------------------
+   TOURISM PROVIDER DASHBOARD DATA
+-------------------------------- */
+export const Tourism_Provider_Details = [
+  {
+    id: 1,
+    name: "Syed Sahil Shah",
+    type: "Tour Guide",
+    verificationStatus: "Verified",
+    badgeLevel: "Gold",
+    profileViews: 1205,
+    calls: 45,
+    whatsapp: 82,
+    requestsCount: 15,
+    rating: 4.8,
+    reportsCount: 2,
+    warningLevel: "Low",
+    subscriptionPlan: "Verified Plan",
+    subscriptionExpiry: "2026-05-15",
+    offerings: [
+      { id: 101, title: "Full Day City Tour", desc: "8 hours guided tour of Kohat City & Fort", price: "3000", availability: "Available" },
+      { id: 102, title: "Tanda Dam Bird Watching", desc: "4 hours morning session with equipment", price: "1500", availability: "Weekend Only" }
+    ],
+    requests: [
+      { id: 1001, user: "Ali Khan", service: "Full Day City Tour", date: "2026-01-12", status: "Pending", contact: "0300-1234567" },
+      { id: 1002, user: "John Doe", service: "Tanda Dam Trip", date: "2026-01-15", status: "Confirmed", contact: "0333-9876543" }
+    ],
+    reviews: [
+      { id: 501, user: "Hamza", rating: 5, comment: "Best guide ever!", date: "2025-12-20", reply: "Thanks Hamza!" },
+      { id: 502, user: "Sara", rating: 4, comment: "Good experience but bit late", date: "2025-12-25", reply: "" }
+    ],
+    reports: [
+      { id: 1, reason: "Late Arrival", status: "Resolved", date: "2025-11-10" },
+      { id: 2, reason: "Price dispute", status: "Pending", date: "2026-01-05" }
+    ]
+  }
+];

@@ -162,6 +162,13 @@ export const Food_Details = [
             { id: "p1", title: "Weekend Feast", type: "discount", value: "15%", code: "WEEKEND15", status: "active", usage: 45 },
             { id: "p2", title: "Free Delivery", type: "shipping", value: "100%", threshold: 2000, status: "active", usage: 120 }
         ],
+        reportStatus: "Warning",
+        reportCount: 73,
+        reports: [
+            { id: "r1", reason: "Fake information", date: "2024-02-15", status: "Verified" },
+            { id: "r2", reason: "Bad service", date: "2024-02-18", status: "Pending" },
+            { id: "r3", reason: "Overcharging", date: "2024-02-20", status: "Verified" }
+        ],
         finance: {
             balance: 45000,
             pendingPayout: 12000,

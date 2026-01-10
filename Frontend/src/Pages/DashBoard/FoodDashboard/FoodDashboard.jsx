@@ -14,7 +14,10 @@ import {
     FiDollarSign,
     FiMessageSquare,
     FiHelpCircle,
-    FiStar
+    FiStar,
+    FiAlertTriangle,
+    FiSlash,
+    FiFileText
 } from "react-icons/fi";
 import { FaUser, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes, FaClock, FaPrint, FaReply } from "react-icons/fa";
 import { Food_Details } from "../../../Store/Food_store";
@@ -424,6 +427,52 @@ const FoodSupport = () => {
     );
 };
 
+// ==========================================
+// 6. REPORTS & COMPLIANCE
+// ==========================================
+const FoodReports = ({ reports = [], reportCount = 0, status = "Active" }) => {
+    return (
+        <div className="fd-card">
+            <h2 className="fd-section-title">Reports & Compliance</h2>
+
+            <div className={`fd-report-status-box status-${status}`}>
+                <div className="fd-report-metric">
+                    <h3>Reports: {reportCount} / 100</h3>
+                    <div className="fd-progress-bar">
+                        <div className="fd-progress-fill" style={{ width: `${Math.min(reportCount, 100)}%` }}></div>
+                    </div>
+                </div>
+                <div className="fd-status-display">
+                    <h3>Status: {status}</h3>
+                    {status === "Warning" && <p><FiAlertTriangle /> Your business has received multiple reports.</p>}
+                </div>
+            </div>
+
+            <h3 className="fd-subsection-title">Recent Reports</h3>
+            <table className="fd-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reports.length > 0 ? reports.map(r => (
+                        <tr key={r.id}>
+                            <td>{r.date}</td>
+                            <td>{r.reason}</td>
+                            <td><span className={`fd-badge-status ${r.status.toLowerCase()}`}>{r.status}</span></td>
+                            <td><button className="fd-btn-text">View Details</button></td>
+                        </tr>
+                    )) : <tr><td colSpan="4">No reports found. Good job!</td></tr>}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
 export const FoodDashboard = () => {
     /**
      * SUPER ADMIN CONNECTION LOGIC COMMENT:
@@ -493,6 +542,7 @@ export const FoodDashboard = () => {
             case "Finance": return <FoodFinance finance={profileData.finance} />;
             case "Reviews": return <FoodReviews reviews={profileData.detailedReviews} />;
             case "Support": return <FoodSupport />;
+            case "Reports": return <FoodReports reports={profileData.reports} reportCount={profileData.reportCount} status={profileData.reportStatus} />;
             case "Ads": return <FoodAd />;
             case "Membership-details": return <MembershipDetails />;
             default: return <FoodOrders orders={orders} setOrders={setOrders} />;
@@ -500,69 +550,94 @@ export const FoodDashboard = () => {
     };
 
     return (
-        <div className="fd-dashboard-wrapper">
-            <header className="fd-main-header">
-                <nav className="fd-navbar">
-                    <div className="fd-nav-container" style={{ padding: "10px 2px" }}>
-                        {/* LOGO */}
-                        <div className="fd-nav-logo">
-                            <img src={brandLogo} alt="Logo" className="logo-img fd-dshbrdlogo" />
-                            <h2>DIGITAL SMART CITIES HUB</h2>
-                        </div>
+        <>
+            {profileData.reportStatus === 'Suspended' ? (
+                <div className="fd-suspended-screen">
+                    <div className="fd-suspended-modal">
+                        <FiSlash className="fd-suspended-icon" />
+                        <h2>⛔ Account Suspended</h2>
+                        <p><strong>Reason:</strong> High number of verified complaints</p>
+                        <p>Your business access has been temporarily revoked due to policy violations.</p>
+                        <button className="fd-btn-primary">Contact DSCH Support</button>
+                    </div>
+                </div>
+            ) : (
+                <div className="fd-dashboard-wrapper">
+                    <header className="fd-main-header">
+                        <nav className="fd-navbar">
+                            <div className="fd-nav-container" style={{ padding: "10px 2px" }}>
+                                {/* LOGO */}
+                                <div className="fd-nav-logo">
+                                    <img src={brandLogo} alt="Logo" className="logo-img fd-dshbrdlogo" />
+                                    <h2>DIGITAL SMART CITIES HUB</h2>
+                                </div>
 
-                        <div className="fd-Admin-Icon-TagsCont">
-                            <span className="fd-usrIcon fd-adminIcon" onClick={() => setAdmintags(!AdminTags)}>
-                                <FaUser />
-                            </span>
-                            <ul className={AdminTags ? "fd-tags-cont fd-flexDsply fd-Admin-Tags" : "fd-tags-cont fd-Admin-Tags"}>
-                                <li>Dashboard</li>
-                                <li>Notifications</li>
-                                <li className="fd-DshbrdlogOut-tag">log Out</li>
+                                <div className="fd-Admin-Icon-TagsCont">
+                                    <span className="fd-usrIcon fd-adminIcon" onClick={() => setAdmintags(!AdminTags)}>
+                                        <FaUser />
+                                    </span>
+                                    <ul className={AdminTags ? "fd-tags-cont fd-flexDsply fd-Admin-Tags" : "fd-tags-cont fd-Admin-Tags"}>
+                                        <li>Dashboard</li>
+                                        <li>Notifications</li>
+                                        <li className="fd-DshbrdlogOut-tag">log Out</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+
+                    <main className="fd-layout">
+                        {/* Sidebar */}
+                        <aside className="fd-sidebar">
+                            <ul>
+                                <li onClick={() => setActiveTab("Orders")} className={activeTab === "Orders" ? "active" : ""}><FiShoppingBag className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Orders</p></li>
+                                <li onClick={() => setActiveTab("Menu")} className={activeTab === "Menu" ? "active" : ""}><FiMenu className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Menu</p></li>
+                                <li onClick={() => setActiveTab("Deals")} className={activeTab === "Deals" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Deals</p></li>
+                                <li onClick={() => setActiveTab("Analytics")} className={activeTab === "Analytics" ? "active" : ""}><FiActivity className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Analytics</p></li>
+                                <li onClick={() => setActiveTab("Finance")} className={activeTab === "Finance" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Finance</p></li>
+                                <li onClick={() => setActiveTab("Reviews")} className={activeTab === "Reviews" ? "active" : ""}><FiMessageSquare className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reviews</p></li>
+                                <li onClick={() => setActiveTab("Profile")} className={activeTab === "Profile" ? "active" : ""}><FiUser className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Profile</p></li>
+                                <li onClick={() => setActiveTab("Reports")} className={activeTab === "Reports" ? "active" : ""}><FiFileText className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reports</p></li>
+                                <li onClick={() => setActiveTab("Support")} className={activeTab === "Support" ? "active" : ""}><FiHelpCircle className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Support</p></li>
                             </ul>
-                        </div>
-                    </div>
-                </nav>
-            </header>
+                        </aside>
 
-            <main className="fd-layout">
-                {/* Sidebar */}
-                <aside className="fd-sidebar">
-                    <ul>
-                        <li onClick={() => setActiveTab("Orders")} className={activeTab === "Orders" ? "active" : ""}><FiShoppingBag className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Orders</p></li>
-                        <li onClick={() => setActiveTab("Menu")} className={activeTab === "Menu" ? "active" : ""}><FiMenu className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Menu</p></li>
-                        <li onClick={() => setActiveTab("Deals")} className={activeTab === "Deals" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Deals</p></li>
-                        <li onClick={() => setActiveTab("Analytics")} className={activeTab === "Analytics" ? "active" : ""}><FiActivity className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Analytics</p></li>
-                        <li onClick={() => setActiveTab("Finance")} className={activeTab === "Finance" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Finance</p></li>
-                        <li onClick={() => setActiveTab("Reviews")} className={activeTab === "Reviews" ? "active" : ""}><FiMessageSquare className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reviews</p></li>
-                        <li onClick={() => setActiveTab("Profile")} className={activeTab === "Profile" ? "active" : ""}><FiUser className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Profile</p></li>
-                        <li onClick={() => setActiveTab("Support")} className={activeTab === "Support" ? "active" : ""}><FiHelpCircle className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Support</p></li>
-                    </ul>
-                </aside>
+                        {/* Main Content */}
+                        <section className="fd-content">
 
-                {/* Main Content */}
-                <section className="fd-content">
+                            <div className="fd-stepper">
+                                <div className={(activeTab === "Orders") ? "fd-step active" : "fd-step"}>
+                                    <span className="fd-circle">1</span>
+                                    <p>Orders</p>
+                                </div>
+                                <div className="fd-line"></div>
+                                <div className={(activeTab === "Menu") ? "fd-step active" : "fd-step"}>
+                                    <span className="fd-circle">2</span>
+                                    <p>Menu</p>
+                                </div>
+                                <div className="fd-line"></div>
+                                <div className={(activeTab === "Profile") ? "fd-step active" : "fd-step"}>
+                                    <span className="fd-circle">3</span>
+                                    <p>Profile</p>
+                                </div>
 
-                    <div className="fd-stepper">
-                        <div className={(activeTab === "Orders") ? "fd-step active" : "fd-step"}>
-                            <span className="fd-circle">1</span>
-                            <p>Orders</p>
-                        </div>
-                        <div className="fd-line"></div>
-                        <div className={(activeTab === "Menu") ? "fd-step active" : "fd-step"}>
-                            <span className="fd-circle">2</span>
-                            <p>Menu</p>
-                        </div>
-                        <div className="fd-line"></div>
-                        <div className={(activeTab === "Profile") ? "fd-step active" : "fd-step"}>
-                            <span className="fd-circle">3</span>
-                            <p>Profile</p>
-                        </div>
+                            </div>
 
-                    </div>
+                            {profileData.reportStatus === 'Warning' && (
+                                <div className="fd-warning-banner">
+                                    <FiAlertTriangle className="fd-warning-icon" />
+                                    <div>
+                                        <h4>Warning: High Report Volume</h4>
+                                        <p>Your business has received multiple user reports. Please resolve issues to avoid suspension.</p>
+                                    </div>
+                                </div>
+                            )}
 
-                    {renderContent()}
-                </section>
-            </main>
-        </div>
+                            {renderContent()}
+                        </section>
+                    </main>
+                </div>
+            )}
+        </>
     );
 };
