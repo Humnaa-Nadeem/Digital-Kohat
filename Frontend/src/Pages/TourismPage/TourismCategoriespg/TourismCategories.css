@@ -50,10 +50,12 @@
     cursor: pointer;
 }
 
-.institute-lst li:hover {
+.institute-lst li:hover,
+.institute-lst li.active {
     background: linear-gradient(-140deg, whitesmoke 14.7%, #027646 5%);
     color: white;
-    border: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 /* ================================

@@ -4,10 +4,17 @@ import kdaPark from "../components/imgs/kda_park.png";
 import tourismImg from "../components/imgs/tourism.png";
 import restaurantImg from "../components/imgs/restaurant.jpg";
 import hotelImg from "../components/imgs/hotel.jpg";
-import galleryImg from "../components/imgs/gallery.jpg";
+
 import imgSahil from "../components/imgs/sahil.jpeg";
 import imgSaqibullah from "../components/imgs/Saqibullah.jpg";
 import imgguidelady from "../components/imgs/guideimg.jpg";
+import galleryImg from "../components/imgs/gallery.jpg";
+import bazarMain from "../components/imgs/bazar_main.png";
+import bazarStreet from "../components/imgs/bazar_street.png";
+import bazarModern from "../components/imgs/bazar_modern.png";
+import bazarMeat from "../components/imgs/bazar_meat.png";
+import bazarCosmetic from "../components/imgs/bazar_cosmetic.png";
+import bazarCloth from "../components/imgs/bazar_cloth.png";
 
 export const tourismCategories = [
   {
@@ -56,13 +63,13 @@ export const tourismCategories = [
     icon: "fa fa-user-tie",
   },
   {
-    id: "gallery",
-    title: "Gallery",
-    description: "Explore Kohat through pictures",
-    btn: "View Gallery",
-    link: "/tourism/gallery",
-    bgImage: galleryImg,
-    icon: "fa fa-camera",
+    id: "Bazar",
+    title: "Bazar",
+    description: "Explore local markets and shopping areas",
+    btn: "View Bazar",
+    link: "/tourism/bazar",
+    bgImage: bazarMain,
+    icon: "fa fa-shopping-bag",
   },
 ];
 
@@ -73,6 +80,7 @@ const createLandingData = ({
   id,
   name,
   type,
+  category,
   tagline,
   about,
   aboutImage,
@@ -90,6 +98,7 @@ const createLandingData = ({
   name,
   title: name, // For backward compatibility
   type,
+  category,
   tagline,
   about,
   aboutImage,
@@ -106,6 +115,7 @@ const createLandingData = ({
     basicInfo: {
       ...defaultCommonInfo.basicInfo,
       placeName: name,
+      category: category || "",
       ...(commonInfo.basicInfo || {})
     }
   },
@@ -405,6 +415,244 @@ export const NatureCardsData = [
       facilities: ["Walking tracks", "Natural seating areas"],
       safetyInfo: { ...defaultCommonInfo.safetyInfo, warnings: "Do not wander deep without a guide. Beware of wild boars.", restrictedAreas: "Protected research plots" },
       educationalInfo: { historicalBackground: "Part of the semi-arid forest range of southern KP.", environmentalImportance: "Critical forest cover for the Kohat valley.", culturalRelevance: "Traditional hunting grounds (now protected).", whyItMatters: "Preserves native biodiversity." }
+    }
+  })
+];
+
+/* -----------------------------
+   BAZAR / MARKETS DATA
+-------------------------------- */
+export const BazarList = [
+  { id: 1, name: "Main Bazar Kohat", category: "General" },
+  { id: 2, name: "Old City Bazar", category: "General" },
+  { id: 3, name: "Kohat Mall Area", category: "Super Market" },
+  { id: 4, name: "Al-Noor Meat Shop", category: "Meat" },
+  { id: 5, name: "Kohat Fresh Mutton", category: "Meat" },
+  { id: 6, name: "Madina Cosmetic center", category: "Cosmetic" },
+  { id: 7, name: "Glow & Shine", category: "Cosmetic" },
+  { id: 8, name: "Kohat Fabrics", category: "Cloth" },
+  { id: 9, name: "Heritage Silks", category: "Cloth" },
+  { id: 10, name: "Step-In Shoes", category: "Shoes" },
+  { id: 11, name: "Peshawari Chappal House", category: "Shoes" },
+  { id: 12, name: "Green Grocery Mart", category: "Super Market" }
+];
+
+export const BazarCardsData = [
+  createLandingData({
+    id: 1,
+    name: "Main Bazar Kohat",
+    type: "Bazar",
+    category: "General",
+    tagline: "The heartbeat of Kohat's commerce.",
+    about: "Main Bazar Kohat is one of the oldest and busiest markets in the region, offering everything from traditional spices to modern electronics.",
+    aboutImage: bazarMain,
+    bgImage: bazarMain,
+    gallery: [bazarMain, bazarStreet, bazarModern],
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Main Bazar Kohat", city: "Kohat", category: "Traditional Market", shortIntroduction: "A historic marketplace where tradition meets modern commerce." },
+      locationNavigation: { exactLocation: "Old City Center, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "0 KM", howToReach: { byCar: "Directly accessible via Main Road", byPublicTransport: "All rickshaws go to main bazaar" }, parkingAvailability: "Street parking (limited)" },
+      visitingInfo: { openingTime: "09:00 AM", closingTime: "09:00 PM", entryFee: "Free", bestTimeOfDay: "Evening", bestSeason: "Winter" },
+      thingsToDo: ["Shopping for traditional fabrics", "Street food tasting", "Historical walk"],
+      facilities: ["Public Toilets", "Prayer Area", "Benches", "Food Stalls"],
+      safetyInfo: { ...defaultCommonInfo.safetyInfo, warnings: "Keep your belongings safe in crowded areas.", restrictedAreas: "None" },
+      educationalInfo: { historicalBackground: "The bazaar dates back to the British era and has been a trade hub for over a century.", whyItMatters: "Central to the economy of the southern districts of KP." },
+      budgetInfo: { transportCost: "Low", foodCost: "Low", familyVisitEstimate: "Budget Friendly" }
+    }
+  }),
+  createLandingData({
+    id: 2,
+    name: "Old City Bazar",
+    type: "Bazar",
+    category: "General",
+    tagline: "Authentic cultural shopping experience.",
+    about: "Step into the past at the Old City Bazar, famous for its hand-made Peshawari Chappals and intricate embroidery work.",
+    aboutImage: bazarStreet,
+    bgImage: bazarStreet,
+    gallery: [bazarStreet, bazarMain],
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Old City Bazar", city: "Kohat", category: "Handicrafts Market", shortIntroduction: "The best place to find authentic local handicrafts." },
+      locationNavigation: { exactLocation: "Rawarpatti Side, Old Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "1 KM", howToReach: { byCar: "Drive through Hangu Road", byPublicTransport: "Local vans available" }, parkingAvailability: "Nearby public parking" },
+      visitingInfo: { openingTime: "10:00 AM", closingTime: "08:00 PM", entryFee: "Free", bestTimeOfDay: "Afternoon", bestSeason: "Spring" },
+      thingsToDo: ["Buying Peshawari Chappals", "Exploring embroidery shops"],
+      facilities: ["Tea Shops", "Small Rest Areas"],
+      safetyInfo: { ...defaultCommonInfo.safetyInfo, warnings: "Narrow streets, watch out for motorcycles.", terrainRisks: "Uneven pavement" },
+      educationalInfo: { historicalBackground: "Built around the traditional residential quarters of the old city.", whyItMatters: "Preserves the authentic architectural heritage of Kohat." },
+      budgetInfo: { transportCost: "Low", foodCost: "Medium", familyVisitEstimate: "Moderate" }
+    }
+  }),
+  createLandingData({
+    id: 3,
+    name: "Kohat Mall Area",
+    type: "Bazar",
+    category: "Super Market",
+    tagline: "Modern shopping and entertainment.",
+    about: "A rapidly developing area with modern shopping malls and national brands.",
+    aboutImage: bazarModern,
+    bgImage: bazarModern,
+    gallery: [bazarModern, bazarMain],
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Kohat Mall Area", city: "Kohat", category: "Modern Shopping", shortIntroduction: "Experience modern retail therapy with major national and international brands." },
+      locationNavigation: { exactLocation: "KDA/Peshawar Road Area, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "3 KM", howToReach: { byCar: "10 mins drive from city center", byPublicTransport: "Main road taxis available" }, parkingAvailability: "Secure indoor parking" },
+      visitingInfo: { openingTime: "11:00 AM", closingTime: "11:00 PM", entryFee: "Free", bestTimeOfDay: "Night", bestSeason: "Summer" },
+      thingsToDo: ["Brand shopping", "Food court dining", "Cinema"],
+      facilities: ["AC", "Elevators", "Safe Zone", "Food Court"],
+      budgetInfo: { transportCost: "Medium", foodCost: "High", familyVisitEstimate: "Premium" }
+    }
+  }),
+  createLandingData({
+    id: 4,
+    name: "Al-Noor Meat Shop",
+    type: "Bazar",
+    category: "Meat",
+    tagline: "Fresh and quality meat every day.",
+    about: "The most trusted meat providers in Kohat Bazar, known for fresh mutton and beef.",
+    aboutImage: bazarMeat,
+    bgImage: bazarMeat,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Al-Noor Meat Shop", city: "Kohat", category: "Meat Shop", shortIntroduction: "Fresh and organic meat sourced daily." },
+      locationNavigation: { exactLocation: "Sabzi Mandi Road, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "0.5 KM", howToReach: { byCar: "5 mins from main gate", byPublicTransport: "Rickshaw stop nearby" }, parkingAvailability: "Open space" },
+      visitingInfo: { openingTime: "07:00 AM", closingTime: "02:00 PM", entryFee: "Free", bestTimeOfDay: "Morning", bestSeason: "Year round" },
+      facilities: ["Home Delivery", "Custom Cuts"],
+      budgetInfo: { transportCost: "Low", foodCost: "Market Price", familyVisitEstimate: "Domestic" }
+    }
+  }),
+  createLandingData({
+    id: 5,
+    name: "Kohat Fresh Mutton",
+    type: "Bazar",
+    category: "Meat",
+    tagline: "Pure organic meat from local farms.",
+    about: "Famous for high-quality mutton and hygienic environment.",
+    aboutImage: bazarMeat,
+    bgImage: bazarMeat,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Kohat Fresh Mutton", city: "Kohat", category: "Meat Shop", shortIntroduction: "Premium mutton shop in the heart of Kohat." },
+      locationNavigation: { exactLocation: "Main Road, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "1 KM" },
+      visitingInfo: { openingTime: "08:00 AM", closingTime: "03:00 PM", entryFee: "Free" }
+    }
+  }),
+  createLandingData({
+    id: 6,
+    name: "Madina Cosmetic center",
+    type: "Bazar",
+    category: "Cosmetic",
+    tagline: "All your beauty needs in one place.",
+    about: "Specializing in local and imported cosmetics, perfumes, and jewelry.",
+    aboutImage: bazarCosmetic,
+    bgImage: bazarCosmetic,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Madina Cosmetic center", city: "Kohat", category: "Cosmetic Shop", shortIntroduction: "Leading cosmetic store in Kohat Bazar." },
+      locationNavigation: { exactLocation: "Bangle Market, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "0.2 KM", howToReach: { byCar: "Walking within bazaar recommended", byPublicTransport: "Rickshaw to bazaar gate" }, parkingAvailability: "Limited" },
+      visitingInfo: { openingTime: "10:00 AM", closingTime: "09:00 PM", entryFee: "Free", bestTimeOfDay: "Evening", bestSeason: "Wedding Season" },
+      facilities: ["Makeup advice", "Tester available"],
+      budgetInfo: { transportCost: "Low", foodCost: "N/A", familyVisitEstimate: "Shopping Budget" }
+    }
+  }),
+  createLandingData({
+    id: 7,
+    name: "Glow & Shine",
+    type: "Bazar",
+    category: "Cosmetic",
+    tagline: "Enhance your natural beauty.",
+    about: "A modern cosmetics boutique with top international brands.",
+    aboutImage: bazarCosmetic,
+    bgImage: bazarCosmetic,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Glow & Shine", city: "Kohat", category: "Cosmetic Shop", shortIntroduction: "Modern beauty and skin care outlet." },
+      locationNavigation: { exactLocation: "Phase 1 KDA, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "4 KM" },
+      visitingInfo: { openingTime: "11:00 AM", closingTime: "10:00 PM", entryFee: "Free" }
+    }
+  }),
+  createLandingData({
+    id: 8,
+    name: "Kohat Fabrics",
+    type: "Bazar",
+    category: "Cloth",
+    tagline: "Traditional fabrics and modern designs.",
+    about: "Extensive collection of local fabrics including embroidery and silk.",
+    aboutImage: bazarCloth,
+    bgImage: bazarCloth,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Kohat Fabrics", city: "Kohat", category: "Cloth Shop", shortIntroduction: "The best collection of textiles in the city." },
+      locationNavigation: { exactLocation: "Cloth Market, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "0.3 KM", howToReach: { byCar: "Parking at city stand and walk", byPublicTransport: "Center of Bazar" }, parkingAvailability: "Bazar parking" },
+      visitingInfo: { openingTime: "10:00 AM", closingTime: "08:00 PM", entryFee: "Free", bestTimeOfDay: "Noon", bestSeason: "Eid Season" },
+      facilities: ["Tailoring Service", "Wholesale available"],
+      budgetInfo: { transportCost: "Low", foodCost: "N/A", familyVisitEstimate: "Varies" }
+    }
+  }),
+  createLandingData({
+    id: 9,
+    name: "Heritage Silks",
+    type: "Bazar",
+    category: "Cloth",
+    tagline: "Authentic silk and heritage wear.",
+    about: "Specializing in premium silks and traditional wedding attire.",
+    aboutImage: bazarCloth,
+    bgImage: bazarCloth,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Heritage Silks", city: "Kohat", category: "Cloth Shop", shortIntroduction: "Premium wedding and silk wear." },
+      locationNavigation: { exactLocation: "Tehsil Road, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "0.5 KM" },
+      visitingInfo: { openingTime: "10:00 AM", closingTime: "09:00 PM", entryFee: "Free" }
+    }
+  }),
+  createLandingData({
+    id: 10,
+    name: "Step-In Shoes",
+    type: "Bazar",
+    category: "Shoes",
+    tagline: "Quality footwear for all ages.",
+    about: "Large variety of shoes from traditional Peshawari Chappals to modern brands.",
+    aboutImage: bazarStreet,
+    bgImage: bazarStreet,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Step-In Shoes", city: "Kohat", category: "Shoes Shop", shortIntroduction: "Comfortable and stylish shoes for everyone." },
+      locationNavigation: { exactLocation: "Shoe Market, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "0.4 KM", howToReach: { byCar: "Direct road access", byPublicTransport: "Main road stop" }, parkingAvailability: "Available" },
+      visitingInfo: { openingTime: "10:00 AM", closingTime: "10:00 PM", entryFee: "Free", bestTimeOfDay: "Afternoon", bestSeason: "Festivals" },
+      facilities: ["Fittings", "Repairs"],
+      budgetInfo: { transportCost: "Low", foodCost: "N/A", familyVisitEstimate: "Fair" }
+    }
+  }),
+  createLandingData({
+    id: 11,
+    name: "Peshawari Chappal House",
+    type: "Bazar",
+    category: "Shoes",
+    tagline: "Authentic hand-made footwear.",
+    about: "Specialists in traditional hand-made Peshawari Chappals with pure leather.",
+    aboutImage: bazarStreet,
+    bgImage: bazarStreet,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Peshawari Chappal House", city: "Kohat", category: "Shoes Shop", shortIntroduction: "The best hand-made chappals in Kohat." },
+      locationNavigation: { exactLocation: "Old City, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "1.2 KM" },
+      visitingInfo: { openingTime: "09:00 AM", closingTime: "08:00 PM", entryFee: "Free" }
+    }
+  }),
+  createLandingData({
+    id: 12,
+    name: "Green Grocery Mart",
+    type: "Bazar",
+    category: "Super Market",
+    tagline: "Freshness you can trust.",
+    about: "A large super market offering fresh produce, groceries, and household essentials.",
+    aboutImage: bazarModern,
+    bgImage: bazarModern,
+    commonInfo: {
+      ...defaultCommonInfo,
+      basicInfo: { placeName: "Green Grocery Mart", city: "Kohat", category: "Super Market", shortIntroduction: "Your one-stop shop for fresh daily needs." },
+      locationNavigation: { exactLocation: "Indus Highway Road, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "5 KM" },
+      visitingInfo: { openingTime: "08:00 AM", closingTime: "11:00 PM", entryFee: "Free" },
+      facilities: ["Parking", "Home Delivery", "Fresh Section"]
     }
   })
 ];
