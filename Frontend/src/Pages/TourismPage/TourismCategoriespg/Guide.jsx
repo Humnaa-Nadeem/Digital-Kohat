@@ -23,15 +23,15 @@ export const Guide = () => {
       {id && selectedGuide ? (
         <TourismLandingPage listing={selectedGuide} />
       ) : (
-        <section className="Tourism-Cata-Pg-Sec">
+        <section className="tr-Tourism-Cata-Pg-Sec">
           {/* Left sidebar */}
-          <div className={showList ? "lft-sec showList" : "lft-sec"}>
-            <h2 className="sector" onClick={() => navigate(`/tourism`)}>
+          <div className={showList ? "tr-lft-sec tr-showList" : "tr-lft-sec"}>
+            <h2 className="tr-sector" onClick={() => navigate(`/tourism`)}>
               Tourism
             </h2>
-            <div className="institute-hd-lst">
-              <h2 className="institute-hd">Travel Guide</h2>
-              <ul className="institute-lst">
+            <div className="tr-institute-hd-lst">
+              <h2 className="tr-institute-hd">Travel Guide</h2>
+              <ul className="tr-institute-lst">
                 {GuideContent.map((v) => (
                   <li key={v.id} onClick={() => navigate(`?id=${v.id}`)}>
                     {v.name}
@@ -42,34 +42,34 @@ export const Guide = () => {
           </div>
 
           {/* Main content */}
-          <div className="main-sec">
-            <div className="showLstBtn" onClick={() => setShowList(!showList)}>
+          <div className="tr-main-sec">
+            <div className="tr-showLstBtn" onClick={() => setShowList(!showList)}>
               {showList ? "×" : "☰"}
             </div>
 
-            <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Travel Guide</h1>
+            <div className="tr-cata-pg-banner">
+              <h1 className="tr-tr-cata-pg-main-hd">Travel Guide</h1>
               <p>Your complete travel guide for exploring Kohat.</p>
             </div>
 
-            <div className="cata-card-cont">
+            <div className="tr-cata-card-cont">
               {GuideContent.map((guide) => (
-                <div className="cata-pg-card premium-card" key={guide.id}>
-                  <div className="card-img-container">
+                <div className="tr-card tr-premium-card" key={guide.id}>
+                  <div className="tr-card-img-container">
                     <img src={guide.aboutImage || guide.bgImage} alt={guide.name} />
-                    <div className="card-rating">
-                      <FaStar className="star-icon" />
+                    <div className="tr-card-rating">
+                      <FaStar className="tr-star-icon" />
                       <span>{guide.rating || "4.8"}</span>
                     </div>
                   </div>
-                  <div className="cata-pg-card-content">
-                    <div className="card-header">
+                  <div className="tr-card-content">
+                    <div className="tr-card-header">
                       <h3>{guide.name}</h3>
-                      <span className="card-city"><FaMapMarkerAlt /> Kohat</span>
+                      <span className="tr-card-city"><FaMapMarkerAlt /> Kohat</span>
                     </div>
-                    <p className="card-short-desc">{guide.about}</p>
+                    <p className="tr-card-short-desc">{guide.about}</p>
                     <button
-                      className="explore-btn"
+                      className="tr-explore-btn"
                       onClick={() => navigate(`/tourism/landing`, { state: { listing: guide } })}
                     >
                       Read Guide

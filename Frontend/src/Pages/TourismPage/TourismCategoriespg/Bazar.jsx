@@ -56,17 +56,17 @@ export const Bazar = () => {
       {id && selectedBazar ? (
         <TourismLandingPage listing={selectedBazar} />
       ) : (
-        <section className="Tourism-Cata-Pg-Sec">
+        <section className="tr-Tourism-Cata-Pg-Sec">
           {/* LEFT SIDEBAR */}
-          <div className={showList ? "lft-sec showList" : "lft-sec"}>
-            <h2 className="sector" onClick={() => navigate(`/tourism`)}>
+          <div className={showList ? "tr-lft-sec tr-showList" : "tr-lft-sec"}>
+            <h2 className="tr-sector" onClick={() => navigate(`/tourism`)}>
               Tourism
             </h2>
 
             {/* Filter Section */}
-            <div className="institute-hd-lst">
-              <h2 className="institute-hd"><FaFilter style={{ fontSize: '16px', marginRight: '8px' }} /> Categories</h2>
-              <ul className="institute-lst">
+            <div className="tr-institute-hd-lst">
+              <h2 className="tr-institute-hd"><FaFilter style={{ fontSize: '16px', marginRight: '8px' }} /> Categories</h2>
+              <ul className="tr-institute-lst">
                 {categories.map((cat) => (
                   <li
                     key={cat}
@@ -79,9 +79,9 @@ export const Bazar = () => {
               </ul>
             </div>
 
-            <div className="institute-hd-lst" style={{ marginTop: '20px' }}>
-              <h2 className="institute-hd">Local Bazars</h2>
-              <ul className="institute-lst">
+            <div className="tr-institute-hd-lst" style={{ marginTop: '20px' }}>
+              <h2 className="tr-institute-hd">Local Bazars</h2>
+              <ul className="tr-institute-lst">
                 {getMergedData(BazarList, "Tourism", "Bazar").map((bazar, i) => (
                   <li
                     key={bazar.id}
@@ -96,56 +96,56 @@ export const Bazar = () => {
           </div>
 
           {/* MAIN CONTENT */}
-          <div className="main-sec">
-            <div className="showLstBtn" onClick={() => setShowList(!showList)}>
+          <div className="tr-main-sec">
+            <div className="tr-showLstBtn" onClick={() => setShowList(!showList)}>
               {showList ? <>&times;</> : <>&#9776;</>}
             </div>
 
-            <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Traditional Bazars of Kohat</h1>
+            <div className="tr-cata-pg-banner">
+              <h1 className="tr-tr-cata-pg-main-hd">Traditional Bazars of Kohat</h1>
               <p>
                 Explore the vibrant markets, local handicrafts, and cultural shopping hubs.
               </p>
               <SearchBar SearchedInst={setFilteredCards} AllInst={bazarCards} />
             </div>
 
-            <div className="cata-card-cont">
+            <div className="tr-cata-card-cont">
               {filteredCards.length > 0 ? (
                 filteredCards.map((bazar) => (
                   <div
-                    className="cata-pg-card premium-card"
+                    className="tr-card tr-premium-card"
                     key={bazar.id}
                     onClick={() => handleBazarClick(bazar.id)}
                   >
-                    <div className="card-img-container">
+                    <div className="tr-card-img-container">
                       <img src={bazar.img || bazar.bgImage} alt={bazar.name} />
-                      <div className="card-rating">
-                        <FaStar className="star-icon" />
+                      <div className="tr-card-rating">
+                        <FaStar className="tr-star-icon" />
                         <span>{bazar.rating || "4.8"}</span>
                         <small>({bazar.reviewsCount || "250"}+ reviews)</small>
                       </div>
                     </div>
-                    <div className="cata-pg-card-content">
-                      <div className="card-header">
+                    <div className="tr-card-content">
+                      <div className="tr-card-header">
                         <h3>{bazar.name}</h3>
-                        <span className="card-city"><FaMapMarkerAlt /> {bazar.commonInfo?.basicInfo?.city || "Kohat"}</span>
+                        <span className="tr-card-city"><FaMapMarkerAlt /> {bazar.commonInfo?.basicInfo?.city || "Kohat"}</span>
                       </div>
 
-                      <div className="card-details-grid">
-                        <div className="detail-item">
+                      <div className="tr-card-details-grid">
+                        <div className="tr-detail-item">
                           <FaClock />
                           <span>{bazar.commonInfo?.visitingInfo?.openingTime} - {bazar.commonInfo?.visitingInfo?.closingTime}</span>
                         </div>
-                        <div className="detail-item">
+                        <div className="tr-detail-item">
                           <FaTicketAlt />
                           <span>{bazar.commonInfo?.visitingInfo?.entryFee}</span>
                         </div>
                       </div>
 
-                      <p className="card-short-desc">
+                      <p className="tr-card-short-desc">
                         {bazar.commonInfo?.basicInfo?.shortIntroduction}
                       </p>
-                      <button className="explore-btn" onClick={(e) => {
+                      <button className="tr-explore-btn" onClick={(e) => {
                         e.stopPropagation();
                         handleBazarClick(bazar.id);
                       }}>Explore Full Data</button>
