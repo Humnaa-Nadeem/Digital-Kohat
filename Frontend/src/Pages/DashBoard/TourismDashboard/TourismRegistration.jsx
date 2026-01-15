@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './TourismDashboard.css'; // Reusing premium styles
-import { FiUser, FiBriefcase, FiCheck, FiMapPin, FiPhone, FiUpload } from 'react-icons/fi';
+import { FiUser, FiBriefcase, FiCheck, FiMapPin, FiPhone, FiUpload, FiShield } from 'react-icons/fi';
 
 const RegistrationStep = ({ step, currentStep, icon, label }) => {
     return (

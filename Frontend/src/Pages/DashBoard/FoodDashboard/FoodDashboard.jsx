@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./FoodDashboard.css";
 import brandLogo from "../../../Assests/brandLogo.jpeg";
@@ -21,6 +20,24 @@ import {
 } from "react-icons/fi";
 import { FaUser, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes, FaClock, FaPrint, FaReply } from "react-icons/fa";
 import { Food_Details } from "../../../Store/Food_store";
+
+// Reusable Modal Component
+const Modal = ({ isOpen, onClose, title, children }) => {
+    if (!isOpen) return null;
+    return (
+        <div className="fd-modal-overlay" onClick={onClose}>
+            <div className="fd-modal-content" onClick={e => e.stopPropagation()}>
+                <div className="fd-modal-header">
+                    <h3>{title}</h3>
+                    <button className="fd-btn-close" onClick={onClose}>×</button>
+                </div>
+                <div className="fd-modal-body">
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const FoodProfile = ({ data, onUpdate }) => {
     return (
@@ -157,13 +174,12 @@ const FoodAd = () => {
         </div>
     );
 };
-const FoodMenu = ({ items, onAdd, onDelete }) => {
+const FoodMenu = ({ items, onAdd, onDelete, onEdit }) => {
     return (
         <div className="fd-card">
             <h2 className="fd-section-title">Menu Management</h2>
             <div className="fd-menu-actions">
                 <button className="fd-btn-primary" onClick={onAdd}><FaPlus /> Add New Item</button>
-                <button className="fd-btn-secondary">Bulk Upload</button>
             </div>
 
             <div className="fd-menu-list">
@@ -188,15 +204,9 @@ const FoodMenu = ({ items, onAdd, onDelete }) => {
                             <div className="fd-tags">
                                 {item.tags?.map((tag, idx) => <span key={idx} className="fd-tag">{tag}</span>)}
                             </div>
-
-                            {item.variants && (
-                                <div className="fd-variants">
-                                    <small>Variants: {item.variants.join(", ")}</small>
-                                </div>
-                            )}
                         </div>
                         <div className="fd-menu-btns">
-                            <button className="fd-btn-edit"><FaEdit /> Edit</button>
+                            <button className="fd-btn-edit" onClick={() => onEdit(item)}><FaEdit /> Edit</button>
                             <button className="fd-btn-delete" onClick={() => onDelete(item.id)}><FaTrash /> Delete</button>
                         </div>
                     </div>
@@ -294,12 +304,12 @@ const FoodOrders = ({ orders, setOrders }) => {
 // ==========================================
 // 2. DEALS & PROMOTIONS
 // ==========================================
-const FoodDeals = ({ promotions = [] }) => {
+const FoodDeals = ({ promotions = [], onAdd, onDelete }) => {
     return (
         <div className="fd-card">
             <h2 className="fd-section-title">Deals & Promotions</h2>
             <div className="fd-menu-actions">
-                <button className="fd-btn-primary"><FaPlus /> Create New Promo</button>
+                <button className="fd-btn-primary" onClick={onAdd}><FaPlus /> Create New Promo</button>
             </div>
 
             <table className="fd-table">
@@ -308,9 +318,9 @@ const FoodDeals = ({ promotions = [] }) => {
                         <th>Title</th>
                         <th>Code</th>
                         <th>Discount</th>
-                        <th>Detail</th>
+                        <th>Type</th>
                         <th>Status</th>
-                        <th>Usage</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -321,7 +331,9 @@ const FoodDeals = ({ promotions = [] }) => {
                             <td>{p.value}</td>
                             <td>{p.type}</td>
                             <td><span className={`fd-status-badge status-${p.status}`}>{p.status}</span></td>
-                            <td>{p.usage} Used</td>
+                            <td>
+                                <button className="fd-btn-text-danger" onClick={() => onDelete(p.id)}><FaTrash /> Remove</button>
+                            </td>
                         </tr>
                     )) : <tr><td colSpan="6">No active promotions.</td></tr>}
                 </tbody>
@@ -333,7 +345,17 @@ const FoodDeals = ({ promotions = [] }) => {
 // ==========================================
 // 3. REVIEWS & REPUTATION
 // ==========================================
-const FoodReviews = ({ reviews = [] }) => {
+const FoodReviews = ({ reviews = [], onReply }) => {
+    const [replyText, setReplyText] = useState("");
+    const [activeReplyId, setActiveReplyId] = useState(null);
+
+    const submitReply = (id) => {
+        if (!replyText.trim()) return;
+        onReply(id, replyText);
+        setReplyText("");
+        setActiveReplyId(null);
+    };
+
     return (
         <div className="fd-card">
             <h2 className="fd-section-title">Reviews & Reputation</h2>
@@ -362,8 +384,25 @@ const FoodReviews = ({ reviews = [] }) => {
                             </div>
                         ) : (
                             <div className="fd-reply-box">
-                                <button className="fd-btn-text"><FaReply /> Reply to review</button>
-                                <button className="fd-btn-text-danger">Report</button>
+                                {activeReplyId === r.id ? (
+                                    <div className="fd-reply-input-cont">
+                                        <textarea
+                                            placeholder="Write your response..."
+                                            value={replyText}
+                                            onChange={(e) => setReplyText(e.target.value)}
+                                            className="fd-textarea"
+                                        />
+                                        <div className="fd-menu-btns" style={{ marginTop: '10px' }}>
+                                            <button className="fd-btn-primary" onClick={() => submitReply(r.id)}>Send</button>
+                                            <button className="fd-btn-outline" onClick={() => setActiveReplyId(null)}>Cancel</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <button className="fd-btn-text" onClick={() => setActiveReplyId(r.id)}><FaReply /> Reply to review</button>
+                                        <button className="fd-btn-text-danger">Report</button>
+                                    </>
+                                )}
                             </div>
                         )}
                     </div>
@@ -393,12 +432,29 @@ const FoodFinance = ({ finance }) => {
             </div>
 
             <div className="fd-subsection">
+                <h3>Transaction History</h3>
+                <table className="fd-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2024-02-28</td><td>Order #101 Payout</td><td>Rs. 1,200</td></tr>
+                        <tr><td>2024-02-25</td><td>Weekly Settlement</td><td>Rs. 15,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div className="fd-subsection">
                 <h3>Subscription Status</h3>
                 <div className="fd-subscription-card">
                     <p><strong>Plan:</strong> {finance.subscriptionPlan}</p>
                     <p><strong>Status:</strong> <span className="fd-status-active">{finance.subscriptionStatus}</span></p>
                     <p><strong>Next Billing:</strong> 2026-02-01</p>
-                    <button className="fd-btn-secondary">Manage Subscription</button>
+                    <button className="fd-btn-secondary">Upgrade Plan</button>
                 </div>
             </div>
         </div>
@@ -423,6 +479,72 @@ const FoodSupport = () => {
                 </div>
                 <button className="fd-btn-primary">Submit Ticket</button>
             </form>
+        </div>
+    );
+};
+
+// ==========================================
+// 7. CUSTOMER ORDER TRACKING (My Purchases)
+// ==========================================
+const CustomerOrderTracking = ({ orders, currentUserName }) => {
+    const myOrders = orders.filter(o => o.customer === currentUserName);
+
+    const getProgressWidth = (status) => {
+        switch (status) {
+            case "Pending": return "25%";
+            case "Preparing": return "50%";
+            case "Ready": return "75%";
+            case "Delivered": return "100%";
+            default: return "0%";
+        }
+    };
+
+    return (
+        <div className="fd-card">
+            <h2 className="fd-section-title">My Purchases & Tracking</h2>
+            <p className="fd-section-subtitle">Follow your orders from kitchen to doorstep</p>
+
+            <div className="fd-tracking-list">
+                {myOrders.length > 0 ? myOrders.map(order => (
+                    <div key={order.id} className="fd-tracking-item">
+                        <div className="fd-track-info">
+                            <div className="fd-track-main">
+                                <h3>Order #{order.id}</h3>
+                                <p>{order.items}</p>
+                                <span className="fd-track-date">Today, 12:45 PM</span>
+                            </div>
+                            <div className="fd-track-status-badge">
+                                <span className={`fd-status-pill ${order.status.toLowerCase()}`}>{order.status}</span>
+                                <span className="fd-track-amount">Rs. {order.total}</span>
+                            </div>
+                        </div>
+
+                        <div className="fd-progress-container">
+                            <div className="fd-progress-bar-bg">
+                                <div className="fd-progress-fill" style={{ width: getProgressWidth(order.status) }}></div>
+                            </div>
+                            <div className="fd-progress-labels">
+                                <span className={order.status === "Pending" ? "active" : ""}>Pending</span>
+                                <span className={order.status === "Preparing" ? "active" : ""}>Preparing</span>
+                                <span className={order.status === "Ready" ? "active" : ""}>Ready</span>
+                                <span className={order.status === "Delivered" ? "active" : ""}>Delivered</span>
+                            </div>
+                        </div>
+
+                        <div className="fd-track-actions">
+                            <button className="fd-btn-outline"><FiMessageSquare /> Contact Support</button>
+                            <button className="fd-btn-outline"><FiStar /> Rate Order</button>
+                            {order.status === "Delivered" && <button className="fd-btn-primary">Order Again</button>}
+                        </div>
+                    </div>
+                )) : (
+                    <div className="fd-empty-state">
+                        <FiShoppingBag size={48} />
+                        <p>No orders found. Time to eat something delicious!</p>
+                        <button className="fd-btn-primary">Explore Menu</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
@@ -514,16 +636,37 @@ export const FoodDashboard = () => {
         alert("Profile updated successfully!");
     };
 
-    // Menu Handlers
-    const handleAddMenuItem = () => {
-        const newItem = {
-            id: Date.now(),
-            name: "New Item",
-            desc: "Description here",
-            price: "0",
-            img: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
-        };
-        setMenuItems([...menuItems, newItem]);
+    // Menu Handlers (Modals)
+    const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
+    const [editingMenuItem, setEditingMenuItem] = useState(null);
+    const [menuForm, setMenuForm] = useState({ name: '', price: '', desc: '' });
+
+    const openAddMenu = () => {
+        setEditingMenuItem(null);
+        setMenuForm({ name: '', price: '', desc: '' });
+        setIsMenuModalOpen(true);
+    };
+
+    const openEditMenu = (item) => {
+        setEditingMenuItem(item);
+        setMenuForm({ name: item.name, price: item.price, desc: item.desc });
+        setIsMenuModalOpen(true);
+    };
+
+    const handleSaveMenu = (e) => {
+        e.preventDefault();
+        if (editingMenuItem) {
+            setMenuItems(menuItems.map(m => m.id === editingMenuItem.id ? { ...m, ...menuForm } : m));
+        } else {
+            const newItem = {
+                id: Date.now(),
+                ...menuForm,
+                img: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
+                isAvailable: true
+            };
+            setMenuItems([...menuItems, newItem]);
+        }
+        setIsMenuModalOpen(false);
     };
 
     const handleDeleteMenuItem = (id) => {
@@ -532,17 +675,45 @@ export const FoodDashboard = () => {
         }
     };
 
+    // Deals Handlers (Modals)
+    const [isPromoModalOpen, setIsPromoModalOpen] = useState(false);
+    const [promoForm, setPromoForm] = useState({ title: '', code: '' });
+
+    const openAddPromo = () => {
+        setPromoForm({ title: '', code: '' });
+        setIsPromoModalOpen(true);
+    };
+
+    const handleSavePromo = (e) => {
+        e.preventDefault();
+        const newDeal = { id: Date.now(), ...promoForm, value: "10%", type: "discount", status: "active", usage: 0 };
+        setProfileData({ ...profileData, promotions: [...(profileData.promotions || []), newDeal] });
+        setIsPromoModalOpen(false);
+    };
+
+    const handleDeleteDeal = (id) => {
+        setProfileData({ ...profileData, promotions: profileData.promotions.filter(p => p.id !== id) });
+    };
+
+    const handleReviewReply = (id, response) => {
+        setProfileData({
+            ...profileData,
+            detailedReviews: profileData.detailedReviews.map(r => r.id === id ? { ...r, response } : r)
+        });
+    };
+
     const renderContent = () => {
         switch (activeTab) {
             case "Orders": return <FoodOrders orders={orders} setOrders={setOrders} />;
-            case "Menu": return <FoodMenu items={menuItems} onAdd={handleAddMenuItem} onDelete={handleDeleteMenuItem} />;
-            case "Deals": return <FoodDeals promotions={profileData.promotions} />;
+            case "Menu": return <FoodMenu items={menuItems} onAdd={openAddMenu} onDelete={handleDeleteMenuItem} onEdit={openEditMenu} />;
+            case "Deals": return <FoodDeals promotions={profileData.promotions} onAdd={openAddPromo} onDelete={handleDeleteDeal} />;
             case "Profile": return <FoodProfile data={profileData} onUpdate={handleProfileUpdate} />;
             case "Analytics": return <ServiceAnalytics orders={orders} />;
             case "Finance": return <FoodFinance finance={profileData.finance} />;
-            case "Reviews": return <FoodReviews reviews={profileData.detailedReviews} />;
+            case "Reviews": return <FoodReviews reviews={profileData.detailedReviews} onReply={handleReviewReply} />;
             case "Support": return <FoodSupport />;
             case "Reports": return <FoodReports reports={profileData.reports} reportCount={profileData.reportCount} status={profileData.reportStatus} />;
+            case "MyPurchases": return <CustomerOrderTracking orders={orders} currentUserName="Ali Khan" />;
             case "Ads": return <FoodAd />;
             case "Membership-details": return <MembershipDetails />;
             default: return <FoodOrders orders={orders} setOrders={setOrders} />;
@@ -636,6 +807,79 @@ export const FoodDashboard = () => {
                             {renderContent()}
                         </section>
                     </main>
+
+                    {/* Menu Modal */}
+                    <Modal
+                        isOpen={isMenuModalOpen}
+                        onClose={() => setIsMenuModalOpen(false)}
+                        title={editingMenuItem ? "Edit Menu Item" : "Add Menu Item"}
+                    >
+                        <form className="fd-profile-form" onSubmit={handleSaveMenu}>
+                            <div className="fd-form-group">
+                                <label>Item Name</label>
+                                <input
+                                    type="text"
+                                    className="fd-input"
+                                    value={menuForm.name}
+                                    onChange={e => setMenuForm({ ...menuForm, name: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className="fd-form-group">
+                                <label>Price (Rs.)</label>
+                                <input
+                                    type="number"
+                                    className="fd-input"
+                                    value={menuForm.price}
+                                    onChange={e => setMenuForm({ ...menuForm, price: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className="fd-form-group">
+                                <label>Description</label>
+                                <textarea
+                                    className="fd-textarea"
+                                    value={menuForm.desc}
+                                    onChange={e => setMenuForm({ ...menuForm, desc: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="fd-btn-primary">Save Item</button>
+                        </form>
+                    </Modal>
+
+                    {/* Promo Modal */}
+                    <Modal
+                        isOpen={isPromoModalOpen}
+                        onClose={() => setIsPromoModalOpen(false)}
+                        title="Create New Promotion"
+                    >
+                        <form className="fd-profile-form" onSubmit={handleSavePromo}>
+                            <div className="fd-form-group">
+                                <label>Promotion Title</label>
+                                <input
+                                    type="text"
+                                    className="fd-input"
+                                    value={promoForm.title}
+                                    onChange={e => setPromoForm({ ...promoForm, title: e.target.value })}
+                                    placeholder="e.g. Summer Discount"
+                                    required
+                                />
+                            </div>
+                            <div className="fd-form-group">
+                                <label>Promo Code</label>
+                                <input
+                                    type="text"
+                                    className="fd-input"
+                                    value={promoForm.code}
+                                    onChange={e => setPromoForm({ ...promoForm, code: e.target.value })}
+                                    placeholder="e.g. SUMMER10"
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="fd-btn-primary">Create Promo</button>
+                        </form>
+                    </Modal>
                 </div>
             )}
         </>

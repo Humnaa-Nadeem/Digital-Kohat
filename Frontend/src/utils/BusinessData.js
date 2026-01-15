@@ -1,4 +1,3 @@
-
 export const MASTER_BUSINESS_CATEGORIES = [
   {
     id: 'shops_retail',

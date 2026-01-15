@@ -768,3 +768,218 @@ body {
         flex-direction: column;
     }
 }
+
+/* --- New Tourism Dashboard Styles --- */
+.td-action-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.td-btn-sm {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.td-btn-success {
+    background: #1dd1a1;
+    color: white;
+}
+
+.td-btn-danger {
+    background: #ff6b6b;
+    color: white;
+}
+
+.td-btn-outline {
+    background: transparent;
+    border: 1px solid #0abde3;
+    color: #0abde3;
+}
+
+.td-status-Pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.td-status-Confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.td-status-Cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Reviews */
+.td-review-item {
+    border-bottom: 1px solid #f1f2f6;
+    padding: 20px 0;
+}
+
+.td-review-item:last-child {
+    border-bottom: none;
+}
+
+.td-review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.td-stars {
+    color: #ffd700;
+}
+
+.td-stars .fill {
+    fill: #ffd700;
+}
+
+.td-review-comment {
+    font-style: italic;
+    color: #555;
+}
+
+.td-review-reply {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-left: 3px solid #0abde3;
+    font-size: 0.9rem;
+}
+
+/* Subscription */
+.td-promo-card {
+    background: linear-gradient(135deg, #5f27cd, #341f97);
+}
+
+.td-btn-white {
+    background: white;
+    color: #5f27cd;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    margin-top: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.td-plan-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* Profile Form */
+.td-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.td-form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.td-form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.td-form-group label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.td-form-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.td-form-group input:focus {
+    border-color: #0abde3;
+    outline: none;
+}
+
+.td-btn-text {
+    background: none;
+    border: none;
+    color: #0abde3;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+/* --- Modal Styles --- */
+.td-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.td-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    position: relative;
+    animation: tdSlideUp 0.3s ease-out;
+}
+
+@keyframes tdSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.td-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.td-btn-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #888;
+}
+
+.td-reply-input-cont textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    min-height: 80px;
+}
+

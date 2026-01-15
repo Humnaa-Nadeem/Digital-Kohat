@@ -951,3 +951,280 @@
     margin-top: 10px;
     cursor: pointer;
 }
+
+/* --- Customer Order Tracking (My Purchases) --- */
+.fd-tracking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.fd-tracking-item {
+    border: 1px solid #eee;
+    padding: 25px;
+    border-radius: 15px;
+    background: #fff;
+    transition: 0.3s;
+}
+
+.fd-tracking-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.fd-track-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.fd-track-main h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.fd-track-main p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.fd-track-date {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.fd-track-status-badge {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.fd-status-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.fd-status-pill.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.fd-status-pill.preparing {
+    background: #cfe2ff;
+    color: #084298;
+}
+
+.fd-status-pill.ready {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.fd-status-pill.delivered {
+    background: #e2e3e5;
+    color: #41464b;
+}
+
+.fd-track-amount {
+    font-weight: 700;
+    color: var(--fd-primary);
+    font-size: 1.1rem;
+}
+
+/* Progress Stepper */
+.fd-progress-container {
+    margin: 30px 0;
+}
+
+.fd-progress-bar-bg {
+    height: 8px;
+    background: #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.fd-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--fd-primary), var(--fd-secondary));
+    transition: width 1s ease-in-out;
+}
+
+.fd-progress-labels {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fd-progress-labels span {
+    font-size: 0.8rem;
+    color: #aaa;
+    font-weight: 500;
+}
+
+.fd-progress-labels span.active {
+    color: var(--fd-primary);
+    font-weight: 700;
+}
+
+.fd-track-actions {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.fd-btn-outline {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fd-btn-outline:hover {
+    background: #f8f8f8;
+    border-color: #ccc;
+}
+
+/* --- New Utility Styles --- */
+.fd-btn-text-danger {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fd-btn-text-danger:hover {
+    text-decoration: underline;
+}
+
+.fd-status-active {
+    color: #1dd1a1;
+    font-weight: 700;
+}
+
+.fd-subsection {
+    margin-top: 30px;
+    border-top: 1px solid #f1f2f6;
+    padding-top: 20px;
+}
+
+.fd-subsection h3 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.fd-subscription-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #00d2ff;
+}
+
+.fd-menu-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.fd-btn-edit,
+.fd-btn-delete {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    /* background: white; */
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.3s;
+}
+
+.fd-btn-edit:hover {
+    background: #e3f2fd;
+    border-color: #2196f3;
+    color: #1976d2;
+}
+
+.fd-btn-delete:hover {
+    background: #ffebee;
+    border-color: #f44336;
+    color: #d32f2f;
+}
+/* --- Modal Styles --- */
+.fd-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.fd-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    position: relative;
+    animation: fdSlideUp 0.3s ease-out;
+}
+
+@keyframes fdSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.fd-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.fd-btn-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #888;
+}
+
+.fd-reply-input-cont textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    min-height: 80px;
+}
+
