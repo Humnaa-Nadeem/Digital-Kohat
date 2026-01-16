@@ -256,8 +256,7 @@ body {
 .td-table th,
 .td-table td {
     padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #f1f2f6;
+    color: #2d3748;
 }
 
 .td-table th {
@@ -613,6 +612,8 @@ body {
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         align-items: center;
         background: white;
+        z-index: 1001;
+        /* Ensure above content */
     }
 
     .td-brand {
@@ -624,17 +625,22 @@ body {
         width: 100%;
         justify-content: space-between;
         padding: 0 10px;
+        overflow-x: auto;
+        /* Allow scrolling if many items */
     }
 
     .td-nav-item {
         flex-direction: column;
         padding: 10px 5px;
         gap: 5px;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
+        /* Smaller text */
         border-left: none;
         border-top: 3px solid transparent;
         text-align: center;
         flex: 1;
+        min-width: 60px;
+        /* Ensure touch target size */
     }
 
     .td-nav-item:hover,
@@ -664,110 +670,124 @@ body {
         padding: 15px;
     }
 
+    /* Form rows stack on mobile */
+    .td-form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Checkbox grid auto-fit */
+    /* Checkbox grid auto-fit */
+    .td-checkbox-grid {
+        grid-template-columns: 1fr;
+        /* Single column on very small screens */
+    }
+
     /* Stats Grid */
     .td-stats-grid {
         grid-template-columns: 1fr;
     }
-
-    .td-stat-card {
-        padding: 15px;
-    }
-
-    /* Table Responsiveness */
-    .td-table,
-    .td-table thead,
-    .td-table tbody,
-    .td-table th,
-    .td-table td,
-    .td-table tr {
-        display: block;
-    }
-
-    .td-table thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    .td-table tr {
-        border: 1px solid #eee;
-        margin-bottom: 15px;
-        border-radius: 8px;
-        padding: 10px;
-    }
-
-    .td-table td {
-        border: none;
-        position: relative;
-        padding-left: 50%;
-        text-align: right;
-        padding-bottom: 5px;
-    }
-
-    .td-table td:before {
-        position: absolute;
-        top: 15px;
-        left: 10px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
-        font-weight: bold;
-    }
-
-    /* Labeling for mobile table view */
-    .td-table td:nth-of-type(1):before {
-        content: "User Name";
-    }
-
-    .td-table td:nth-of-type(2):before {
-        content: "Service";
-    }
-
-    .td-table td:nth-of-type(3):before {
-        content: "Date";
-    }
-
-    .td-table td:nth-of-type(4):before {
-        content: "Contact";
-    }
-
-    .td-table td:nth-of-type(5):before {
-        content: "Status";
-    }
-
-    /* Offerings Item */
-    .td-offering-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .td-offering-actions {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    /* Registration Page Mobile */
-    .tr-container {
-        margin: 20px auto;
-        padding-bottom: 80px;
-    }
-
-    .tr-stepper {
-        padding: 0;
-    }
-
-    .tr-step span {
-        font-size: 0.8rem;
-    }
-
-    .tr-feature-cards {
-        flex-direction: column;
-    }
 }
+
+.td-stat-card {
+    padding: 15px;
+}
+
+/* Table Responsiveness */
+.td-table,
+.td-table thead,
+.td-table tbody,
+.td-table th,
+.td-table td,
+.td-table tr {
+    display: block;
+}
+
+.td-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.td-table tr {
+    border: 1px solid #eee;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.td-table td {
+    border: none;
+    position: relative;
+    /* padding-left: 50%; */
+    text-align: right;
+    padding-bottom: 5px;
+}
+
+.td-table td:before {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Labeling for mobile table view */
+.td-table td:nth-of-type(1):before {
+    content: "User Name";
+}
+
+.td-table td:nth-of-type(2):before {
+    content: "Service";
+}
+
+.td-table td:nth-of-type(3):before {
+    content: "Date";
+}
+
+.td-table td:nth-of-type(4):before {
+    content: "Contact";
+}
+
+.td-table td:nth-of-type(5):before {
+    content: "Status";
+}
+
+/* Offerings Item */
+.td-offering-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.td-offering-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Registration Page Mobile */
+.tr-container {
+    margin: 20px auto;
+    padding-bottom: 80px;
+}
+
+.tr-stepper {
+    padding: 0;
+}
+
+.tr-step span {
+    font-size: 0.8rem;
+}
+
+.tr-feature-cards {
+    flex-direction: column;
+}
+
 
 /* --- New Tourism Dashboard Styles --- */
 .td-action-group {
@@ -925,6 +945,7 @@ body {
     text-decoration: underline;
     padding: 0;
 }
+
 /* --- Modal Styles --- */
 .td-modal-overlay {
     position: fixed;
@@ -932,7 +953,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -946,14 +967,21 @@ body {
     border-radius: 16px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     position: relative;
     animation: tdSlideUp 0.3s ease-out;
 }
 
 @keyframes tdSlideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .td-modal-header {
@@ -982,4 +1010,3 @@ body {
     font-family: inherit;
     min-height: 80px;
 }
-

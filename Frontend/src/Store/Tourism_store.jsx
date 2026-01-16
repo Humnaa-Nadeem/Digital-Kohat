@@ -229,7 +229,7 @@ export const PlacesCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "Toi Khula", city: "Kohat", category: "Valley", shortIntroduction: "A serene valley perfect for nature lovers and adventurers." },
-      locationNavigation: { exactLocation: "Toi Khula, Near Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "25 KM", howToReach: { byCar: "45 mins drive via Hangu Road", byPublicTransport: "Local vans available till nearby village" }, parkingAvailability: "Available at entrance" },
+      locationNavigation: { exactLocation: "Toi Khula, Near Kohat", googleMap: "https://www.google.com/maps/@33.5200,71.4000,15z", distanceFromCityCenter: "25 KM", howToReach: { byCar: "45 mins drive via Hangu Road", byPublicTransport: "Local vans available till nearby village" }, parkingAvailability: "Available at entrance" },
       visitingInfo: { openingTime: "Sunrise", closingTime: "Sunset", entryFee: "Free", bestTimeOfDay: "Morning", bestSeason: "Spring & Autumn" },
       thingsToDo: ["Hiking", "Nature Photography", "Bird Watching", "Picnic"],
       facilities: ["Public Restroom", "Small tuck shop", "Prayer area"],
@@ -253,7 +253,7 @@ export const PlacesCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "KDA Park", city: "Kohat", category: "Public Park", shortIntroduction: "A premier family-friendly park with hiking trails and scenic city views." },
-      locationNavigation: { exactLocation: "KDA Sector, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "3 KM", howToReach: { byCar: "10 mins drive from city center", byPublicTransport: "Taxis and Rickshaws readily available" }, parkingAvailability: "Ample parking available" },
+      locationNavigation: { exactLocation: "KDA Sector, Kohat", googleMap: "https://www.google.com/maps/@33.5950,71.4500,15z", distanceFromCityCenter: "3 KM", howToReach: { byCar: "10 mins drive from city center", byPublicTransport: "Taxis and Rickshaws readily available" }, parkingAvailability: "Ample parking available" },
       visitingInfo: { openingTime: "8:00 AM", closingTime: "10:00 PM", entryFee: "Rs. 20", bestTimeOfDay: "Late Afternoon", bestSeason: "Summer Evenings & Winter Afternoons" },
       thingsToDo: ["Jogging", "Climbing the hill trails", "Family picnic", "Children's play"],
       facilities: ["Kids Play Area", "Cafeteria", "Prayer Hall", "Walkways", "Security"],
@@ -277,7 +277,7 @@ export const PlacesCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "Kohat Fort", city: "Kohat", category: "Heritage Site", shortIntroduction: "A historic fortress offering a glimpse into the colonial and pre-colonial past of the region." },
-      locationNavigation: { exactLocation: "Main Road, Near Old City, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "1 KM", howToReach: { byCar: "5 mins from city center", byPublicTransport: "Walking distance from old city" }, parkingAvailability: "Street parking nearby" },
+      locationNavigation: { exactLocation: "Main Road, Near Old City, Kohat", googleMap: "https://www.google.com/maps/@33.5850,71.4400,15z", distanceFromCityCenter: "1 KM", howToReach: { byCar: "5 mins from city center", byPublicTransport: "Walking distance from old city" }, parkingAvailability: "Street parking nearby" },
       visitingInfo: { openingTime: "9:00 AM", closingTime: "5:00 PM", entryFee: "Rs. 50 (Museum only)", bestTimeOfDay: "Morning", bestSeason: "Winter" },
       thingsToDo: ["Architecture study", "Photography", "Visiting the museum"],
       facilities: ["Information center", "Restrooms"],
@@ -301,7 +301,7 @@ export const PlacesCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "Tanda Dam", city: "Kohat", category: "Nature Reserve", shortIntroduction: "A breathtaking water reservoir and protected wetland site." },
-      locationNavigation: { exactLocation: "Tanda Dam Lake, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "8 KM", howToReach: { byCar: "20 mins drive from city", byPublicTransport: "Pickups available from city stand" }, parkingAvailability: "Designated picnic parking" },
+      locationNavigation: { exactLocation: "Tanda Dam Lake, Kohat", googleMap: "https://www.google.com/maps/@33.5700,71.4000,15z", distanceFromCityCenter: "8 KM", howToReach: { byCar: "20 mins drive from city", byPublicTransport: "Pickups available from city stand" }, parkingAvailability: "Designated picnic parking" },
       visitingInfo: { openingTime: "24/7", closingTime: "No restriction (Night visits not recommended)", entryFee: "Free (Parking fee applies)", bestTimeOfDay: "Sunset", bestSeason: "Monsoon & Winter" },
       thingsToDo: ["Picnic", "Landscape photography", "Bird watching", "Lake walk"],
       facilities: ["Boat ride service", "Snack shops", "Rest areas"],
@@ -325,7 +325,7 @@ export const PlacesCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "Kohat Tunnel", city: "Kohat", category: "Engineering Landmark", shortIntroduction: "A 1.9km masterpiece of engineering connecting southern districts to Peshawar." },
-      locationNavigation: { exactLocation: "Indus Highway, Kohat Pass", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "15 KM", howToReach: { byCar: "25 mins drive via Indus Highway", byPublicTransport: "All Peshawar-bound buses pass through" }, parkingAvailability: "Not allowed inside tunnel (viewpoints nearby)" },
+      locationNavigation: { exactLocation: "Indus Highway, Kohat Pass", googleMap: "https://www.google.com/maps/@33.6500,71.5000,15z", distanceFromCityCenter: "15 KM", howToReach: { byCar: "25 mins drive via Indus Highway", byPublicTransport: "All Peshawar-bound buses pass through" }, parkingAvailability: "Not allowed inside tunnel (viewpoints nearby)" },
       visitingInfo: { openingTime: "24 Hours", closingTime: "None", entryFee: "Toll Tax applies", bestTimeOfDay: "Anytime", bestSeason: "Year round" },
       thingsToDo: ["Driving experience", "Nearby mountain photography"],
       facilities: ["Emergency phones", "Air ventilation system", "24/7 surveillance"],
@@ -361,7 +361,7 @@ export const NatureCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "Toi Waterfall", city: "Kohat", category: "Nature Spot", shortIntroduction: "A natural oasis featuring a refreshing seasonal waterfall." },
-      locationNavigation: { exactLocation: "Rawarpatti Hills, Near Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "18 KM", howToReach: { byCar: "35 mins drive from Kohat", byPublicTransport: "Local transport available till hill base" }, parkingAvailability: "Open space parking" },
+      locationNavigation: { exactLocation: "Rawarpatti Hills, Near Kohat", googleMap: "https://www.google.com/maps/search/33.5300,71.3900", distanceFromCityCenter: "18 KM", howToReach: { byCar: "35 mins drive from Kohat", byPublicTransport: "Local transport available till hill base" }, parkingAvailability: "Open space parking" },
       visitingInfo: { openingTime: "Dawn", closingTime: "Dusk", entryFee: "Free", bestTimeOfDay: "Noon (for swimming)", bestSeason: "Monsoon (July-Sept)" },
       thingsToDo: ["Swimming in natural pools", "Landscape photography", "Rock climbing", "Picnic"],
       facilities: ["Nature trails", "Stone benches"],
@@ -385,7 +385,7 @@ export const NatureCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "KDA Hills", city: "Kohat", category: "Hill Park", shortIntroduction: "Elevation offering the best sunset views and hiking trails in the city." },
-      locationNavigation: { exactLocation: "Phase 1, KDA, Kohat", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "4 KM", howToReach: { byCar: "5-10 mins from city center", byPublicTransport: "Rickshaws go to hill base" }, parkingAvailability: "Available at trail start" },
+      locationNavigation: { exactLocation: "Phase 1, KDA, Kohat", googleMap: "https://www.google.com/maps/place/KDA+Kohat/@33.6100,71.4600", distanceFromCityCenter: "4 KM", howToReach: { byCar: "5-10 mins from city center", byPublicTransport: "Rickshaws go to hill base" }, parkingAvailability: "Available at trail start" },
       visitingInfo: { openingTime: "6:00 AM", closingTime: "11:00 PM", entryFee: "Free", bestTimeOfDay: "Evening", bestSeason: "October to March" },
       thingsToDo: ["Sunset watching", "Night photography", "Fitness trekking", "Outdoor yoga"],
       facilities: ["Paved paths", "Viewing points", "Street lights"],
@@ -409,7 +409,7 @@ export const NatureCardsData = [
     commonInfo: {
       ...defaultCommonInfo,
       basicInfo: { placeName: "Jungle Point", city: "Kohat", category: "Forest Reserve", shortIntroduction: "A lush, dense forest spot on the city outskirts." },
-      locationNavigation: { exactLocation: "Kohat Pass Forest Range", googleMap: "https://maps.app.goo.gl/KohatMapArea", distanceFromCityCenter: "12 KM", howToReach: { byCar: "20 mins drive north of city", byPublicTransport: "Accessible via Peshawar bound vans" }, parkingAvailability: "Open natural parking" },
+      locationNavigation: { exactLocation: "Kohat Pass Forest Range", googleMap: "https://www.google.com/maps/@33.6200,71.4800", distanceFromCityCenter: "12 KM", howToReach: { byCar: "20 mins drive north of city", byPublicTransport: "Accessible via Peshawar bound vans" }, parkingAvailability: "Open natural parking" },
       visitingInfo: { openingTime: "Sunrise", closingTime: "Evening", entryFee: "Free", bestTimeOfDay: "Early Morning", bestSeason: "September to April" },
       thingsToDo: ["Wildlife spotting", "Forest trekking", "Pine cone collecting", "Photography"],
       facilities: ["Walking tracks", "Natural seating areas"],

@@ -249,42 +249,201 @@ const TourismSubscription = ({ data, onUpgrade }) => {
 };
 
 const TourismProfile = ({ data, onUpdate }) => {
-    const [form, setForm] = useState(data);
+    const [form, setForm] = useState({
+        ...data,
+        // Ensure all fields exist even if data is missing them
+        description: data.description || "",
+        googleMapLink: data.googleMapLink || "",
+        exactAddress: data.exactAddress || "",
+        distanceFromCity: data.distanceFromCity || "",
+        parking: data.parking || "Ample",
+        openingTime: data.openingTime || "09:00",
+        closingTime: data.closingTime || "22:00",
+        entryFee: data.entryFee || "Free",
+        bestSeason: data.bestSeason || "All Year",
+        facilities: data.facilities || [],
+        coverImage: data.coverImage || "",
+        galleryImages: data.galleryImages || []
+    });
+
+    const [activeSection, setActiveSection] = useState('General');
+
+    const handleCheckboxChange = (e, field) => {
+        const value = e.target.value;
+        const list = form[field] || [];
+        if (e.target.checked) {
+            setForm({ ...form, [field]: [...list, value] });
+        } else {
+            setForm({ ...form, [field]: list.filter(item => item !== value) });
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onUpdate(form);
     };
 
+    const renderSection = () => {
+        switch (activeSection) {
+            case 'General':
+                return (
+                    <div className="td-anime-fade">
+                        <div className="td-form-row">
+                            <div className="td-form-group">
+                                <label>Service Name <span style={{ fontSize: '0.8rem', color: '#e17055' }}>(Contact Admin to change)</span></label>
+                                <input type="text" className="td-input" value={form.name} readOnly style={{ backgroundColor: '#f1f2f6', cursor: 'not-allowed' }} />
+                            </div>
+                            <div className="td-form-group">
+                                <label>Category</label>
+                                <select className="td-input" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+                                    <option>Places</option>
+                                    <option>Parks</option>
+                                    <option>Hotels</option>
+                                    <option>Restaurants</option>
+                                    <option>Tour Guides</option>
+                                    <option>Bazar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="td-form-group">
+                            <label>Tagline (Short Slogan)</label>
+                            <input type="text" className="td-input" value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} />
+                        </div>
+                        <div className="td-form-group">
+                            <label>Detailed Description</label>
+                            <textarea className="td-input" rows="5" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Describe your place..." />
+                        </div>
+                        <div className="td-form-row">
+                            <div className="td-form-group">
+                                <label>Contact Phone</label>
+                                <input type="text" className="td-input" value={form.whatsappNum || ""} onChange={(e) => setForm({ ...form, whatsappNum: e.target.value })} />
+                            </div>
+                            <div className="td-form-group">
+                                <label>Email Address</label>
+                                <input type="email" className="td-input" value={form.email || ""} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'Location':
+                return (
+                    <div className="td-anime-fade">
+                        <div className="td-alert-box">
+                            <FiMapPin />
+                            <strong>Location Locked:</strong> To change your location or map pin, please submit a request to the admin.
+                        </div>
+                        <div className="td-form-group">
+                            <label>Google Maps Share Link</label>
+                            <input type="text" className="td-input" value={form.googleMapLink} readOnly style={{ backgroundColor: '#f1f2f6', cursor: 'not-allowed' }} />
+                        </div>
+                        <div className="td-form-group">
+                            <label>Exact Address / Location Name</label>
+                            <input type="text" className="td-input" value={form.exactAddress} readOnly style={{ backgroundColor: '#f1f2f6', cursor: 'not-allowed' }} />
+                        </div>
+                        <div className="td-form-row">
+                            <div className="td-form-group">
+                                <label>Distance from City Center</label>
+                                <input type="text" className="td-input" placeholder="e.g. 5 KM" value={form.distanceFromCity} onChange={(e) => setForm({ ...form, distanceFromCity: e.target.value })} />
+                            </div>
+                            <div className="td-form-group">
+                                <label>Parking Availability</label>
+                                <select className="td-input" value={form.parking} onChange={(e) => setForm({ ...form, parking: e.target.value })}>
+                                    <option>Ample Parking</option>
+                                    <option>Street Parking</option>
+                                    <option>Paid Parking</option>
+                                    <option>No Parking</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'Operations':
+                return (
+                    <div className="td-anime-fade">
+                        <div className="td-form-row">
+                            <div className="td-form-group">
+                                <label>Opening Time</label>
+                                <input type="time" className="td-input" value={form.openingTime} onChange={(e) => setForm({ ...form, openingTime: e.target.value })} />
+                            </div>
+                            <div className="td-form-group">
+                                <label>Closing Time</label>
+                                <input type="time" className="td-input" value={form.closingTime} onChange={(e) => setForm({ ...form, closingTime: e.target.value })} />
+                            </div>
+                        </div>
+                        <div className="td-form-row">
+                            <div className="td-form-group">
+                                <label>Entry Fee</label>
+                                <input type="text" className="td-input" placeholder="e.g. Free or Rs. 50" value={form.entryFee} onChange={(e) => setForm({ ...form, entryFee: e.target.value })} />
+                            </div>
+                            <div className="td-form-group">
+                                <label>Best Season/Time</label>
+                                <input type="text" className="td-input" placeholder="e.g. Winter Evening" value={form.bestSeason} onChange={(e) => setForm({ ...form, bestSeason: e.target.value })} />
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'Facilities':
+                return (
+                    <div className="td-anime-fade">
+                        <label className="td-label-lg">Select Available Facilities</label>
+                        <div className="td-checkbox-grid">
+                            {["Free Wi-Fi", "Washrooms", "Prayer Area", "Wheelchair Access", "Kids Play Area", "AC / Heating", "Card Payment", "Outdoor Seating"].map(opt => (
+                                <label key={opt} className="td-check-item">
+                                    <input
+                                        type="checkbox"
+                                        value={opt}
+                                        checked={form.facilities.includes(opt)}
+                                        onChange={(e) => handleCheckboxChange(e, 'facilities')}
+                                    />
+                                    <span>{opt}</span>
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+                );
+            case 'Media':
+                return (
+                    <div className="td-anime-fade">
+                        <div className="td-form-group">
+                            <label>Cover Image URL</label>
+                            <input type="text" className="td-input" value={form.coverImage} onChange={(e) => setForm({ ...form, coverImage: e.target.value })} />
+                            {form.coverImage && <img src={form.coverImage} alt="Cover" style={{ width: '100%', height: '150px', objectFit: 'cover', marginTop: '10px', borderRadius: '10px' }} />}
+                        </div>
+                        {/* Gallery placeholder - in real app would be file upload */}
+                        <div className="td-form-group">
+                            <label>Gallery Images (URLs)</label>
+                            <textarea className="td-input" placeholder="Paste image URLs separated by comma" />
+                        </div>
+                    </div>
+                );
+            default: return null;
+        }
+    };
+
     return (
         <div className="td-section-card">
-            <h3 className="td-section-title">Edit Guide Profile</h3>
-            <form className="td-form" onSubmit={handleSubmit}>
-                <div className="td-form-row">
-                    <div className="td-form-group">
-                        <label>Full Name</label>
-                        <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-                    </div>
-                    <div className="td-form-group">
-                        <label>Service Type</label>
-                        <input type="text" value={form.type} disabled />
-                    </div>
+            <div className="td-section-header">
+                <div>
+                    <h3 className="td-section-title">Edit Service Details</h3>
+                    <p className="td-section-subtitle">Keep your service information up to date.</p>
                 </div>
-                <div className="td-form-group">
-                    <label>Tagline</label>
-                    <input type="text" value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} />
-                </div>
-                <div className="td-form-row">
-                    <div className="td-form-group">
-                        <label>Contact Number (WhatsApp)</label>
-                        <input type="text" value={form.whatsappNum || "03XX-XXXXXXX"} />
-                    </div>
-                    <div className="td-form-group">
-                        <label>Location Area</label>
-                        <input type="text" value="Kohat City, KPK" />
-                    </div>
-                </div>
-                <button type="submit" className="td-btn-primary">Save Profile Changes</button>
+                <button type="submit" className="td-btn-primary" onClick={handleSubmit}>Save Changes</button>
+            </div>
+
+            <div className="td-profile-tabs">
+                {['General', 'Location', 'Operations', 'Facilities', 'Media'].map(tab => (
+                    <button
+                        key={tab}
+                        className={`td-tab-btn ${activeSection === tab ? 'active' : ''}`}
+                        onClick={() => setActiveSection(tab)}
+                    >
+                        {tab}
+                    </button>
+                ))}
+            </div>
+
+            <form className="td-form-body">
+                {renderSection()}
             </form>
         </div>
     );

@@ -50,7 +50,7 @@ import { Places } from './Pages/TourismPage/TourismCategoriespg/Places';
 import { Hotels } from './Pages/TourismPage/TourismCategoriespg/Hotels';
 import { Restaurants } from './Pages/TourismPage/TourismCategoriespg/Restaurants';
 import { Parks } from './Pages/TourismPage/TourismCategoriespg/Parks';
-import { Guide } from './Pages/TourismPage/TourismCategoriespg/Guide';
+// Guide import removed
 import { Bazar } from './Pages/TourismPage/TourismCategoriespg/Bazar';
 
 import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
@@ -184,10 +184,10 @@ const routes = [
       { path: "hotels", element: <Hotels /> },
       { path: "restaurants", element: <Restaurants /> },
       { path: "parks", element: <Parks /> },
-      { path: "guide", element: <Guide /> },
+      // Duplicate Guide route removed
       { path: "guides", element: <TourGuides /> },
       { path: "bazar", element: <Bazar /> },
-      
+
       { path: "landing", element: <TourismLandingPage /> },
       // Dynamic route for individual service provider
       { path: ":id", element: <TourismLandingPage /> },

@@ -1,14 +1,100 @@
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   FaMapMarkerAlt, FaClock, FaHiking, FaHistory, FaShieldAlt,
   FaBus, FaCar, FaStar, FaLeaf, FaExternalLinkAlt, FaDollarSign,
   FaExclamationTriangle, FaCheckCircle, FaTimesCircle, FaWalking,
-  FaCamera, FaShoppingBag, FaUsers, FaArrowLeft, FaSuitcase, FaMap
+  FaCamera, FaShoppingBag, FaUsers, FaArrowLeft, FaSuitcase, FaMap, FaLocationArrow, FaDirections, FaWhatsapp
 } from "react-icons/fa";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import "leaflet-routing-machine";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "../../../utils/fixLeafletIcon";
 import "./SingleLandingPage.css";
+
+// --- Custom Routing Control Component ---
+const MapRoutingControl = ({ start, end }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!start || !end || !map) return;
+
+    // Create the routing control
+    const routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(start[0], start[1]),
+        L.latLng(end[0], end[1])
+      ],
+      routeWhileDragging: true,
+      showAlternatives: false,
+      fitSelectedRoutes: true,
+      lineOptions: {
+        styles: [{ color: "#027646", weight: 5, opacity: 0.9 }]
+      },
+      createMarker: function (i, waypoint, n) {
+        // Use default markers or custom ones - passing null to use default for now
+        // or effectively relying on the map's existing markers if we wanted to hide these.
+        // For clarity, we'll let it create default markers for start/end of route.
+        return L.marker(waypoint.latLng, {
+          draggable: false,
+          icon: new L.Icon.Default()
+        });
+      },
+      addWaypoints: false // Disable adding new waypoints by dragging line (optional)
+    }).addTo(map);
+
+    return () => {
+      // Cleanup routing control on unmount or update
+      if (map && routingControl) {
+        try {
+          map.removeControl(routingControl);
+        } catch (e) {
+          console.warn("Routing control cleanup error", e);
+        }
+      }
+    };
+  }, [start, end, map]);
+
+  return null;
+};
+
+// Helper component to recenter map
+const MapRecenter = ({ position }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (position) {
+      map.flyTo(position, 13);
+    }
+  }, [position, map]);
+  return null;
+};
+
+// Helper: Extract Lat/Lng from Google Maps URL
+const extractCoordsFromUrl = (url) => {
+  if (!url) return null;
+
+  // Patterns for different Google Maps URL formats
+  const patterns = [
+    /@(-?\d+\.\d+),(-?\d+\.\d+)/,        // @lat,lng
+    /q=(-?\d+\.\d+),(-?\d+\.\d+)/,        // q=lat,lng
+    /!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/,     // !3dlat!4dlng (embed/data style)
+    /search\/(-?\d+\.\d+),(-?\d+\.\d+)/   // search/lat,lng
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) {
+      const lat = parseFloat(match[1]);
+      const lng = parseFloat(match[2]);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        return [lat, lng];
+      }
+    }
+  }
+  return null;
+};
 
 export const TourismLandingPage = ({ listing: propListing }) => {
   const navigate = useNavigate();
@@ -33,6 +119,44 @@ export const TourismLandingPage = ({ listing: propListing }) => {
     media = {}
   } = info;
 
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationStatus, setLocationStatus] = useState("");
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Calculate destination coords from google map link or use default
+  const destinationCoords = useMemo(() => {
+    const extracted = extractCoordsFromUrl(locationNav.googleMap);
+    return extracted || [33.5889, 71.4429]; // Default to Kohat Center
+  }, [locationNav.googleMap]);
+
+  const handleGetLocation = () => {
+    setLocationStatus("Locating...");
+    if (!navigator.geolocation) {
+      setLocationStatus("Geolocation not supported");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserLocation([position.coords.latitude, position.coords.longitude]);
+        setLocationStatus("Location Found!");
+      },
+      (error) => {
+        console.error(error);
+        setLocationStatus("Unable to retrieve location");
+      }
+    );
+  };
+
+  const handleGetDirections = () => {
+    if (userLocation) {
+      setIsNavigating(true);
+      setLocationStatus("Calculating Route...");
+    } else {
+      setLocationStatus("Please use 'Use My Location' first.");
+    }
+  };
+
   return (
     <section className="S_main_Sec">
       {/* GLASSMORPHISM HERO */}
@@ -44,7 +168,15 @@ export const TourismLandingPage = ({ listing: propListing }) => {
           <div className="hero-rating-meta">
             <FaStar className="star-icon" /> {listing.rating} ({listing.reviewsCount} Reviews)
           </div>
-          <button className="GlassHeroBG-btn" onClick={() => { navigate(-1) }}> <FaArrowLeft /> Go Back</button>
+          <div className="hero-action-buttons">
+            <button className="GlassHeroBG-btn" onClick={() => { navigate(-1) }}> <FaArrowLeft /> Go Back</button>
+            <button className="GlassHeroBG-btn contact-btn" onClick={() => {
+              // Use WhatsApp number from listing or default to a dummy one
+              const phone = listing.contact?.phone?.replace(/\D/g, '') || "923000000000";
+              const message = `Hello, I saw your listing for ${listing.name} on Digital Kohat and want to know more.`;
+              window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+            }}> <FaWhatsapp /> Contact Service Provider</button>
+          </div>
         </div>
         <div className="blurShape s1"></div>
         <div className="blurShape s2"></div>
@@ -171,18 +303,52 @@ export const TourismLandingPage = ({ listing: propListing }) => {
       {/* MAP SECTION */}
       <section className="S_map_Sec SP_Sec">
         <h2 className="SP_Sec_hd">Discover in Kohat</h2>
+
+        {/* Location Controls */}
+        <div className="map-controls-panel">
+          <div className="location-status">
+            {locationStatus && <span className="status-badge">{locationStatus}</span>}
+          </div>
+          <div className="control-buttons">
+            <button className="control-btn locate-btn" onClick={handleGetLocation}>
+              <FaLocationArrow /> Use My Location
+            </button>
+            <button className="control-btn navigate-btn" onClick={handleGetDirections}>
+              <FaDirections /> Get Directions
+            </button>
+          </div>
+        </div>
+
         <div className="map-wrapper">
-          <MapContainer center={[33.5889, 71.4429]} zoom={13} scrollWheelZoom={false} className="leaflet-container-landing">
+          <MapContainer center={destinationCoords} zoom={13} scrollWheelZoom={false} className="leaflet-container-landing">
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={[33.5889, 71.4429]}>
+            {/* Destination Marker */}
+            <Marker position={destinationCoords}>
               <Popup>
-                <strong>Kohat, Pakistan</strong> <br />
-                Explore {listing.name} and surrounding areas.
+                <strong>{listing.name}</strong> <br />
+                {basic.city}, Pakistan
               </Popup>
             </Marker>
+
+            {/* User Location Marker */}
+            {userLocation && (
+              <>
+                <Marker position={userLocation}>
+                  <Popup>
+                    <strong>You are here</strong>
+                  </Popup>
+                </Marker>
+                {!isNavigating && <MapRecenter position={userLocation} />}
+              </>
+            )}
+
+            {/* In-Map Navigation */}
+            {isNavigating && userLocation && (
+              <MapRoutingControl start={userLocation} end={destinationCoords} />
+            )}
           </MapContainer>
         </div>
       </section>
