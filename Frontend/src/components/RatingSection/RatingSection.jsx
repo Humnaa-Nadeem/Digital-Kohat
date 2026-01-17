@@ -1,9 +1,10 @@
 import { FaStar } from "react-icons/fa"
 import "./RatingSection.css"
 import { useState } from "react";
-export const RatingSection = ({ ratingData }) => {
+import { ChangeRatingData } from "../../ApiCalls/ApiCalls";
+import { ToastContainer } from "react-toastify";
+export const RatingSection = ({ ratingData, id }) => {
     // Rating data from where rating will calculate.
-    let [ratingObj, setRatingObj] = useState(ratingData);
     let [ratedStr, setratedStr] = useState({
         firstratestr: false,
         secratestar: false,
@@ -28,15 +29,18 @@ export const RatingSection = ({ ratingData }) => {
         if (newratedStr === 0) {
             alert("Fill atleast one rating stars.");
         } else {
-            setRatingObj({ ...ratingObj, ["totalStrs"]: ratingData["totalStrs"] + 5, ["allratedStrs"]: ratingData["allratedStrs"] + newratedStr });
-            alert("Your rating is submitted Successfully ✅.");
+            let newObj = {
+                totalStrs: Number(ratingData["totalStrs"]) + 5,
+                allratedStrs: Number(ratingData["allratedStrs"] + Number(newratedStr))
+            }
+            ChangeRatingData(newObj, id, setRatingSubmitted);
         }
-        setRatingSubmitted(true);
     }
 
 
     return (
         <section className="SP_Sec reviewSec">
+            <ToastContainer />
             <h2 className="SP_Sec_hd">Rate Us</h2>
             <p>Share your experience while dealing with us.</p>
             <div className="rateUsStrCont">

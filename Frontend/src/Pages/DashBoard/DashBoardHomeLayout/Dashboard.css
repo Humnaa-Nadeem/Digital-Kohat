@@ -1,4 +1,9 @@
 /* ---------------- TOP BAR ---------------- */
+.dshbrdlogo {
+    width: 54px;
+    border-radius: 50%;
+}
+
 .Dshbrdlgoutbtn {
     border: none;
     outline: none;
@@ -29,7 +34,7 @@
     padding-bottom: 5px;
 }
 
-.Admin-Icon-TagsCont:hover .Admin-Tags{
+.Admin-Icon-TagsCont:hover .Admin-Tags {
     display: flex;
 }
 
@@ -56,36 +61,89 @@
 }
 
 /* ---------------- SIDEBAR ---------------- */
-.sidebar {
+.DshBrdsidebar {
     margin-top: 20px;
     width: 240px;
-    padding-top: 20px;
+    padding: 16px 0;
+    background: #ffffff;
     border: none;
 }
 
-.sidebar ul {
+.DshBrdsidebar ul {
+    margin: 0;
     list-style: none;
     padding: 0;
 }
 
-.sidebar li {
-    padding: 12px 20px;
-    cursor: pointer;
+.DshBrdsidebar li {
     display: flex;
     align-items: center;
-    gap: 20px;
-    justify-content: flex-start;
-    font-size: 14px;
+    gap: 16px;
+    padding: 12px 18px;
+    margin: 6px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.25s ease;
 }
 
-.sidebar li .DshbrdSidbrIcn {
-    font-size: 1.5rem;
-    transition: 0.4s ease-in-out;
+.DshBrdsidebar li .DshbrdSidbrIcn {
+    font-size: 24px;
+    color: #16a162;
+    background: #eafff4;
+    padding: 1px;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.sidebar li:hover .DshbrdSidbrIcn {
-    color: #0d915a;
-    rotate: 360deg;
+.DshbrdtagName {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.DshBrdsidebar li:hover {
+    background: #f0fdf4;
+}
+
+.DshBrdsidebar li:hover .DshbrdSidbrIcn {
+    transform: scale(1.1);
+    background: #dcfce7;
+}
+
+.DshBrdsidebar li:hover .DshbrdtagName {
+    color: #15803d;
+}
+
+.DshBrdsidebar li.active {
+    background: #ecfdf5;
+    position: relative;
+}
+
+.DshBrdsidebar li.active::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: #16a162;
+    border-radius: 10px;
+}
+
+.DshBrdsidebar li.active .DshbrdSidbrIcn {
+    background: #16a162;
+    color: #ffffff;
+    outline-offset: 2px;
+    outline: 2px solid #16a162;
+}
+
+.DshBrdsidebar li.active .DshbrdtagName {
+    color: #065f46;
+    font-weight: 600;
 }
 
 /* ---------------- CONTENT ---------------- */
@@ -99,9 +157,39 @@
     margin-bottom: 10px;
 }
 
+/* Spinner */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #0d915a;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 /* ---------------- RESPONSIVE STYLING ---------------- */
 @media (max-width: 1100px) {
-    .sidebar {
+    .DshBrdsidebar {
         width: auto;
     }
 
@@ -128,7 +216,7 @@
 }
 
 @media (max-width: 768px) {
-    .sidebar::-webkit-scrollbar {
+    .DshBrdsidebar::-webkit-scrollbar {
         display: none;
     }
 
@@ -171,6 +259,61 @@
         flex-direction: column;
     }
 
+    .DshBrdsidebar ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 8px 6px;
+    }
+
+    .DshBrdsidebar li {
+        padding: 0;
+        margin: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+    }
+
+    .DshBrdsidebar i {
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+        padding: 0;
+        background: #eafff4;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .DshbrdSidbrIcn{
+        padding: 0;
+        margin: 0;
+    }
+
+    .DshBrdsidebar li:hover .DshbrdSidbrIcn {
+        transform: scale(1.05);
+    }
+
+    .DshBrdsidebar li.active {
+        background: transparent;
+    }
+
+    .DshBrdsidebar li.active::before {
+        display: none;
+    }
+
+    .DshBrdsidebar li.active i {
+        background: #16a162;
+        outline: none;
+        color: #ffffff;
+        transform: scale(1.1);
+    }
 
     .DashBoardlogo {
         width: 30px;
@@ -210,14 +353,14 @@
         font-size: 1rem;
     }
 
-    .sidebar ul {
+    .DshBrdsidebar ul {
         width: auto;
         display: flex;
         justify-content: space-around;
         gap: 10px;
     }
 
-    .sidebar li {
+    .DshBrdsidebar li {
         padding: 0;
         margin: 0;
         width: 35px;
@@ -228,7 +371,6 @@
         font-size: 13px;
         justify-content: center;
     }
-
 
     .Dshbrdicon {
         width: 28px;

@@ -1,193 +1,328 @@
-import { useState } from "react";
 import "./Admin.css";
 import "../DashboardComponents.css";
-import "react-icons";
-import { FaTrash } from "react-icons/fa";
-import { SendAdmnTabDataToDb } from "../../../../ApiCalls/DashBoardApiCalls";
+import { useEffect, useState } from "react";
+import { UpdateAdministration, UpdateFacilities, UpdateTimings } from "../../../../ApiCalls/DashBoardApiCalls.jsx";
+import { FiTrash2 } from "react-icons/fi";
+import { ToastContainer } from "react-toastify";
 
-let GeneralFacilities = ["Library", "Science_Lab", "Computer_Lab", "Playground", "Transport", "Canteen", "First_Aid", "Auditorium"];
-export const AdminForm = () => {
-    let [formSubmitted, setFormSubmitted] = useState(false);
-    let [adminFormData, setAdminFormData] = useState({ prncplNme: "", vicePrncplNme: "", MdNme: "" });
-    let [timings, setTimings] = useState({ opening: "", closing: "", break: "", office: "" });
-    let [facilitiesArr, setFacilitiesArr] = useState(GeneralFacilities);
-    let [newFieldNme, setNewfieldNme] = useState([]);
-    let [avalibleFacility, setAvalibleFacility] = useState({ Library: false, Science_Lab: false, Computer_Lab: false, Playground: false, Transport: false, Canteen: false, First_Aid: false, Auditorium: false });
+const generalFacilities = ["Library", "Science_Lab", "Computer_Lab", "Playground", "Transport", "Canteen", "First_Aid", "Auditorium"];
 
-    // Handling Administration Block
-    const handleAdminData = (e) => {
-        const { name, value } = e.target;
-        setAdminFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+export const AdminManagingForm = ({ dashboardData }) => {
+    // =========================
+    // Administration Section
+    // =========================
+    // Getting the new fields if any added by admin.
+    let customFieldsOfDb = [];
+    const [customFields, setCustomFields] = useState(customFieldsOfDb);
 
-    const AddField = () => {
-        let fieldName = prompt("Enter Field Name");
-        setNewfieldNme([...newFieldNme, fieldName]);
-        setAdminFormData(prev => ({ ...prev, [fieldName]: "" }));
-
-    }
-
-    const deleteField = (fieldNme) => {
-        setNewfieldNme(newFieldNme.filter((field) => field !== fieldNme));
-        let updatedAdminFormData = { ...adminFormData };
-        delete updatedAdminFormData[fieldNme];
-        setAdminFormData(updatedAdminFormData);
-    }
-
-    // Handling Timings Block
-
-    const handleTimeChange = (e) => {
-        const { name, value } = e.target;
-        setTimings(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    // Handling Facilities Block
-
-    const handleFacility = (e) => {
-        const { name, checked } = e.target;
-        setAvalibleFacility(prev => ({
-            ...prev,
-            [name]: checked
-        }));
-    };
-
-    let facility = facilitiesArr.map((facility, index) => (
-        <div className="facilityItem" key={index}>
-            <input type="checkbox" id={facility} name={facility} checked={avalibleFacility[facility] || false} className="dshbrdCheckbox" onChange={(e) => handleFacility(e)} />
-            <label htmlFor={facility} className="facilityNme">{facility}</label>
-        </div>
-    ));
-    // Adding Facility;
-    const AddFacility = () => {
-        const facilityName = prompt("Enter Facility Name");
-        if (!facilityName) return;
-        setFacilitiesArr(prev => [...prev, facilityName]);
-        setAvalibleFacility(prev => ({ ...prev, [facilityName]: false }));
-    };
-
-
-    // Cleaning Form
-    const CleanForm = () => {
-        setAdminFormData({ prncplNme: "", vicePrncplNme: "", MdNme: "" });
-        setTimings({ opening: "", closing: "", break: "", office: "" });
-        setFacilitiesArr(GeneralFacilities);
-        setAvalibleFacility({ Library: false, Science_Lab: false, Computer_Lab: false, Playground: false, Transport: false, Canteen: false, First_Aid: false, Auditorium: false });
-        setNewfieldNme([]);
-    }
-
-    // Final Data
-
-    const FinalFun = (e) => {
-        e.preventDefault();
-        let facilities = [];
-        for (const key in avalibleFacility) {
-            if (avalibleFacility[key]) {
-                facilities.push(key);
+    useEffect(() => {
+        let adminObj = { ...dashboardData.administration };
+        for (const key in adminObj) {
+            if (
+                key !== "principal" &&
+                key !== "vice_principal" &&
+                key !== "managing_director"
+            ) {
+                customFieldsOfDb.push(key);
             }
         }
-        if (facilities.length < 3) {
-            alert("Atleast three facilities are required.")
-        } else {
-            SendAdmnTabDataToDb(adminFormData, facilities, timings);
-            setFormSubmitted(true);
-            CleanForm();
+        setCustomFields(customFieldsOfDb.map((v) => v));
+    }, []);
+
+    // Setting the Db Data if any, instead of default data
+    const [adminFormData, setAdminFormData] = useState(
+        dashboardData.administration || {
+            principal: "",
+            vice_principal: "",
+            managing_director: ""
         }
-    }
+    );
+
+    // Tracking changes
+    const [adminSecChanged, setAdminSecChanged] = useState(false);
+
+    // Handling the data entry
+    const handleAdminChange = (e) => {
+        const { name, value } = e.target;
+        setAdminFormData(prev => ({ ...prev, [name]: value }));
+        setAdminSecChanged(true);
+    };
+
+    // Adding new field
+    const addCustomField = () => {
+        const fieldName = prompt("Enter the field name. If it has two words, separate them with an underscore, e.g., First_Name.");
+        if (!fieldName) return;
+        setCustomFields(prev => [...prev, fieldName]);
+        setAdminFormData(prev => ({ ...prev, [fieldName]: "" }));
+        setAdminSecChanged(true);
+    };
+
+    // Deleting fields
+    const deleteCustomField = (fieldName) => {
+        setCustomFields(prev => prev.filter(f => f !== fieldName));
+        const updatedData = { ...adminFormData };
+        delete updatedData[fieldName];
+        setAdminFormData(updatedData);
+        setAdminSecChanged(true);
+    };
+
+    // %%%%%% Form Submission of "ADMINISTARTION" Section %%%%%%%
+    const saveAdministration = (e) => {
+        e.preventDefault();
+        UpdateAdministration(adminFormData, setAdminSecChanged);
+    };
+
+    // =========================
+    // Timings Section
+    // =========================
+
+    // Setting the Db Data if any, instead of default data
+    const [timings, setTimings] = useState(
+        dashboardData.timings || { opening: "", closing: "", break: "", office: "" }
+    );
+
+    // Tracking changes
+    const [timingSecChanged, setTimingSecChanged] = useState(false);
+
+    // Handling the data entry
+    const handleTimeChange = (e) => {
+        const { name, value } = e.target;
+        setTimings(prev => ({ ...prev, [name]: value }));
+        setTimingSecChanged(true);
+    };
+
+    const saveTimings = (e) => {
+        e.preventDefault();
+        UpdateTimings(timings, setTimingSecChanged);
+    };
+
+    // =========================
+    // Facilities Section
+    // =========================
+
+    // Deafult Facilities list:
+    let facilitiesMap = {
+        Library: false,
+        Science_Lab: false,
+        Computer_Lab: false,
+        Playground: false,
+        Transport: false,
+        Canteen: false,
+        First_Aid: false,
+        Auditorium: false
+    };
+
+    // getting avalible facilities among default facilities stored in db
+    let [availableFacilities, setAvailableFacilities] = useState(() => {
+        if (dashboardData.facilities) {
+            let map = { ...facilitiesMap };
+            for (const key in map) {
+                map[key] = dashboardData.facilities.includes(key);
+            }
+            dashboardData.facilities.map((v) => {
+                if (!map[v]) {
+                    map = { ...map, [v]: true };
+                }
+            });
+            return map;
+        }
+        return facilitiesMap;
+    });
+
+    const [allFacilities, setAllFacilities] = useState(generalFacilities);
+
+    // Tracking changes
+    const [facilitiesSecChanged, setFacilitiesSecChanged] = useState(false);
+
+    // Handling the changes
+    const handleFacilityChange = (e) => {
+        const { name, checked } = e.target;
+        setAvailableFacilities(prev => ({ ...prev, [name]: checked }));
+        setFacilitiesSecChanged(true);
+    };
+
+    // Add new facility
+    const addFacility = () => {
+        const facilityName = prompt("Enter the facility name. If it has two words, separate them with an underscore, e.g., First_Name.");
+        if (!facilityName) return;
+        setAllFacilities(prev => [...prev, facilityName]);
+        setAvailableFacilities(prev => ({ ...prev, [facilityName]: false }));
+        setFacilitiesSecChanged(true);
+    };
+
+    // Save selected facilities
+    const saveFacilities = (e) => {
+        e.preventDefault();
+        const selectedFacilities = Object.keys(availableFacilities).filter(
+            key => availableFacilities[key]
+        );
+        if (selectedFacilities.length < 3) return alert("At least 3 facilities required.");
+        UpdateFacilities(selectedFacilities, setFacilitiesSecChanged);
+    };
 
     return (
-        <>
-            <section className="form-area">
-                <form onSubmit={(e) => { FinalFun(e) }}>
-                    <h2>Admin Info</h2>
-                    <div className="smallInputCont">
-                        <div className="form-group">
-                            <label >Managing Director Name</label>
-                            <input type="text" name="MdNme" value={adminFormData.MdNme} onChange={e => handleAdminData(e)} required />
-                        </div>
-                        <div className="form-group">
-                            <label >Principle Name</label>
-                            <input type="text" name="prncplNme" value={adminFormData.prncplNme} onChange={e => handleAdminData(e)} required />
-                        </div>
-                    </div>
-                    <div className="smallInputCont">
-                        <div className="form-group">
-                            <label >Vice-Principle Name</label>
-                            <input type="text" name="vicePrncplNme" value={adminFormData.vicePrncplNme} onChange={e => handleAdminData(e)} required />
-                        </div>
-                    </div>
-                    {(newFieldNme[0])
-                        ?
-                        newFieldNme.map((field, index) => (
-                            <div className="smallInputCont" key={index}>
-                                <div className="form-group">
-                                    <label >{field}</label>
-                                    <input type="text" name={field} value={adminFormData[field] || ""} onChange={e => handleAdminData(e)} required />
-                                </div>
-                                <span className="deleteField" onClick={() => deleteField(field)}>
-                                    <FaTrash />
-                                </span>
-                            </div>
-                        ))
-                        :
-                        <></>
-                    }
+        <section className="form-area">
+            <ToastContainer />
+
+            {/* Administration Form */}
+            <h2>Administration</h2>
+            <form onSubmit={saveAdministration}>
+                <div className="smallInputCont">
                     <div className="form-group">
-                        <span className="AddField" title="Add more fields" onClick={AddField}>
-                            +
+                        <label>Managing Director Name</label>
+                        <input
+                            type="text"
+                            name="managing_director"
+                            value={adminFormData.managing_director}
+                            onChange={handleAdminChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Principal Name</label>
+                        <input
+                            type="text"
+                            name="principal"
+                            value={adminFormData.principal}
+                            onChange={handleAdminChange}
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div className="smallInputCont">
+                    <div className="form-group">
+                        <label>Vice-Principal Name</label>
+                        <input
+                            type="text"
+                            name="vice_principal"
+                            value={adminFormData.vice_principal}
+                            onChange={handleAdminChange}
+                            required
+                        />
+                    </div>
+                </div>
+
+                {/* Custom Fields */}
+                {customFields.map((field, index) => (
+                    <div className="smallInputCont" key={index}>
+                        <div className="form-group">
+                            <label>{field}</label>
+                            <input
+                                type="text"
+                                name={field}
+                                value={adminFormData[field] || ""}
+                                onChange={handleAdminChange}
+                                required
+                            />
+                        </div>
+                        <span className="deleteField" onClick={() => deleteCustomField(field)}>
+                            <FiTrash2 />
                         </span>
                     </div>
-                    {/* Student and Timing */}
-                    <h2>Timing</h2>
-                    <div className="smallInputCont">
-                        <div className="form-group">
-                            <label >Opening Time</label>
-                            <input type="text" name="opening" value={timings.opening} placeholder="8:00 AM" onChange={(e) => { handleTimeChange(e) }} required />
+                ))}
+
+                <span className="AddField" title="Add more fields" onClick={addCustomField}>+</span>
+
+                <div className="form-actions">
+                    <button type="submit" disabled={!adminSecChanged} className="save-btn">
+                        Save
+                    </button>
+                </div>
+            </form>
+
+            {/* Timings Form */}
+            <h2>Timings</h2>
+            <form onSubmit={saveTimings}>
+                <div className="smallInputCont">
+                    <div className="form-group">
+                        <label>Opening Time</label>
+                        <input
+                            type="text"
+                            name="opening"
+                            value={timings.opening}
+                            onChange={handleTimeChange}
+                            placeholder="8:00 AM"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Closing Time</label>
+                        <input
+                            type="text"
+                            name="closing"
+                            value={timings.closing}
+                            onChange={handleTimeChange}
+                            placeholder="2:00 PM"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div className="smallInputCont">
+                    <div className="form-group">
+                        <label>Break Time</label>
+                        <input
+                            type="text"
+                            name="break"
+                            value={timings.break}
+                            onChange={handleTimeChange}
+                            placeholder="10:00 AM - 10:30 AM"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Office Timing</label>
+                        <input
+                            type="text"
+                            name="office"
+                            value={timings.office}
+                            onChange={handleTimeChange}
+                            placeholder="8:00 AM - 5:00 PM"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div className="form-actions">
+                    <button type="submit" disabled={!timingSecChanged} className="save-btn">
+                        Save
+                    </button>
+                </div>
+            </form>
+
+            {/* Facilities Form */}
+            <h2>Facilities</h2>
+            <form onSubmit={saveFacilities}>
+                <div className="facilitiesCont">
+                    {allFacilities.map((facility, index) => (
+                        <div className="facilityItem" key={index}>
+                            <input
+                                type="checkbox"
+                                name={facility}
+                                id={`${facility}`}
+                                checked={availableFacilities[facility] || false}
+                                onChange={handleFacilityChange}
+                                className="dshbrdCheckbox"
+                            />
+                            <label htmlFor={facility} className="facilityNme">
+                                {facility}
+                            </label>
                         </div>
-                        <div className="form-group">
-                            <label >Closing Time</label>
-                            <input type="text" name="closing" value={timings.closing} placeholder="2:00 PM" onChange={(e) => { handleTimeChange(e) }} required />
-                        </div>
-                    </div>
-                    <div className="smallInputCont">
-                        <div className="form-group">
-                            <label >Break Time</label>
-                            <input type="text" name="break" value={timings.break} placeholder="10:00 AM - 10:30 AM" onChange={(e) => { handleTimeChange(e) }} required />
-                        </div>
-                        <div className="form-group">
-                            <label >Office Timing</label>
-                            <input type="text" name="office" value={timings.office} placeholder="8:00 AM - 5:00 PM" onChange={(e) => { handleTimeChange(e) }} required />
-                        </div>
-                    </div>
-                    {/* Facilities */}
-                    <h2>Facilities</h2>
-                    <div className="facilitiesCont">
-                        {facility}
-                    </div>
-                    <div className="AddField AddFacility" onClick={AddFacility}>
-                        +
-                    </div>
-                    <div className="form-actions">
-                        <button type="button" className="cancel-btn" onClick={CleanForm}>Cancel</button>
-                        {
-                            (formSubmitted)
-                                ?
-                                <button type="submit" className="save-btn" disabled >
-                                    Save
-                                </button>
-                                :
-                                <button type="submit" className="save-btn">
-                                    Save
-                                </button>
-                        }
-                    </div>
-                </form>
-            </section>
-        </>
-    )
-}
+                    ))}
+                </div>
+
+                <div className="AddField AddFacility" onClick={addFacility}>+</div>
+
+                <div className="form-actions">
+                    <button type="submit" disabled={!facilitiesSecChanged} className="save-btn">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </section>
+    );
+};

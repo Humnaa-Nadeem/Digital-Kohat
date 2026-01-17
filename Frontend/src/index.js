@@ -75,6 +75,7 @@ import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialist
 import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
 import { FoodLayout } from './Layouts/FoodLayout';
 import HospitalLayout from './Layouts/HospitalLayout';
+import { AdminLogin } from './Pages/DashBoard/AdminLgoInForm/AdminLogin';
 
 // 404 Page
 // import { PageNotFoundPg } from './Pages/404Page/404Page';
@@ -93,13 +94,14 @@ const routes = [
 
   // Contact Us Page 
   { path: "/ContactUs", element: <Contactus /> },
-
-  // Dashboard Page [This is for admin panel , will be protected later and will be removed from here]
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+  },
   {
     path: "/dashboard",
     element: <DashBoard />,
   },
-
   // Education Sector
   {
     path: "/edu",

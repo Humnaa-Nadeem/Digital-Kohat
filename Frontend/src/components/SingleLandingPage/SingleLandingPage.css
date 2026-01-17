@@ -136,9 +136,9 @@
     right: -50px;
 }
 
-/* =====================================================
+/* ===========================
    ABOUT SECTION
-===================================================== */
+==============================*/
 .S_about {
     display: grid;
     grid-template-columns: 0.9fr 1fr;
@@ -170,8 +170,86 @@
     line-height: 1.5;
 }
 
+/* ===========================
+   EVENT SEC
+==============================*/
+.event-card {
+    width: 380px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
 
-/* Quick Info */
+.event-header {
+    padding: 24px 20px 16px 20px;
+    background: linear-gradient(135deg, #027646, #038f56);
+    color: #fff;
+    position: relative;
+}
+
+.event-category {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 5px 14px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.event-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.event-body {
+    padding: 22px 20px;
+}
+
+.event-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.SPlabel {
+    font-weight: 500;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.value {
+    color: #111827;
+    font-size: 14px;
+    text-align: right;
+    max-width: 65%;
+}
+
+.badge {
+    background: linear-gradient(135deg, #a8b9b2, #03a05c);
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+
+/* ===========================
+   QUICK INNFO SEC
+==============================*/
 .QI_dashboard {
     max-width: 1200px;
     margin: 40px auto;
@@ -203,7 +281,7 @@
         0 2px 6px rgba(0, 0, 0, 0.04);
     transition: 0.3s ease;
     width: 320px;
-    height: 300px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     align-items: baseline;
@@ -242,6 +320,7 @@
     border-radius: 8px;
     margin-bottom: 10px;
     color: #444;
+    width: 100%;
 }
 
 /* =====================================================
@@ -262,7 +341,7 @@
 }
 
 .staff-card {
-    width: 320px;
+    width: 270px;
     box-shadow: 0 0 10px black;
 }
 
@@ -454,9 +533,28 @@
     }
 }
 
-@media (max-width: 440px) {
+@media screen and (max-width: 400px) {
     body {
         overflow-x: hidden;
+    }
+
+    .event-card {
+        width: 100%;
+    }
+
+    .event-title {
+        font-size: 20px;
+    }
+
+    .event-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .value {
+        text-align: left;
+        max-width: 100%;
     }
 
     .dash-card {
@@ -472,9 +570,12 @@
         display: none;
     }
 
-    .S_event-card,
-    .staff-card {
+    .S_event-card {
         width: 100%;
+    }
+
+    .staff-crd-cont {
+        width: 90%;
     }
 
     .S_staff {
@@ -493,5 +594,11 @@
     .S_gallery-flex img {
         width: 280px !important;
         height: 200px !important;
+    }
+}
+
+@media (max-width: 330px) {
+    .staff-crd-cont {
+        width: 100%;
     }
 }

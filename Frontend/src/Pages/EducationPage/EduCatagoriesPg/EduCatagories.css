@@ -148,11 +148,20 @@
 }
 
 .cata-pg-card-content p {
-    margin: 0px 0px 10px 0px;
+    margin: 0 0 10px 0;
     font-size: 14px;
     color: #666;
-    line-height: 1.34;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 2;
+    box-orient: vertical;
+    line-height: 1.5;
+    max-height: calc(1.5em * 2);
 }
+
 
 .cata-pg-card-btn {
     padding: 7px 14px;

@@ -1,42 +1,3 @@
-/* .DshbrdstaffCrd_Cont {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-.DshbrdstaffImg {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.imageAndPen {
-    position: relative;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.StaffImgEditor {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    color: whitesmoke;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    background-color:#0d915a;
-    padding-bottom: 5px;
-    outline: 2px solid black;
-} */
-
 /* ---------------- Staff Card Container ---------------- */
 .DshbrdstaffCrd_Cont {
     display: flex;
@@ -73,9 +34,10 @@
     right: -18px;
     top: -10px;
     cursor: pointer;
+    z-index: 2;
 }
 
-.StaffCrdDeltr:hover{
+.StaffCrdDeltr:hover {
     border: 2px solid red;
     color: red;
     background-color: whitesmoke;
@@ -179,6 +141,6 @@
     box-shadow: 0px 4px 6px #0b754a;
 }
 
-.StaffSkipBtn{
+.StaffSkipBtn {
     justify-self: flex-start;
 }

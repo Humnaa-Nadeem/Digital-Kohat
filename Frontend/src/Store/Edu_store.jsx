@@ -33,13 +33,13 @@ export const Schools = [
 // SCHOOLS CARD DATA
 // ========================================
 export const ScoolCardDta = [
-    { img: "https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Bright Future School", Desc: "A modern learning environment focused on academics and character building.", ratingData: { totalStrs: 15, allratedStrs: 12 }, id: "1", btn_txt: "Read More" },
-    { img: "https://images.pexels.com/photos/5896843/pexels-photo-5896843.jpeg", InstName: "GreenField Public School", Desc: "Known for disciplined education and a balanced curriculum.", ratingData: { totalStrs: 10, allratedStrs: 10 }, id: "2", btn_txt: "Read More" },
-    { img: "https://images.pexels.com/photos/256491/pexels-photo-256491.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "CityStar Academy", Desc: "Top-rated academy offering strong academic programs and activities.", ratingData: { totalStrs: 20, allratedStrs: 18 }, id: "3", btn_txt: "Read More" },
-    { img: "https://images.pexels.com/photos/289738/pexels-photo-289738.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Unity Grammar School", Desc: "Focused on discipline, academic excellence, and student development.", ratingData: { totalStrs: 10, allratedStrs: 6 }, id: "4", btn_txt: "Read More" },
-    { img: "https://images.pexels.com/photos/2305095/pexels-photo-2305095.jpeg", InstName: "SilverOak School System", Desc: "A reputable system offering advanced classroom learning.", ratingData: { totalStrs: 15, allratedStrs: 12 }, id: "5", btn_txt: "Read More" },
-    { img: "https://images.pexels.com/photos/207669/pexels-photo-207669.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Modern Vision School", Desc: "Highly equipped school with a focus on modern education methods.", ratingData: { totalStrs: 25, allratedStrs: 23 }, id: "6", btn_txt: "Read More" },
-    { img: "https://images.pexels.com/photos/12896161/pexels-photo-12896161.jpeg", InstName: "Crescent High School", Desc: "Providing a strong academic foundation with co-curricular activities.", ratingData: { totalStrs: 15, allratedStrs: 14 }, id: "7", btn_txt: "Read More" }
+    { img: "https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Bright Future School", Desc: "A modern learning environment focused on academics and character building.", ratingData: { totalStrs: 15, allratedStrs: 12 }, id: "1"},
+    { img: "https://images.pexels.com/photos/5896843/pexels-photo-5896843.jpeg", InstName: "GreenField Public School", Desc: "Known for disciplined education and a balanced curriculum.", ratingData: { totalStrs: 10, allratedStrs: 10 }, id: "2"},
+    { img: "https://images.pexels.com/photos/256491/pexels-photo-256491.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "CityStar Academy", Desc: "Top-rated academy offering strong academic programs and activities.", ratingData: { totalStrs: 20, allratedStrs: 18 }, id: "3" },
+    { img: "https://images.pexels.com/photos/289738/pexels-photo-289738.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Unity Grammar School", Desc: "Focused on discipline, academic excellence, and student development.", ratingData: { totalStrs: 10, allratedStrs: 6 }, id: "4"},
+    { img: "https://images.pexels.com/photos/2305095/pexels-photo-2305095.jpeg", InstName: "SilverOak School System", Desc: "A reputable system offering advanced classroom learning.", ratingData: { totalStrs: 15, allratedStrs: 12 }, id: "5"},
+    { img: "https://images.pexels.com/photos/207669/pexels-photo-207669.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Modern Vision School", Desc: "Highly equipped school with a focus on modern education methods.", ratingData: { totalStrs: 25, allratedStrs: 23 }, id: "6"},
+    { img: "https://images.pexels.com/photos/12896161/pexels-photo-12896161.jpeg", InstName: "Crescent High School", Desc: "Providing a strong academic foundation with co-curricular activities.", ratingData: { totalStrs: 15, allratedStrs: 14 }, id: "7"}
 ];
 
 // ========================================

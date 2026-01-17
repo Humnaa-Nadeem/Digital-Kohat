@@ -5,17 +5,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { School_Details, Schools, ScoolCardDta } from "../../../Store/Edu_store";
 import { SingleLandingPage } from "../../../components/SingleLandingPage/SingleLandingPage";
 import { FaStar } from "react-icons/fa";
+import { GetSchoolCrdsDtaFrmDB } from "../../../ApiCalls/ApiCalls";
 export const SchoolPage = () => {
-
-    // To show page from the top:
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
 
     // Data Storing;
     let [SchoolList, setSchoollist] = useState(Schools);
     // let [AboutSchool, setAboutSchool] = useState(Schools_Details);
     let [SchoolCrds, setSchoolCrds] = useState(ScoolCardDta)
+
+    // To show page from the top:
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        GetSchoolCrdsDtaFrmDB(SchoolCrds, setSchoolCrds);
+    }, []);
+
 
     // To maintain Responsivness [For Small Screen]
     let [showList, setShowlist] = useState(false);
@@ -61,7 +64,7 @@ export const SchoolPage = () => {
                     <FaStar color="yellow" />
                 </div>
             );
-        } else
+        } else if (ratingValue >= 80 && ratingValue <= 100) {
             return (
                 <div className="starsCont">
                     <FaStar color="yellow" />
@@ -70,7 +73,14 @@ export const SchoolPage = () => {
                     <FaStar color="yellow" />
                     <FaStar color="yellow" />
                 </div>
-            );
+            )
+        } else {
+            return (
+                <div className="starsCont">
+                    <FaStar color="yellow" />
+                </div>
+            )
+        }
     }
 
     return (
@@ -117,7 +127,7 @@ export const SchoolPage = () => {
                                                     {showRating(v)}
                                                     <h3>{v.InstName}</h3>
                                                     <p>{v.Desc}</p>
-                                                    <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
+                                                    <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">Read More</button>
                                                 </div>
                                             </div>
                                         )

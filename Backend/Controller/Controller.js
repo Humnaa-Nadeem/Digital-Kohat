@@ -1,58 +1,64 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient(process.env.DB_URL);
-const db = client.db();
-const EHomDtaC = db.collection(process.env.E_HOME_COLL);
-const Schools = db.collection(process.env.S_C); // School Collection:
-const Collegs = db.collection(process.env.C_C); // College Collection:
-const Unis = db.collection(process.env.U_C); // Uni Collection:
-const OnlineCourses = db.collection(process.env.OC_C); // Online Courses Collection:
-const OnlineTrnings = db.collection(process.env.OT_C); // Online Tranings Collection:
-const Tutors = db.collection(process.env.Ts_C); // Tutors Collection:
+const db = client.db("DSCH");
+const schoolColl = db.collection(process.env.S_C);
+const AdmnColl = db.collection(process.env.A_C);
 
-
-export const AddingEduHomeDta = async (req, res) => {
-    await Tutors.insertMany(req.body);
-    res.json({ status: true, message: "Alhumdulilah" })
+// Getting School Crds Data
+export const GettingSchlCrdDta = async (req, res) => {
+    try {
+        let [SchoolDta] = await schoolColl.find({ InstType: "School" }, { projection: { InstName: 1, bannerUrl: 1, ratingData: 1, about: 1 } }).toArray();
+        res.json({
+            success: true,
+            SchlCrdData: { img: SchoolDta.bannerUrl, InstName: SchoolDta.InstName, Desc: SchoolDta.about, ratingData: SchoolDta.ratingData, id: SchoolDta._id },
+            message: "Alhumdulilah Data Fetched ......"
+        })
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
 }
 
-// Getting Education Home Page Catagories Data:
-export const GettingEduHomeDta = async (req, res) => {
-    let EduHomeCata = await EHomDtaC.find().toArray();
-    res.json({ status: true, DtaArr: EduHomeCata });
+// Getting School Whole data
+export const GettingSchlWholeDta = async (req, res) => {
+    try {
+        let [SchoolDta] = await schoolColl.find({ _id: new ObjectId(req.body.SchoolId) }).toArray();
+        res.json({
+            success: true,
+            SchlData: { id: SchoolDta._id, bannerUrl: SchoolDta.bannerUrl, type: SchoolDta.InstType, name: SchoolDta.InstName, tagline: SchoolDta.tagline, about: SchoolDta.about, aboutImage: SchoolDta.aboutImgUrl, staff: SchoolDta.staff, events: SchoolDta.eventData, quickInfo: { basicProfile: { name: SchoolDta.InstName, location: "Kohat", type: "private" }, administration: SchoolDta.administration, studentsStaff: SchoolDta.StaffAndStudent, facilities: SchoolDta.facilities, resultsPerformance: SchoolDta.ResultAndPerformance, timings: SchoolDta.timings, extraActivities: SchoolDta.extraActivities, parentReviews: SchoolDta.Reviews }, fee: SchoolDta.feeData, gallery: SchoolDta.gallery, ratingData: SchoolDta.ratingData },
+            message: "Alhumdulilah Data Fetched ......"
+        })
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
 }
 
-// Getting Schools Data:
-export const GettingSchoolDta = async (req, res) => {
-    let Schools_Details = await Schools.find().toArray();
-    res.json({ status: true, DtaArr: Schools_Details });
-}
-
-// Getting Colleges Data:
-export const GettingClgDta = async (req, res) => {
-    let Colleges_Details = await Collegs.find().toArray();
-    res.json({ status: true, DtaArr: Colleges_Details });
-}
-
-// Getting Universities Data:
-export const GettingUniDta = async (req, res) => {
-    let Uni_Details = await Unis.find().toArray();
-    res.json({ status: true, DtaArr: Uni_Details });
-}
-
-// Getting OnlineCourses Data:
-export const GettingOCsDta = async (req, res) => {
-    let OCs_Details = await OnlineCourses.find().toArray();
-    res.json({ status: true, DtaArr: OCs_Details });
-}
-
-// Getting OnlineTrainings Data:
-export const GettingOTsDta = async (req, res) => {
-    let OTs_Details = await OnlineTrnings.find().toArray();
-    res.json({ status: true, DtaArr: OTs_Details });
-}
-
-// Getting OnlineTutors Data:
-export const GettingTutrsDta = async (req, res) => {
-    let Tutrs_Details = await Tutors.find().toArray();
-    res.json({ status: true, DtaArr: Tutrs_Details });
+// Changing the School Rating 
+export const ChangeRatingData = async (req, res) => {
+    try {
+        let { ratingData, id } = req.body;
+        const ip = (req.socket?.remoteAddress || req.ip).replace("::ffff:", "");
+        let SchoolDta = await schoolColl.findOne({ _id: new ObjectId(id) });
+        let OldRatedIPsArr = SchoolDta.RatedIPs || [];
+        if (OldRatedIPsArr.includes(ip)) {
+            return res.json({
+                success: false,
+                message: "Your rating is added already"
+            });
+        }
+        OldRatedIPsArr.push(ip);
+        await schoolColl.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: { RatedIPs: OldRatedIPsArr, ratingData } }
+        );
+        res.json({ success: true });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
 }
