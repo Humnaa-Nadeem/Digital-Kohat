@@ -31,15 +31,15 @@ export const Parks = () => {
       {id && selectedNature ? (
         <TourismLandingPage listing={selectedNature} />
       ) : (
-        <section className="Tourism-Cata-Pg-Sec">
+        <section className="tr-Tourism-Cata-Pg-Sec">
           {/* LEFT SIDEBAR */}
-          <div className={showList ? "lft-sec showList" : "lft-sec"}>
-            <h2 className="sector" onClick={() => navigate(`/tourism`)}>
+          <div className={showList ? "tr-lft-sec tr-showList" : "tr-lft-sec"}>
+            <h2 className="tr-sector" onClick={() => navigate(`/tourism`)}>
               Tourism
             </h2>
-            <div className="institute-hd-lst">
-              <h2 className="institute-hd">Parks & Nature</h2>
-              <ul className="institute-lst">
+            <div className="tr-institute-hd-lst">
+              <h2 className="tr-institute-hd">Parks & Nature</h2>
+              <ul className="tr-institute-lst">
                 {getMergedData(NatureList, "Tourism", "Parks").map((item, i) => (
                   <li
                     key={item.id}
@@ -54,50 +54,50 @@ export const Parks = () => {
           </div>
 
           {/* MAIN CONTENT */}
-          <div className="main-sec">
-            <div className="showLstBtn" onClick={() => setShowList(!showList)}>
+          <div className="tr-main-sec">
+            <div className="tr-showLstBtn" onClick={() => setShowList(!showList)}>
               {showList ? <>&times;</> : <>&#9776;</>}
             </div>
 
-            <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Best Parks & Nature Spots in Kohat</h1>
+            <div className="tr-cata-pg-banner">
+              <h1 className="tr-tr-cata-pg-main-hd">Best Parks & Nature Spots in Kohat</h1>
               <p>Relax and enjoy nature in Kohat's parks and natural spots.</p>
               <SearchBar SearchedInst={setNatureCards} AllInst={NatureCardsData} />
             </div>
 
-            <div className="cata-card-cont">
+            <div className="tr-cata-card-cont">
               {natureCards.map((place) => (
-                <div className="cata-pg-card premium-card" key={place.id}>
-                  <div className="card-img-container">
+                <div className="tr-card tr-premium-card" key={place.id}>
+                  <div className="tr-card-img-container">
                     <img src={place.img || place.bgImage} alt={place.name} />
-                    <div className="card-rating">
-                      <FaStar className="star-icon" />
+                    <div className="tr-card-rating">
+                      <FaStar className="tr-star-icon" />
                       <span>{place.rating || "4.5"}</span>
                       <small>({place.reviewsCount || "120"} reviews)</small>
                     </div>
                   </div>
-                  <div className="cata-pg-card-content">
-                    <div className="card-header">
+                  <div className="tr-card-content">
+                    <div className="tr-card-header">
                       <h3>{place.name}</h3>
-                      <span className="card-city"><FaMapMarkerAlt /> {place.commonInfo?.basicInfo?.city || "Kohat"}</span>
+                      <span className="tr-card-city"><FaMapMarkerAlt /> {place.commonInfo?.basicInfo?.city || "Kohat"}</span>
                     </div>
 
-                    <div className="card-details-grid">
-                      <div className="detail-item">
+                    <div className="tr-card-details-grid">
+                      <div className="tr-detail-item">
                         <FaClock />
                         <span>{place.commonInfo?.visitingInfo?.openingTime || "N/A"} - {place.commonInfo?.visitingInfo?.closingTime || "N/A"}</span>
                       </div>
-                      <div className="detail-item">
+                      <div className="tr-detail-item">
                         <FaTicketAlt />
                         <span>{place.commonInfo?.visitingInfo?.entryFee || "Free"}</span>
                       </div>
                     </div>
 
-                    <p className="card-short-desc">{place.commonInfo?.basicInfo?.shortIntroduction || "Relax and enjoy nature in this beautiful spot."}</p>
+                    <p className="tr-card-short-desc">{place.commonInfo?.basicInfo?.shortIntroduction || "Relax and enjoy nature in this beautiful spot."}</p>
 
                     <button
                       onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
-                      className="explore-btn"
+                      className="tr-explore-btn"
                     >
                       Explore Destination
                     </button>

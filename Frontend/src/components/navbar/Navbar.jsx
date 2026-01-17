@@ -39,7 +39,7 @@ const Navbar = () => {
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
-         
+
             <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
 
             {/* SERVICES DROPDOWN */}
@@ -62,11 +62,11 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
-                   <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
-                    <a  onClick={()=>{ navigate ("/food");closeMenu();}}>food</a>
+                  <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
+                  <a onClick={() => { navigate("/food"); closeMenu(); }}>food</a>
                   <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
-                  <a onClick={() => { navigate("/business"); closeMenu(); }}>Business/shops</a>
-                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians/Labours</a>
+                  <a onClick={() => { navigate("/business"); closeMenu(); }}>Business</a>
+                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>Technicians/Labours</a>
                   <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism/Traveling</a>
                   <a onClick={() => { navigate("/brands"); closeMenu(); }}>Our Brands</a>
                 </div>

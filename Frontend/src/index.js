@@ -50,8 +50,9 @@ import { Places } from './Pages/TourismPage/TourismCategoriespg/Places';
 import { Hotels } from './Pages/TourismPage/TourismCategoriespg/Hotels';
 import { Restaurants } from './Pages/TourismPage/TourismCategoriespg/Restaurants';
 import { Parks } from './Pages/TourismPage/TourismCategoriespg/Parks';
-import { Guide } from './Pages/TourismPage/TourismCategoriespg/Guide';
-import { Gallery } from './Pages/TourismPage/TourismCategoriespg/Gallery';
+// Guide import removed
+import { Bazar } from './Pages/TourismPage/TourismCategoriespg/Bazar';
+
 import { TourismLandingPage } from './Pages/TourismPage/Landingpage/TourismLandingpage';
 import { TourGuides } from './Pages/TourismPage/TourismCategoriespg/TourGuides';
 
@@ -73,6 +74,9 @@ import { DiagnosticsPage } from './Pages/HospitalPage/HosCategoriesPg/Diagnostic
 import { AmbulancePage } from './Pages/HospitalPage/HosCategoriesPg/Ambulance';
 import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialists';
 import { DashBoard } from './Pages/DashBoard/DashBoardHomeLayout/Dashboard';
+import { FoodDashboard } from './Pages/DashBoard/FoodDashboard/FoodDashboard';
+import { TourismDashboard } from './Pages/DashBoard/TourismDashboard/TourismDashboard';
+import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismRegistration';
 import { FoodLayout } from './Layouts/FoodLayout';
 import HospitalLayout from './Layouts/HospitalLayout';
 import { AdminLogin } from './Pages/DashBoard/AdminLgoInForm/AdminLogin';
@@ -138,13 +142,16 @@ const routes = [
     element: <TourismLayout />,
     children: [
       { index: true, element: <TourismHome /> },
+      { path: "dashboard", element: <TourismDashboard /> },
+      { path: "register", element: <TourismRegistration /> },
       { path: "places", element: <Places /> },
       { path: "hotels", element: <Hotels /> },
       { path: "restaurants", element: <Restaurants /> },
       { path: "parks", element: <Parks /> },
-      { path: "guide", element: <Guide /> },
+      // Duplicate Guide route removed
       { path: "guides", element: <TourGuides /> },
-      { path: "gallery", element: <Gallery /> },
+      { path: "bazar", element: <Bazar /> },
+
       { path: "landing", element: <TourismLandingPage /> },
       // Dynamic route for individual service provider
       { path: ":id", element: <TourismLandingPage /> },
@@ -163,6 +170,7 @@ const routes = [
       { path: "local-food", element: <LocalFoodPage /> },
       { path: "bakeries", element: <BakeriesPage /> },
       { path: "street-food", element: <StreetFoodPage /> },
+      { path: "fooddashboard", element: <FoodDashboard /> },
     ],
   },
 
@@ -180,6 +188,24 @@ const routes = [
       { path: "specialists", element: <SpecialistsPage /> },
     ],
   },
+
+  // Business Sector
+  {
+    path: "/business",
+    element: <BusinessLayout />,
+    children: [
+      { index: true, element: <BusinessHomePage /> },
+      { path: "shops", element: <ShopsRetailPg /> },
+      { path: "offices", element: <OfficesPg /> },
+      { path: "events", element: <EventsPg /> },
+      { path: "manufacturing", element: <ManufacturingPg /> },
+      { path: "freelancers", element: <FreelancersPg /> },
+    ],
+  },
+
+  // Business Registration
+  { path: "/business/register", element: <BusinessRegistration /> },
+  { path: "/business/login", element: <BusinessLogin /> },
 
   // Page Not Found
   { path: "*", element: <PageNotFoundPg /> },

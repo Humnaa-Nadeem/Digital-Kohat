@@ -127,12 +127,13 @@
     /* Ensure rounded corners match parent */
 }
 
-.cata-pg-main-hd {
+.fd-cata-pg-main-hd {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
+    color: #6fa78f !important;
     text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 

@@ -31,14 +31,14 @@ export const TourGuides = () => {
             {id && selectedGuide ? (
                 <TourismLandingPage listing={selectedGuide} />
             ) : (
-                <section className="Tourism-Cata-Pg-Sec">
-                    <div className={showList ? "lft-sec showList" : "lft-sec"}>
-                        <h2 className="sector" onClick={() => navigate(`/tourism`)}>
+                <section className="tr-Tourism-Cata-Pg-Sec">
+                    <div className={showList ? "tr-lft-sec tr-showList" : "tr-lft-sec"}>
+                        <h2 className="tr-sector" onClick={() => navigate(`/tourism`)}>
                             Tourism
                         </h2>
-                        <div className="institute-hd-lst">
-                            <h2 className="institute-hd">Professional Guides</h2>
-                            <ul className="institute-lst">
+                        <div className="tr-institute-hd-lst">
+                            <h2 className="tr-institute-hd">Professional Guides</h2>
+                            <ul className="tr-institute-lst">
                                 {getMergedData(TourGuidesList, "Tourism", "Tour Guides").map((guide) => (
                                     <li
                                         key={guide.id}
@@ -52,54 +52,54 @@ export const TourGuides = () => {
                         </div>
                     </div>
 
-                    <div className="main-sec">
-                        <div className="showLstBtn" onClick={() => setShowList(!showList)}>
+                    <div className="tr-main-sec">
+                        <div className="tr-showLstBtn" onClick={() => setShowList(!showList)}>
                             {showList ? <>&times;</> : <>&#9776;</>}
                         </div>
 
-                        <div className="cata-pg-banner">
-                            <h1 className="cata-pg-main-hd">Professional Tour Guides</h1>
+                        <div className="tr-cata-pg-banner">
+                            <h1 className="tr-tr-cata-pg-main-hd">Professional Tour Guides</h1>
                             <p>Hire experienced local guides to explore the best of Kohat.</p>
                             <SearchBar SearchedInst={setCards} AllInst={TourGuidesCardsData} />
                         </div>
 
-                        <div className="cata-card-cont">
+                        <div className="tr-cata-card-cont">
                             {cards.map((guide) => (
                                 <div
-                                    className="cata-pg-card premium-card"
+                                    className="tr-card tr-premium-card"
                                     key={guide.id}
                                     onClick={() => navigate(`/tourism/landing`, { state: { listing: guide } })}
                                 >
-                                    <div className="card-img-container">
+                                    <div className="tr-card-img-container">
                                         <img src={guide.img || guide.bgImage} alt={guide.name} />
-                                        <div className="card-rating">
-                                            <FaStar className="star-icon" />
+                                        <div className="tr-card-rating">
+                                            <FaStar className="tr-star-icon" />
                                             <span>{guide.rating || "4.8"}</span>
                                             <small>({guide.reviewsCount || "30"} reviews)</small>
                                         </div>
                                     </div>
-                                    <div className="cata-pg-card-content">
-                                        <div className="card-header">
+                                    <div className="tr-card-content">
+                                        <div className="tr-card-header">
                                             <h3>{guide.name}</h3>
-                                            <span className="card-city"><FaMapMarkerAlt /> {guide.commonInfo?.basicInfo?.city || "Kohat"}</span>
+                                            <span className="tr-card-city"><FaMapMarkerAlt /> {guide.commonInfo?.basicInfo?.city || "Kohat"}</span>
                                         </div>
 
-                                        <div className="card-tagline">
+                                        <div className="tr-card-tagline">
                                             <FaUserTie /> <span>{guide.tagline}</span>
                                         </div>
 
-                                        <div className="card-details-grid">
-                                            <div className="detail-item">
+                                        <div className="tr-card-details-grid">
+                                            <div className="tr-detail-item">
                                                 <FaPhoneAlt />
                                                 <span>{guide.contact?.phone}</span>
                                             </div>
-                                            <div className="detail-item">
+                                            <div className="tr-detail-item">
                                                 <FaEnvelope />
                                                 <span>{guide.contact?.email}</span>
                                             </div>
                                         </div>
 
-                                        <p className="card-short-desc">{guide.commonInfo?.basicInfo?.shortIntroduction || "Experienced local guide specializing in cultural and adventure tours."}</p>
+                                        <p className="tr-card-short-desc">{guide.commonInfo?.basicInfo?.shortIntroduction || "Experienced local guide specializing in cultural and adventure tours."}</p>
                                     </div>
                                 </div>
                             ))}

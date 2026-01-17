@@ -9,6 +9,10 @@ export const SearchBar = ({ SearchedInst, AllInst }) => {
     let pastRes = ["It's okay", "Coding is fun", "Let's Code together", "Why It is", "CSS", "JavaScript", "Kust 1"];
     let [PastResArr, setPastResArr] = useState(pastRes);
 
+    useEffect(() => {
+        setAllInstitute(AllInst);
+    }, [AllInst]);
+
     // Filtering keywords from past history according to user Search;
     const filterSearch = (search) => {
         if (search) {
@@ -23,9 +27,13 @@ export const SearchBar = ({ SearchedInst, AllInst }) => {
 
     // Displaying Filtered Result:
     const OptionSlctd = (option) => {
-        console.log(AllInstitute);
         setInputValue(option);
-        let SearchedRes = AllInstitute.filter((v) => { if (v.InstName.toLowerCase().includes(option.toLowerCase())) { return v; } });
+        let SearchedRes = AllInstitute.filter((v) => {
+            const itemName = v.InstName || v.name || v.title || "";
+            if (itemName.toLowerCase().includes(option.toLowerCase())) {
+                return v;
+            }
+        });
         SearchedInst(SearchedRes);
         setFiltereditem(undefined);
     }
