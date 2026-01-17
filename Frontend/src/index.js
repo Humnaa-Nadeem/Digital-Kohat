@@ -80,6 +80,15 @@ import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismR
 import { FoodLayout } from './Layouts/FoodLayout';
 import HospitalLayout from './Layouts/HospitalLayout';
 import { AdminLogin } from './Pages/DashBoard/AdminLgoInForm/AdminLogin';
+import { BusinessLayout } from './Layouts/BusinessLayout';
+import { BusinessHomePage } from './Pages/BusinessPage/BusinessHomePage/BusinessHomePage';
+import { ShopsRetailPg } from './Pages/BusinessPage/BusinessCategoriesPg/ShopsRetailPg';
+import { OfficesPg } from './Pages/BusinessPage/BusinessCategoriesPg/OfficesPg';
+import { EventsPg } from './Pages/BusinessPage/BusinessCategoriesPg/EventsPg';
+import { ManufacturingPg } from './Pages/BusinessPage/BusinessCategoriesPg/ManufacturingPg';
+import { FreelancersPg } from './Pages/BusinessPage/BusinessCategoriesPg/FreelancersPg';
+import { BusinessLogin } from './Pages/BusinessPage/Login/BusinessLogin';
+import { BusinessRegistration } from './Pages/BusinessPage/Registration/BusinessRegistration';
 
 // 404 Page
 // import { PageNotFoundPg } from './Pages/404Page/404Page';

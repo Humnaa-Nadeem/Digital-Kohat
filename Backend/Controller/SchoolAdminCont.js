@@ -15,7 +15,6 @@ export const AdminLoginFun = async (req, res) => {
     if (AdmnData) {
         let instituteId = AdmnData.InstId.toString();
         let verfied = await argon2.verify(AdmnData.password, req.body.password);
-        console.log(AdmnData.verfied);
         if (verfied && AdmnData.Role === "Admin" && AdmnData.verified === "Verified") {
             let token = JWT.sign({ instId: instituteId, instName: AdmnData.InstName, role: "admin" }, process.env.JWT_KEY, {
                 expiresIn: "1d"
