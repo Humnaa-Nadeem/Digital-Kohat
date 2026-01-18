@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { RatingSection } from "../RatingSection/RatingSection";
 import { GetTheSchlData } from "../../ApiCalls/ApiCalls";
+import { ToastContainer } from "react-toastify";
 export const SingleLandingPage = ({ id, Alldata }) => {
 
     // Getting the specfic data
@@ -167,6 +168,7 @@ export const SingleLandingPage = ({ id, Alldata }) => {
                             (DataOf === "Db")
                                 ?
                                 <section className="S_main_Sec">
+                                    <ToastContainer />
                                     {/* GLASSMORPHISM HERO */}
                                     <section className="GlassHeroBG" style={{ background: `linear-gradient(135deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.35)), url("${fltrdData.bannerUrl}")`, }}>
                                         <div className="GlassHeroBG-content">
@@ -222,7 +224,7 @@ export const SingleLandingPage = ({ id, Alldata }) => {
                                                                 <span className="SPlabel">Audience</span>
                                                                 <span className="value badge">{event.Audience}</span>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 );
@@ -324,7 +326,7 @@ export const SingleLandingPage = ({ id, Alldata }) => {
                                                 {(fltrdData.fee)
                                                     ?
                                                     fltrdData.fee.map((v, i) =>
-                                                        <tr  key={i}>
+                                                        <tr key={i}>
                                                             <td>{v.Class}</td>
                                                             <td>{v.MonthlyFee}</td>
                                                             <td>{v.AnnualFee}</td>
@@ -347,10 +349,34 @@ export const SingleLandingPage = ({ id, Alldata }) => {
                                     </section>
 
                                     {/* RATE US */}
-                                    <RatingSection ratingData={fltrdData.ratingData } id={id} />
+                                    <RatingSection ratingData={fltrdData.ratingData} id={id} />
                                 </section>
                                 :
-                                <></>
+                                // PENDING INSTITUTE PAGE :
+                                <section className="PdInstWrapper">
+                                    <ToastContainer />
+
+                                    <div className="PdInstCard">
+                                        <div className="PdInstIcon">⏳</div>
+
+                                        <h2 className="PdInstTitle">
+                                            Institute is Under Processing
+                                        </h2>
+
+                                        <p className="PdInstDesc">
+                                            After completion of the verification process, this institute
+                                            will become visible to the public.
+                                        </p>
+
+                                        <button
+                                            className="PdInstBtn"
+                                            onClick={() => navigate(-1)}
+                                        >
+                                            Go Back
+                                        </button>
+                                    </div>
+                                </section>
+
                         }
                     </>
 

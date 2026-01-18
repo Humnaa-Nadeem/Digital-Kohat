@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const mainURL = "http://localhost:5500"
+const mainURL = "http://localhost:5500";
+
 export const GetSchoolCrdsDtaFrmDB = (SchoolCrds, setSchoolCrds) => {
     axios.get(`${mainURL}/getSchlCrdDta`)
         .then((res) => {
@@ -24,7 +26,7 @@ export const GetTheSchlData = (SchoolId, setFltedData, setDataOf) => {
                 setFltedData(res.data.SchlData);
                 setDataOf("Db");
             } else {
-                console.log(res.data.message);
+                toast.warn(res.data.message);
             }
         }).catch((err) => {
             console.log(err)
@@ -35,7 +37,7 @@ export const ChangeRatingData = (ratingData, id, setRatingSubmitted) => {
     axios.post(`${mainURL}/changeRatingData`, { ratingData, id })
         .then((res) => {
             if (res.data.success) {
-                // setRatingSubmitted(true);
+                setRatingSubmitted(true);
                 toast.success("Your rating is submitted Successfully ✅");
             } else {
                 window.scrollTo(0, 0);

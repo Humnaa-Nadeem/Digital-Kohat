@@ -24,12 +24,20 @@ export const GettingSchlCrdDta = async (req, res) => {
 // Getting School Whole data
 export const GettingSchlWholeDta = async (req, res) => {
     try {
-        let [SchoolDta] = await schoolColl.find({ _id: new ObjectId(req.body.SchoolId) }).toArray();
-        res.json({
-            success: true,
-            SchlData: { id: SchoolDta._id, bannerUrl: SchoolDta.bannerUrl, type: SchoolDta.InstType, name: SchoolDta.InstName, tagline: SchoolDta.tagline, about: SchoolDta.about, aboutImage: SchoolDta.aboutImgUrl, staff: SchoolDta.staff, events: SchoolDta.eventData, quickInfo: { basicProfile: { name: SchoolDta.InstName, location: "Kohat", type: "private" }, administration: SchoolDta.administration, studentsStaff: SchoolDta.StaffAndStudent, facilities: SchoolDta.facilities, resultsPerformance: SchoolDta.ResultAndPerformance, timings: SchoolDta.timings, extraActivities: SchoolDta.extraActivities, parentReviews: SchoolDta.Reviews }, fee: SchoolDta.feeData, gallery: SchoolDta.gallery, ratingData: SchoolDta.ratingData },
-            message: "Alhumdulilah Data Fetched ......"
-        })
+        let AdminVerfied = await AdmnColl.findOne({ InstId: new ObjectId(req.body.SchoolId) }, { projection: { verified: 1, Role: 1 } });
+        if (AdminVerfied.Role === "Admin" && AdminVerfied.verified === "Verified") {
+            let [SchoolDta] = await schoolColl.find({ _id: new ObjectId(req.body.SchoolId) }).toArray();
+            res.json({
+                success: true,
+                SchlData: { id: SchoolDta._id, bannerUrl: SchoolDta.bannerUrl, type: SchoolDta.InstType, name: SchoolDta.InstName, tagline: SchoolDta.tagline, about: SchoolDta.about, aboutImage: SchoolDta.aboutImgUrl, staff: SchoolDta.staff, events: SchoolDta.eventData, quickInfo: { basicProfile: { name: SchoolDta.InstName, location: "Kohat", type: "private" }, administration: SchoolDta.administration, studentsStaff: SchoolDta.StaffAndStudent, facilities: SchoolDta.facilities, resultsPerformance: SchoolDta.ResultAndPerformance, timings: SchoolDta.timings, extraActivities: SchoolDta.extraActivities, parentReviews: SchoolDta.Reviews }, fee: SchoolDta.feeData, gallery: SchoolDta.gallery, ratingData: SchoolDta.ratingData },
+                message: "Alhumdulilah Data Fetched ......"
+            })
+        } else {
+            res.json({
+                success: false,
+                message: "Institute is under process"
+            })
+        }
     } catch (error) {
         res.json({
             success: false,

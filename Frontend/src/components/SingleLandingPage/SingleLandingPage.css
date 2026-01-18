@@ -454,9 +454,83 @@
     line-height: 1.6;
 }
 
+/* =========================
+   Pending Institute Styling
+   ========================= */
+.PdInstWrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+            #f0fdf4,
+            #dcfce7);
+    padding: 20px;
+}
+
+.PdInstCard {
+    background: #ffffff;
+    max-width: 480px;
+    width: 100%;
+    padding: 40px 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.PdInstIcon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    animation: PdInstFadeUp 0.5s ease-in-out;
+}
+
+.PdInstTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #065f46;
+    margin-bottom: 10px;
+}
+
+.PdInstDesc {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.PdInstBtn {
+    padding: 10px 22px;
+    background: #16a34a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.PdInstBtn:hover {
+    background: #15803d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(22, 163, 74, 0.35);
+}
+
 /* =====================================================
    ANIMATION / KEYFRAMES
 ===================================================== */
+
+@keyframes PdInstFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 @keyframes glassFade {
     to {

@@ -16,13 +16,13 @@ export const AdminLoginFun = async (req, res) => {
         let instituteId = AdmnData.InstId.toString();
         let verfied = await argon2.verify(AdmnData.password, req.body.password);
         if (verfied && AdmnData.Role === "Admin" && AdmnData.verified === "Verified") {
-            let token = JWT.sign({ instId: instituteId, instName: AdmnData.InstName, role: "admin" }, process.env.JWT_KEY, {
+            let token = JWT.sign({ instId: instituteId, instName: AdmnData.InstName, role: "admin", verifired: AdmnData.verified }, process.env.JWT_KEY, {
                 expiresIn: "1d"
             });
             res.cookie("adm_token", token, {
                 httpOnly: true,
                 secure: false, // true ---> production
-                sameSite: "lax", //none ---> production
+                sameSite: "lax", // none ---> production
                 path: "/",
                 maxAge: 24 * 60 * 60 * 1000
             })
@@ -51,6 +51,7 @@ export const RetriveTheDashboardDta = async (req, res) => {
 // Saving Result and Preformance data
 export const AddResAndPrfumncDataToDb = async (req, res) => {
     try {
+        console.log(req.admin);
         const { ResAndPrfrmnc } = req.body;
         await schoolColl.updateOne({ _id: new ObjectId(req.admin.instId) }, { $set: { ResultAndPerformance: ResAndPrfrmnc } });
         res.json({ success: true, dataAddedOf: "Staff Tab", message: "Res & Perfumence is okay 👍😊." })
