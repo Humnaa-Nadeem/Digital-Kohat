@@ -157,7 +157,7 @@ const routes = [
       { path: "hotels", element: <Hotels /> },
       { path: "restaurants", element: <Restaurants /> },
       { path: "parks", element: <Parks /> },
-      // Duplicate Guide route removed
+
       { path: "guides", element: <TourGuides /> },
       { path: "bazar", element: <Bazar /> },
 
