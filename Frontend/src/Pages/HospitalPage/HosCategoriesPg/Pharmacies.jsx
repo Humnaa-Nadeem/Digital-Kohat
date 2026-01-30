@@ -1,15 +1,40 @@
-import "../../EducationPage/EduCatagoriesPg/EduCatagories.css";
+import "./HealthCategories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pharmacies, PharmacyCardDta, Pharmacy_Details } from "./HosCatData";
-import { SingleLandingPage } from "../../../components/SingleLandingPage/SingleLandingPage";
+import { HealthLandingPage } from "../../../components/HealthLandingPage/HealthLandingPage";
 
 export const PharmaciesPage = () => {
+
   useEffect(() => { window.scrollTo(0, 0) }, []);
 
   let [pharmacyList, setPharmacyList] = useState(Pharmacies);
+
+  // Filter Logic
+  const [allPharmacies] = useState(PharmacyCardDta);
+  const [locationFiltered, setLocationFiltered] = useState(PharmacyCardDta);
   let [PharmacyCrds, setPharmacyCrds] = useState(PharmacyCardDta);
+
+  const [location, setLocation] = useState("All");
+
+  // Extract Unique Locations
+  const locations = ["All", ...new Set(Pharmacy_Details.map(item => item.location).filter(Boolean))];
+
+  useEffect(() => {
+    if (location === "All") {
+      setLocationFiltered(allPharmacies);
+      setPharmacyCrds(allPharmacies);
+    } else {
+      const filtered = allPharmacies.filter(card => {
+        const detail = Pharmacy_Details.find(d => d.id == card.id);
+        return detail && detail.location === location;
+      });
+      setLocationFiltered(filtered);
+      setPharmacyCrds(filtered);
+    }
+  }, [location, allPharmacies]);
+
 
   let [showList, setShowlist] = useState(false);
   let navigate = useNavigate();
@@ -23,14 +48,15 @@ export const PharmaciesPage = () => {
       {
         (id)
           ?
-          <SingleLandingPage id={id} Alldata={Pharmacy_Details} />
+          <HealthLandingPage id={id} Alldata={Pharmacy_Details} />
           :
-          <section className="edu-cata-pg-sec">
-            <div className={(showList) ? "lft-sec showList" : "lft-sec"} >
-              <h2 className="sector" onClick={() => { navigate(`/hospital`) }}>Hospital</h2>
-              <div className="institute-hd-lst">
-                <h2 className="institute-hd">Pharmacies</h2>
-                <ul className="institute-lst">
+          <section className="health-cata-pg-sec">
+            {/* Sidebar */}
+            <div className={(showList) ? "health-lft-sec health-showList" : "health-lft-sec"} >
+              <h2 className="health-sector-label" onClick={() => { navigate(`/hospital`) }}>Hospital</h2>
+              <div className="health-institute-hd-lst">
+                <h2 className="health-institute-hd">Pharmacies</h2>
+                <ul className="health-institute-lst">
                   {
                     pharmacyList.map((v, i) => {
                       return (
@@ -42,28 +68,54 @@ export const PharmaciesPage = () => {
               </div>
             </div>
 
-            <div className="main-sec">
-              <div className="showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
-              <div className="cata-pg-banner">
-                <h1 className="cata-pg-main-hd">Pharmacies & Medical Stores</h1>
+            {/* Main Content */}
+            <div className="health-main-sec">
+              <div className="health-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
+
+              <div className="health-cata-banner">
+                <h1 className="health-cata-pg-main-hd">Pharmacies & Medical Stores</h1>
                 <p>Find nearby pharmacies, hours, and delivery options.</p>
-                <SearchBar SearchedInst={setPharmacyCrds} AllInst={PharmacyCrds} />
+
+                {/* Search & Filter Bar */}
+                <div className="HealthFilterBar">
+                  {/* Location Dropdown */}
+                  <select
+                    className="HealthFilterSelect"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                  >
+                    {locations.map((loc, i) => (
+                      <option key={i} value={loc}>{loc === "All" ? "All Locations" : loc}</option>
+                    ))}
+                  </select>
+
+                  <div style={{ flex: 2 }}>
+                    <SearchBar SearchedInst={setPharmacyCrds} AllInst={locationFiltered} />
+                  </div>
+                </div>
               </div>
 
-              <div className="cata-card-cont">
+              <div className="health-card-cont">
                 {
-                  PharmacyCrds.map((v, i) => {
-                    return (
-                      <div className="cata-pg-card" key={i}>
-                        <img src={v.img} alt="Placeholder Image" />
-                        <div className="cata-pg-card-content">
-                          <h3>{v.InstName}</h3>
-                          <p>{v.Desc}</p>
-                          <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
+                  PharmacyCrds.length > 0 ? (
+                    PharmacyCrds.map((v, i) => {
+                      return (
+                        <div className="health-pg-card" key={i}>
+                          <img src={v.img} alt="Placeholder Image" />
+                          <div className="health-pg-card-content">
+                            <h3>{v.InstName}</h3>
+                            <p>{v.Desc}</p>
+                            <button onClick={() => { navigate(`?id=${v.id}`) }} className="health-pg-card-btn">{v.btn_txt}</button>
+                          </div>
                         </div>
-                      </div>
-                    )
-                  })
+                      )
+                    })
+                  ) : (
+                    <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px" }}>
+                      <h3>No Pharmacies Found</h3>
+                      <p>Try changing the location or search term.</p>
+                    </div>
+                  )
                 }
               </div>
             </div>

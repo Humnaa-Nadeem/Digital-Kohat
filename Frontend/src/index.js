@@ -57,6 +57,14 @@ import { EduLayout } from './Layouts/EduLayout';
 import { TechLayout } from './Layouts/TechLayout';
 import { TourismLayout } from './Layouts/TourismLayout';
 import { FoodLayout } from './Layouts/FoodLayout';
+import { HealthLayout } from './Layouts/HealthLayout';
+import { HospHomePage } from './Pages/HospitalPage/HospHomePg/HospHomePg';
+import { HospitalsPage } from './Pages/HospitalPage/HosCategoriesPg/Hospitals';
+import { ClinicsPage } from './Pages/HospitalPage/HosCategoriesPg/Clinics';
+import { PharmaciesPage } from './Pages/HospitalPage/HosCategoriesPg/Pharmacies';
+import { DiagnosticsPage } from './Pages/HospitalPage/HosCategoriesPg/Diagnostics';
+import { AmbulancePage } from './Pages/HospitalPage/HosCategoriesPg/Ambulance';
+import { SpecialistsPage } from './Pages/HospitalPage/HosCategoriesPg/Specialists';
 
 // 404 Page
 import { PageNotFoundPg } from './Pages/404Page/404Page';
@@ -137,6 +145,21 @@ const allRoutes = createBrowserRouter([
       { path: "local-food", element: <LocalFoodPage /> },
       { path: "bakeries", element: <BakeriesPage /> },
       { path: "street-food", element: <StreetFoodPage /> },
+    ],
+  },
+
+  // Health Sector
+  {
+    path: "/hospital",
+    element: <HealthLayout />,
+    children: [
+      { index: true, element: <HospHomePage /> },
+      { path: "hospitals", element: <HospitalsPage /> },
+      { path: "clinics", element: <ClinicsPage /> },
+      { path: "pharmacies", element: <PharmaciesPage /> },
+      { path: "diagnostics", element: <DiagnosticsPage /> },
+      { path: "ambulance", element: <AmbulancePage /> },
+      { path: "specialists", element: <SpecialistsPage /> },
     ],
   },
 

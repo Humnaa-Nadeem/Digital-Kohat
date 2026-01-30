@@ -1,55 +1,101 @@
 import { useEffect, useState } from "react";
-import "../../CatagoriesHomePgs.css";
-import "../../EducationPage/EduHomePage/EduHomePage.css";
-import "react-router-dom";
+import "./HealthHome.css";
 import { useNavigate } from "react-router-dom";
-import { categories } from "../HosCategoriesPg/HosCategories";
-import { Form } from "../../../components/Form/form";
+import { categories } from "../HosCategoriesPg/HosCategories"; // Corrected Import
+import { FaSearch, FaCheckCircle, FaHospital, FaStethoscope, FaAmbulance, FaCapsules, FaMicroscope, FaUserMd } from "react-icons/fa";
+// Removed local image import to fix missing module error
+
 export const HospHomePage = () => {
 
-    // To show page from the top:
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
 
-    // Navigate use to redirect to other pages:
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [location, setLocation] = useState("Kohat");
 
-    // useState to open the Form
-    let [showForm, setShowform] = useState(false);
+    // Filter categories based on selection
+    const filteredCategories = categories.filter(cat =>
+        searchTerm === "" || cat.title === searchTerm
+    );
+
+    // Map icons to categories if they strictly match titles
+    const getIcon = (title) => {
+        if (title.includes("Hospital")) return <FaHospital />;
+        if (title.includes("Clinic")) return <FaStethoscope />;
+        if (title.includes("Ambulance")) return <FaAmbulance />;
+        if (title.includes("Pharmacy")) return <FaCapsules />;
+        if (title.includes("Diagnostic")) return <FaMicroscope />;
+        if (title.includes("Specialist")) return <FaUserMd />;
+        return <FaHospital />;
+    };
 
     return (
-        <>
-            {
-                // Condition
-                (showForm)
-                    ?
-                    //  Registration Form
-                    <Form setShowform={setShowform} />
-                    :
-                    // Home Page
-                    <section className="pg-sec">
-                        {/* Registartion Button */}
-                        <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
-                        {/* Hospital / Healthcare Part like hospitals, clinics & pharmacies */}
-                        <div className="content-cont">
-                            <h1>Let's Find Best Healthcare In <strong>Kohat</strong></h1>
-                            <p className="pg-desc">Find trusted hospitals, clinics, pharmacies, and diagnostic centers in <b>Kohat</b>. This page helps residents locate nearby healthcare services, view brief descriptions, and navigate to detailed listings.</p>
-                            <div className="card-Container">
-                                {categories.map((v, i) => {
-                                    return (
-                                        <div className="card EduHomeCard" key={i}>
-                                            <span className="Icon_Cont">{v.icon}</span>
-                                            <h2 className="Cata_Title">{v.title}</h2>
-                                            <p>{v.description}</p>
-                                            <button className="pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
-                                        </div>
-                                    )
-                                })}
+        <div className="HealthHomeContainer">
+            {/* OlaDoc Style Banner */}
+            <section className="HealthHeroSection">
+                <div className="HealthHeroContent">
+                    <div className="HealthHeroText">
+                        <div className="VerifiedBadge">
+                            <FaCheckCircle /> <span>Verified Healthcare Services</span>
+                        </div>
+                        <h1>Find and Book the <br /> <span>Best Doctors</span> near you</h1>
+                        <p>Access the best hospitals, clinics, and specialists in Kohat District.</p>
+
+                        <div className="HealthSearchBar">
+                            <div className="SearchInputGroup" style={{ flex: 1 }}>
+                                <FaSearch />
+                                <select
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="HealthFilterSelect"
+                                    style={{ border: 'none', background: 'transparent' }}
+                                >
+                                    <option value="">Search Doctors, Hospitals, Conditions...</option>
+                                    {categories.map((cat, i) => (
+                                        <option key={i} value={cat.title}>{cat.title}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <button className="SearchBtn" onClick={() => {
+                                const selectedCat = categories.find(c => c.title === searchTerm);
+                                if (selectedCat) navigate(selectedCat.link);
+                            }}>Search</button>
+                        </div>
+                    </div>
+
+                    <div className="HealthHeroImage">
+                        {/* Use a placeholder from web if local asset doesn't exist */}
+                        <img
+                            src="https://img.freepik.com/free-photo/pleased-young-female-doctor-wearing-medical-robe-stethoscope-around-neck-standing-with-closed-posture_409827-254.jpg?w=1000"
+                            alt="Doctor"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Categories Section - Food Style Cards */}
+            <section className="HealthCategoriesSection">
+                <div className="CategoryGrid">
+                    {filteredCategories.map((v, i) => (
+                        <div className="HealthCategoryCard" key={i} onClick={() => navigate(v.link)}>
+                            <div className="CatImgContainer">
+                                {/* Use v.img if available, else placeholder */}
+                                <img src={v.img || "https://img.freepik.com/free-vector/hospital-building-concept-illustration_114360-8440.jpg"} alt={v.title} />
+                                <div className="CatIconBadge">
+                                    {getIcon(v.title)}
+                                </div>
+                            </div>
+                            <div className="CatContent">
+                                <h3>{v.title}</h3>
+                                <p>{v.description}</p>
+                                <button className="CatActionBtn">{v.btn || "Explore"}</button>
                             </div>
                         </div>
-                    </section>
-            }
-        </>
+                    ))}
+                </div>
+            </section>
+        </div>
     )
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Navbar.css";
 import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    return () => clearTimeout(timerRef.current);
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -19,10 +24,19 @@ const Navbar = () => {
     document.body.classList.remove("menu-open");
   };
 
-  const handleDropdownEnter = () => setDropdownOpen(true);
-  const handleDropdownLeave = () => setTimeout(() => setDropdownOpen(false), 200);
+  const handleDropdownEnter = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  };
+
+  const handleDropdownLeave = () => {
+    timerRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 200);
+  };
+
   const toggleDropdownClick = (e) => {
     e.preventDefault();
+    if (timerRef.current) clearTimeout(timerRef.current);
     setDropdownOpen((prev) => !prev);
   };
 
@@ -39,12 +53,13 @@ const Navbar = () => {
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
-         
+
             <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
 
             {/* SERVICES DROPDOWN */}
+            {/* SERVICES DROPDOWN */}
             <div
-              className="dropdown"
+              className={`dropdown ${dropdownOpen ? "open" : ""}`}
               onMouseEnter={handleDropdownEnter}
               onMouseLeave={handleDropdownLeave}
             >
@@ -59,14 +74,12 @@ const Navbar = () => {
               {dropdownOpen && (
                 <div
                   className="dropdown-menu"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
                 >
-                   <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
-                    <a  onClick={()=>{ navigate ("/food");closeMenu();}}>food</a>
+                  <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
+                  <a onClick={() => { navigate("/food"); closeMenu(); }}>food</a>
                   <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
                   <a onClick={() => { navigate("/business"); closeMenu(); }}>Business/shops</a>
-                  <a  onClick={()=>{ navigate ("/tech");closeMenu();}}>Technicians/Labours</a>
+                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>Technicians/Labours</a>
                   <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism/Traveling</a>
                   <a onClick={() => { navigate("/brands"); closeMenu(); }}>Our Brands</a>
                 </div>

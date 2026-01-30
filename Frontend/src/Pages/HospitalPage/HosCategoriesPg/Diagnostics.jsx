@@ -1,15 +1,40 @@
-import "../../EducationPage/EduCatagoriesPg/EduCatagories.css";
+import "./HealthCategories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Diagnostics, DiagnosticCardDta, Diagnostic_Details } from "./HosCatData";
-import { SingleLandingPage } from "../../../components/SingleLandingPage/SingleLandingPage";
+import { HealthLandingPage } from "../../../components/HealthLandingPage/HealthLandingPage";
 
 export const DiagnosticsPage = () => {
+
   useEffect(() => { window.scrollTo(0, 0) }, []);
 
   let [diagnosticList, setDiagnosticList] = useState(Diagnostics);
+
+  // Filter Logic
+  const [allDiagnostics] = useState(DiagnosticCardDta);
+  const [locationFiltered, setLocationFiltered] = useState(DiagnosticCardDta);
   let [DiagnosticCrds, setDiagnosticCrds] = useState(DiagnosticCardDta);
+
+  const [location, setLocation] = useState("All");
+
+  // Extract Unique Locations
+  const locations = ["All", ...new Set(Diagnostic_Details.map(item => item.location).filter(Boolean))];
+
+  useEffect(() => {
+    if (location === "All") {
+      setLocationFiltered(allDiagnostics);
+      setDiagnosticCrds(allDiagnostics);
+    } else {
+      const filtered = allDiagnostics.filter(card => {
+        const detail = Diagnostic_Details.find(d => d.id == card.id);
+        return detail && detail.location === location;
+      });
+      setLocationFiltered(filtered);
+      setDiagnosticCrds(filtered);
+    }
+  }, [location, allDiagnostics]);
+
 
   let [showList, setShowlist] = useState(false);
   let navigate = useNavigate();
@@ -23,14 +48,15 @@ export const DiagnosticsPage = () => {
       {
         (id)
           ?
-          <SingleLandingPage id={id} Alldata={Diagnostic_Details} />
+          <HealthLandingPage id={id} Alldata={Diagnostic_Details} />
           :
-          <section className="edu-cata-pg-sec">
-            <div className={(showList) ? "lft-sec showList" : "lft-sec"} >
-              <h2 className="sector" onClick={() => { navigate(`/hospital`) }}>Hospital</h2>
-              <div className="institute-hd-lst">
-                <h2 className="institute-hd">Diagnostics</h2>
-                <ul className="institute-lst">
+          <section className="health-cata-pg-sec">
+            {/* Sidebar */}
+            <div className={(showList) ? "health-lft-sec health-showList" : "health-lft-sec"} >
+              <h2 className="health-sector-label" onClick={() => { navigate(`/hospital`) }}>Hospital</h2>
+              <div className="health-institute-hd-lst">
+                <h2 className="health-institute-hd">Diagnostics</h2>
+                <ul className="health-institute-lst">
                   {
                     diagnosticList.map((v, i) => {
                       return (
@@ -42,28 +68,54 @@ export const DiagnosticsPage = () => {
               </div>
             </div>
 
-            <div className="main-sec">
-              <div className="showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
-              <div className="cata-pg-banner">
-                <h1 className="cata-pg-main-hd">Diagnostics & Labs</h1>
+            {/* Main Content */}
+            <div className="health-main-sec">
+              <div className="health-showLstBtn" onClick={() => { setShowlist(!showList) }}>{(showList) ? <>&times;</> : <>&#9776;</>}</div>
+
+              <div className="health-cata-banner">
+                <h1 className="health-cata-pg-main-hd">Diagnostics & Labs</h1>
                 <p>Find reliable labs and imaging centers.</p>
-                <SearchBar SearchedInst={setDiagnosticCrds} AllInst={DiagnosticCrds} />
+
+                {/* Search & Filter Bar */}
+                <div className="HealthFilterBar">
+                  {/* Location Dropdown */}
+                  <select
+                    className="HealthFilterSelect"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                  >
+                    {locations.map((loc, i) => (
+                      <option key={i} value={loc}>{loc === "All" ? "All Locations" : loc}</option>
+                    ))}
+                  </select>
+
+                  <div style={{ flex: 2 }}>
+                    <SearchBar SearchedInst={setDiagnosticCrds} AllInst={locationFiltered} />
+                  </div>
+                </div>
               </div>
 
-              <div className="cata-card-cont">
+              <div className="health-card-cont">
                 {
-                  DiagnosticCrds.map((v, i) => {
-                    return (
-                      <div className="cata-pg-card" key={i}>
-                        <img src={v.img} alt="Placeholder Image" />
-                        <div className="cata-pg-card-content">
-                          <h3>{v.InstName}</h3>
-                          <p>{v.Desc}</p>
-                          <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>
+                  DiagnosticCrds.length > 0 ? (
+                    DiagnosticCrds.map((v, i) => {
+                      return (
+                        <div className="health-pg-card" key={i}>
+                          <img src={v.img} alt="Placeholder Image" />
+                          <div className="health-pg-card-content">
+                            <h3>{v.InstName}</h3>
+                            <p>{v.Desc}</p>
+                            <button onClick={() => { navigate(`?id=${v.id}`) }} className="health-pg-card-btn">{v.btn_txt}</button>
+                          </div>
                         </div>
-                      </div>
-                    )
-                  })
+                      )
+                    })
+                  ) : (
+                    <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px" }}>
+                      <h3>No Diagnostics Found</h3>
+                      <p>Try changing the location or search term.</p>
+                    </div>
+                  )
                 }
               </div>
             </div>

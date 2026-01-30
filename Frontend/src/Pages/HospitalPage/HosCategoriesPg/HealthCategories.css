@@ -1,0 +1,293 @@
+/* Health Category Page Styling - Matching Food Section Layout */
+.health-cata-pg-sec {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 0;
+    background: #fdfdfd;
+}
+
+/* Sidebar */
+.health-lft-sec {
+    height: 100vh;
+    padding: 30px 0;
+    background: white;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.health-sector-label {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    /* Green gradient */
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px 25px;
+    margin: 0 20px 30px 0;
+    border-radius: 0 50px 50px 0;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
+}
+
+.health-sector-label:hover {
+    transform: translateX(5px);
+    box-shadow: 0 15px 25px rgba(39, 174, 96, 0.3);
+}
+
+.health-institute-hd {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin: 0 0 20px 25px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.health-institute-hd::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: #27ae60;
+}
+
+.health-institute-lst {
+    list-style: none;
+    padding: 0 15px;
+}
+
+.health-institute-lst li {
+    padding: 12px 20px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    color: #636e72;
+    font-weight: 600;
+    transition: 0.3s;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.health-institute-lst li:hover {
+    background: #eafaf1;
+    color: #27ae60;
+    transform: translateX(8px);
+}
+
+/* Main Section */
+.health-main-sec {
+    padding: 40px;
+    /* Removed height & overflow to allow page scroll */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.health-cata-banner {
+    width: 100%;
+    min-height: 40vh;
+    margin-bottom: 50px;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    background-color: #27ae60;
+    /* Fallback */
+    background: linear-gradient(rgba(39, 174, 96, 0.9), rgba(46, 204, 113, 0.8)), url('https://img.freepik.com/free-photo/medical-banner-with-doctor-wearing-goggles_23-2149611193.jpg');
+}
+
+.health-cata-banner h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.health-cata-banner p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+    opacity: 0.95;
+    margin-bottom: 30px;
+}
+
+/* Filter Section */
+.HealthFilterBar {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    gap: 15px;
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    margin-top: 20px;
+    z-index: 2;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.HealthFilterSelect {
+    flex: 1;
+    min-width: 150px;
+    padding: 14px;
+    border: 1px solid #eee;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    color: #2c3e50;
+    font-family: inherit;
+    outline: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.HealthFilterSelect:focus {
+    border-color: #27ae60;
+    background-color: white;
+}
+
+/* Cards */
+.health-card-cont {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 35px;
+    width: 100%;
+}
+
+.health-pg-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #f0f0f0;
+}
+
+.health-pg-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    border-color: #27ae60;
+}
+
+.health-pg-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.health-pg-card:hover img {
+    transform: scale(1.05);
+}
+
+.health-pg-card-content {
+    padding: 25px;
+}
+
+.health-pg-card-content h3 {
+    font-size: 1.4rem;
+    color: #2d3436;
+    margin-bottom: 12px;
+    font-weight: 800;
+}
+
+.health-pg-card-content p {
+    color: #636e72;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    height: 3.2em;
+    overflow: hidden;
+}
+
+.health-pg-card-btn {
+    width: 100%;
+    padding: 14px;
+    background: #f8f9fa;
+    color: #27ae60;
+    border: none;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.health-pg-card:hover .health-pg-card-btn {
+    background: #27ae60;
+    color: white;
+}
+
+/* Mobile */
+.health-showLstBtn {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .health-cata-pg-sec {
+        grid-template-columns: 250px 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .health-cata-pg-sec {
+        display: block;
+    }
+
+    .health-lft-sec {
+        position: fixed;
+        left: -300px;
+        top: 0;
+        width: 300px;
+        transition: 0.4s;
+    }
+
+    .health-showList {
+        left: 0;
+    }
+
+    .health-showLstBtn {
+        display: flex;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: #27ae60;
+        color: white;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        z-index: 100;
+        box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
+        cursor: pointer;
+    }
+
+    .health-main-sec {
+        padding: 20px;
+    }
+
+    .health-cata-banner h1 {
+        font-size: 2.5rem;
+    }
+}
