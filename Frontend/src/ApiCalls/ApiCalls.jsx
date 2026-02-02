@@ -1,16 +1,12 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const mainURL = "http://localhost:5500";
 
-export const GetSchoolCrdsDtaFrmDB = (SchoolCrds, setSchoolCrds) => {
+export const GetSchoolCrdsDtaFrmDB = (setSchoolCrds) => {
     axios.get(`${mainURL}/getSchlCrdDta`)
         .then((res) => {
             if (res.data.success) {
-                setSchoolCrds(prev => ([
-                    ...prev,
-                    res.data.SchlCrdData
-                ]));
+                setSchoolCrds(res.data.serviceCards);
             } else {
                 console.log(res.data.message);
             }
@@ -19,12 +15,11 @@ export const GetSchoolCrdsDtaFrmDB = (SchoolCrds, setSchoolCrds) => {
         })
 }
 
-export const GetTheSchlData = (SchoolId, setFltedData, setDataOf) => {
+export const GetTheSchlData = (SchoolId, setPageData) => {
     axios.post(`${mainURL}/getSchlWholeDta`, { SchoolId })
         .then((res) => {
             if (res.data.success) {
-                setFltedData(res.data.SchlData);
-                setDataOf("Db");
+                setPageData(res.data.serviceData)
             } else {
                 toast.warn(res.data.message);
             }
@@ -45,5 +40,18 @@ export const ChangeRatingData = (ratingData, id, setRatingSubmitted) => {
             }
         }).catch((err) => {
             toast.error("Something went wrong");
+        })
+}
+
+export const NewEduCataServiceReq = (data) => { 
+    axios.post(`${mainURL}/NewEduCataServiceReq`, data)
+        .then((res) => {
+            if (res.data.success) {
+                alert("Your request submitted successfully ✅.");
+            } else {
+                alert(res.data.message);
+            }
+        }).catch((err) => {
+            alert("Something went wrong.");
         })
 }

@@ -4,7 +4,8 @@ import "./EduHomePage.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { categories } from "../../../Store/Edu_store";
-import { Form } from "../../../components/Form/form";
+import { EduRegisterForm } from "../../../components/Form/form";
+// import { Form } from "../../../components/Form/form";
 export const EduHomePage = () => {
 
     // To show page from the top:
@@ -25,12 +26,13 @@ export const EduHomePage = () => {
                 (showForm)
                     ?
                     //  Registration Form
-                    <Form setShowform={setShowform} />
+                    <EduRegisterForm setShowform={setShowform} />
                     :
                     // Home Page
                     <section className="pg-sec">
                         {/* Registartion Button */}
                         <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
+                        <button onClick={() => navigate("admin")} className="AdminLogin-btn">Admin Login</button>
                         {/* Education Institute Part like schools , colleges & Uni */}
                         <div className="content-cont">
                             <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
@@ -40,7 +42,7 @@ export const EduHomePage = () => {
                                     return (
                                         <div className="card EduHomeCard" key={i}>
                                             <h2 className="Cata_Title">{v.title}</h2>
-                                            <span className="Icon_Cont">{v.icon}</span>
+                                            <span className="Edu_Home_card_Img"><img src="https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg" /></span>
                                             <p>{v.description}</p>
                                             <button className="pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
                                         </div>

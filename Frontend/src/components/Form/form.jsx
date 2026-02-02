@@ -1,93 +1,92 @@
-import { useState } from "react";
-import "./form.css";
+import { useState } from 'react';
+import './form.css';
+import { NewEduCataServiceReq } from '../../ApiCalls/ApiCalls';
 
-const serviceFields = {
-  Education: [
-    { label: "School/College/University Name", name: "categoryName", required: true },
-    { label: "Program (if University)", name: "program", required: false },
-    { label: "Address", name: "address", required: true },
-  ],
-  Tourism: [
-    { label: "Tourism Place Name", name: "categoryName", required: true },
-    { label: "Duration of Tour", name: "duration", required: false },
-  ],
-  Restaurant: [
-    { label: "Restaurant Name", name: "categoryName", required: true },
-    { label: "Address", name: "address", required: false },
-  ],
-  Hospital: [
-    { label: "Hospital Name", name: "categoryName", required: true },
-    { label: "Address", name: "address", required: true },
-  ],
-  Technician: [
-    { label: "Technician Name", name: "categoryName", required: true },
-    { label: "Service Area / Address", name: "address", required: false },
-  ],
-};
+const StepOne = ({ onNext, formData, handleChange }) => (
+  <div className="form-content fade-in">
+    <input type="text" name='fullname' value={formData.fullname} placeholder="Full Name" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <input type="email" name='email' value={formData.email} placeholder="Email Address" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <input type="password" name='password' value={formData.password} placeholder="Password" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <input type="number" name='IDCard' value={formData.IDCard} placeholder="1420111223344" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <button type='button' onClick={onNext} className="btn-black">Next Step</button>
+  </div>
+);
 
-export const Form = ({ setShowform, serviceType }) => {
-  const [data, setData] = useState({
-    name: "",
+const StepTwo = ({ onBack, formData, handleChange }) => (
+  <div className="form-content fade-in">
+    <input type="number" name='phonenumber' value={formData.phonenumber} placeholder="923131234567" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <input type="number" name='whatsappnumber' value={formData.whatsappnumber} placeholder="WhatsApp number in above formate" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <input type="text" name='address' value={formData.address} placeholder="Physical Address" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <input type="text" name='language' value={formData.language} placeholder="Language" className="pill-input" onChange={(e) => handleChange(e)} required />
+    <div className="button-row">
+      <button type='button' onClick={onBack} className="btn-gray">Back</button>
+      <button type="submit" className="btn-black flex-grow">Complete Registration</button>
+    </div>
+  </div>
+);
+
+export const EduRegisterForm = ({ setShowform }) => {
+  const [step, setStep] = useState(1);
+  let [formData, setFormData] = useState({
+    fullname: "",
     email: "",
-    phone: "",
-    service: serviceType || "",
+    password: "",
+    phonenumber: "",
+    whatsappnumber: "",
+    address: "",
+    language: "",
+    IDCard: "",
   });
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setData(prev => ({ ...prev, [name]: value }));
-  };
+  const handleChange = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
 
-  const formSubmission = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!data.name || !data.email || !data.phone) {
-      return alert("Please fill all required fields!");
+    if (formData.phonenumber.length < 11 || formData.whatsappnumber.length < 11) {
+      alert("Invalid Number is filled.");
+    } else if (!formData.fullname || !formData.email || !formData.password) {
+      alert("Fill the forms carefully.");
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        ["catagory"]: "Education",
+        ["type"]: "SCHOOL",
+        ["Verified"]: false
+      }));
+      NewEduCataServiceReq(formData);
     }
-
-    // Generate a fake user ID
-    const userId = Date.now();
-    const registeredUser = { id: userId, ...data };
-    localStorage.setItem("registeredUser", JSON.stringify(registeredUser));
-
-    console.log("Registered user:", registeredUser);
-    alert(`Registered successfully! Your ID is ${userId}`);
-
-    setShowform(false);
-  };
+  }
 
   return (
-    <div className="form-cont">
-      <form onSubmit={formSubmission} className="rgstr-form">
-        <div className="crs" onClick={() => setShowform(false)}>
-          &times;
-        </div>
-        <h2 className="rgstr-frm-heading">Register for {serviceType}</h2>
-
-        <label className="formLabel">Name</label>
-        <input name="name" type="text" value={data.name} onChange={changeHandler} required />
-
-        <label className="formLabel">Phone</label>
-        <input name="phone" type="tel" value={data.phone} onChange={changeHandler} required />
-
-        <label className="formLabel">Email</label>
-        <input name="email" type="email" value={data.email} onChange={changeHandler} required />
-
-        {/* Dynamic fields */}
-        {serviceFields[serviceType]?.map((field, index) => (
-          <div key={index}>
-            <label className="formLabel">{field.label}</label>
-            <input
-              name={field.name}
-              type="text"
-              value={data[field.name] || ""}
-              onChange={changeHandler}
-              required={field.required}
-            />
+    <div className="page-wrapper">
+      <div className="main-card">
+        {/* Left Branding Panel */}
+        <div className="branding-panel">
+          <div className="text-center">
+            <h1>{step === 1 ? "Welcome!" : "Almost There!"}</h1>
+            <p>{step === 1 ? "Let's start with the basics." : "We need a few more details for verbal contact."}</p>
+            <div className="progress-dots">
+              <div className={`dot-circle ${step === 1 ? 'SuprAEduFormactive' : ''}`}></div>
+              <div className={`dot-circle ${step === 2 ? 'SuprAEduFormactive' : ''}`}></div>
+            </div>
+            <br></br>
+            <button className='btn-gray' onClick={() => setShowform(false)}>Click here to go back.</button>
           </div>
-        ))}
-        <button type="submit">Submit</button>
-      </form>
+        </div>
+
+        {/* Right Form Panel */}
+        <form className="form-panel" onSubmit={(e) => handleSubmit(e)}>
+          <h2 className="form-title">Register</h2>
+          {step === 1 ? <StepOne onNext={() => setStep(2)} formData={formData} handleChange={handleChange} /> : <StepTwo onBack={() => setStep(1)} formData={formData} handleChange={handleChange} />}
+        </form>
+      </div>
     </div>
   );
 };

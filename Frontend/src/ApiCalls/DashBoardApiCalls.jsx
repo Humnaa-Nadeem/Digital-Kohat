@@ -5,31 +5,56 @@ export const maniURL = "http://localhost:5500";
 export const verfiyTheAdmin = (email, password) => {
     axios.post(`/AdminLogin`, { email, password })
         .then((res) => {
-            if (res.data.success && res.data.token) {
-                window.location.href = "/dashboard";
+            if (res.data.success) {
+                window.location.href = "/edu/dashboard";
             } else {
                 toast.error(res.data.message);
             }
         })
         .catch((err) => {
-            window.location.href = "/admin/login";
+            window.location.href = "/edu/admin";
         })
 }
 
-export const GetTheDashboardDta = (setDashboardData, setLoading) => {
+export const GetTheDashboardDta = (setDashboardData, setLoading, setAdminOtherServices) => {
     axios.get(`/getDashBoardDta`, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
-                setDashboardData(res.data.instDta);
+                setDashboardData(res.data.ServiceDta);
+                setAdminOtherServices(res.data.OtherServices);
                 setLoading(false);
             } else {
-                window.location.href = "/admin/login";
+                // console.log("Error:", res.data);
+                window.location.href = "/edu/admin";
             }
         })
         .catch((err) => {
-            window.location.href = "/admin/login";
+            console.log("Error:", err.response?.data || err.message);
+            window.location.href = "/edu/admin";
         })
 }
+
+export const SwitchDashBoard = async (ServiceName, ServiceId, ServiceType, setDashboardData, setAdminOtherServices) => {
+    try {
+        const res = await axios.post(
+            `${maniURL}/switchDashBoard`,
+            { ServiceName, ServiceId, ServiceType },
+            { withCredentials: true }
+        );
+        if (res.data.success) {
+            setDashboardData(res.data.ServiceDta);
+            if (res.data.role === "admin") {
+                setAdminOtherServices(res.data.OtherServices || []);
+            }
+            window.location.reload();
+        } else {
+            toast.error(res.data.message);
+        }
+    } catch (err) {
+        console.error(err);
+        toast.error("Failed to switch dashboard");
+    }
+};
 
 export const SendResAndPrfumncDataToDb = (ResAndPrfrmnc, setResAndPrfSecChanged) => {
     axios.post(`${maniURL}/AddResAndPrfumncData`, { ResAndPrfrmnc }, { withCredentials: true })
@@ -42,7 +67,7 @@ export const SendResAndPrfumncDataToDb = (ResAndPrfrmnc, setResAndPrfSecChanged)
             }
         }).catch((err) => {
             console.log(err)
-        })
+        });
 }
 
 export const SendStaffAndStudentDataToDb = (staffAndStudnt, setStaffAndStudSecChanged) => {
@@ -178,6 +203,7 @@ export const UpdateAdministration = (administration, setAdminSecChanged) => {
 };
 
 export const saveBasicInfoApi = (formData, setBasicInfoChanged) => {
+    setBasicInfoChanged(false);
     axios.post(
         `${maniURL}/UpdateBasicInfo`,
         formData,
@@ -190,17 +216,18 @@ export const saveBasicInfoApi = (formData, setBasicInfoChanged) => {
     ).then((res) => {
         if (res.data.success) {
             toast.success(res.data.message);
-            setBasicInfoChanged(false);
         } else {
+            setBasicInfoChanged(true);
             toast.error(res.data.message);
         }
     }).catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong while updating administration");
+        setBasicInfoChanged(true);
+        toast.error("Something went wrong.");
     });
 };
 
 export const saveStaffInfo = (staff, setstaffSecChanged) => {
+    setstaffSecChanged(false);
     axios.post(`${maniURL}/UpdateStaff`, staff, {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -210,8 +237,8 @@ export const saveStaffInfo = (staff, setstaffSecChanged) => {
         .then((res) => {
             if (res.data.success) {
                 toast.success(res.data.message);
-                setstaffSecChanged(false);
             } else {
+                setstaffSecChanged(true);
                 toast.error(res.data.message);
             }
         })
@@ -221,17 +248,16 @@ export const saveStaffInfo = (staff, setstaffSecChanged) => {
         });
 };
 
-
-
 export const SaveGalleryImgs = (ImagesArr, setGalleryChanged) => {
+    setGalleryChanged(false);
     axios.post(`${maniURL}/UpdateGallery`, ImagesArr, {
         withCredentials: true,
     })
         .then((res) => {
             if (res.data.success) {
                 toast.success(res.data.message);
-                setGalleryChanged(false);
             } else {
+                setGalleryChanged(true);
                 toast.error(res.data.message);
             }
         })
@@ -240,3 +266,17 @@ export const SaveGalleryImgs = (ImagesArr, setGalleryChanged) => {
             toast.error("Something went wrong while updating staff");
         });
 };
+
+export const AddManagerApi = (formData) => {
+    axios.post(`${maniURL}/AddManager`, formData, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+            } else {
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err);
+            toast.error("Something went wrong.");
+        });
+}

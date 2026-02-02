@@ -4,7 +4,7 @@ import "../../EducationPage/EduHomePage/EduHomePage.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { categories } from "../HosCategoriesPg/HosCategories";
-import { Form } from "../../../components/Form/form";
+import { EduRegisterForm } from "../../../components/Form/form";
 export const HospHomePage = () => {
 
     // To show page from the top:
@@ -25,7 +25,7 @@ export const HospHomePage = () => {
                 (showForm)
                     ?
                     //  Registration Form
-                    <Form setShowform={setShowform} />
+                    <EduRegisterForm setShowform={setShowform} />
                     :
                     // Home Page
                     <section className="pg-sec">

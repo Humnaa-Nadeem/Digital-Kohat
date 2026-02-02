@@ -12,18 +12,30 @@ export const DecodeTheToken = (token) => {
 
 // Getting the specfic url of cloudinary image:
 export function getPublicIdFromUrl(imageUrl) {
-    // Remove query string
+    if (!imageUrl) return null;
+
+    if (!imageUrl.includes("res.cloudinary.com")) {
+        return null;
+    }
+
     const urlWithoutQuery = imageUrl.split("?")[0];
+    const splitOnUpload = urlWithoutQuery.split("/upload/");
 
-    // Extract path after "/upload/"
-    let pathWithExt = urlWithoutQuery.split("/upload/")[1];
-    if (!pathWithExt) throw new Error("Invalid Cloudinary URL");
+    if (splitOnUpload.length < 2) return null;
 
-    // Remove version prefix if exists (v123456/)
+    let pathWithExt = splitOnUpload[1];
+
     pathWithExt = pathWithExt.replace(/^v\d+\//, "");
 
-    // Remove file extension
-    const public_id = pathWithExt.replace(/\.[^/.]+$/, "");
-
-    return public_id;
+    return pathWithExt.replace(/\.[^/.]+$/, "");
 }
+
+export const getCollections = (req) => {
+    const db = req.app.locals.db;
+
+    return {
+        ADMINS: db.collection(process.env.A_C),
+        NRs: db.collection(process.env.NSPR_C),
+        SCHOOLS: db.collection(process.env.S_C),
+    };
+};

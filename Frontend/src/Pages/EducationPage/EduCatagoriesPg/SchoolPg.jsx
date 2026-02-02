@@ -11,12 +11,12 @@ export const SchoolPage = () => {
     // Data Storing;
     let [SchoolList, setSchoollist] = useState(Schools);
     // let [AboutSchool, setAboutSchool] = useState(Schools_Details);
-    let [SchoolCrds, setSchoolCrds] = useState(ScoolCardDta)
+    let [SchoolCrds, setSchoolCrds] = useState(undefined);
 
     // To show page from the top:
     useEffect(() => {
         window.scrollTo(0, 0);
-        GetSchoolCrdsDtaFrmDB(SchoolCrds, setSchoolCrds);
+        GetSchoolCrdsDtaFrmDB(setSchoolCrds);
     }, []);
 
 
@@ -32,7 +32,7 @@ export const SchoolPage = () => {
     // Showing Real rating.
     const showRating = (v) => {
         // Calculate rating.
-        let ratingValue = v.ratingData["allratedStrs"] / v.ratingData["totalStrs"] * 100;
+        let ratingValue = (v.ratingData) ? v.ratingData["allratedStrs"] / v.ratingData["totalStrs"] * 100 : 0;
         if (ratingValue <= 20) {
             return (
                 <div className="starsCont">
@@ -88,22 +88,26 @@ export const SchoolPage = () => {
             {
                 (id)
                     ?
-                    <SingleLandingPage id={id} Alldata={School_Details} />
+                    <SingleLandingPage id={id} />
                     :
                     <section className="edu-cata-pg-sec">
                         {/* LEFT SIDE OF PAGE */}
-                        <div className={(showList) ? "lft-sec showList" : "lft-sec"} > {/* 👈 Show in Small Screen */}
+                        <div className={(showList) ? "lft-sec showList" : "lft-sec"} >
                             <h2 className="sector" onClick={() => { navigate(`/edu`) }}>Education</h2>
                             <div className="institute-hd-lst">
                                 <h2 className="institute-hd">Schools</h2>
                                 {/* 👇 Here to show the list of Schools */}
                                 <ul className="institute-lst">
                                     {
-                                        SchoolList.map((v, i) => {
-                                            return (
-                                                <li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.SchoolName}</li>
-                                            )
-                                        })
+                                        (SchoolCrds)
+                                            ?
+                                            SchoolCrds.map((v, i) => {
+                                                return (
+                                                    <li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.serviceName}</li>
+                                                )
+                                            })
+                                            :
+                                            <></>
                                     }
                                 </ul>
                             </div>
@@ -119,19 +123,23 @@ export const SchoolPage = () => {
                             {/* // Schools Cards */}
                             <div className="cata-card-cont">
                                 {
-                                    SchoolCrds.map((v, i) => {
-                                        return (
-                                            <div className="cata-pg-card" key={i}>
-                                                <img src={v.img} alt="Placeholder Image" />
-                                                <div className="cata-pg-card-content">
-                                                    {showRating(v)}
-                                                    <h3>{v.InstName}</h3>
-                                                    <p>{v.Desc}</p>
-                                                    <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">Read More</button>
+                                    (SchoolCrds)
+                                        ?
+                                        SchoolCrds.map((v, i) => {
+                                            return (
+                                                <div className="cata-pg-card" key={i}>
+                                                    <img src={v.img} alt="Placeholder Image" />
+                                                    <div className="cata-pg-card-content">
+                                                        {showRating(v)}
+                                                        <h3>{v.serviceName || v.InstName}</h3>
+                                                        <p>{v.Desc}</p>
+                                                        <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">Read More</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    })
+                                            )
+                                        })
+                                        :
+                                        <></>
                                 }
                             </div>
                         </div>

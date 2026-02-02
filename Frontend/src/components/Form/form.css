@@ -1,127 +1,167 @@
-.form-cont {
-    top: 0px;
-    padding: 30px 0px;
-    background-color: white;
+/* Container & Background */
+.page-wrapper {
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 50px;
+    align-items: center;
+    background: linear-gradient(135deg, #28e07a 0%, #009393 100%);
 }
 
-/* FORM Styling */
-.rgstr-form {
-    width: 60%;
-    border-radius: 10px;
-    padding: 20px;
+.main-card {
+    display: flex;
+    width: 90%;
+    align-items: center;
+    min-height: 550px;
+}
+
+/* Left Branding Side */
+.branding-panel {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 38px;
-    position: relative;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.branding-panel h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
     margin-top: 20px;
 }
 
-.rgstr-frm-heading {
-    color: #267252;
-    margin: 0px;
-    font-size: 1.8rem;
+.dot-pill {
+    width: 30px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
 }
 
-.label-cont {
+.dot-circle {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+.SuprAEduFormactive {
+    background: white;
+}
+
+/* Right Form Side */
+.form-panel {
+    background: white;
+    border-radius: 40px;
+    padding: 20px 0px;
+    width: 400px;
     display: flex;
     flex-direction: column;
-}
-
-.formLabel {
-    margin-bottom: 5px;
-    font-size: 20px;
-    color: #374151;
-    font-weight: 600;
-}
-
-input,
-select {
-    padding: 12px 14px;
-    border-radius: 4px;
-    border: none;
-    box-shadow: 0px 0px 5px gray;
-    background-color: rgba(128, 128, 128, 0.07);
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    box-shadow: 0 0 0 3px rgba(106, 136, 255, 0.15);
-    border-color: #6a88ff;
-}
-
-.rgstr-pg-sbmt-btn {
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    background: linear-gradient(90deg, #02ac65, #00c97d);
-    color: white;
-    box-shadow: 0 6px 16px rgba(106, 136, 255, 0.18);
-    transition: 0.2s;
-}
-
-
-.rgstr-pg-sbmt-btn:hover {
-    transform: scale(1.08);
-    background: linear-gradient(90deg, #267252, #32b57e);
-    box-shadow: 0 6px 15px rgba(0, 181, 106, 0.4);
-}
-
-.rgstr-pg-sbmt-btn:active {
-    background: linear-gradient(135deg, #0335ff 0%, #0335ff 100%);
-}
-
-/* Cross Btn Styling  */
-
-.crs {
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding-bottom: 6px;
-    background-color: #32b57e;
-    color: whitesmoke;
-    cursor: pointer;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.9rem;
 }
 
-.crs:hover {
-    background-color: red;
+.form-title {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #333;
 }
 
-.crs:active {
-    border: 2px solid black;
-    background-color: whitesmoke;
-    color: black;
+.form-content {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 15px;
 }
 
-/* RESPONSIVENESS : MEDIA QUERRY */
+.pill-input {
+    background: #f1f1f1;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 25px;
+    font-size: 1rem;
+    outline: none;
+}
 
-@media (max-width: 980px) {
-    .rgstr-form {
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.btn-black {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-gray {
+    background: #e0e0e0;
+    color: #666;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 25px;
+    cursor: pointer;
+}
+
+.or-divider {
+    text-align: center;
+    margin: 20px 0;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Animation */
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 850px) {
+    .main-card {
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    .branding-panel {
+        padding: 30px;
+    }
+
+    .form-panel {
+        border-radius: 40px;
+        padding: 40px;
+    }
+}
+
+@media (max-width: 430px) {
+    .form-panel {
         width: 100%;
-    }
-}
-
-@media (max-width: 345px) {
-    .rgstr-frm-heading {
-        font-size: 1.56rem;
-    }
-
-    .crs {
-        top: -25px;
+        padding: 15px;
     }
 }

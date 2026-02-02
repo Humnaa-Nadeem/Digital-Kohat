@@ -2,8 +2,11 @@ import express from "express";
 const app = express();
 import cors from "cors";
 import Routes from "./Router/Router.js";
-import SAR from "./Router/DashBoardRouter.js";
 import cookieParser from "cookie-parser";
+import SACAR from "./Router/SchlAndColDshBrdRouts.js";
+import SARoutes from "./Router/SuperAdminRouter.js";
+import { connectMongoClient } from "./Db/mongoClient.js";
+import { connectMongoose } from "./Db/mongoose.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,12 +16,16 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+await connectMongoose();
+const db = await connectMongoClient();
+app.locals.db = db;
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(Routes);
-app.use(SAR);
+app.use(SACAR);
+app.use(SARoutes);
 
 
 app.listen(PORT, () => {
-  console.log(`Alhumdulilah , Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

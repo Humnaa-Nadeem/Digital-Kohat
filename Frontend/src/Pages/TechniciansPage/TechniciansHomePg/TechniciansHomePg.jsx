@@ -3,7 +3,7 @@ import "../../CatagoriesHomePgs.css";
 import "./TechniciansHomePg.css";
 import "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Form } from "../../../components/Form/form";
+import { EduRegisterForm } from "../../../components/Form/form";
 import { Techicians_categories } from "../../../Store/Techcn_Store";
 export const TechniciansHomePg = () => {
 
@@ -24,7 +24,7 @@ export const TechniciansHomePg = () => {
                 (showForm)
                     ?
                     //  Registration Form
-                    <Form setShowform={setShowform} />
+                    <EduRegisterForm setShowform={setShowform} />
                     :
                     // Home Page
                     <section className="Tech-pg-sec">

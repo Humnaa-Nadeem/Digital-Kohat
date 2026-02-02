@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../../CatagoriesHomePgs.css";
 import "./FoodHomePage.css";
 import { useNavigate } from "react-router-dom";
-import { Form } from "../../../components/Form/form";
+import { EduRegisterForm } from "../../../components/Form/form";
 import { Food_categories } from "../../../Store/Food_store";
 
 export const FoodHomePage = () => {
@@ -57,7 +57,7 @@ export const FoodHomePage = () => {
                                 </ul>
                             </div>
                             <div className="MerchantFormWrapper">
-                                <Form setShowform={setShowform} serviceType="Restaurant" />
+                                <EduRegisterForm setShowform={setShowform} serviceType="Restaurant" />
                             </div>
                         </div>
                     </div>
