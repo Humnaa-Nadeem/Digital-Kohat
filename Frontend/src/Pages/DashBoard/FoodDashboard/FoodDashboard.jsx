@@ -721,167 +721,146 @@ export const FoodDashboard = () => {
     };
 
     return (
-        <>
-            {profileData.reportStatus === 'Suspended' ? (
-                <div className="fd-suspended-screen">
-                    <div className="fd-suspended-modal">
-                        <FiSlash className="fd-suspended-icon" />
-                        <h2>⛔ Account Suspended</h2>
-                        <p><strong>Reason:</strong> High number of verified complaints</p>
-                        <p>Your business access has been temporarily revoked due to policy violations.</p>
-                        <button className="fd-btn-primary">Contact DSCH Support</button>
-                    </div>
-                </div>
-            ) : (
-                <div className="fd-dashboard-wrapper">
-                    <header className="fd-main-header">
-                        <nav className="fd-navbar">
-                            <div className="fd-nav-container" style={{ padding: "10px 2px" }}>
-                                {/* LOGO */}
-                                <div className="fd-nav-logo">
-                                    <img src={brandLogo} alt="Logo" className="logo-img fd-dshbrdlogo" />
-                                    <h2>DIGITAL SMART CITIES HUB</h2>
-                                </div>
+        <div className="fd-dashboard-wrapper">
+            <header className="fd-main-header">
+                <nav className="fd-navbar">
+                    <div className="fd-nav-container" style={{ padding: "10px 2px" }}>
+                        {/* LOGO */}
+                        <div className="fd-nav-logo">
+                            <img src={brandLogo} alt="Logo" className="logo-img fd-dshbrdlogo" />
+                            <h2>DIGITAL SMART CITIES HUB</h2>
+                        </div>
 
-                                <div className="fd-Admin-Icon-TagsCont">
-                                    <span className="fd-usrIcon fd-adminIcon" onClick={() => setAdmintags(!AdminTags)}>
-                                        <FaUser />
-                                    </span>
-                                    <ul className={AdminTags ? "fd-tags-cont fd-flexDsply fd-Admin-Tags" : "fd-tags-cont fd-Admin-Tags"}>
-                                        <li>Dashboard</li>
-                                        <li>Notifications</li>
-                                        <li className="fd-DshbrdlogOut-tag">log Out</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </nav>
-                    </header>
-
-                    <main className="fd-layout">
-                        {/* Sidebar */}
-                        <aside className="fd-sidebar">
-                            <ul>
-                                <li onClick={() => setActiveTab("Orders")} className={activeTab === "Orders" ? "active" : ""}><FiShoppingBag className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Orders</p></li>
-                                <li onClick={() => setActiveTab("Menu")} className={activeTab === "Menu" ? "active" : ""}><FiMenu className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Menu</p></li>
-                                <li onClick={() => setActiveTab("Deals")} className={activeTab === "Deals" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Deals</p></li>
-                                <li onClick={() => setActiveTab("Analytics")} className={activeTab === "Analytics" ? "active" : ""}><FiActivity className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Analytics</p></li>
-                                <li onClick={() => setActiveTab("Finance")} className={activeTab === "Finance" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Finance</p></li>
-                                <li onClick={() => setActiveTab("Reviews")} className={activeTab === "Reviews" ? "active" : ""}><FiMessageSquare className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reviews</p></li>
-                                <li onClick={() => setActiveTab("Profile")} className={activeTab === "Profile" ? "active" : ""}><FiUser className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Profile</p></li>
-                                <li onClick={() => setActiveTab("Reports")} className={activeTab === "Reports" ? "active" : ""}><FiFileText className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reports</p></li>
-                                <li onClick={() => setActiveTab("Support")} className={activeTab === "Support" ? "active" : ""}><FiHelpCircle className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Support</p></li>
+                        <div className="fd-Admin-Icon-TagsCont">
+                            <span className="fd-usrIcon fd-adminIcon" onClick={() => setAdmintags(!AdminTags)}>
+                                <FaUser />
+                            </span>
+                            <ul className={AdminTags ? "fd-tags-cont fd-flexDsply fd-Admin-Tags" : "fd-tags-cont fd-Admin-Tags"}>
+                                <li>Dashboard</li>
+                                <li>Notifications</li>
+                                <li className="fd-DshbrdlogOut-tag">log Out</li>
                             </ul>
-                        </aside>
+                        </div>
+                    </div>
+                </nav>
+            </header>
 
-                        {/* Main Content */}
-                        <section className="fd-content">
+            <main className="fd-layout">
+                {/* Sidebar */}
+                <aside className="fd-sidebar">
+                    <ul>
+                        <li onClick={() => setActiveTab("Orders")} className={activeTab === "Orders" ? "active" : ""}><FiShoppingBag className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Orders</p></li>
+                        <li onClick={() => setActiveTab("Menu")} className={activeTab === "Menu" ? "active" : ""}><FiMenu className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Menu</p></li>
+                        <li onClick={() => setActiveTab("Deals")} className={activeTab === "Deals" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Deals</p></li>
+                        <li onClick={() => setActiveTab("Analytics")} className={activeTab === "Analytics" ? "active" : ""}><FiActivity className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Analytics</p></li>
+                        <li onClick={() => setActiveTab("Finance")} className={activeTab === "Finance" ? "active" : ""}><FiDollarSign className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Finance</p></li>
+                        <li onClick={() => setActiveTab("Reviews")} className={activeTab === "Reviews" ? "active" : ""}><FiMessageSquare className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reviews</p></li>
+                        <li onClick={() => setActiveTab("Profile")} className={activeTab === "Profile" ? "active" : ""}><FiUser className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Profile</p></li>
+                        <li onClick={() => setActiveTab("Reports")} className={activeTab === "Reports" ? "active" : ""}><FiFileText className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Reports</p></li>
+                        <li onClick={() => setActiveTab("Support")} className={activeTab === "Support" ? "active" : ""}><FiHelpCircle className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">Support</p></li>
+                        <li onClick={() => setActiveTab("MyPurchases")} className={activeTab === "MyPurchases" ? "active" : ""}><FiShoppingBag className="fd-DshbrdSidbrIcn" /> <p className="fd-DshbrdtagName">My Purchases</p></li>
+                    </ul>
+                </aside>
 
-                            <div className="fd-stepper">
-                                <div className={(activeTab === "Orders") ? "fd-step active" : "fd-step"}>
-                                    <span className="fd-circle">1</span>
-                                    <p>Orders</p>
-                                </div>
-                                <div className="fd-line"></div>
-                                <div className={(activeTab === "Menu") ? "fd-step active" : "fd-step"}>
-                                    <span className="fd-circle">2</span>
-                                    <p>Menu</p>
-                                </div>
-                                <div className="fd-line"></div>
-                                <div className={(activeTab === "Profile") ? "fd-step active" : "fd-step"}>
-                                    <span className="fd-circle">3</span>
-                                    <p>Profile</p>
-                                </div>
+                {/* Main Content */}
+                <section className="fd-content">
 
+                    <div className="fd-stepper">
+                        <div className={(activeTab === "Orders") ? "fd-step active" : "fd-step"}>
+                            <span className="fd-circle">1</span>
+                            <p>Orders</p>
+                        </div>
+                        <div className="fd-line"></div>
+                        <div className={(activeTab === "Menu") ? "fd-step active" : "fd-step"}>
+                            <span className="fd-circle">2</span>
+                            <p>Menu</p>
+                        </div>
+                        <div className="fd-line"></div>
+                        <div className={(activeTab === "Profile") ? "fd-step active" : "fd-step"}>
+                            <span className="fd-circle">3</span>
+                            <p>Profile</p>
+                        </div>
+
+                    </div>
+
+                    {profileData.reportStatus === 'Warning' && (
+                        <div className="fd-warning-banner">
+                            <FiAlertTriangle className="fd-warning-icon" />
+                            <div>
+                                <h4>Warning: High Report Volume</h4>
+                                <p>Your business has received multiple user reports. Please resolve issues to avoid suspension.</p>
                             </div>
+                        </div>
+                    )}
 
-                            {profileData.reportStatus === 'Warning' && (
-                                <div className="fd-warning-banner">
-                                    <FiAlertTriangle className="fd-warning-icon" />
-                                    <div>
-                                        <h4>Warning: High Report Volume</h4>
-                                        <p>Your business has received multiple user reports. Please resolve issues to avoid suspension.</p>
-                                    </div>
-                                </div>
-                            )}
+                    {renderContent()}
+                </section>
+            </main>
 
-                            {renderContent()}
-                        </section>
-                    </main>
+            {/* Menu Modal */}
+            <Modal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} title={editingMenuItem ? "Edit Menu Item" : "Add Menu Item"}>
+                <form className="fd-profile-form" onSubmit={handleSaveMenu}>
+                    <div className="fd-form-group">
+                        <label>Item Name</label>
+                        <input
+                            type="text"
+                            className="fd-input"
+                            value={menuForm.name}
+                            onChange={e => setMenuForm({ ...menuForm, name: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className="fd-form-group">
+                        <label>Price (Rs.)</label>
+                        <input
+                            type="number"
+                            className="fd-input"
+                            value={menuForm.price}
+                            onChange={e => setMenuForm({ ...menuForm, price: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className="fd-form-group">
+                        <label>Description</label>
+                        <textarea
+                            className="fd-textarea"
+                            value={menuForm.desc}
+                            onChange={e => setMenuForm({ ...menuForm, desc: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="fd-btn-primary">Save Item</button>
+                </form>
+            </Modal>
 
-                    {/* Menu Modal */}
-                    <Modal
-                        isOpen={isMenuModalOpen}
-                        onClose={() => setIsMenuModalOpen(false)}
-                        title={editingMenuItem ? "Edit Menu Item" : "Add Menu Item"}
-                    >
-                        <form className="fd-profile-form" onSubmit={handleSaveMenu}>
-                            <div className="fd-form-group">
-                                <label>Item Name</label>
-                                <input
-                                    type="text"
-                                    className="fd-input"
-                                    value={menuForm.name}
-                                    onChange={e => setMenuForm({ ...menuForm, name: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div className="fd-form-group">
-                                <label>Price (Rs.)</label>
-                                <input
-                                    type="number"
-                                    className="fd-input"
-                                    value={menuForm.price}
-                                    onChange={e => setMenuForm({ ...menuForm, price: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div className="fd-form-group">
-                                <label>Description</label>
-                                <textarea
-                                    className="fd-textarea"
-                                    value={menuForm.desc}
-                                    onChange={e => setMenuForm({ ...menuForm, desc: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="fd-btn-primary">Save Item</button>
-                        </form>
-                    </Modal>
-
-                    {/* Promo Modal */}
-                    <Modal
-                        isOpen={isPromoModalOpen}
-                        onClose={() => setIsPromoModalOpen(false)}
-                        title="Create New Promotion"
-                    >
-                        <form className="fd-profile-form" onSubmit={handleSavePromo}>
-                            <div className="fd-form-group">
-                                <label>Promotion Title</label>
-                                <input
-                                    type="text"
-                                    className="fd-input"
-                                    value={promoForm.title}
-                                    onChange={e => setPromoForm({ ...promoForm, title: e.target.value })}
-                                    placeholder="e.g. Summer Discount"
-                                    required
-                                />
-                            </div>
-                            <div className="fd-form-group">
-                                <label>Promo Code</label>
-                                <input
-                                    type="text"
-                                    className="fd-input"
-                                    value={promoForm.code}
-                                    onChange={e => setPromoForm({ ...promoForm, code: e.target.value })}
-                                    placeholder="e.g. SUMMER10"
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="fd-btn-primary">Create Promo</button>
-                        </form>
-                    </Modal>
-                </div>
-            )}
-        </>
+            {/* Promo Modal */}
+            <Modal isOpen={isPromoModalOpen} onClose={() => setIsPromoModalOpen(false)} title="Create New Promotion">
+                <form className="fd-profile-form" onSubmit={handleSavePromo}>
+                    <div className="fd-form-group">
+                        <label>Promotion Title</label>
+                        <input
+                            type="text"
+                            className="fd-input"
+                            value={promoForm.title}
+                            onChange={e => setPromoForm({ ...promoForm, title: e.target.value })}
+                            placeholder="e.g. Summer Discount"
+                            required
+                        />
+                    </div>
+                    <div className="fd-form-group">
+                        <label>Promo Code</label>
+                        <input
+                            type="text"
+                            className="fd-input"
+                            value={promoForm.code}
+                            onChange={e => setPromoForm({ ...promoForm, code: e.target.value })}
+                            placeholder="e.g. SUMMER10"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="fd-btn-primary">Create Promo</button>
+                </form>
+            </Modal>
+        </div>
     );
 };

@@ -13,6 +13,7 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "../../../utils/fixLeafletIcon";
 import "./SingleLandingPage.css";
+import { BookingForm } from "./BookingForm";
 
 // --- Custom Routing Control Component ---
 const MapRoutingControl = ({ start, end }) => {
@@ -352,6 +353,11 @@ export const TourismLandingPage = ({ listing: propListing }) => {
           </MapContainer>
         </div>
       </section>
+
+      {/* BOOKING FORM (Only for Hotels/Stays) */}
+      {(basic.category?.toLowerCase().includes("hotel") || listing.type?.toLowerCase().includes("hotel") || basic.category?.toLowerCase().includes("stay") || basic.category?.toLowerCase().includes("guest house")) && (
+        <BookingForm hotelName={listing.name} />
+      )}
 
       {/* REACH US */}
       <section className="S_reach-us SP_Sec">

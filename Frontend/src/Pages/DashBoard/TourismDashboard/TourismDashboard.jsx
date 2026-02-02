@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './TourismDashboard.css';
 import {
-    FiHome, FiGrid, FiUsers, FiStar, FiShield, FiTrendingUp,
-    FiMessageCircle, FiPhoneCall, FiMapPin, FiCheckCircle, FiAlertTriangle
+    FiMessageCircle, FiPhoneCall, FiMapPin, FiCheckCircle, FiAlertTriangle, FiCalendar,
+    FiUsers, FiHome, FiGrid, FiStar, FiShield, FiTrendingUp
 } from 'react-icons/fi';
 import { FaWhatsapp, FaCrown } from 'react-icons/fa';
 import { Tourism_Provider_Details } from '../../../Store/Tourism_store';
@@ -484,6 +484,80 @@ const TrustCenter = ({ data }) => {
 };
 
 // ==========================================
+// NEW BOOKINGS SECTION
+// ==========================================
+const BookingsManager = () => {
+    const [bookings, setBookings] = useState(() => {
+        return JSON.parse(localStorage.getItem('tourism_bookings') || '[]');
+    });
+
+    const updateStatus = (id, newStatus) => {
+        const updated = bookings.map(b => b.id === id ? { ...b, status: newStatus } : b);
+        setBookings(updated);
+        localStorage.setItem('tourism_bookings', JSON.stringify(updated));
+    };
+
+    return (
+        <div className="td-section-card">
+            <h3 className="td-section-title">Hotel Bookings & Reservations</h3>
+            <table className="td-table">
+                <thead>
+                    <tr>
+                        <th>Guest Name</th>
+                        <th>Hotel</th>
+                        <th>Dates</th>
+                        <th>Contact</th>
+                        <th>Guests</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bookings.length > 0 ? bookings.map(b => (
+                        <tr key={b.id}>
+                            <td>
+                                <div style={{ fontWeight: 'bold' }}>{b.name}</div>
+                                <small style={{ color: '#888' }}>ID: {b.id}</small>
+                            </td>
+                            <td>{b.hotelName}</td>
+                            <td>
+                                <div>In: {b.checkIn}</div>
+                                <div>Out: {b.checkOut}</div>
+                            </td>
+                            <td>{b.phone}</td>
+                            <td>{b.guests}</td>
+                            <td>
+                                <span className={`td-status-badge td-status-${b.status === "Pending" ? "Available" : b.status === "Confirmed" ? "Active" : "Rejected"}`}>
+                                    {b.status}
+                                </span>
+                            </td>
+                            <td>
+                                {b.status === "Pending" && (
+                                    <div className="td-action-group">
+                                        <button className="td-btn-sm td-btn-success" onClick={() => updateStatus(b.id, 'Confirmed')}>Confirm</button>
+                                        <button className="td-btn-sm td-btn-danger" onClick={() => updateStatus(b.id, 'Cancelled')}>Cancel</button>
+                                    </div>
+                                )}
+                                {b.status === "Confirmed" && (
+                                    <button className="td-btn-sm td-btn-outline" onClick={() => updateStatus(b.id, 'Checked-Out')}>Check Out</button>
+                                )}
+                            </td>
+                        </tr>
+                    )) : (
+                        <tr>
+                            <td colSpan="7" style={{ textAlign: 'center', padding: '30px' }}>
+                                <FiCalendar size={40} style={{ color: '#ccc', marginBottom: '10px' }} />
+                                <p>No bookings found yet.</p>
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+// ==========================================
 // MAIN DASHBOARD COMPONENT
 // ==========================================
 export const TourismDashboard = () => {
@@ -573,6 +647,7 @@ export const TourismDashboard = () => {
                     onEdit={openEditOffering}
                 />
             );
+            case 'Bookings': return <BookingsManager />;
             case 'Requests': return <TourismRequests requests={providerData.requests} onUpdateStatus={handleUpdateStatus} />;
             case 'Reviews': return <TourismReviews reviews={providerData.reviews} onReply={handleReviewReply} />;
             case 'Trust': return <TrustCenter data={providerData} />;
@@ -598,6 +673,9 @@ export const TourismDashboard = () => {
                     </li>
                     <li className={`td-nav-item ${activeTab === 'Requests' ? 'active' : ''}`} onClick={() => setActiveTab('Requests')}>
                         <FiUsers className="td-nav-icon" /> Requests
+                    </li>
+                    <li className={`td-nav-item ${activeTab === 'Bookings' ? 'active' : ''}`} onClick={() => setActiveTab('Bookings')}>
+                        <FiCalendar className="td-nav-icon" /> Bookings
                     </li>
                     <li className={`td-nav-item ${activeTab === 'Reviews' ? 'active' : ''}`} onClick={() => setActiveTab('Reviews')}>
                         <FiStar className="td-nav-icon" /> Reviews
