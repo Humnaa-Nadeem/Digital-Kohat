@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UniCardDta, Unis_Details, Universities } from "../../../Store/Edu_store";
 import { SingleLandingPage } from "../../../components/SingleLandingPage/SingleLandingPage";
+import { FaStar } from "react-icons/fa";
 export const UniPage = () => {
 
     // To show page from the top:
@@ -68,6 +69,13 @@ export const UniPage = () => {
                                             <div className="cata-pg-card" key={i}>
                                                 <img src={v.img} alt="Placeholder Image" />
                                                 <div className="cata-pg-card-content">
+                                                    <div className="starsCont">
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                        <FaStar color="yellow" />
+                                                    </div>
                                                     <h3>{v.InstName}</h3>
                                                     <p>{v.Desc}</p>
                                                     <button onClick={() => { navigate(`?id=${v.id}`) }} className="cata-pg-card-btn">{v.btn_txt}</button>

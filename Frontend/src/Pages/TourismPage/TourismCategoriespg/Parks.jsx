@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NatureList, NatureCardsData } from "../../../Store/Tourism_store";
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaClock, FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const Parks = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const [natureCards, setNatureCards] = useState(NatureCardsData);
+  const [natureCards, setNatureCards] = useState(() => getMergedData(NatureCardsData, "Tourism", "Parks"));
   const [showList, setShowList] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
 
@@ -23,7 +24,7 @@ export const Parks = () => {
     setActiveItem(index);
   };
 
-  const selectedNature = NatureCardsData.find((n) => n.id === Number(id));
+  const selectedNature = getSelectedItem(NatureCardsData, "Tourism", "Parks", id);
 
   return (
     <>
@@ -39,7 +40,7 @@ export const Parks = () => {
             <div className="institute-hd-lst">
               <h2 className="institute-hd">Parks & Nature</h2>
               <ul className="institute-lst">
-                {NatureList.map((item, i) => (
+                {getMergedData(NatureList, "Tourism", "Parks").map((item, i) => (
                   <li
                     key={item.id}
                     className={activeItem === i ? "active" : ""}
@@ -59,7 +60,7 @@ export const Parks = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Best Parks & Nature Spots in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Best Parks & Nature Spots in Kohat</h1>
               <p>Relax and enjoy nature in Kohat's parks and natural spots.</p>
               <SearchBar SearchedInst={setNatureCards} AllInst={NatureCardsData} />
             </div>

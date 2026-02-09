@@ -76,21 +76,21 @@ export const SignUpForm = () => {
                             <h2 className="rgstr-frm-heading">Registration Form:</h2>
                             {/* Permanent Fields */}
                             <div className="label-cont">
-                                <label htmlFor="name">Full name</label>
+                                <label htmlFor="name" className="formLabel">Full name</label>
                                 <input id="name" name="name" type="text" placeholder="Jane Doe" value={data.name} onChange={(e) => changeHandler(e)} required />
                             </div>
                             <div className="label-cont">
-                                <label htmlFor="phone">Phone</label>
+                                <label htmlFor="phone" className="formLabel">Phone</label>
                                 <input id="phone" name="phone" type="tel" min={10} placeholder="+92 300 0000000" value={data.phone} onChange={(e) => changeHandler(e)} required />
                             </div>
 
                             <div className="label-cont">
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email" className="formLabel">Email</label>
                                 <input id="email" name="email" type="email" placeholder="jane@example.com" value={data.email} onChange={(e) => changeHandler(e)} required />
                             </div>
 
                             <div className="label-cont">
-                                <label htmlFor="payment">Select Catagory</label>
+                                <label htmlFor="payment" className="formLabel">Select Catagory</label>
                                 <select id="payment" name="Catagory" value={data.Catagory} onChange={(e) => { changeHandler(e) }}>
                                     <option>Catagory</option>
                                     <option>School</option>
@@ -107,26 +107,26 @@ export const SignUpForm = () => {
                                 <></>
                                 :
                                 <div className="label-cont">
-                                    <label htmlFor="catagoryTitle">{data.Catagory} Name :</label>
+                                    <label htmlFor="catagoryTitle" className="formLabel">{data.Catagory} Name :</label>
                                     <input id="catagoryTitle" name="catagoryTitle" type="text" placeholder={`${data.Catagory} name`} value={data.catagoryTitle} onChange={(e) => changeHandler(e)} required />
                                     <br></br>
                                     {(data.Catagory === "Online Course" || data.Catagory === "Online Training") ?
                                         <>
                                             {/* ONLINE COURSES AND ONLINE TRAINING (OC & OT)*/}
-                                            <label htmlFor="duration">Enrolling Date :</label>
+                                            <label htmlFor="duration" className="formLabel">Enrolling Date :</label>
                                             <input id="duration" name="duration" type="date" value={data.duration} onChange={(e) => changeHandler(e)} required />
                                         </>
                                         :
                                         <>
                                             {/* OTHER THAN OC & OT */}
-                                            <label htmlFor="Address">Address :</label>
+                                            <label htmlFor="Address" className="formLabel">Address :</label>
                                             <input id="Address" name="address" type="text" placeholder="street , city , district, kp pakistan" value={data.address} onChange={(e) => changeHandler(e)} required />
                                             <br></br>
                                             {(data.Catagory === "University")
                                                 ?
                                                 <>
                                                     {/* FOR UNIVERSITY */}
-                                                    <label htmlFor="progrm">Enter the Program Name :</label>
+                                                    <label htmlFor="progrm" className="formLabel">Enter the Program Name :</label>
                                                     <input id="progrm" name="program" type="text" placeholder="Computer Science" value={data.program} onChange={(e) => changeHandler(e)} required />
                                                 </>
                                                 :

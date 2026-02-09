@@ -3,8 +3,6 @@ import "./Navbar.css";
 import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
 import LanguageSwitcher from "../LanguageSwitcher";
-// ❌ removed unused import
-// import GoogleTranslate from "../utils/GoogleTranslate";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,10 +42,7 @@ const Navbar = () => {
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
-
-            <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>
-              About us
-            </a>
+            <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
 
             {/* SERVICES DROPDOWN */}
             <div
@@ -64,32 +59,13 @@ const Navbar = () => {
               </a>
 
               {dropdownOpen && (
-                <div
-                  className="dropdown-menu"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
-                >
-                  <a onClick={() => { navigate("/Edu"); closeMenu(); }}>
-                    Education
-                  </a>
-                  <a onClick={() => { navigate("/food"); closeMenu(); }}>
-                    Food
-                  </a>
-                  <a onClick={() => { navigate("/hospital"); closeMenu(); }}>
-                    Health
-                  </a>
-                  <a onClick={() => { navigate("/business"); closeMenu(); }}>
-                    Business/Shops
-                  </a>
-                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>
-                    Technicians/Labours
-                  </a>
-                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>
-                    Tourism/Traveling
-                  </a>
-                  <a onClick={() => { navigate("/brands"); closeMenu(); }}>
-                    Our Brands
-                  </a>
+                <div className="dropdown-menu">
+                  <a onClick={() => { navigate("/edu"); closeMenu(); }}>Education</a>
+                  <a onClick={() => { navigate("/food"); closeMenu(); }}>Food</a>
+                  <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
+                  <a onClick={() => { navigate("/business"); closeMenu(); }}>Business</a>
+                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>Technicians</a>
+                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism</a>
                 </div>
               )}
             </div>
@@ -98,20 +74,14 @@ const Navbar = () => {
               Contact Us
             </a>
 
-            {/* BUTTONS + LANGUAGE */}
+            {/* REGISTER + LANGUAGE */}
             <div className="nav-buttons">
               <button
+                type="button"
                 className="btn sign"
-                onClick={() => {
-                  closeMenu();
-                  navigate("/form");
-                }}
+                onClick={() => navigate("/form")}
               >
-                Sign Up
-              </button>
-
-              <button className="btn log" onClick={closeMenu}>
-                Log in
+                Register
               </button>
 
               <LanguageSwitcher />

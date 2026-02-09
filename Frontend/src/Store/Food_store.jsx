@@ -1,4 +1,4 @@
-import { FaUtensils, FaCoffee, FaPizzaSlice, FaHamburger, FaBirthdayCake, FaIceCream } from "react-icons/fa";
+import { FaUtensils, FaCoffee, FaPizzaSlice, FaHamburger, FaBirthdayCake, FaIceCream, FaBreadSlice } from "react-icons/fa";
 
 // ========================================
 // FOOD CATEGORIES
@@ -31,7 +31,7 @@ export const Food_categories = [
     {
         title: "Local Cuisine",
         img: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600",
-        icon: <FaHamburger className="icons" />,
+        icon: <FaBreadSlice className="icons" />,
         btn: "Traditional Food",
         link: "/food/local-food",
         description: "Explore the authentic flavors and traditional dishes of Kohat."
@@ -64,9 +64,9 @@ export const FineDiningList = [
 ];
 
 export const FineDiningCardsData = [
-    { img: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "The Grand Regal", Desc: "Premium fine dining with a mix of continental and local dishes.", id: "1", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Royal Pavilion", Desc: "Exquisite ambiance and gourmet flavors for special occasions.", id: "2", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Elite Restaurant", Desc: "A sophisticated dining experience with top-notch service.", id: "3", btn_txt: "View Details" },
+    { img: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "The Grand Regal", Desc: "Premium fine dining with a mix of continental and local dishes.", id: "1", btn_txt: "View Details", rating: 4.8, priceRange: "$$$", cuisine: "Continental", deliveryAvailable: false, price: 2000 },
+    { img: "https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Royal Pavilion", Desc: "Exquisite ambiance and gourmet flavors for special occasions.", id: "2", btn_txt: "View Details", rating: 4.5, priceRange: "$$$", cuisine: "Mughlai", deliveryAvailable: true, price: 1800 },
+    { img: "https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Elite Restaurant", Desc: "A sophisticated dining experience with top-notch service.", id: "3", btn_txt: "View Details", rating: 4.2, priceRange: "$$$", cuisine: "Steakhouse", deliveryAvailable: false, price: 2500 },
 ];
 
 // ========================================
@@ -79,9 +79,9 @@ export const CafesList = [
 ];
 
 export const CafesCardsData = [
-    { img: "https://images.pexels.com/photos/6067/coffee-flower-reading-magazine.jpg?auto=compress&cs=tinysrgb&w=600", InstName: "Mountain Brew", Desc: "Freshly brewed coffee with a stunning view of the hills.", id: "4", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Bean & Beyond", Desc: "The perfect spot for coffee lovers and dessert enthusiasts.", id: "5", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "The Cozy Corner", Desc: "A small, peaceful space for work or casual meetups.", id: "6", btn_txt: "View Details" },
+    { img: "https://images.pexels.com/photos/6067/coffee-flower-reading-magazine.jpg?auto=compress&cs=tinysrgb&w=600", InstName: "Mountain Brew", Desc: "Freshly brewed coffee with a stunning view of the hills.", id: "4", btn_txt: "View Details", rating: 4.7, priceRange: "$$", cuisine: "Cafe", deliveryAvailable: true, price: 500 },
+    { img: "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Bean & Beyond", Desc: "The perfect spot for coffee lovers and dessert enthusiasts.", id: "5", btn_txt: "View Details", rating: 4.4, priceRange: "$$", cuisine: "Cafe", deliveryAvailable: true, price: 450 },
+    { img: "https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "The Cozy Corner", Desc: "A small, peaceful space for work or casual meetups.", id: "6", btn_txt: "View Details", rating: 4.1, priceRange: "$", cuisine: "Cafe", deliveryAvailable: false, price: 300 },
 ];
 
 // ========================================
@@ -94,9 +94,9 @@ export const FastFoodList = [
 ];
 
 export const FastFoodCardsData = [
-    { img: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Burger Hub", Desc: "Juicy burgers and crispy fries that will keep you coming back.", id: "7", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Pizza Palace", Desc: "Authentic wood-fired pizzas with a variety of toppings.", id: "8", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/60616/fried-chicken-chicken-fried-crunchy-60616.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Crunchy Chicken", Desc: "The best fried chicken in town, crispy and flavorful.", id: "9", btn_txt: "View Details" },
+    { img: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Burger Hub", Desc: "Juicy burgers and crispy fries that will keep you coming back.", id: "7", btn_txt: "View Details", rating: 4.9, priceRange: "$$", cuisine: "Burgers", deliveryAvailable: true, price: 800 },
+    { img: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Pizza Palace", Desc: "Authentic wood-fired pizzas with a variety of toppings.", id: "8", btn_txt: "View Details", rating: 4.3, priceRange: "$$", cuisine: "Pizza", deliveryAvailable: true, price: 1200 },
+    { img: "https://images.pexels.com/photos/60616/fried-chicken-chicken-fried-crunchy-60616.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Crunchy Chicken", Desc: "The best fried chicken in town, crispy and flavorful.", id: "9", btn_txt: "View Details", rating: 4.0, priceRange: "$$", cuisine: "Fried Chicken", deliveryAvailable: true, price: 600 },
 ];
 
 // ========================================
@@ -109,9 +109,9 @@ export const LocalFoodList = [
 ];
 
 export const LocalFoodCardsData = [
-    { img: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Kohat Chapli Kebab Central", Desc: "The most famous and authentic Chapli Kebabs in the region.", id: "10", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Sulemani Pulao House", Desc: "Traditional Pulao served with a unique Sulemani taste.", id: "11", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/533325/pexels-photo-533325.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Traditional Shinwari BBQ", Desc: "Freshly prepared barbecue using traditional Shinwari recipes.", id: "12", btn_txt: "View Details" },
+    { img: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Kohat Chapli Kebab Central", Desc: "The most famous and authentic Chapli Kebabs in the region.", id: "10", btn_txt: "View Details", rating: 4.8, priceRange: "$", cuisine: "Pashtun", deliveryAvailable: true, price: 400 },
+    { img: "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Sulemani Pulao House", Desc: "Traditional Pulao served with a unique Sulemani taste.", id: "11", btn_txt: "View Details", rating: 4.5, priceRange: "$", cuisine: "Desi", deliveryAvailable: true, price: 350 },
+    { img: "https://images.pexels.com/photos/533325/pexels-photo-533325.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Traditional Shinwari BBQ", Desc: "Freshly prepared barbecue using traditional Shinwari recipes.", id: "12", btn_txt: "View Details", rating: 4.6, priceRange: "$$", cuisine: "Shinwari", deliveryAvailable: false, price: 1500 },
 ];
 
 // ========================================
@@ -124,9 +124,9 @@ export const BakeriesList = [
 ];
 
 export const BakeriesCardsData = [
-    { img: "https://images.pexels.com/photos/1739748/pexels-photo-1739748.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Sweet Bake Studio", Desc: "Custom cakes and premium pastries for all your celebrations.", id: "13", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/1855214/pexels-photo-1855214.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "The Pastry Shop", Desc: "Freshly baked cookies, bread, and croissants every morning.", id: "14", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/808941/pexels-photo-808941.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Traditional Sweets Corner", Desc: "Authentic local sweets and mithai made with pure ingredients.", id: "15", btn_txt: "View Details" },
+    { img: "https://images.pexels.com/photos/1739748/pexels-photo-1739748.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Sweet Bake Studio", Desc: "Custom cakes and premium pastries for all your celebrations.", id: "13", btn_txt: "View Details", rating: 4.7, priceRange: "$$", cuisine: "Bakery", deliveryAvailable: true, price: 1200 },
+    { img: "https://images.pexels.com/photos/1855214/pexels-photo-1855214.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "The Pastry Shop", Desc: "Freshly baked cookies, bread, and croissants every morning.", id: "14", btn_txt: "View Details", rating: 4.5, priceRange: "$$", cuisine: "French Bakery", deliveryAvailable: true, price: 800 },
+    { img: "https://images.pexels.com/photos/808941/pexels-photo-808941.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Traditional Sweets Corner", Desc: "Authentic local sweets and mithai made with pure ingredients.", id: "15", btn_txt: "View Details", rating: 4.9, priceRange: "$$", cuisine: "Traditional", deliveryAvailable: true, price: 1100 },
 ];
 
 // ========================================
@@ -139,9 +139,9 @@ export const StreetFoodList = [
 ];
 
 export const StreetFoodCardsData = [
-    { img: "https://images.pexels.com/photos/5412440/pexels-photo-5412440.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Bazaar Chaat Point", Desc: "Spicy and tangy chaat that captures the essence of street flavors.", id: "16", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/12419161/pexels-photo-12419161.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Golgappa Corner", Desc: "Crispy golgappas with a variety of spicy waters.", id: "17", btn_txt: "View Details" },
-    { img: "https://images.pexels.com/photos/4449068/pexels-photo-4449068.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Samosa & Pakora Stall", Desc: "The ultimate evening snacks, freshly fried and hot.", id: "18", btn_txt: "View Details" },
+    { img: "https://images.pexels.com/photos/5412440/pexels-photo-5412440.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Bazaar Chaat Point", Desc: "Spicy and tangy chaat that captures the essence of street flavors.", id: "16", btn_txt: "View Details", rating: 4.3, priceRange: "$", cuisine: "Street Food", deliveryAvailable: false, price: 250 },
+    { img: "https://images.pexels.com/photos/12419161/pexels-photo-12419161.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Golgappa Corner", Desc: "Crispy golgappas with a variety of spicy waters.", id: "17", btn_txt: "View Details", rating: 4.6, priceRange: "$", cuisine: "Street Food", deliveryAvailable: false, price: 200 },
+    { img: "https://images.pexels.com/photos/4449068/pexels-photo-4449068.jpeg?auto=compress&cs=tinysrgb&w=600", InstName: "Samosa & Pakora Stall", Desc: "The ultimate evening snacks, freshly fried and hot.", id: "18", btn_txt: "View Details", rating: 4.4, priceRange: "$", cuisine: "Street Food", deliveryAvailable: false, price: 150 },
 ];
 
 // ========================================
@@ -158,6 +158,17 @@ export const Food_Details = [
         aboutImage: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg",
         staff: [{ name: "Chef Haris", subject: "Executive Chef", description: "Master of continental cuisine.", image: "https://images.pexels.com/photos/2102934/pexels-photo-2102934.jpeg" }],
         events: [{ title: "Gourmet Week", description: "Special menu featuring international dishes.", icon: "FaUtensils" }],
+        promotions: [
+            { id: "p1", title: "Weekend Feast", type: "discount", value: "15%", code: "WEEKEND15", status: "active", usage: 45 },
+            { id: "p2", title: "Free Delivery", type: "shipping", value: "100%", threshold: 2000, status: "active", usage: 120 }
+        ],
+        finance: {
+            balance: 45000,
+            pendingPayout: 12000,
+            lastPayout: "2024-02-01",
+            subscriptionStatus: "Active",
+            subscriptionPlan: "Premium"
+        },
         quickInfo: {
             basicProfile: { name: "The Grand Regal", location: "Cantonment, Kohat", type: "Fine Dining" },
             administration: { owner: "Mr. Zahid Khan", phone: "0922-123456", email: "info@grandregal.com" },
@@ -166,20 +177,24 @@ export const Food_Details = [
             extraActivities: ["Live Violin Performance"],
             parentReviews: ["Best fine dining in KPK.", "Highly professional staff."]
         },
+        hygieneRating: "A+",
+        inspectionStatus: "Passed",
+        verifiedBadge: true,
+        isOpen: true,
         detailedReviews: [
-            { name: "Ahmed Khan", img: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg", rating: 5, comment: "Absolutely marvelous experience. The steaks were cooked to perfection!" },
-            { name: "Sara Malik", img: "https://images.pexels.com/photos/3801456/pexels-photo-3801456.jpeg", rating: 5, comment: "The ambiance is unmatched in Kohat. Highly recommended for family dinners." }
+            { id: "r1", name: "Ahmed Khan", img: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg", rating: 5, comment: "Absolutely marvelous experience. The steaks were cooked to perfection!", date: "2024-02-10", response: "Thank you Ahmed! We are glad you enjoyed it." },
+            { id: "r2", name: "Sara Malik", img: "https://images.pexels.com/photos/3801456/pexels-photo-3801456.jpeg", rating: 5, comment: "The ambiance is unmatched in Kohat. Highly recommended for family dinners.", date: "2024-02-08", response: "" }
         ],
         categorizedMenu: [
             {
                 categoryName: "Signature Deals",
-                items: [{ id: 101, name: "Regal Platter for 4", price: "4500", img: "https://images.pexels.com/photos/323682/pexels-photo-323682.jpeg", desc: "A royal mix of BBQ, steaks, and aromatic rice.", tags: ["Popular", "Spicy"] }]
+                items: [{ id: 101, name: "Regal Platter for 4", price: "4500", img: "https://images.pexels.com/photos/323682/pexels-photo-323682.jpeg", desc: "A royal mix of BBQ, steaks, and aromatic rice.", tags: ["Popular", "Spicy"], isAvailable: true, prepTime: "45 mins", sku: "RP-004", addOns: ["Extra Rice", "Raita"] }]
             },
             {
                 categoryName: "Main Course",
                 items: [
-                    { id: 102, name: "Beef Wellington", price: "2800", img: "https://images.pexels.com/photos/11749407/pexels-photo-11749407.jpeg", desc: "Tender beef wrapped in puff pastry.", variants: ["Classic", "Extra Spicy"], tags: ["Signature"] },
-                    { id: 103, name: "Grilled Salmon", price: "2200", img: "https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg", desc: "Fresh Atlantic salmon grilled with lemon butter.", variants: ["Lemon Garlic", "Honey Glazed"] }
+                    { id: 102, name: "Beef Wellington", price: "2800", img: "https://images.pexels.com/photos/11749407/pexels-photo-11749407.jpeg", desc: "Tender beef wrapped in puff pastry.", variants: ["Classic", "Extra Spicy"], tags: ["Signature"], isAvailable: true, prepTime: "30 mins", sku: "BW-102", addOns: ["Mashed Potatoes", "Steamed Veggies"] },
+                    { id: 103, name: "Grilled Salmon", price: "2200", img: "https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg", desc: "Fresh Atlantic salmon grilled with lemon butter.", variants: ["Lemon Garlic", "Honey Glazed"], isAvailable: false, prepTime: "25 mins", sku: "GS-103", addOns: ["Asparagus"] }
                 ]
             },
             {
@@ -208,6 +223,10 @@ export const Food_Details = [
             extraActivities: ["Gazal Nights"],
             parentReviews: ["Authentic taste.", "The ambiance is just royal."]
         },
+        hygieneRating: "A",
+        inspectionStatus: "Passed",
+        verifiedBadge: true,
+        isOpen: true,
         categorizedMenu: [
             {
                 categoryName: "Royal Court Deals",
@@ -244,6 +263,10 @@ export const Food_Details = [
             extraActivities: ["Business Brunch"],
             parentReviews: ["Perfect for business meetings.", "Great steaks!"]
         },
+        hygieneRating: "A",
+        inspectionStatus: "Passed",
+        verifiedBadge: true,
+        isOpen: false,
         categorizedMenu: [
             {
                 categoryName: "Gourmet Steaks",
@@ -383,7 +406,11 @@ export const Food_Details = [
         ],
         deliveryAvailability: "Free Home Delivery",
         gallery: ["https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg"],
-        contact: { email: "pizza@palace.com", phone: "+92 321 4445551" }
+        contact: { email: "pizza@palace.com", phone: "+92 321 4445551" },
+        hygieneRating: "B+",
+        inspectionStatus: "Pending",
+        verifiedBadge: false,
+        isOpen: true
     },
     {
         id: 9,

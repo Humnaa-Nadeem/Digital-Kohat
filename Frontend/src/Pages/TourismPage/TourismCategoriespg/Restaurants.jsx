@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RestaurantsList, RestaurantsCardsData } from "../../../Store/Tourism_store";
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaClock, FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const Restaurants = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const [restaurantCards, setRestaurantCards] = useState(RestaurantsCardsData);
+  const [restaurantCards, setRestaurantCards] = useState(() => getMergedData(RestaurantsCardsData, "Tourism", "Restaurants"));
   const [showList, setShowList] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
 
@@ -23,7 +24,7 @@ export const Restaurants = () => {
     setActiveItem(index);
   };
 
-  const selectedRestaurant = RestaurantsCardsData.find((r) => r.id === Number(id));
+  const selectedRestaurant = getSelectedItem(RestaurantsCardsData, "Tourism", "Restaurants", id);
 
   return (
     <>
@@ -36,10 +37,11 @@ export const Restaurants = () => {
             <h2 className="sector" onClick={() => navigate(`/tourism`)}>
               Tourism
             </h2>
-            <div className="institute-hd-lst">
+            <div 
+          className="institute-hd-lst">
               <h2 className="institute-hd">Restaurants</h2>
               <ul className="institute-lst">
-                {RestaurantsList.map((item, i) => (
+                {getMergedData(RestaurantsList, "Tourism", "Restaurants").map((item, i) => (
                   <li
                     key={item.id}
                     className={activeItem === i ? "active" : ""}
@@ -59,7 +61,7 @@ export const Restaurants = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Top Restaurants in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Top Restaurants in Kohat</h1>
               <p>Discover the best local cuisine and dining spots in Kohat.</p>
               <SearchBar SearchedInst={setRestaurantCards} AllInst={RestaurantsCardsData} />
             </div>

@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PlacesList, PlacesCardsData } from "../../../Store/Tourism_store";
 import { TourismLandingPage } from "../Landingpage/TourismLandingpage";
 import { FaStar, FaClock, FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { getMergedData, getSelectedItem } from "../../../utils/dataMerger";
 
 export const Places = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  const [placeCards, setPlaceCards] = useState(PlacesCardsData);
+  const [placeCards, setPlaceCards] = useState(() => getMergedData(PlacesCardsData, "Tourism", "Places"));
   const [showList, setShowList] = useState(false);
   const [activePlace, setActivePlace] = useState(null);
 
@@ -23,7 +24,7 @@ export const Places = () => {
     setActivePlace(index);
   };
 
-  const selectedPlace = PlacesCardsData.find((p) => p.id === Number(id));
+  const selectedPlace = getSelectedItem(PlacesCardsData, "Tourism", "Places", id);
 
   return (
     <>
@@ -39,7 +40,7 @@ export const Places = () => {
             <div className="institute-hd-lst">
               <h2 className="institute-hd">Famous Places</h2>
               <ul className="institute-lst">
-                {PlacesList.map((place, i) => (
+                {getMergedData(PlacesList, "Tourism", "Places").map((place, i) => (
                   <li
                     key={place.id}
                     className={activePlace === i ? "active" : ""}
@@ -59,7 +60,7 @@ export const Places = () => {
             </div>
 
             <div className="cata-pg-banner">
-              <h1 className="cata-pg-main-hd">Top Tourist Places in Kohat</h1>
+              <h1 className="cata-pg-main-hd tr-cata-pg-main-hd">Top Tourist Places in Kohat</h1>
               <p>
                 Discover beautiful landmarks, historical sites, and scenic spots.
               </p>
@@ -68,7 +69,11 @@ export const Places = () => {
 
             <div className="cata-card-cont">
               {placeCards.map((place) => (
-                <div className="cata-pg-card premium-card" key={place.id}>
+                <div
+                  className="cata-pg-card premium-card"
+                  key={place.id}
+                  onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
+                >
                   <div className="card-img-container">
                     <img src={place.img || place.bgImage} alt={place.name} />
                     <div className="card-rating">
@@ -97,13 +102,6 @@ export const Places = () => {
                     <p className="card-short-desc">
                       {place.commonInfo?.basicInfo?.shortIntroduction || "Discover the beauty and history of this amazing spot in Kohat."}
                     </p>
-
-                    <button
-                      onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
-                      className="explore-btn"
-                    >
-                      Explore Destination
-                    </button>
                   </div>
                 </div>
               ))}

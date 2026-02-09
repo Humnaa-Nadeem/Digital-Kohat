@@ -39,8 +39,8 @@ export const EduHomePage = () => {
                                 {categories.map((v, i) => {
                                     return (
                                         <div className="card EduHomeCard" key={i}>
-                                            <span className="Icon_Cont">{v.icon}</span>
                                             <h2 className="Cata_Title">{v.title}</h2>
+                                            <span className="Icon_Cont">{v.icon}</span>
                                             <p>{v.description}</p>
                                             <button className="pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
                                         </div>
