@@ -7,6 +7,7 @@ import SACAR from "./Router/SchlAndColDshBrdRouts.js";
 import SARoutes from "./Router/SuperAdminRouter.js";
 import { connectMongoClient } from "./Db/mongoClient.js";
 import { connectMongoose } from "./Db/mongoose.js";
+import { ensureSuperAdmin } from "./HelperFun/initSuperAdmin.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,6 +19,7 @@ app.use(cors({
 app.use(express.json());
 await connectMongoose();
 const db = await connectMongoClient();
+await ensureSuperAdmin(db);
 app.locals.db = db;
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())

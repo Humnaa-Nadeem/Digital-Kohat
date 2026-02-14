@@ -87,6 +87,7 @@ import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismR
 import { BusinessRegistration } from './Pages/BusinessPage/Registration/BusinessRegistration';
 import { BusinessLogin } from './Pages/BusinessPage/Login/BusinessLogin';
 import { AdminLogin } from './Pages/DashBoard/EductionDashboard/AdminLgoInForm/AdminLogin';
+import { FoodAdminLogin } from './Pages/DashBoard/FoodDashboard/FoodAdminLogin/FoodAdminLogin';
 import { SignUpForm } from './components/SignUpForm/SignUpForm';
 import { SuperAdminLogin } from './Pages/DashBoard/SuperAdmin/SuprAdminLogIn/SuprAdminLogin.jsx';
 
@@ -194,6 +195,7 @@ const routes = [
       { path: "bakeries", element: <BakeriesPage /> },
       { path: "street-food", element: <StreetFoodPage /> },
       { path: "fooddashboard", element: <FoodDashboard /> },
+      { path: "admin", element: <FoodAdminLogin /> },
     ],
   },
 

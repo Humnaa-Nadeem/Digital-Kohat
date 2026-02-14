@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { GetTheDashboardDta, UpdateFoodMenuApi, UpdateFoodProfileApi, UpdateReviewReplyApi, LogoutApi, SubmitSupportTicketApi } from "../../../ApiCalls/DashBoardApiCalls";
+import { GetOrdersApi, UpdateOrderStatusApi } from "../../../ApiCalls/ApiCalls";
+import { toast } from "react-toastify";
 import "./FoodDashboard.css";
 import brandLogo from "../../../Assests/brandLogo.jpeg";
 import {
@@ -16,9 +19,11 @@ import {
     FiStar,
     FiAlertTriangle,
     FiSlash,
-    FiFileText
+    FiFileText,
+    FiClock,
+    FiInfo
 } from "react-icons/fi";
-import { FaUser, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes, FaClock, FaPrint, FaReply } from "react-icons/fa";
+import { FaUser, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes, FaClock, FaPrint, FaReply, FaStar } from "react-icons/fa";
 import { Food_Details } from "../../../Store/Food_store";
 
 // Reusable Modal Component
@@ -49,7 +54,7 @@ const FoodProfile = ({ data, onUpdate }) => {
                 {/* Basic Info */}
                 <div className="fd-form-group">
                     <label>Restaurant Name</label>
-                    <input type="text" className="fd-input" name="name" defaultValue={data.name} disabled />
+                    <input type="text" className="fd-input" name="name" defaultValue={data.ServiceName || data.name} disabled />
                 </div>
 
                 <div className="fd-form-group">
@@ -59,7 +64,7 @@ const FoodProfile = ({ data, onUpdate }) => {
 
                 <div className="fd-form-group">
                     <label>Restaurant Type</label>
-                    <select className="fd-input" name="type" defaultValue={data.type}>
+                    <select className="fd-input" name="type" defaultValue={data.Type || data.type}>
                         <option>Fine Dining</option>
                         <option>Cafe</option>
                         <option>Fast Food</option>
@@ -99,7 +104,7 @@ const FoodProfile = ({ data, onUpdate }) => {
                 {/* Operational Details */}
                 <div className="fd-form-group">
                     <label>Opening Timings</label>
-                    <input type="text" className="fd-input" name="timing" defaultValue={data.quickInfo?.timings?.timing} />
+                    <input type="text" className="fd-input" name="timing" defaultValue={data.timings?.opening || data.quickInfo?.timings?.timing} />
                 </div>
 
                 <div className="fd-form-group">
@@ -136,23 +141,59 @@ const FoodProfile = ({ data, onUpdate }) => {
 };
 
 const ServiceAnalytics = ({ orders }) => {
-    const totalOrders = orders.length;
-    const completedOrders = orders.filter(o => o.status === "Approved").length;
-    const revenue = orders.filter(o => o.status === "Approved").reduce((acc, curr) => acc + curr.total, 0);
-    const pending = orders.filter(o => o.status === "Pending").length;
+    const [filter, setFilter] = useState("Daily");
+
+    const getFilteredOrders = () => {
+        const now = new Date();
+        return orders.filter(order => {
+            const orderDate = new Date(order.timestamp || now);
+            const diffTime = Math.abs(now - orderDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (filter === "Daily") return diffDays <= 1;
+            if (filter === "Weekly") return diffDays <= 7;
+            if (filter === "Monthly") return diffDays <= 30;
+            if (filter === "Yearly") return diffDays <= 365;
+            return true;
+        });
+    };
+
+    const filtered = getFilteredOrders();
+    const totalOrders = filtered.length;
+    const completedOrders = filtered.filter(o => o.status === "Delivered" || o.status === "Approved").length;
+    const revenue = filtered.filter(o => o.status === "Delivered" || o.status === "Approved").reduce((acc, curr) => acc + curr.total, 0);
+    const pending = filtered.filter(o => o.status === "Pending").length;
 
     const stats = [
-        { label: "Total Orders", value: totalOrders },
-        { label: "Completed Orders", value: completedOrders },
-        { label: "Total Revenue", value: `Rs. ${revenue}` },
-        { label: "Pending Requests", value: pending }
+        { label: "Total Orders", value: totalOrders, icon: <FiShoppingBag /> },
+        { label: "Completed", value: completedOrders, icon: <FaCheck /> },
+        { label: "Revenue", value: `Rs. ${revenue}`, icon: <FiDollarSign /> },
+        { label: "Pending", value: pending, icon: <FaClock /> }
     ];
+
     return (
-        <div className="fd-card fd-analytics">
-            <h2 className="fd-section-title">Service Analytics</h2>
+        <div className="fd-card fd-analytics-v2">
+            <div className="fd-section-header-flex">
+                <div className="fd-title-group">
+                    <h2 className="fd-section-title">Performance Insights</h2>
+                    <p className="fd-section-subtitle">Real-time data for your {filter.toLowerCase()} performance</p>
+                </div>
+                <div className="fd-filter-btns">
+                    {["Daily", "Weekly", "Monthly", "Yearly"].map(f => (
+                        <button
+                            key={f}
+                            className={`fd-filter-btn ${filter === f ? "active" : ""}`}
+                            onClick={() => setFilter(f)}
+                        >
+                            {f}
+                        </button>
+                    ))}
+                </div>
+            </div>
             <div className="fd-analytics-grid">
                 {stats.map((s, i) => (
                     <div key={i} className="fd-analytics-item">
+                        <div className="fd-stat-icon">{s.icon}</div>
                         <span className="fd-analytics-value">{s.value}</span>
                         <span className="fd-analytics-label">{s.label}</span>
                     </div>
@@ -244,7 +285,12 @@ const FoodOrders = ({ orders, setOrders }) => {
     });
 
     const updateStatus = (id, newStatus) => {
-        setOrders(orders.map(o => o.id === id ? { ...o, status: newStatus } : o));
+        UpdateOrderStatusApi(id, newStatus).then(res => {
+            if (res.data.success) {
+                setOrders(orders.map(o => o._id === id ? { ...o, status: newStatus } : o));
+                toast.success(`Order status updated to ${newStatus}`);
+            }
+        });
     };
 
     return (
@@ -266,30 +312,30 @@ const FoodOrders = ({ orders, setOrders }) => {
 
             <div className="fd-orders-list">
                 {filteredOrders.length > 0 ? filteredOrders.map((order) => (
-                    <div key={order.id} className="fd-order-card">
+                    <div key={order._id || order.id} className="fd-order-card">
                         <div className="fd-order-header">
-                            <h4>Order #{order.id}</h4>
-                            <span className="fd-time-stamp">12:30 PM</span>
+                            <h4>Order #{order.orderID || order._id || order.id}</h4>
+                            <span className="fd-time-stamp">{order.timestamp || "Just now"}</span>
                         </div>
                         <div className="fd-order-body">
-                            <p><strong>Customer:</strong> {order.customer}</p>
-                            <p><strong>Items:</strong> {order.items}</p>
+                            <p><strong>Customer:</strong> {order.userDetails?.name || order.customer}</p>
+                            <p><strong>Items:</strong> {Array.isArray(order.items) ? order.items.map(i => `${i.qty}x ${i.name}`).join(", ") : order.items}</p>
                             <p className="fd-total-price">Total: Rs. {order.total}</p>
-                            {order.note && <p className="fd-note">Note: {order.note}</p>}
+                            {order.specialInstructions && <p className="fd-note">Note: {order.specialInstructions}</p>}
                         </div>
 
                         <div className="fd-order-actions">
                             {subTab === "New" && (
                                 <>
-                                    <button className="fd-btn-approve" onClick={() => updateStatus(order.id, "Preparing")}><FaCheck /> Accept</button>
-                                    <button className="fd-btn-reject" onClick={() => updateStatus(order.id, "Rejected")}><FaTimes /> Reject</button>
+                                    <button className="fd-btn-approve" onClick={() => updateStatus(order._id || order.id, "Preparing")}><FaCheck /> Accept</button>
+                                    <button className="fd-btn-reject" onClick={() => updateStatus(order._id || order.id, "Rejected")}><FaTimes /> Reject</button>
                                 </>
                             )}
                             {subTab === "Preparing" && (
-                                <button className="fd-btn-primary" onClick={() => updateStatus(order.id, "Ready")}><FaClock /> Mark Ready</button>
+                                <button className="fd-btn-primary" onClick={() => updateStatus(order._id || order.id, "Ready")}><FaClock /> Mark Ready</button>
                             )}
                             {subTab === "Ready" && (
-                                <button className="fd-btn-success" onClick={() => updateStatus(order.id, "Delivered")}><FaCheck /> Mark Delivered</button>
+                                <button className="fd-btn-success" onClick={() => updateStatus(order._id || order.id, "Delivered")}><FaCheck /> Mark Delivered</button>
                             )}
 
                             <button className="fd-btn-icon" title="Print Receipt"><FaPrint /></button>
@@ -358,55 +404,69 @@ const FoodReviews = ({ reviews = [], onReply }) => {
 
     return (
         <div className="fd-card">
-            <h2 className="fd-section-title">Reviews & Reputation</h2>
+            <div className="fd-section-header-flex">
+                <div className="fd-title-group">
+                    <h2 className="fd-section-title">Reviews & Reputation</h2>
+                    <p className="fd-section-subtitle">Manage customer feedback and build your brand</p>
+                </div>
+            </div>
             <div className="fd-reviews-list">
-                {reviews.map((r, i) => (
-                    <div key={r.id || i} className="fd-review-item">
-                        <div className="fd-review-header">
-                            <div className="fd-reviewer-info">
-                                <img src={r.img} alt={r.name} className="fd-avatar-sm" />
-                                <div>
-                                    <h4>{r.name}</h4>
-                                    <span className="fd-review-date">{r.date || "Just now"}</span>
-                                </div>
-                            </div>
-                            <div className="fd-rating-stars">
-                                {[...Array(5)].map((_, idx) => (
-                                    <FiStar key={idx} className={idx < r.rating ? "fill-star" : "empty-star"} />
-                                ))}
-                            </div>
-                        </div>
-                        <p className="fd-review-text">"{r.comment}"</p>
+                {reviews.length === 0 ? (
+                    <div className="fd-empty-state">No reviews yet. Your customers' feedback will appear here.</div>
+                ) : (
+                    reviews.map((r, i) => {
+                        const isDetailed = typeof r === 'object';
+                        const name = isDetailed ? (r.name || "Verified Customer") : "Verified Customer";
+                        const comment = isDetailed ? r.comment : r;
+                        const rating = isDetailed ? (Number(r.rating) || 5) : 5;
+                        const date = isDetailed ? (r.date || r.timestamp || "Just now") : "Static Review";
 
-                        {r.response ? (
-                            <div className="fd-admin-reply">
-                                <strong>You replied:</strong> {r.response}
-                            </div>
-                        ) : (
-                            <div className="fd-reply-box">
-                                {activeReplyId === r.id ? (
-                                    <div className="fd-reply-input-cont">
-                                        <textarea
-                                            placeholder="Write your response..."
-                                            value={replyText}
-                                            onChange={(e) => setReplyText(e.target.value)}
-                                            className="fd-textarea"
-                                        />
-                                        <div className="fd-menu-btns" style={{ marginTop: '10px' }}>
-                                            <button className="fd-btn-primary" onClick={() => submitReply(r.id)}>Send</button>
-                                            <button className="fd-btn-outline" onClick={() => setActiveReplyId(null)}>Cancel</button>
+                        return (
+                            <div key={i} className="fd-review-card">
+                                <div className="fd-review-header">
+                                    <div className="fd-review-user">
+                                        <h4>{name}</h4>
+                                        <div className="fd-review-stars">
+                                            {[...Array(5)].map((_, idx) => (
+                                                <FaStar key={idx} color={idx < rating ? "#fdcb6e" : "#dfe6e9"} />
+                                            ))}
                                         </div>
                                     </div>
+                                    <span className="fd-review-date">{new Date(date).toLocaleDateString()}</span>
+                                </div>
+                                <p className="fd-review-body">"{comment}"</p>
+
+                                {isDetailed && r.response ? (
+                                    <div className="fd-reply-section">
+                                        <h5>Your Response:</h5>
+                                        <p>{r.response}</p>
+                                    </div>
                                 ) : (
-                                    <>
-                                        <button className="fd-btn-text" onClick={() => setActiveReplyId(r.id)}><FaReply /> Reply to review</button>
-                                        <button className="fd-btn-text-danger">Report</button>
-                                    </>
+                                    <div className="fd-reply-box">
+                                        {activeReplyId === (r.id || r._id) ? (
+                                            <div className="fd-reply-input-cont">
+                                                <textarea
+                                                    placeholder="Write your response..."
+                                                    value={replyText}
+                                                    onChange={(e) => setReplyText(e.target.value)}
+                                                    className="fd-textarea"
+                                                />
+                                                <div className="fd-menu-btns" style={{ marginTop: '10px' }}>
+                                                    <button className="fd-btn-primary" onClick={() => submitReply(r.id || r._id)}>Send Reply</button>
+                                                    <button className="fd-btn-outline" onClick={() => setActiveReplyId(null)}>Cancel</button>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <button className="fd-btn-edit" onClick={() => setActiveReplyId(r.id || r._id)}>
+                                                <FaReply /> Reply to Review
+                                            </button>
+                                        )}
+                                    </div>
                                 )}
                             </div>
-                        )}
-                    </div>
-                ))}
+                        );
+                    })
+                )}
             </div>
         </div>
     );
@@ -415,46 +475,69 @@ const FoodReviews = ({ reviews = [], onReply }) => {
 // ==========================================
 // 4. FINANCE & SUBSCRIPTION
 // ==========================================
-const FoodFinance = ({ finance }) => {
-    if (!finance) return <div>Loading finance data...</div>;
+const FoodFinance = ({ finance = {}, orders = [] }) => {
+    const totalRevenue = orders.filter(o => o.status === "Delivered" || o.status === "Approved").reduce((acc, curr) => acc + curr.total, 0);
+    const activeBalance = finance?.balance || totalRevenue;
+
     return (
         <div className="fd-card">
-            <h2 className="fd-section-title">Finance & Subscription</h2>
+            <div className="fd-section-header-flex">
+                <div className="fd-title-group">
+                    <h2 className="fd-section-title">Finance & Wallet</h2>
+                    <p className="fd-section-subtitle">Monitor your earnings and subscription status</p>
+                </div>
+            </div>
+
             <div className="fd-analytics-grid">
                 <div className="fd-analytics-item">
-                    <span className="fd-analytics-value">Rs. {finance.balance}</span>
-                    <span className="fd-analytics-label">Wallet Balance</span>
+                    <div className="fd-stat-icon" style={{ background: '#e8f5e9', color: '#2e7d32' }}><FiDollarSign /></div>
+                    <span className="fd-analytics-value">Rs. {activeBalance}</span>
+                    <span className="fd-analytics-label">Total Earnings</span>
                 </div>
                 <div className="fd-analytics-item">
-                    <span className="fd-analytics-value">Rs. {finance.pendingPayout}</span>
+                    <div className="fd-stat-icon" style={{ background: '#fff3cd', color: '#856404' }}><FiClock /></div>
+                    <span className="fd-analytics-value">Rs. {finance?.pendingPayout || 0}</span>
                     <span className="fd-analytics-label">Pending Payout</span>
                 </div>
             </div>
 
-            <div className="fd-subsection">
-                <h3>Transaction History</h3>
+            <div className="fd-subsection" style={{ marginTop: '30px' }}>
+                <h3 className="fd-subsection-title">Recent Transactions</h3>
                 <table className="fd-table">
                     <thead>
                         <tr>
+                            <th>Order ID</th>
                             <th>Date</th>
-                            <th>Description</th>
                             <th>Amount</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>2024-02-28</td><td>Order #101 Payout</td><td>Rs. 1,200</td></tr>
-                        <tr><td>2024-02-25</td><td>Weekly Settlement</td><td>Rs. 15,000</td></tr>
+                        {orders.filter(o => o.status === "Delivered").slice(0, 5).map(o => (
+                            <tr key={o._id || o.id}>
+                                <td>#{o.orderID || (o._id ? o._id.slice(-6) : o.id)}</td>
+                                <td>{new Date(o.timestamp).toLocaleDateString()}</td>
+                                <td>Rs. {o.total}</td>
+                                <td><span className="fd-status-pill delivered">Paid</span></td>
+                            </tr>
+                        ))}
+                        {orders.filter(o => o.status === "Delivered").length === 0 && (
+                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>No payment history yet.</td></tr>
+                        )}
                     </tbody>
                 </table>
             </div>
 
-            <div className="fd-subsection">
-                <h3>Subscription Status</h3>
-                <div className="fd-subscription-card">
-                    <p><strong>Plan:</strong> {finance.subscriptionPlan}</p>
-                    <p><strong>Status:</strong> <span className="fd-status-active">{finance.subscriptionStatus}</span></p>
-                    <p><strong>Next Billing:</strong> 2026-02-01</p>
-                    <button className="fd-btn-secondary">Upgrade Plan</button>
+            <div className="fd-subsection" style={{ marginTop: '30px' }}>
+                <h3 className="fd-subsection-title">Subscription Status</h3>
+                <div className="fd-subscription-card" style={{ background: '#f8f9fa', padding: '20px', borderRadius: '12px', border: '1px solid #eee' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                            <p style={{ margin: '0 0 5px 0' }}><strong>Plan:</strong> {finance?.subscriptionPlan || "Standard (Free)"}</p>
+                            <p style={{ margin: '0' }}><strong>Status:</strong> <span className="fd-status-active" style={{ color: '#2e7d32', fontWeight: 600 }}>{finance?.subscriptionStatus || "Active"}</span></p>
+                        </div>
+                        <button className="fd-btn-edit">Upgrade Plan</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -464,21 +547,61 @@ const FoodFinance = ({ finance }) => {
 // ==========================================
 // 5. SUPPORT
 // ==========================================
-const FoodSupport = () => {
+const FoodSupport = ({ tickets = [], onSubmit }) => {
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!subject || !message) return toast.error("Please fill all fields");
+        onSubmit({ subject, message });
+        setSubject("");
+        setMessage("");
+    };
+
     return (
         <div className="fd-card">
             <h2 className="fd-section-title">Support & Tickets</h2>
-            <form className="fd-form">
+            <form className="fd-form" onSubmit={handleSubmit}>
                 <div className="fd-form-group">
                     <label>Subject</label>
-                    <input type="text" className="fd-input" placeholder="Issue with orders..." />
+                    <input
+                        type="text"
+                        className="fd-input"
+                        placeholder="Issue with orders..."
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                    />
                 </div>
                 <div className="fd-form-group">
                     <label>Message</label>
-                    <textarea className="fd-textarea" placeholder="Describe your issue..."></textarea>
+                    <textarea
+                        className="fd-textarea"
+                        placeholder="Describe your issue..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                    ></textarea>
                 </div>
                 <button className="fd-btn-primary">Submit Ticket</button>
             </form>
+
+            {tickets.length > 0 && (
+                <div className="fd-subsection" style={{ marginTop: '20px' }}>
+                    <h3>Your Tickets</h3>
+                    <div className="fd-tickets-list">
+                        {tickets.map((t, idx) => (
+                            <div key={idx} className="fd-ticket-item">
+                                <div className="fd-ticket-header">
+                                    <strong>{t.subject}</strong>
+                                    <span className={`fd-status-badge status-${t.status.toLowerCase()}`}>{t.status}</span>
+                                </div>
+                                <p>{t.message}</p>
+                                <span className="fd-time-stamp">{new Date(t.timestamp).toLocaleString()}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
@@ -555,40 +678,78 @@ const CustomerOrderTracking = ({ orders, currentUserName }) => {
 const FoodReports = ({ reports = [], reportCount = 0, status = "Active" }) => {
     return (
         <div className="fd-card">
-            <h2 className="fd-section-title">Reports & Compliance</h2>
-
-            <div className={`fd-report-status-box status-${status}`}>
-                <div className="fd-report-metric">
-                    <h3>Reports: {reportCount} / 100</h3>
-                    <div className="fd-progress-bar">
-                        <div className="fd-progress-fill" style={{ width: `${Math.min(reportCount, 100)}%` }}></div>
-                    </div>
-                </div>
-                <div className="fd-status-display">
-                    <h3>Status: {status}</h3>
-                    {status === "Warning" && <p><FiAlertTriangle /> Your business has received multiple reports.</p>}
+            <div className="fd-section-header-flex">
+                <div className="fd-title-group">
+                    <h2 className="fd-section-title">Reports & Compliance</h2>
+                    <p className="fd-section-subtitle">Monitor user reports and ensure service quality</p>
                 </div>
             </div>
 
-            <h3 className="fd-subsection-title">Recent Reports</h3>
+            <div className={`fd-report-status-box status-${status.toLowerCase()}`} style={{
+                background: status === "Suspended" ? "#fff5f5" : (status === "Warning" ? "#fff9db" : "#f8fbfa"),
+                padding: '25px',
+                borderRadius: '15px',
+                border: `1px solid ${status === "Suspended" ? "#feb2b2" : (status === "Warning" ? "#ffe066" : "#e6fffa")}`,
+                marginBottom: '30px'
+            }}>
+                <div className="fd-report-metric" style={{ marginBottom: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                        <h3 style={{ margin: 0 }}>Progress to Suspension</h3>
+                        <strong>{reportCount} / 100 Reports</strong>
+                    </div>
+                    <div className="fd-progress-bar-bg" style={{ height: '12px', background: '#eee', borderRadius: '10px', overflow: 'hidden' }}>
+                        <div className="fd-progress-fill" style={{
+                            width: `${Math.min(reportCount, 100)}%`,
+                            height: '100%',
+                            background: reportCount > 70 ? '#e74c3c' : (reportCount > 40 ? '#f1c40f' : '#2ecc71'),
+                            transition: '0.5s'
+                        }}></div>
+                    </div>
+                </div>
+                <div className="fd-status-display" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        background: status === "Suspended" ? "#e74c3c" : (status === "Warning" ? "#f1c40f" : "#2ecc71"),
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.5rem'
+                    }}>
+                        {status === "Suspended" ? <FiAlertTriangle /> : (status === "Warning" ? <FiInfo /> : <FaCheck />)}
+                    </div>
+                    <div>
+                        <h3 style={{ margin: '0 0 5px 0' }}>Current Status: {status}</h3>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>
+                            {status === "Suspended" ? "Your service is currently hidden from public." :
+                                status === "Warning" ? "Action required: Improve your service to avoid suspension." :
+                                    "Your service is in good standing. Keep it up!"}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 className="fd-subsection-title">Recent Reports History</h3>
             <table className="fd-table">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Reason</th>
+                        <th>Reporter</th>
                         <th>Status</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {reports.length > 0 ? reports.map(r => (
-                        <tr key={r.id}>
-                            <td>{r.date}</td>
-                            <td>{r.reason}</td>
-                            <td><span className={`fd-badge-status ${r.status.toLowerCase()}`}>{r.status}</span></td>
-                            <td><button className="fd-btn-text">View Details</button></td>
+                    {reports.length > 0 ? reports.map((r, i) => (
+                        <tr key={i}>
+                            <td>{r.timestamp ? new Date(r.timestamp).toLocaleDateString() : (r.date || "N/A")}</td>
+                            <td><strong>{r.reason}</strong><br /><small style={{ color: '#888' }}>{r.details}</small></td>
+                            <td>{r.reporterName || "Anonymous"}</td>
+                            <td><span className={`fd-status-badge status-${(r.status || "Pending").toLowerCase()}`}>{r.status || "Pending"}</span></td>
                         </tr>
-                    )) : <tr><td colSpan="4">No reports found. Good job!</td></tr>}
+                    )) : <tr><td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>No reports found. Good job!</td></tr>}
                 </tbody>
             </table>
         </div>
@@ -609,37 +770,61 @@ export const FoodDashboard = () => {
      * For now, this component runs in standalone "Provider Mode".
      */
 
-    // Mock logged in user/service ID
-    const [serviceId] = useState(1); // Assuming logged in user owns service ID 1
+    // State for various sections
+    const [serviceId, setServiceId] = useState(null);
     const [activeTab, setActiveTab] = useState("Orders");
     const [AdminTags, setAdmintags] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [profileData, setProfileData] = useState(null);
+    const [menuItems, setMenuItems] = useState([]);
+    const [orders, setOrders] = useState([]);
 
-    // Load initial data from store
-    const initialData = Food_Details.find(s => s.id === serviceId) || Food_Details[0];
+    // Modal states
+    const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
+    const [editingMenuItem, setEditingMenuItem] = useState(null);
+    const [menuForm, setMenuForm] = useState({ name: '', price: '', desc: '' });
+    const [isPromoModalOpen, setIsPromoModalOpen] = useState(false);
+    const [promoForm, setPromoForm] = useState({ title: '', code: '' });
 
-    // State for various sections
-    const [profileData, setProfileData] = useState(initialData);
-    const [menuItems, setMenuItems] = useState(initialData.categorizedMenu?.flatMap(cat => cat.items) || []);
-    const [orders, setOrders] = useState([
-        { id: 101, customer: "Ali Khan", items: "2x Zinger Burger, 1x Coke", total: 1200, status: "Pending", note: "Extra spicy" },
-        { id: 102, customer: "Sara Ahmed", items: "1x Large Pizza", total: 1500, status: "Preparing", note: "" },
-        { id: 103, customer: "John Doe", items: "5x Samosa", total: 250, status: "Delivered", note: "" },
-        { id: 104, customer: "Kamran Shah", items: "1x Coffee", total: 400, status: "Ready", note: "Sugar free" },
-    ]);
+    const handleLogout = () => {
+        LogoutApi();
+    };
+
+    useEffect(() => {
+        GetTheDashboardDta((data) => {
+            setProfileData(data);
+            setServiceId(data._id);
+            setMenuItems(data.categorizedMenu?.flatMap(cat => cat.items) || data.menu || []);
+        }, setLoading, () => { });
+    }, []);
+
+    useEffect(() => {
+        if (serviceId) {
+            GetOrdersApi(serviceId).then(res => {
+                if (res.data.success) {
+                    setOrders(res.data.orders);
+                }
+            });
+        }
+    }, [serviceId]);
+
+    if (loading) return <div className="fd-loading">Loading Dashboard...</div>;
 
     // Profile Handlers
     const handleProfileUpdate = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const updated = Object.fromEntries(formData.entries());
-        setProfileData(prev => ({ ...prev, ...updated }));
-        alert("Profile updated successfully!");
+
+        // Manual check for files if any
+        const fileInput = e.target.querySelector('input[type="file"]');
+        if (fileInput && fileInput.files[0]) {
+            formData.set("aboutImage", fileInput.files[0]);
+        }
+
+        UpdateFoodProfileApi(formData, setProfileData);
     };
 
     // Menu Handlers (Modals)
-    const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
-    const [editingMenuItem, setEditingMenuItem] = useState(null);
-    const [menuForm, setMenuForm] = useState({ name: '', price: '', desc: '' });
 
     const openAddMenu = () => {
         setEditingMenuItem(null);
@@ -655,8 +840,9 @@ export const FoodDashboard = () => {
 
     const handleSaveMenu = (e) => {
         e.preventDefault();
+        let updatedMenuItems;
         if (editingMenuItem) {
-            setMenuItems(menuItems.map(m => m.id === editingMenuItem.id ? { ...m, ...menuForm } : m));
+            updatedMenuItems = menuItems.map(m => m.id === editingMenuItem.id ? { ...m, ...menuForm } : m);
         } else {
             const newItem = {
                 id: Date.now(),
@@ -664,20 +850,21 @@ export const FoodDashboard = () => {
                 img: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
                 isAvailable: true
             };
-            setMenuItems([...menuItems, newItem]);
+            updatedMenuItems = [...menuItems, newItem];
         }
+
+        UpdateFoodMenuApi(updatedMenuItems, setMenuItems);
         setIsMenuModalOpen(false);
     };
 
     const handleDeleteMenuItem = (id) => {
         if (window.confirm("Are you sure you want to delete this item?")) {
-            setMenuItems(menuItems.filter(item => item.id !== id));
+            const updatedMenuItems = menuItems.filter(item => item.id !== id);
+            UpdateFoodMenuApi(updatedMenuItems, setMenuItems);
         }
     };
 
     // Deals Handlers (Modals)
-    const [isPromoModalOpen, setIsPromoModalOpen] = useState(false);
-    const [promoForm, setPromoForm] = useState({ title: '', code: '' });
 
     const openAddPromo = () => {
         setPromoForm({ title: '', code: '' });
@@ -696,10 +883,31 @@ export const FoodDashboard = () => {
     };
 
     const handleReviewReply = (id, response) => {
-        setProfileData({
-            ...profileData,
-            detailedReviews: profileData.detailedReviews.map(r => r.id === id ? { ...r, response } : r)
-        });
+        const newData = { ...profileData };
+        let found = false;
+
+        if (newData.detailedReviews) {
+            newData.detailedReviews = newData.detailedReviews.map(r => {
+                if (r.id === id || r._id === id) {
+                    found = true;
+                    return { ...r, response };
+                }
+                return r;
+            });
+        }
+
+        if (newData.ratingData) {
+            newData.ratingData = newData.ratingData.map(r => {
+                if (r.id === id || r._id === id) {
+                    found = true;
+                    return { ...r, response };
+                }
+                return r;
+            });
+        }
+
+        setProfileData(newData);
+        UpdateReviewReplyApi(id, response);
     };
 
     const renderContent = () => {
@@ -709,9 +917,13 @@ export const FoodDashboard = () => {
             case "Deals": return <FoodDeals promotions={profileData.promotions} onAdd={openAddPromo} onDelete={handleDeleteDeal} />;
             case "Profile": return <FoodProfile data={profileData} onUpdate={handleProfileUpdate} />;
             case "Analytics": return <ServiceAnalytics orders={orders} />;
-            case "Finance": return <FoodFinance finance={profileData.finance} />;
-            case "Reviews": return <FoodReviews reviews={profileData.detailedReviews} onReply={handleReviewReply} />;
-            case "Support": return <FoodSupport />;
+            case "Finance": return <FoodFinance finance={profileData.finance} orders={orders} />;
+            case "Reviews": return <FoodReviews reviews={[...(profileData.ratingData || []), ...(profileData.detailedReviews || [])]} onReply={handleReviewReply} />;
+            case "Support": return <FoodSupport tickets={profileData.supportTickets} onSubmit={(data) => {
+                SubmitSupportTicketApi(data, (newTicket) => {
+                    setProfileData({ ...profileData, supportTickets: [newTicket, ...(profileData.supportTickets || [])] });
+                });
+            }} />;
             case "Reports": return <FoodReports reports={profileData.reports} reportCount={profileData.reportCount} status={profileData.reportStatus} />;
             case "MyPurchases": return <CustomerOrderTracking orders={orders} currentUserName="Ali Khan" />;
             case "Ads": return <FoodAd />;
@@ -736,9 +948,8 @@ export const FoodDashboard = () => {
                                 <FaUser />
                             </span>
                             <ul className={AdminTags ? "fd-tags-cont fd-flexDsply fd-Admin-Tags" : "fd-tags-cont fd-Admin-Tags"}>
-                                <li>Dashboard</li>
                                 <li>Notifications</li>
-                                <li className="fd-DshbrdlogOut-tag">log Out</li>
+                                <li className="fd-DshbrdlogOut-tag" onClick={handleLogout}>log Out</li>
                             </ul>
                         </div>
                     </div>

@@ -16,6 +16,21 @@ export const verfiyTheAdmin = (email, password) => {
         })
 }
 
+// Added verifyFoodAdmin
+export const verifyFoodAdmin = (email, password) => {
+    axios.post(`/AdminLogin`, { email, password })
+        .then((res) => {
+            if (res.data.success) {
+                window.location.href = "/food/fooddashboard";
+            } else {
+                toast.error(res.data.message);
+            }
+        })
+        .catch((err) => {
+            window.location.href = "/food/admin";
+        })
+}
+
 export const GetTheDashboardDta = (setDashboardData, setLoading, setAdminOtherServices) => {
     axios.get(`/getDashBoardDta`, { withCredentials: true })
         .then((res) => {
@@ -278,5 +293,83 @@ export const AddManagerApi = (formData) => {
         }).catch((err) => {
             console.log(err);
             toast.error("Something went wrong.");
+        });
+}
+
+export const UpdateFoodProfileApi = (formData, setProfileData) => {
+    axios.post(`${maniURL}/UpdateBasicInfo`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true
+    })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            console.error(err);
+            toast.error("Failed to update profile.");
+        });
+}
+
+export const UpdateFoodMenuApi = (menuItems, setMenuItems) => {
+    axios.post(`${maniURL}/UpdateFoodMenu`, { menuItems }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+                setMenuItems(menuItems);
+            } else {
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            console.error(err);
+            toast.error("Failed to update menu.");
+        });
+}
+
+export const UpdateReviewReplyApi = (reviewId, response) => {
+    axios.post(`${maniURL}/ReplyToReview`, { reviewId, response }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success("Reply saved successfully.");
+            } else {
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            console.error(err);
+            toast.error("Failed to save reply.");
+        });
+}
+
+export const LogoutApi = () => {
+    axios.post(`${maniURL}/Logout`, {}, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                window.location.href = "/food/admin";
+            } else {
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            console.error(err);
+            toast.error("Failed to logout.");
+        });
+}
+
+export const SubmitSupportTicketApi = (ticketData, callback) => {
+    axios.post(`${maniURL}/SubmitSupportTicket`, ticketData, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+                if (callback) callback(res.data.ticket);
+            } else {
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            console.error(err);
+            toast.error("Failed to submit support ticket.");
         });
 }

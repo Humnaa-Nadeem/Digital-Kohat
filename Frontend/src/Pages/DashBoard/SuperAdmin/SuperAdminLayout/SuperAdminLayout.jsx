@@ -16,6 +16,7 @@ import { EducationSection } from "../SuperAdminComponents/EductionSection/Educti
 
 import { VerifyTheSuperAdmin } from "../../../../ApiCalls/SuperAdminApiCall";
 import { SAAddManagerForm } from "../SuperAdminComponents/SAAddManagers/SAAddManagers";
+import { FoodSection } from "../SuperAdminComponents/FoodSection/FoodSection";
 
 /* ---------------- SIDEBAR CONFIG ---------------- */
 
@@ -33,8 +34,8 @@ const SIDEBAR_ITEMS = [
         icon: <MdOutlineSchool />
     },
     {
-        key: "Restaurant",
-        title: "Restaurant",
+        key: "Food",
+        title: "Food",
         tab: "Restaurant",
         icon: <MdOutlineRestaurant />
     },
@@ -55,7 +56,6 @@ const SIDEBAR_ITEMS = [
         title: "Add Managers",
         tab: "AddManagers",
         icon: <FiUsers />
-
     }
 ];
 
@@ -115,7 +115,7 @@ export const SuperAdminDashboard = () => {
                 break;
 
             case "Restaurant":
-                content = <div>Restaurant Module</div>;
+                content = <FoodSection />;
                 break;
 
             case "Health":
@@ -147,17 +147,24 @@ export const SuperAdminDashboard = () => {
 
             <main className="SA_layout">
                 <aside className="SA_sidebar">
+                    <div className="SA_brand_mark" onClick={() => setCurrentTab("")}>
+                        DK
+                    </div>
                     <nav className="SA_side_nav">
-                        {sidebarItems.map(item => (
-                            <li
-                                key={item.key}
-                                title={item.title}
-                                className={currentTab === item.tab ? "active" : ""}
-                                onClick={() => setCurrentTab(item.tab)}
-                            >
-                                {item.icon}
-                            </li>
-                        ))}
+                        {sidebarItems.length > 0 ? (
+                            sidebarItems.map(item => (
+                                <li
+                                    key={item.key}
+                                    title={item.title}
+                                    className={currentTab === item.tab ? "active" : ""}
+                                    onClick={() => setCurrentTab(item.tab)}
+                                >
+                                    {item.icon}
+                                </li>
+                            ))
+                        ) : (
+                            <div className="SA_sidebar_loading">...</div>
+                        )}
                     </nav>
                 </aside>
 

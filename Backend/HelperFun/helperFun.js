@@ -37,5 +37,7 @@ export const getCollections = (req) => {
         ADMINS: db.collection(process.env.A_C),
         NRs: db.collection(process.env.NSPR_C),
         SCHOOLS: db.collection(process.env.S_C),
+        FOODS: db.collection(process.env.FOOD_C || "Food"),
+        ORDERS: db.collection(process.env.ORDERS_C || "Orders"),
     };
 };

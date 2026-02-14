@@ -5,7 +5,8 @@ import {
     FaTruck, FaShoppingCart, FaTrash, FaCheckCircle, FaUtensils,
     FaChair, FaCalendarAlt, FaUserFriends, FaStickyNote, FaInfoCircle
 } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { PlaceOrderApi, GetTheFoodData, BookTableApi, ChangeRatingData, ReportServiceLandingApi } from "../../../ApiCalls/ApiCalls";
 
 export const FoodLandingPage = ({ id, Alldata }) => {
     const navigate = useNavigate();
@@ -13,10 +14,30 @@ export const FoodLandingPage = ({ id, Alldata }) => {
     const [orderStatus, setOrderStatus] = useState(null);
     const [reservationStatus, setReservationStatus] = useState(null);
     const [activeTab, setActiveTab] = useState('delivery'); // 'delivery' or 'booking'
+    const [dbItem, setDbItem] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+    const [promoCode, setPromoCode] = useState("");
+    const [discount, setDiscount] = useState(0);
 
-    // Getting the specific data
-    const item = Alldata.find(v => String(v.id) === String(id));
+    // Initial check in static data
+    const staticItem = Alldata.find(v => String(v.id) === String(id));
 
+    useEffect(() => {
+        if (id && String(id).length > 20) { // Likely a MongoDB ObjectId
+            setLoading(true);
+            GetTheFoodData(id, (data) => {
+                setDbItem(data);
+                setLoading(false);
+            });
+        } else {
+            setLoading(false);
+        }
+    }, [id]);
+
+    const item = dbItem || staticItem;
+
+    if (loading) return <div className="fd-loading">Loading Restaurant Details...</div>;
     if (!item) return <div className="error-msg">Information not found.</div>;
 
     const addToCart = (product) => {
@@ -34,15 +55,30 @@ export const FoodLandingPage = ({ id, Alldata }) => {
     };
 
     const calculateTotal = () => {
-        return cart.reduce((acc, curr) => acc + (Number(curr.price) * curr.quantity), 0);
+        const subtotal = cart.reduce((acc, curr) => acc + (Number(curr.price) * curr.quantity), 0);
+        return subtotal - discount;
+    };
+
+    const applyPromoCode = () => {
+        if (!promoCode) return;
+        const promo = item.promotions.find(p => p.code === promoCode && p.status === "active");
+        if (promo) {
+            const subtotal = cart.reduce((acc, curr) => acc + (Number(curr.price) * curr.quantity), 0);
+            const discAmt = promo.type === "discount" ? (subtotal * (parseFloat(promo.value) / 100)) : parseFloat(promo.value);
+            setDiscount(discAmt);
+            alert(`Promo applied! You saved Rs. ${discAmt}`);
+        } else {
+            alert("Invalid or expired promo code.");
+            setDiscount(0);
+        }
     };
 
     const handlePlaceOrder = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
 
         const orderData = {
             orderID: `ORD-${Math.floor(Math.random() * 1000000)}`,
+            serviceId: id, // Link order to specific service
             shopName: item.name,
             items: cart.map(i => ({ name: i.name, qty: i.quantity, subtotal: Number(i.price) * i.quantity })),
             total: calculateTotal(),
@@ -57,20 +93,27 @@ export const FoodLandingPage = ({ id, Alldata }) => {
             }
         };
 
-        console.log("================ ORDER DETAILS (LANDING) ================");
-        console.table(orderData);
-        console.log("==========================================================");
-
-        setOrderStatus(`Order placed successfully! Total: Rs. ${orderData.total}`);
-        setCart([]);
-        alert(`Order Confirmed at ${item.name}!\nTotal: Rs. ${orderData.total}\nInstruction: ${orderData.specialInstructions || "None"}`);
-        setTimeout(() => setOrderStatus(null), 5000);
+        PlaceOrderApi(orderData)
+            .then(res => {
+                if (res.data.success) {
+                    setOrderStatus(`Order placed successfully! Total: Rs. ${orderData.total}`);
+                    setCart([]);
+                    alert(`Order Confirmed at ${item.name}!\nTotal: Rs. ${orderData.total}\nOrder ID: ${orderData.orderID}`);
+                    setTimeout(() => setOrderStatus(null), 5000);
+                } else {
+                    alert("Failed to place order: " + res.data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Something went wrong while placing the order.");
+            });
     };
 
     const handleTableBooking = (e) => {
         e.preventDefault();
         const bookingData = {
-            bookingID: `BK-${Math.floor(Math.random() * 1000000)}`,
+            serviceId: id,
             shopName: item.name,
             date: e.target.date.value,
             time: e.target.time.value,
@@ -80,14 +123,66 @@ export const FoodLandingPage = ({ id, Alldata }) => {
             contact: e.target.resContact.value
         };
 
-        console.log("================ TABLE RESERVATION ================");
-        console.table(bookingData);
-        console.log("===================================================");
+        BookTableApi(bookingData)
+            .then(res => {
+                if (res.data.success) {
+                    setReservationStatus(`Table Booked successfully for ${bookingData.guests} guests!`);
+                    alert(`Table Reserved!\nDate: ${bookingData.date}\nTime: ${bookingData.time}\nReference: ${res.data.bookingId}`);
+                    e.target.reset();
+                } else {
+                    alert("Failure: " + res.data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Something went wrong with the reservation.");
+            });
+    };
 
-        setReservationStatus(`Table Booked for ${bookingData.guests} guests on ${bookingData.date} at ${bookingData.time}.`);
-        alert(`Table Reserved Successfully!\nReference ID: ${bookingData.bookingID}`);
-        e.target.reset();
-        setTimeout(() => setReservationStatus(null), 5000);
+    const handleReviewSubmit = (e) => {
+        e.preventDefault();
+        const rating = Number(e.target.rating.value);
+        const comment = e.target.comment.value;
+        const name = e.target.reviewerName.value;
+
+        const reviewObj = {
+            id: Date.now(),
+            name,
+            rating,
+            comment,
+            timestamp: new Date().toISOString(),
+            img: "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
+        };
+
+        ChangeRatingData(reviewObj, id, (success) => {
+            if (success) {
+                alert("Review submitted! Thank you.");
+                e.target.reset();
+                // Refresh data to show new review
+                GetTheFoodData(id, (data) => setDbItem(data));
+            }
+        });
+    };
+
+    const handleReportSubmit = (e) => {
+        e.preventDefault();
+        const reportData = {
+            id,
+            reason: e.target.reason.value,
+            details: e.target.details.value,
+            reporterName: e.target.reporterName.value
+        };
+
+        ReportServiceLandingApi(reportData)
+            .then(res => {
+                if (res.data.success) {
+                    alert(res.data.message);
+                    setIsReportModalOpen(false);
+                } else {
+                    alert(res.data.message);
+                }
+            })
+            .catch(err => alert("Failed to submit report."));
     };
 
     return (
@@ -123,7 +218,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                 <FaClock className="info-icon" />
                                 <div>
                                     <h4>Timings</h4>
-                                    <p>{item.quickInfo?.timings?.timing || "Contact for timings"}</p>
+                                    <p>{item.timings?.opening || item.quickInfo?.timings?.opening || item.quickInfo?.timings?.timing || "Contact for timings"}</p>
                                 </div>
                             </div>
                             <div className="InfoCard">
@@ -174,11 +269,36 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                         </div>
                         <div className="rating-box">
                             <FaStar className="star-icon" />
-                            <span>4.8 / 5.0</span>
-                            <small>(Based on 150+ reviews)</small>
+                            <span>{item.ratingData?.length > 0 ? (item.ratingData.reduce((acc, curr) => acc + curr.rating, 0) / item.ratingData.length).toFixed(1) : "4.8"} / 5.0</span>
+                            <small>(Based on {item.ratingData?.length || 150} reviews)</small>
                         </div>
+                        <button className="report-service-btn" onClick={() => setIsReportModalOpen(true)}>
+                            <FaInfoCircle /> Report this Service
+                        </button>
                     </div>
                 </div>
+
+                {/* PROMOTIONS & DEALS */}
+                {item.promotions && item.promotions.length > 0 && (
+                    <section className="PromotionsSection">
+                        <h2 className="section-title">Exclusive Deals & Offers</h2>
+                        <div className="PromotionsGrid">
+                            {item.promotions.filter(p => p.status === "active").map((promo, idx) => (
+                                <div key={idx} className="PromoCard">
+                                    <div className="PromoBadge">{promo.value} OFF</div>
+                                    <div className="PromoContent">
+                                        <h3>{promo.title}</h3>
+                                        <p>{promo.type === "discount" ? "Save on your entire order" : "Special offer available"}</p>
+                                        <div className="PromoCode">
+                                            <span>Use Code:</span>
+                                            <strong>{promo.code}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* MENU & ORDER SYSTEM SIDE-BY-SIDE */}
                 <div className="MenuOrderLayout">
@@ -190,7 +310,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                         </div>
 
                         <div className="MenuCategoriesList">
-                            {item.categorizedMenu ? (
+                            {item.categorizedMenu && item.categorizedMenu.length > 0 ? (
                                 item.categorizedMenu.map((cat, catIdx) => (
                                     <div key={catIdx} className="MenuCategoryBlock">
                                         <h3 className="CategoryTitle">{cat.categoryName}</h3>
@@ -208,7 +328,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                                             <h4>{menuItem.name}</h4>
                                                             <span className="ItemPrice">Rs. {menuItem.price}</span>
                                                         </div>
-                                                        <p className="ItemDesc">{menuItem.desc}</p>
+                                                        <p className="ItemDesc">{menuItem.desc || menuItem.description}</p>
                                                         {menuItem.variants && (
                                                             <div className="ItemVariants">
                                                                 <span>Variants:</span>
@@ -229,15 +349,23 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                     </div>
                                 ))
                             ) : (
-                                <div className="LegacyMenu">
-                                    {item.menu && item.menu.map((m) => (
-                                        <div key={m.id} className="MenuItem">
-                                            <div className="item-info">
-                                                <h4>{m.name}</h4>
-                                                <p>{m.description}</p>
-                                                <span className="price">Rs. {m.price}</span>
+                                <div className="MenuItemsGrid">
+                                    {(item.menu || []).map((menuItem) => (
+                                        <div key={menuItem.id} className="MenuItemCardNew">
+                                            <div className="ItemImageWrapper">
+                                                <img src={menuItem.img || "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"} alt={menuItem.name} />
+                                                {menuItem.isAvailable && <span className="item-tag tag-fresh">Available</span>}
                                             </div>
-                                            <button onClick={() => addToCart(m)}>Add to Order</button>
+                                            <div className="ItemDetails">
+                                                <div className="ItemTitlePrice">
+                                                    <h4>{menuItem.name}</h4>
+                                                    <span className="ItemPrice">Rs. {menuItem.price}</span>
+                                                </div>
+                                                <p className="ItemDesc">{menuItem.desc || menuItem.description}</p>
+                                                <button className="AddToCartBtn" onClick={() => addToCart(menuItem)}>
+                                                    Add to Order
+                                                </button>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -300,12 +428,29 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                                                     <input type="text" name="fullName" placeholder="Full Name" required />
                                                     <input type="tel" name="phone" placeholder="Phone Number" required />
                                                     <textarea name="address" placeholder="Delivery Address" required></textarea>
+                                                    <div className="form-group-side">
+                                                        <label>Payment Method</label>
+                                                        <select name="paymentMethod" required>
+                                                            <option value="cod">Cash on Delivery</option>
+                                                            <option value="online">Online Payment</option>
+                                                        </select>
+                                                    </div>
                                                     <textarea name="specialInstructions" placeholder="Special Instructions (e.g. less spicy, extra sauce)" rows="2"></textarea>
-                                                    <select name="paymentMethod" required>
-                                                        <option value="">Payment Method</option>
-                                                        <option value="cod">Cash on Delivery</option>
-                                                        <option value="online">Online Payment</option>
-                                                    </select>
+                                                    <div className="PromoInputGroup">
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Enter Promo Code"
+                                                            value={promoCode}
+                                                            onChange={(e) => setPromoCode(e.target.value)}
+                                                        />
+                                                        <button type="button" onClick={applyPromoCode}>Apply</button>
+                                                    </div>
+                                                    {discount > 0 && (
+                                                        <div className="DiscountInfo">
+                                                            <span>Discount Applied:</span>
+                                                            <strong>- Rs. {discount}</strong>
+                                                        </div>
+                                                    )}
                                                     {orderStatus && <p className="success-msg-side">{orderStatus}</p>}
                                                     <button className="submit-order-btn" type="submit">
                                                         Confirm & Order
@@ -399,33 +544,88 @@ export const FoodLandingPage = ({ id, Alldata }) => {
 
                 <section className="ReviewsSection">
                     <h2 className="section-title">Customer Feedback</h2>
+
+                    {/* Add Review Form */}
+                    <div className="AddReviewForm">
+                        <h3>Write a Review</h3>
+                        <form onSubmit={handleReviewSubmit}>
+                            <div className="form-row">
+                                <input type="text" name="reviewerName" placeholder="Your Name" required />
+                                <div className="rating-selector">
+                                    <label>Rating:</label>
+                                    <select name="rating" required>
+                                        <option value="5">5 Stars - Excellent</option>
+                                        <option value="4">4 Stars - Very Good</option>
+                                        <option value="3">3 Stars - Average</option>
+                                        <option value="2">2 Stars - Poor</option>
+                                        <option value="1">1 Star - Terrible</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <textarea name="comment" placeholder="Share your experience..." required rows="3"></textarea>
+                            <button type="submit" className="submit-review-btn">Submit Review</button>
+                        </form>
+                    </div>
+
                     <div className="ReviewsGrid">
-                        {(item.detailedReviews || item.quickInfo?.parentReviews)?.map((rev, i) => {
+                        {[...(item.ratingData || []), ...(item.detailedReviews || []), ...(item.quickInfo?.parentReviews || [])]?.map((rev, i) => {
                             const isDetailed = typeof rev === 'object';
                             return (
                                 <div key={i} className="ReviewCard">
                                     <div className="ReviewHeader">
                                         <img
-                                            src={isDetailed ? rev.img : "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"}
+                                            src={isDetailed ? (rev.img || "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg") : "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"}
                                             alt={isDetailed ? rev.name : "Customer"}
                                             className="ReviewerImg"
                                         />
                                         <div className="ReviewerInfo">
                                             <h4>{isDetailed ? rev.name : "Verified Customer"}</h4>
                                             <div className="stars">
-                                                {[...Array(isDetailed ? rev.rating : 5)].map((_, sIdx) => (
+                                                {[...Array(isDetailed ? Number(rev.rating) : 5)].map((_, sIdx) => (
                                                     <FaStar key={sIdx} />
                                                 ))}
                                             </div>
                                         </div>
                                     </div>
                                     <p className="ReviewText">"{isDetailed ? rev.comment : rev}"</p>
+
+                                    {isDetailed && rev.response && (
+                                        <div className="RestaurantReply">
+                                            <strong>Restaurant Reply:</strong>
+                                            <p>{rev.response}</p>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
                     </div>
                 </section>
             </div>
+
+            {/* REPORT MODAL */}
+            {isReportModalOpen && (
+                <div className="ReportModalOverlay">
+                    <div className="ReportModal">
+                        <h2>Report {item.name}</h2>
+                        <form onSubmit={handleReportSubmit}>
+                            <input type="text" name="reporterName" placeholder="Your Name (Optional)" />
+                            <select name="reason" required>
+                                <option value="">Select a Reason</option>
+                                <option value="Wrong Info">Incorrect Information</option>
+                                <option value="Poor Quality">Poor Service Quality</option>
+                                <option value="Hygiene">Hygiene Issues</option>
+                                <option value="Foul Language">Foul Language/Behavior</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <textarea name="details" placeholder="Please provide more details..." required rows="4"></textarea>
+                            <div className="modal-actions">
+                                <button type="button" onClick={() => setIsReportModalOpen(false)}>Cancel</button>
+                                <button type="submit" className="confirm-report">Submit Report</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

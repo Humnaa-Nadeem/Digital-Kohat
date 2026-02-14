@@ -6,14 +6,15 @@ import { FineDiningList, FineDiningCardsData, Food_Details } from "../../../Stor
 import { FoodLandingPage } from "../FoodLanding/FoodLandingPage";
 import { getMergedData, getFullMergedData } from "../../../utils/dataMerger";
 import { FaFilter, FaSortAmountDown, FaStar, FaBicycle, FaClock } from "react-icons/fa";
+import { GetFoodCrdsDtaFrmDB } from "../../../ApiCalls/ApiCalls";
 
 export const FineDiningPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
 
-    const [allCrds] = useState(() => getMergedData(FineDiningCardsData, "Food", "Fine Dining"));
-    const [Crds, setCrds] = useState(allCrds);
+    const [allCrds, setAllCrds] = useState(FineDiningCardsData);
+    const [Crds, setCrds] = useState(FineDiningCardsData);
     const [showList, setShowlist] = useState(false);
 
     // Filter & Sort State
@@ -27,10 +28,28 @@ export const FineDiningPage = () => {
     const query = new URLSearchParams(search);
     const id = query.get("id");
 
-    const List = getMergedData(FineDiningList, "Food", "Fine Dining");
+    const [listData, setListData] = useState([]);
+
+    useEffect(() => {
+        const staticList = FineDiningList.map(item => ({ name: item.name, id: item.id }));
+        setListData(staticList);
+
+        GetFoodCrdsDtaFrmDB((dbData) => {
+            if (!dbData || !Array.isArray(dbData)) return;
+            const filteredDb = dbData.filter(item => item.serviceType === "Fine Dining");
+            const merged = [...FineDiningCardsData, ...filteredDb];
+            setAllCrds(merged);
+            setCrds(merged);
+
+            const staticList = FineDiningList.map(item => ({ name: item.name, id: item.id }));
+            const dynamicList = filteredDb.map(item => ({ name: item.InstName, id: item.id }));
+            setListData([...staticList, ...dynamicList]);
+        });
+    }, []);
 
     // Apply Sorting and Filtering
     useEffect(() => {
+        if (allCrds.length === 0) return;
         let results = [...allCrds];
 
         // Search filtering is handled by SearchBar, but we re-apply filters on top
@@ -72,7 +91,7 @@ export const FineDiningPage = () => {
                                 <h2 className="food-institute-hd">Fine Dining</h2>
                                 <ul className="food-institute-lst">
                                     {
-                                        List.map((v, i) => (
+                                        listData.map((v, i) => (
                                             <li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.name}</li>
                                         ))
                                     }
@@ -121,6 +140,16 @@ export const FineDiningPage = () => {
                                         <option value="priceHigh">Price: High to Low</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            {/* ADMIN LOGIN BUTTON */}
+                            <div className="admin-login-sidebar">
+                                <button
+                                    className="admin-login-btn-sidebar"
+                                    onClick={() => navigate('/food/admin')}
+                                >
+                                    🍽️ Service Provider Login
+                                </button>
                             </div>
                         </div>
 

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 
 export const CreateEduCataAdmin = (AdminData, setActiveTab) => {
-    axios.post(`/CreateEduCataAdmin`, AdminData, { withCredentials: true })
+    axios.post(`${mainURL}/CreateEduCataAdmin`, AdminData, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -142,6 +142,130 @@ export const deleteRequest = (reqId, setRowData) => {
         })
 }
 
+// FOOD API CALLS
+export const CreateFoodCataAdmin = (AdminData, setActiveTab) => {
+    axios.post(`${mainURL}/CreateFoodCataAdmin`, AdminData, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+                setActiveTab("RESTAURANT");
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while creating the admin.");
+        })
+}
+
+export const GetFoodNewReqTabData = (dataOf, setRowData) => {
+    let route;
+    // dataOf usually is the tab name
+    if (dataOf === "NEW_REQUESTS") {
+        route = `${mainURL}/GetSADFoodTabData`;
+    } else if (dataOf === "RESTAURANT") {
+        route = `${mainURL}/GetFoodTabData`;
+    }
+
+    axios.post(route, { dataOf }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                setRowData(res.data.ResponseData);
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while fetching the data.");
+        })
+}
+
+export const ChangeFoodAdminVerificationState = (adminId, setData) => {
+    axios.post(`${mainURL}/ChangeFoodAdminVerificationState`, { adminId }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                setData(prevData => prevData.map(admin =>
+                    admin.adminId === adminId
+                        ? { ...admin, verified: !admin.verified }
+                        : admin
+                ));
+                toast.success("Admin verification state changed successfully.");
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while changing admin verification state.");
+        })
+}
+
+export const ChangeFoodInstState = (adminId, InstId, setData) => {
+    axios.post(`${mainURL}/ChangeTheFoodInstState`, { adminId, InstId }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                setData(prevData => prevData.map(admin =>
+                    admin.adminId === adminId
+                        ? { ...admin, status: !admin.status }
+                        : admin
+                ));
+                toast.success("Food Service state changed successfully");
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while changing Food Service state.");
+        })
+}
+
+export const DeleteTheFoodInst = (adminId, InstId, setData) => {
+    axios.post(`${mainURL}/DeleteTheFoodInst`, { adminId, InstId }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                setData(prevData => prevData.filter(admin => admin.adminId !== adminId));
+                toast.success(res.data.message);
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while deleting the Food Service.");
+        })
+}
+
+export const deleteFoodRequest = (reqId, setRowData) => {
+    axios.post(`${mainURL}/DeleteTheFoodReq`, { reqId }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                setRowData(prevData => prevData.filter(request => request._id !== reqId));
+                toast.success("Request deleted successfully");
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while deleting the request.");
+        })
+}
+
 export const ChangePaymentPlan = (adminId, InstId, setData, newPlan) => {
     axios.post(`${mainURL}/ChangePaymentData`, { adminId, InstId, newPlan }, { withCredentials: true })
         .then((res) => {
@@ -167,7 +291,7 @@ export const ChangePaymentPlan = (adminId, InstId, setData, newPlan) => {
 
 export const VerifyTheSuperAdmin = (setRole, setSuperAdminEmail, setSAManagers) => {
     axios.get(
-        `/GetSuperAdminDashboardData`, { withCredentials: true }
+        `${mainURL}/GetSuperAdminDashboardData`, { withCredentials: true }
     )
         .then((res) => {
             if (!res.data.success) {
@@ -186,7 +310,7 @@ export const VerifyTheSuperAdmin = (setRole, setSuperAdminEmail, setSAManagers) 
 };
 
 export const SuperAdminFormSubmitted = (formData, setIsLoading) => {
-    axios.post(`/SuperAdminLogin`, formData, { withCredentials: true })
+    axios.post(`${mainURL}/SuperAdminLogin`, formData, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 window.location.href = "/superadmin/dashboard";
@@ -202,7 +326,7 @@ export const SuperAdminFormSubmitted = (formData, setIsLoading) => {
 }
 
 export const CreateSAManager = (formData, setSAManagers) => {
-    axios.post(`/CreateSAManager`, formData, { withCredentials: true })
+    axios.post(`${mainURL}/CreateSAManager`, formData, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 setSAManagers(prev => ([
@@ -227,7 +351,7 @@ export const CreateSAManager = (formData, setSAManagers) => {
 }
 
 export const SAManagerDelete = (catagory, setSAManagers) => {
-    axios.post(`/DeleteThSAManager`, { catagory }, { withCredentials: true })
+    axios.post(`${mainURL}/DeleteThSAManager`, { catagory }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 setSAManagers(prev =>

@@ -25,7 +25,7 @@ const StepTwo = ({ onBack, formData, handleChange }) => (
   </div>
 );
 
-export const EduRegisterForm = ({ setShowform }) => {
+export const EduRegisterForm = ({ setShowform, serviceCategory = "Education" }) => {
   const [step, setStep] = useState(1);
   let [formData, setFormData] = useState({
     fullname: "",
@@ -54,13 +54,17 @@ export const EduRegisterForm = ({ setShowform }) => {
     } else if (!formData.fullname || !formData.email || !formData.password) {
       alert("Fill the forms carefully.");
     } else {
-      setFormData(prev => ({
-        ...prev,
-        ["catagory"]: "Education",
-        ["type"]: "SCHOOL",
-        ["Verified"]: false
-      }));
-      NewEduCataServiceReq(formData);
+      const category = serviceCategory === "Food" ? "Food" : "Education";
+      const type = serviceCategory === "Food" ? "RESTAURANT" : "SCHOOL";
+
+      const dataToSubmit = {    
+        ...formData,
+        catagory: category,
+        type: type,
+        Verified: false
+      };
+
+      NewEduCataServiceReq(dataToSubmit);
     }
   }
 

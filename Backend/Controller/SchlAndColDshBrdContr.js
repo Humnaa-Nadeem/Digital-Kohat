@@ -179,11 +179,19 @@ export const AddManager = async (req, res) => {
 };
 
 // ===============================================
-// Getting the Institute data according to admin:
+// Getting the Institute data according to admin also for food section:
 // ===============================================
-export const SERVICE_COLLECTION = {
-  SCHOOL: schoolColl
-};
+export const SERVICE_COLLECTION = (db) => ({
+  SCHOOL: db.collection(process.env.S_C),
+  COLLEGE: db.collection(process.env.S_C),
+  RESTURANT: db.collection(process.env.FOOD_C || "Food"),
+  Bakery: db.collection(process.env.FOOD_C || "Food"),
+  Cafe: db.collection(process.env.FOOD_C || "Food"),
+  "Fast Food": db.collection(process.env.FOOD_C || "Food"),
+  "Fine Dining": db.collection(process.env.FOOD_C || "Food"),
+  "Local Food": db.collection(process.env.FOOD_C || "Food"),
+  "Street Food": db.collection(process.env.FOOD_C || "Food"),
+});
 
 export const RetriveTheDashboardDta = async (req, res) => {
   try {
@@ -203,11 +211,8 @@ export const RetriveTheDashboardDta = async (req, res) => {
       s => s.ServiceId.toString() === ServiceId.toString()
     );
 
-    if (!activeService) {
-      return res.json({ success: false, message: "Service not found." });
-    }
-
-    const ServiceCollection = SERVICE_COLLECTION[activeService.ServiceType];
+    const servicesCollections = SERVICE_COLLECTION(db);
+    const ServiceCollection = servicesCollections[activeService.ServiceType];
     if (!ServiceCollection) {
       return res.json({ success: false, message: "Invalid service type." });
     }
@@ -218,6 +223,16 @@ export const RetriveTheDashboardDta = async (req, res) => {
 
     if (!ServiceDta) {
       return res.json({ success: false, message: "Service data not found." });
+    }
+
+    // Suspension logic: if report count > 70, suspend service
+    if (ServiceDta.reportCount > 70 && ServiceDta.reportStatus !== "Suspended") {
+      await ServiceCollection.updateOne(
+        { _id: new ObjectId(ServiceId) },
+        { $set: { reportStatus: "Suspended", Status: false } }
+      );
+      ServiceDta.reportStatus = "Suspended";
+      ServiceDta.Status = false;
     }
 
     if (role === "admin") {
@@ -274,65 +289,83 @@ export const RetriveTheDashboardDta = async (req, res) => {
 // ===============================================================================
 export const UpdateBasicInfoToDb = async (req, res) => {
   try {
-    const { tagline, about, bannerUrl, aboutImgUrl } = req.body;
+    const { tagline, about, bannerUrl, aboutImgUrl, location, phone, email, deliveryAvailability, timing, name, facilities } = req.body;
     const bannerFile = req.files?.bannerUrl?.[0];
-    const aboutImgFile = req.files?.aboutImgUrl?.[0];
+    const aboutImgFile = req.files?.aboutImgUrl?.[0] || req.files?.aboutImage?.[0];
 
+    const { ServiceId } = req.token;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
 
-    // Get existing URLs from DB
-    const school = await schoolColl.findOne(
-      { _id: new ObjectId(req.token.ServiceId) },
-      { projection: { bannerUrl: 1, aboutImgUrl: 1 } }
-    );
+    const currentData = await ServiceCollection.findOne({ _id: new ObjectId(ServiceId) });
 
-    const updateData = {
-      tagline: tagline || school?.tagline || "",
-      about: about || school?.about || ""
-    };
+    const updateData = {};
+    if (service.ServiceType === "SCHOOL") {
+      if (tagline !== undefined) updateData.tagline = tagline;
+      if (about !== undefined) updateData.about = about;
+      if (location !== undefined) updateData.location = location;
+      if (name !== undefined) updateData.ServiceName = name;
+      if (phone !== undefined) updateData.phone = phone;
+      if (email !== undefined) updateData.email = email;
+      if (timing !== undefined) updateData.timing = timing;
+    } else {
+      // Food service structure
+      if (tagline !== undefined) updateData.tagline = tagline;
+      if (about !== undefined) updateData.about = about;
+      if (name !== undefined) updateData.ServiceName = name;
 
-    // Banner: either uploaded file or existing URL from frontend
+      if (location !== undefined) updateData["quickInfo.basicProfile.location"] = location;
+      if (name !== undefined) updateData["quickInfo.basicProfile.name"] = name;
+
+      if (phone !== undefined) updateData["contact.phone"] = phone;
+      if (email !== undefined) updateData["contact.email"] = email;
+
+      if (timing !== undefined) {
+        updateData["timings.opening"] = timing;
+        updateData["quickInfo.timings.timing"] = timing;
+      }
+
+      if (deliveryAvailability !== undefined) updateData.deliveryAvailability = deliveryAvailability;
+      if (facilities !== undefined) {
+        const facilitiesArr = facilities.split(",").map(f => f.trim());
+        updateData["quickInfo.facilities"] = facilitiesArr;
+        updateData.facilities = facilitiesArr;
+      }
+    }
+
+    // Handle Image uploads
     if (bannerFile) {
-      if (school?.bannerUrl) {
-        const oldBannerId = getPublicIdFromUrl(school.bannerUrl);
+      if (currentData?.bannerUrl) {
+        const oldBannerId = getPublicIdFromUrl(currentData.bannerUrl);
         await deleteFromCloudinary(oldBannerId);
       }
-      const bannerRes = await uploadToCloudinary(bannerFile, "school/banners");
+      const bannerRes = await uploadToCloudinary(bannerFile, "dashboard/banners");
       updateData.bannerUrl = bannerRes.secure_url;
-    } else if (bannerUrl) {
-      updateData.bannerUrl = bannerUrl;
-    } else {
-      // fallback to existing DB value if nothing provided
-      updateData.bannerUrl = school?.bannerUrl || "";
     }
 
-    // About image: same logic
     if (aboutImgFile) {
-      if (school?.aboutImgUrl) {
-        const oldAboutId = getPublicIdFromUrl(school.aboutImgUrl);
-        await deleteFromCloudinary(oldAboutId);
+      const fieldToUpdate = service.ServiceType === "SCHOOL" ? "aboutImgUrl" : "aboutImage";
+      const oldUrl = currentData?.[fieldToUpdate];
+      if (oldUrl) {
+        const oldId = getPublicIdFromUrl(oldUrl);
+        await deleteFromCloudinary(oldId);
       }
-      const aboutRes = await uploadToCloudinary(aboutImgFile, "school/about-images");
-      updateData.aboutImgUrl = aboutRes.secure_url;
-    } else if (aboutImgUrl) {
-      updateData.aboutImgUrl = aboutImgUrl;
-    } else {
-      updateData.aboutImgUrl = school?.aboutImgUrl || "";
+      const aboutRes = await uploadToCloudinary(aboutImgFile, "dashboard/about");
+      updateData[fieldToUpdate] = aboutRes.secure_url;
+    } else if (req.body.aboutImage) {
+      updateData.aboutImage = req.body.aboutImage;
     }
 
-    // Validate
-    const tempBasicInfo = new mongoose.Document(updateData, Schema.BasicInfoSchema);
-    const err = tempBasicInfo.validateSync();
-    if (err) return res.json({ success: false, message: "Invalid Data" });
-
-    await schoolColl.updateOne(
-      { _id: new ObjectId(req.token.ServiceId) },
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId) },
       { $set: updateData }
     );
 
-    res.json({ success: true, message: "Basic Info updated." });
+    res.json({ success: true, message: "Profile updated successfully." });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: "Upload failed" });
+    res.status(500).json({ success: false, message: "Update failed" });
   }
 };
 
@@ -342,12 +375,11 @@ export const UpdateBasicInfoToDb = async (req, res) => {
 export const UpdateAdministrationToDb = async (req, res) => {
   try {
     let { administration } = req.body;
-    const tempAdmin = new mongoose.Document(administration, Schema.AdministrationSchema);
-    const err = tempAdmin.validateSync();
-    if (err) {
-      return res.json({ success: false, message: "Validation failed", errors: err.errors });
-    }
-    await schoolColl.updateOne(
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
       { _id: new ObjectId(req.token.ServiceId) },
       { $set: { administration } }
     );
@@ -364,10 +396,11 @@ export const UpdateAdministrationToDb = async (req, res) => {
 export const UpdateTimingsToDb = async (req, res) => {
   try {
     let { timings } = req.body;
-    const tempTiming = new mongoose.Document(timings, Schema.TimingSchema);
-    const err = tempTiming.validateSync();
-    if (err) return res.json({ success: false, message: "Invalid Data" });
-    await schoolColl.updateOne(
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
       { _id: new ObjectId(req.token.ServiceId) },
       { $set: { timings } }
     );
@@ -389,21 +422,19 @@ export const UpdateTimingsToDb = async (req, res) => {
 export const UpdateFacilitiesToDb = async (req, res) => {
   try {
     let { facilities } = req.body;
-    const tempFacili = new mongoose.Document({ facilities }, Schema.FacilitiesSchema);
-    const err = tempFacili.validateSync();
-    if (err) {
-      res.json({ success: false, message: "Invalid Data" })
-    } else {
-      await schoolColl.updateOne(
-        { _id: new ObjectId(req.token.ServiceId) },
-        { $set: { facilities } }
-      );
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
 
-      res.json({
-        success: true,
-        message: "Facilities updated successfully ✅."
-      });
-    }
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { $set: { facilities } }
+    );
+
+    res.json({
+      success: true,
+      message: "Facilities updated successfully ✅."
+    });
   } catch (error) {
     res.json({
       success: false,
@@ -541,12 +572,11 @@ export const AddNewEventToDb = async (req, res) => {
 export const UpdateExtraActivitiesToDb = async (req, res) => {
   try {
     let { extraActivities } = req.body;
-    const tempExtraActivities = new mongoose.Document({ extraActivities }, Schema.ExtraActivitiesSchema);
-    const err = tempExtraActivities.validateSync();
-    if (err) {
-      res.json({ success: false, message: "Invalid Data" });
-    }
-    await schoolColl.updateOne(
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
       { _id: new ObjectId(req.token.ServiceId) },
       { $set: { extraActivities } }
     );
@@ -584,13 +614,40 @@ export const AddFeeTabDataToDb = async (req, res) => {
 export const AddReviewTabDataToDb = async (req, res) => {
   try {
     let Reviews = req.body.Reviews;
-    let tempReview = new mongoose.Document({ Reviews }, Schema.ReviewSchema);
-    let err = tempReview.validateSync();
-    if (err) return res.json({ success: false, message: "Invalid Data" });
-    await schoolColl.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { Reviews } });
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { Reviews } });
     res.json({ success: true, message: "Reviews Updated." });
   } catch (error) {
     res.json({ success: false, message: error.message });
+  }
+}
+
+export const ReplyToReview = async (req, res) => {
+  try {
+    const { reviewId, response } = req.body;
+    const { ServiceId } = req.token;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    // Attempt to update in both potential review locations
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId), "ratingData.id": reviewId },
+      { $set: { "ratingData.$.response": response } }
+    );
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId), "detailedReviews.id": reviewId },
+      { $set: { "detailedReviews.$.response": response } }
+    );
+
+    res.json({ success: true, message: "Reply saved successfully ✅." });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Something went wrong while saving reply." });
   }
 }
 
@@ -599,12 +656,16 @@ export const AddReviewTabDataToDb = async (req, res) => {
 // ================================================
 export const UpdateGallery = async (req, res) => {
   try {
-    const school = await schoolColl.findOne(
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    const currentData = await ServiceCollection.findOne(
       { _id: new ObjectId(req.token.ServiceId) },
       { projection: { gallery: 1 } }
     );
 
-    const oldGallery = school?.gallery || [];
+    const oldGallery = currentData?.gallery || [];
 
     let existingImages = [];
     if (req.body.existingImages) {
@@ -639,11 +700,7 @@ export const UpdateGallery = async (req, res) => {
       ...uploadedUrls
     ];
 
-    const tempGallery = new mongoose.Document({ finalGalleryImages }, Schema.GallerySchema);
-    const err = tempGallery.validateSync();
-    if (err) return res.json({ success: false, message: "Invalid Data" });
-
-    await schoolColl.updateOne(
+    await ServiceCollection.updateOne(
       { _id: new ObjectId(req.token.ServiceId) },
       { $set: { gallery: finalGalleryImages } }
     );
@@ -694,13 +751,11 @@ export const switchDashBoard = async (req, res) => {
       return res.json({ success: false, message: "Invalid service selection." });
     }
 
-    // 3️⃣ Pick correct collection
-    const SERVICE_COLLECTION = {
-      SCHOOL: schoolColl,
-    };
+    // 3️⃣ Pick correct collection from global definition (already updated to function)
+
 
     const ServiceCollection =
-      SERVICE_COLLECTION[selectedService.ServiceType];
+      SERVICE_COLLECTION(db)[selectedService.ServiceType];
 
     if (!ServiceCollection) {
       return res.json({ success: false, message: "Unsupported service type." });
@@ -751,5 +806,69 @@ export const switchDashBoard = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: "Something went wrong." });
+  }
+};
+// ==========================================
+// FOOD MENU MANAGEMENT
+// ==========================================
+export const UpdateFoodMenuToDb = async (req, res) => {
+  try {
+    const { menuItems } = req.body;
+    const { ServiceId, AdmnEmail } = req.token;
+
+    const admin = await AdmnColl.findOne({ AdminEmail: AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const FoodCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    if (!FoodCollection) {
+      return res.json({ success: false, message: "Invalid Food Service type." });
+    }
+
+    await FoodCollection.updateOne(
+      { _id: new ObjectId(ServiceId) },
+      { $set: { menu: menuItems } }
+    );
+
+    res.json({ success: true, message: "Menu updated successfully ✅." });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Failed to update menu." });
+  }
+};
+
+export const Logout = (req, res) => {
+  res.clearCookie("adm_token", {
+    path: "/",
+    sameSite: "lax",
+  });
+  res.json({ success: true, message: "Logged out successfully." });
+};
+
+export const SubmitSupportTicket = async (req, res) => {
+  try {
+    const { subject, message } = req.body;
+    const { ServiceId } = req.token;
+
+    const ticket = {
+      id: new ObjectId(),
+      subject,
+      message,
+      status: "Open",
+      timestamp: new Date(),
+    };
+
+    const admin = await AdmnColl.findOne({ "Services.ServiceId": ServiceId });
+    const activeService = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[activeService.ServiceType];
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId) },
+      { $push: { supportTickets: ticket } }
+    );
+
+    res.json({ success: true, message: "Ticket submitted successfully.", ticket });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Failed to submit ticket." });
   }
 };

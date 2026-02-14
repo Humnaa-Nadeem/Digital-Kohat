@@ -113,14 +113,23 @@
     background: #9ca3af;
 }
 
-@media (max-width: 600px) {
-    .SA_layout {
-        gap: 6px;
-    }
+.SA_sidebar_loading {
+    color: #94a3b8;
+    font-size: 1.5rem;
+    font-weight: 800;
+    animation: blink 1.5s infinite;
 }
 
-@media (max-width: 420px) {
-    .SA_layout {
-        gap: 0px;
+@keyframes blink {
+    0% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
     }
 }

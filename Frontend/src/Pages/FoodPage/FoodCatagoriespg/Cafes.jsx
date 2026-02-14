@@ -6,14 +6,15 @@ import { CafesList, CafesCardsData, Food_Details } from "../../../Store/Food_sto
 import { FoodLandingPage } from "../FoodLanding/FoodLandingPage";
 import { getMergedData, getFullMergedData } from "../../../utils/dataMerger";
 import { FaFilter, FaSortAmountDown, FaStar, FaBicycle } from "react-icons/fa";
+import { GetFoodCrdsDtaFrmDB } from "../../../ApiCalls/ApiCalls";
 
 export const CafesPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
 
-    const [allCrds] = useState(() => getMergedData(CafesCardsData, "Food", "Cafes & Coffee"));
-    const [Crds, setCrds] = useState(allCrds);
+    const [allCrds, setAllCrds] = useState(CafesCardsData);
+    const [Crds, setCrds] = useState(CafesCardsData);
     const [showList, setShowlist] = useState(false);
 
     // Filter & Sort State
@@ -26,10 +27,28 @@ export const CafesPage = () => {
     const query = new URLSearchParams(search);
     const id = query.get("id");
 
-    const List = getMergedData(CafesList, "Food", "Cafes & Coffee");
+    const [listData, setListData] = useState([]);
+
+    useEffect(() => {
+        const staticList = CafesList.map(item => ({ name: item.name, id: item.id }));
+        setListData(staticList);
+
+        GetFoodCrdsDtaFrmDB((dbData) => {
+            if (!dbData || !Array.isArray(dbData)) return;
+            const filteredDb = dbData.filter(item => item.serviceType === "Cafe");
+            const merged = [...CafesCardsData, ...filteredDb];
+            setAllCrds(merged);
+            setCrds(merged);
+
+            const staticList = CafesList.map(item => ({ name: item.name, id: item.id }));
+            const dynamicList = filteredDb.map(item => ({ name: item.InstName, id: item.id }));
+            setListData([...staticList, ...dynamicList]);
+        });
+    }, []);
 
     // Apply Sorting and Filtering
     useEffect(() => {
+        if (!allCrds || allCrds.length === 0) return;
         let results = [...allCrds];
 
         if (filterPrice !== "all") {
@@ -59,7 +78,7 @@ export const CafesPage = () => {
                             <div className="institute-hd-lst">
                                 <h2 className="food-institute-hd">Cafes & Coffee</h2>
                                 <ul className="food-institute-lst">
-                                    {List.map((v, i) => (
+                                    {listData.map((v, i) => (
                                         <li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.name}</li>
                                     ))}
                                 </ul>

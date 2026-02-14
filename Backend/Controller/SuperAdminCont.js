@@ -56,48 +56,26 @@ export const SuperAdminLogin = async (req, res) => {
         const { email, password } = req.body;
         const { ADMINS } = getCollections(req);
 
-        const superAdmin = await ADMINS.findOne({
-            email: email.toLowerCase(),
-            role: "SUPER_ADMIN"
-        });
+        // 1. Get credentials from ENV
+        const envEmail = process.env.SUPER_ADMIN_EMAIL?.toLowerCase().trim();
+        const envPassword = process.env.SUPER_ADMIN_PASSWORD;
 
-        if (!superAdmin) {
-            return res.json({ success: false, message: "Invalid credentials" });
+        if (!envEmail || !envPassword) {
+            return res.json({ success: false, message: "System error: Security credentials not configured" });
         }
 
-        let match = await argon2.verify(superAdmin.passwordHash, password);
-        if (!match) {
-            let managerAccess;
-            for (const manager of superAdmin.SAManagers || []) {
-                match = await argon2.verify(manager.password, password);
-                if (match) {
-                    managerAccess = manager.AccessTo;
-                }
-                break;
-            }
+        // 2. Fetch the SuperAdmin record from DB (needed for ID and Managers list)
+        const superAdmin = await ADMINS.findOne({ role: "SUPER_ADMIN" });
 
-            const token = JWT.sign(
-                {
-                    id: superAdmin._id,
-                    role: "SAManager",
-                    AccessTo: managerAccess
-                },
-                process.env.JWT_KEY,
-                { expiresIn: "1d" }
-            );
+        if (!superAdmin) {
+            return res.json({ success: false, message: "System error: Super Admin not configured" });
+        }
 
-            res.cookie("adm_token", token, {
-                httpOnly: true,
-                secure: false,
-                sameSite: "lax",
-                path: "/",
-                maxAge: 24 * 60 * 60 * 1000
-            });
+        // 3. Direct check against ENV for Privacy
+        const isSuperAdminMatch = (email.toLowerCase() === envEmail && password === envPassword && envPassword !== undefined);
 
-            res.json({ success: true, message: "Login successful" });
-
-        } else {
-
+        if (isSuperAdminMatch) {
+            // Log in as MAIN Super Admin
             const token = JWT.sign(
                 {
                     id: superAdmin._id,
@@ -110,16 +88,56 @@ export const SuperAdminLogin = async (req, res) => {
 
             res.cookie("adm_token", token, {
                 httpOnly: true,
-                secure: false,
+                secure: false, // true in production
                 sameSite: "lax",
                 path: "/",
                 maxAge: 24 * 60 * 60 * 1000
             });
 
-            res.json({ success: true, message: "Login successful" });
+            return res.json({ success: true, message: "Login successful (Env Auth)" });
         }
 
+        // 4. If not main SuperAdmin, check if it's a Manager (stored in DB)
+        // Managers still need to match the SuperAdmin's configured email
+        if (email.toLowerCase() === superAdmin.email.toLowerCase()) {
+            let managerAccess = null;
+            let match = false;
+
+            for (const manager of superAdmin.SAManagers || []) {
+                match = await argon2.verify(manager.password, password);
+                if (match) {
+                    managerAccess = manager.AccessTo;
+                    break;
+                }
+            }
+
+            if (match) {
+                const token = JWT.sign(
+                    {
+                        id: superAdmin._id,
+                        role: "SAManager",
+                        AccessTo: managerAccess
+                    },
+                    process.env.JWT_KEY,
+                    { expiresIn: "1d" }
+                );
+
+                res.cookie("adm_token", token, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "lax",
+                    path: "/",
+                    maxAge: 24 * 60 * 60 * 1000
+                });
+
+                return res.json({ success: true, message: "Manager Login successful" });
+            }
+        }
+
+        return res.json({ success: false, message: "Invalid credentials" });
+
     } catch (err) {
+        console.error(err);
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
@@ -165,8 +183,9 @@ export const CreateEduCataAdmin = async (req, res) => {
             }
 
             const { ADMINS, NRs } = getCollections(req);
+            const db = req.app.locals.db;
 
-            const ServiceCollection = SERVICE_COLLECTION[ServiceType];
+            const ServiceCollection = SERVICE_COLLECTION(db)[ServiceType];
             if (!ServiceCollection) {
                 return res.json({ success: false, message: "Invalid ServiceType" });
             }

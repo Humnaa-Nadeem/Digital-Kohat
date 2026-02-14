@@ -28,6 +28,32 @@ export const GetTheSchlData = (SchoolId, setPageData) => {
         })
 }
 
+export const GetFoodCrdsDtaFrmDB = (setFoodCrds) => {
+    axios.get(`${mainURL}/getFoodCrdDta`)
+        .then((res) => {
+            if (res.data.success) {
+                setFoodCrds(res.data.serviceCards);
+            } else {
+                console.log(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
+
+export const GetTheFoodData = (FoodId, setPageData) => {
+    axios.post(`${mainURL}/getFoodWholeDta`, { FoodId })
+        .then((res) => {
+            if (res.data.success) {
+                setPageData(res.data.serviceData)
+            } else {
+                toast.warn(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
+
 export const ChangeRatingData = (ratingData, id, setRatingSubmitted) => {
     axios.post(`${mainURL}/changeRatingData`, { ratingData, id })
         .then((res) => {
@@ -43,7 +69,7 @@ export const ChangeRatingData = (ratingData, id, setRatingSubmitted) => {
         })
 }
 
-export const NewEduCataServiceReq = (data) => { 
+export const NewEduCataServiceReq = (data) => {
     axios.post(`${mainURL}/NewEduCataServiceReq`, data)
         .then((res) => {
             if (res.data.success) {
@@ -54,4 +80,24 @@ export const NewEduCataServiceReq = (data) => {
         }).catch((err) => {
             alert("Something went wrong.");
         })
+}
+
+export const PlaceOrderApi = (orderData) => {
+    return axios.post(`${mainURL}/placeOrder`, orderData);
+}
+
+export const GetOrdersApi = (serviceId) => {
+    return axios.post(`${mainURL}/getOrders`, { serviceId });
+}
+
+export const UpdateOrderStatusApi = (orderId, status) => {
+    return axios.post(`${mainURL}/updateOrderStatus`, { orderId, status });
+}
+
+export const BookTableApi = (bookingData) => {
+    return axios.post(`${mainURL}/bookTable`, bookingData);
+}
+
+export const ReportServiceLandingApi = (reportData) => {
+    return axios.post(`${mainURL}/reportServiceLanding`, reportData);
 }

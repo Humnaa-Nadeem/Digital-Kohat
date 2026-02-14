@@ -1170,6 +1170,7 @@
     border-color: #f44336;
     color: #d32f2f;
 }
+
 /* --- Modal Styles --- */
 .fd-modal-overlay {
     position: fixed;
@@ -1177,7 +1178,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1191,14 +1192,21 @@
     border-radius: 16px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     position: relative;
     animation: fdSlideUp 0.3s ease-out;
 }
 
 @keyframes fdSlideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .fd-modal-header {
@@ -1228,3 +1236,211 @@
     min-height: 80px;
 }
 
+/* --- Improved Analytics Style --- */
+.fd-section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.fd-filter-btns {
+    display: flex;
+    background: #eee;
+    padding: 5px;
+    border-radius: 30px;
+}
+
+.fd-filter-btn {
+    border: none;
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #666;
+}
+
+.fd-filter-btn.active {
+    background: white;
+    color: var(--fd-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fd-analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.fd-analytics-item {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.fd-analytics-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.fd-stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #fff5f5;
+    color: var(--fd-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.fd-analytics-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #2d3436;
+    display: block;
+}
+
+.fd-analytics-label {
+    font-size: 1rem;
+    color: #636e72;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* --- Improved Reviews Style --- */
+.fd-review-card {
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 5px solid #ff6b6b;
+}
+
+.fd-review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.fd-review-user h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2d3436;
+}
+
+.fd-review-stars {
+    color: #fdcb6e;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 2px;
+    margin-top: 5px;
+}
+
+.fd-review-date {
+    font-size: 0.8rem;
+    color: #b2bec3;
+}
+
+.fd-review-body {
+    color: #2d3436;
+    line-height: 1.6;
+    font-style: italic;
+    margin: 15px 0;
+}
+
+.fd-reply-section {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+    margin-top: 15px;
+}
+
+.fd-reply-section h5 {
+    margin: 0 0 10px 0;
+    color: var(--fd-primary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.fd-reply-section p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #636e72;
+}
+
+/* --- Finance Payouts --- */
+.fd-status-pill.delivered {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* --- Support Payouts --- */
+.fd-ticket-item {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.fd-ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.fd-ticket-header strong {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.fd-status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.status-open {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.status-resolved {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.fd-ticket-item p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.fd-time-stamp {
+    font-size: 0.75rem;
+    color: #888;
+}

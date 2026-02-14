@@ -729,6 +729,30 @@
     border: 1px solid #bbdefb;
 }
 
+.RestaurantReply {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8fbfa;
+    border-left: 4px solid #267252;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.RestaurantReply strong {
+    color: #267252;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.RestaurantReply p {
+    margin: 0;
+    color: #333;
+    line-height: 1.5;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .MainGrid {
@@ -858,4 +882,284 @@
     .InfoCard p {
         font-size: 0.9rem;
     }
+}
+
+/* Promotions Section Styling */
+.PromotionsSection {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.PromotionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.PromoCard {
+    background: linear-gradient(135deg, #267252 0%, #1a4f39 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.PromoCard:hover {
+    transform: scale(1.02);
+}
+
+.PromoBadge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #fbc531;
+    color: #2c3e50;
+    padding: 20px 35px 10px;
+    transform: rotate(45deg);
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.PromoContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.PromoContent p {
+    opacity: 0.9;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.PromoCode {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.PromoCode span {
+    font-size: 0.85rem;
+}
+
+.PromoCode strong {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    border: 1px dashed white;
+    font-family: monospace;
+    font-size: 1.2rem;
+}
+
+/* Review Form Styling */
+.AddReviewForm {
+    margin-bottom: 40px;
+    padding: 25px;
+    background: #f8fbfa;
+    border-radius: 12px;
+    border: 1px solid #e0f2f1;
+}
+
+.AddReviewForm h3 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-row input {
+    flex: 2;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.rating-selector {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating-selector select {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.submit-review-btn {
+    background: #267252;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-review-btn:hover {
+    background: #1a4f39;
+    transform: translateY(-2px);
+}
+
+/* Report Button */
+.report-service-btn {
+    margin-top: 15px;
+    background: #f8fbfa;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.report-service-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Report Modal */
+.ReportModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.ReportModal {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.ReportModal h2 {
+    margin-bottom: 25px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.ReportModal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ReportModal input,
+.ReportModal select,
+.ReportModal textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.confirm-report {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Checkout Promo Group */
+.PromoInputGroup {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.PromoInputGroup input {
+    flex: 1;
+    padding: 10px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+}
+
+.PromoInputGroup button {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.DiscountInfo {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    color: #27ae60;
+    font-weight: 700;
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #27ae60;
+}
+
+.form-group-side {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group-side label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group-side select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group-side select:focus {
+    border-color: #267252;
 }

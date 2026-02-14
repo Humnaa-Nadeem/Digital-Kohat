@@ -37,6 +37,9 @@ export const FoodHomePage = () => {
                             <button className="btn-secondary" onClick={() => setShowform(!showForm)}>
                                 {showForm ? "Close Registration" : "Join as Merchant"}
                             </button>
+                            <button className="fd-hero-admin-login-btn" style={{ marginLeft: '12px', background: 'transparent', color: 'white', border: '1px solid rgba(255,255,255,0.6)', padding: '12px 28px', borderRadius: '30px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.3s ease' }} onClick={() => navigate('/food/admin')}>
+                                Admin Login
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -55,9 +58,19 @@ export const FoodHomePage = () => {
                                     <li>✓ Provincial-wide Visibility</li>
                                     <li>✓ Dedicated Support Desk</li>
                                 </ul>
+                                <div style={{ marginTop: '30px' }}>
+                                    <p style={{ marginBottom: '10px', fontSize: '0.9rem' }}>Already registered?</p>
+                                    <button
+                                        className="btn-primary"
+                                        style={{ padding: '10px 30px', fontSize: '1rem' }}
+                                        onClick={() => navigate('/food/admin')}
+                                    >
+                                        Admin Login
+                                    </button>
+                                </div>
                             </div>
                             <div className="MerchantFormWrapper">
-                                <EduRegisterForm setShowform={setShowform} serviceType="Restaurant" />
+                                <EduRegisterForm setShowform={setShowform} serviceCategory="Food" />
                             </div>
                         </div>
                     </div>
