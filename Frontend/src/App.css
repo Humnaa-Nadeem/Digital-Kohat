@@ -1,3 +1,4 @@
+/* ================= GLOBAL RESET ================= */
 * {
   padding: 0;
   margin: 0;
@@ -9,6 +10,7 @@ a {
   color: inherit;
 }
 
+/* ================= APP STYLES ================= */
 .App {
   text-align: center;
   overflow: auto;
@@ -44,39 +46,23 @@ a {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
-}.goog-te-banner-frame,
+}
+
+/* ================= GOOGLE TRANSLATE FIX ================= */
+/* Hide Google Translate default UI without affecting navbar */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
 .goog-logo-link,
-.goog-te-gadget {
-  display: none !important;
-}
-
-body {
-  top: 0 !important;
-}
-/* 🔥 Hide Google Translate default UI */
-.goog-te-banner-frame.skiptranslate {
-  display: none !important;
-}
-
-body {
-  top: 0px !important;
-}
-
-.goog-te-gadget {
-  display: none !important;
-}
-
+.goog-te-gadget,
+.goog-te-gadget span,
 .goog-te-combo {
   display: none !important;
 }
-iframe.goog-te-banner-frame {
-  display: none !important;
-}
-.goog-logo-link,
-.goog-te-gadget span {
-  display: none !important;
+
+/* Only adjust body if necessary */
+body {
+  top: 0 !important;
 }

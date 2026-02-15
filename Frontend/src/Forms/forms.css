@@ -1,48 +1,78 @@
-/* Business Home Page Specific Styles */
+/* src/Forms/forms.css */
 
-.business-actions-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px 0;
-    flex-wrap: wrap;
+.form-container {
+  background: #ffffff;
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.business-btn {
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+.form-section {
+  margin-bottom: 30px;
 }
 
-.btn-register {
-    background: linear-gradient(135deg, #32b57e, #26a170);
-    color: white;
+.form-section h3 {
+  color: #1f8e5c;
+  margin-bottom: 15px;
 }
 
-.btn-register:hover {
-    background: linear-gradient(135deg, #26a170, #1e875a);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(50, 181, 126, 0.4);
+.form-row {
+  display: flex;
+  gap: 16px;
 }
 
-.btn-login {
-    background: white;
-    color: #32b57e;
-    border: 2px solid #32b57e;
+.form-group {
+  flex: 1;
+  position: relative;
 }
 
-.btn-login:hover {
-    background: #f0fdf4;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 40px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #f2f2f2;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: #1f8e5c;
+  box-shadow: 0 0 8px rgba(31,142,92,0.4);
+}
+
+.form-group i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1f8e5c;
+}
+
+.confirm-btn {
+  background: #1f8e5c;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.confirm-btn:hover {
+  background: #166b46;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 /* ===============================
    GLOBAL FORM OVERLAY

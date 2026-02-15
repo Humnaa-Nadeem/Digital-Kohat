@@ -1,0 +1,14 @@
+.form-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-header h2 {
+  color: #1f8e5c;
+  margin-bottom: 6px;
+}
+
+.form-header p {
+  color: #444;
+  font-size: 14px;
+}

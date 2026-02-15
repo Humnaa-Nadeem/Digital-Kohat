@@ -1,10 +1,30 @@
+/* Prevent Google Translate from translating the navbar */
+.notranslate {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 /* ===== NAVBAR CONTAINER ===== */
+
+.navbar .nav-container {
+  width: 100%;
+  max-width: 1300px; 
+  margin: 0 auto;
+  padding: 0 10px;  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .navbar {
   width: 100%;
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
   position: sticky;
  
+  margin: 0  !important;
+  padding: 0 !important;  
+  
   top: 0 !important;
   z-index: 1000;
   font-family: "Poppins", sans-serif;

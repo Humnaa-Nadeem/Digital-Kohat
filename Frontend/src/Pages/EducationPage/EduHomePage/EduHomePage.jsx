@@ -1,55 +1,57 @@
 import { useEffect, useState } from "react";
 import "../../CatagoriesHomePgs.css";
 import "./EduHomePage.css";
-import "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import { categories } from "../../../Store/Edu_store";
 import { Form } from "../../../components/Form/form";
+
 export const EduHomePage = () => {
+  const navigate = useNavigate();
+  const [showForm, setShowform] = useState(false);
 
-    // To show page from the top:
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    // Navigate use to redirect to other pages:
-    const navigate = useNavigate();
+  return (
+    <>
+      {showForm ? (
+        <Form setShowform={setShowform} category="education" />
+      ) : (
+        <section className="pg-sec">
 
-    // useState to open the Form
-    let [showForm, setShowform] = useState(false);
+          <button
+            className="rsgrt-btn"
+            onClick={() => setShowform(true)}
+          >
+            Join as Service Provider
+          </button>
 
-    return (
-        <>
-            {
-                // Condition
-                (showForm)
-                    ?
-                    //  Registration Form
-                    <Form setShowform={setShowform} />
-                    :
-                    // Home Page
-                    <section className="pg-sec">
-                        {/* Registartion Button */}
-                        <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
-                        {/* Education Institute Part like schools , colleges & Uni */}
-                        <div className="content-cont">
-                            <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
-                            <p className="pg-desc">Let find the best education in a <b>Kohat</b> where students can easily find good schools, colleges, and learning centers nearby. This platform helps parents and students get clear details about courses and facilities so they can choose the right place for study with confidence.</p>
-                            <div className="card-Container">
-                                {categories.map((v, i) => {
-                                    return (
-                                        <div className="card EduHomeCard" key={i}>
-                                            <h2 className="Cata_Title">{v.title}</h2>
-                                            <span className="Icon_Cont">{v.icon}</span>
-                                            <p>{v.description}</p>
-                                            <button className="pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </section>
-            }
-        </>
-    )
-}
+          <div className="content-cont">
+            <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
+            <p className="pg-desc">
+              Find schools, colleges and learning centers easily.
+            </p>
+
+            <div className="card-Container">
+              {categories.map((v, i) => (
+                <div className="card EduHomeCard" key={i}>
+                  <h2 className="Cata_Title">{v.title}</h2>
+                  <span className="Icon_Cont">{v.icon}</span>
+                  <p>{v.description}</p>
+                  <button
+                    className="pg-crd-btn"
+                    onClick={() => navigate(v.link)}
+                  >
+                    {v.btn}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
+  );
+};

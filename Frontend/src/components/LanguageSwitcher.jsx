@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import React from "react";
+import { useLanguage } from "../context/LanguageContext";
 import "./LanguageSwitcher.css";
 
 const languages = [
@@ -11,29 +12,22 @@ const languages = [
   { code: "zh-CN", label: "🇨🇳 Chinese" },
   { code: "tr", label: "🇹🇷 Turkish" },
   { code: "hi", label: "🇮🇳 Hindi" },
-  { code: "bn", label: "🇧🇩 Bengali" }
+  { code: "bn", label: "🇧🇩 Bengali" },
 ];
 
 const LanguageSwitcher = () => {
-  const changeLanguage = (lang) => {
-    const select = document.querySelector("select.goog-te-combo");
-    if (select) {
-      select.value = lang;
-      select.dispatchEvent(new Event("change"));
-      localStorage.setItem("lang", lang);
+  const { language, setLanguage } = useLanguage();
+
+  const handleLanguageChange = (e) => {
+    const selectedLang = e.target.value;
+    if (selectedLang) {
+      setLanguage(selectedLang);
     }
   };
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang");
-    if (savedLang) {
-      setTimeout(() => changeLanguage(savedLang), 800);
-    }
-  }, []);
-
   return (
-    <div className="language-switcher">
-      <select onChange={(e) => changeLanguage(e.target.value)}>
+    <div className="language-switcher notranslate">
+      <select value={language} onChange={handleLanguageChange}>
         <option value="">🌐 Language</option>
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>

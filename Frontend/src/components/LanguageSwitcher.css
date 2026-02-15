@@ -2,6 +2,12 @@
    LANGUAGE SWITCHER
    =============================== */
 
+/* Prevent Google Translate from translating the language switcher */
+.notranslate {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 .language-switcher {
   display: flex;
   align-items: center;

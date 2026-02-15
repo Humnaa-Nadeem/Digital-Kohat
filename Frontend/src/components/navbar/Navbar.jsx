@@ -31,7 +31,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar">
+      <nav className="navbar notranslate">
         <div className="nav-container">
           {/* LOGO */}
           <div className="nav-logo">

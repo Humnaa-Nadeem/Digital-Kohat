@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import FormRenderer from "./FormRenderer";
-import ErrorBoundary from "./Common/ErrorBoundary";
 import "./Register.css";
 
 const Register = () => {
@@ -116,9 +115,7 @@ const Register = () => {
 
         {/* 🔹 STEP 3: FORM RENDER */}
         {step === "form" && (
-          <ErrorBoundary>
-            <FormRenderer role={role} category={category} />
-          </ErrorBoundary>
+          <FormRenderer role={role} category={category} />
         )}
 
       </div>
