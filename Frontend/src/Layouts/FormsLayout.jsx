@@ -2,10 +2,17 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import "./FormLayout.css";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
 
 const FormsLayout = ({ title, icon }) => {
   return (
-    <div className="form-layout-container">
+   <>
+    <header>
+                <Navbar />
+            </header>
+            <main>
+                <div className="form-layout-container">
       <div className="form-layout-card">
 
         {icon && <div className="form-icon">{icon}</div>}
@@ -17,6 +24,10 @@ const FormsLayout = ({ title, icon }) => {
 
       </div>
     </div>
+                <Outlet />
+            </main>
+            <Footer />
+   </>
   );
 };
 

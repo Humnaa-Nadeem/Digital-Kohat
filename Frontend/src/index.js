@@ -112,11 +112,10 @@ const routes = [
   { path: "/", element: <App /> },
   {
     path: "/form",
-    element: (
-      <FormsLayout>
-        <SignUpForm />
-      </FormsLayout>
-    ),
+    element: <FormsLayout />,
+    children: [
+      { index: true, element: <SignUpForm /> },
+    ]
   },
   { path: "/AboutUs", element: <Aboutus /> },
   { path: "/ContactUs", element: <Contactus /> },
