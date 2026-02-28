@@ -188,7 +188,7 @@ export const FoodLandingPage = ({ id, Alldata }) => {
     return (
         <section className="FoodLanding">
             {/* HERO SECTION */}
-            <div className="FoodHero" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${item.img || item.aboutImage})` }}>
+            <div className="FoodHero" style={{ backgroundImage: (item.img || item.aboutImage) ? `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${item.img || item.aboutImage})` : `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6))` }}>
                 <div className="HeroContent">
                     <div className="HeroBadges">
                         <span className="category-tag">{item.type}</span>
