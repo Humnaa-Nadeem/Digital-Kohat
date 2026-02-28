@@ -2,11 +2,25 @@ import axios from "axios";
 import { toast } from "react-toastify";
 export const maniURL = "http://localhost:5500";
 
+const handleRedirect = (res) => {
+    const serviceType = res.data.ServiceType;
+    const foodServices = ["RESTURANT", "Bakery", "Cafe", "Fast Food", "Fine Dining", "Local Food", "Street Food"];
+
+    if (foodServices.includes(serviceType)) {
+        window.location.href = "/food/fooddashboard";
+    } else if (serviceType === "SCHOOL" || serviceType === "COLLEGE") {
+        window.location.href = "/edu/dashboard";
+    } else {
+        // Default fallback if type is unknown
+        window.location.href = "/edu/dashboard";
+    }
+};
+
 export const verfiyTheAdmin = (email, password) => {
     axios.post(`/AdminLogin`, { email, password })
         .then((res) => {
             if (res.data.success) {
-                window.location.href = "/edu/dashboard";
+                handleRedirect(res);
             } else {
                 toast.error(res.data.message);
             }
@@ -21,7 +35,7 @@ export const verifyFoodAdmin = (email, password) => {
     axios.post(`/AdminLogin`, { email, password })
         .then((res) => {
             if (res.data.success) {
-                window.location.href = "/food/fooddashboard";
+                handleRedirect(res);
             } else {
                 toast.error(res.data.message);
             }
@@ -61,7 +75,7 @@ export const SwitchDashBoard = async (ServiceName, ServiceId, ServiceType, setDa
             if (res.data.role === "admin") {
                 setAdminOtherServices(res.data.OtherServices || []);
             }
-            window.location.reload();
+            handleRedirect(res);
         } else {
             toast.error(res.data.message);
         }

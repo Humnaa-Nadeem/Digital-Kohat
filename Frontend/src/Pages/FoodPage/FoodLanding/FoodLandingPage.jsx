@@ -382,12 +382,14 @@ export const FoodLandingPage = ({ id, Alldata }) => {
                             >
                                 <FaTruck /> Order Delivery
                             </button>
-                            <button
-                                className={`tab-btn ${activeTab === 'booking' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('booking')}
-                            >
-                                <FaChair /> Book Table
-                            </button>
+                            {item.offersReservation && (
+                                <button
+                                    className={`tab-btn ${activeTab === 'booking' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('booking')}
+                                >
+                                    <FaChair /> Book Table
+                                </button>
+                            )}
                         </div>
 
                         <div className="StickyOrderCard">

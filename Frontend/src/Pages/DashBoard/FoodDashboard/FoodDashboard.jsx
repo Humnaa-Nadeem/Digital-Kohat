@@ -118,6 +118,14 @@ const FoodProfile = ({ data, onUpdate }) => {
                 </div>
 
                 <div className="fd-form-group">
+                    <label>Offer Table Reservation?</label>
+                    <select className="fd-input" name="offersReservation" defaultValue={data.offersReservation ? "Yes" : "No"}>
+                        <option value="Yes">Yes, we offer table bookings</option>
+                        <option value="No">No, walk-in only</option>
+                    </select>
+                </div>
+
+                <div className="fd-form-group">
                     <label>Facilities (Comma Separated)</label>
                     <input type="text" className="fd-input" name="facilities" defaultValue={data.quickInfo?.facilities?.join(", ")} />
                 </div>
@@ -274,8 +282,12 @@ const MembershipDetails = () => {
 const FoodOrders = ({ orders, setOrders }) => {
     const [subTab, setSubTab] = useState("New");
 
-    // Filter orders based on active sub-tab
+    // Filter orders and reservations based on active sub-tab
     const filteredOrders = orders.filter(o => {
+        if (subTab === "Reservations") return o.type === "Reservation";
+
+        // Filter regular orders
+        if (o.type === "Reservation") return false;
         if (subTab === "New") return o.status === "Pending";
         if (subTab === "Preparing") return o.status === "Preparing";
         if (subTab === "Ready") return o.status === "Ready";
@@ -287,7 +299,7 @@ const FoodOrders = ({ orders, setOrders }) => {
     const updateStatus = (id, newStatus) => {
         UpdateOrderStatusApi(id, newStatus).then(res => {
             if (res.data.success) {
-                setOrders(orders.map(o => o._id === id ? { ...o, status: newStatus } : o));
+                setOrders(orders.map(o => (o._id === id || o.id === id) ? { ...o, status: newStatus } : o));
                 toast.success(`Order status updated to ${newStatus}`);
             }
         });
@@ -299,7 +311,7 @@ const FoodOrders = ({ orders, setOrders }) => {
 
             {/* Order Status Tabs */}
             <div className="fd-tabs-secondary">
-                {["New", "Preparing", "Ready", "Delivered", "Cancelled"].map(tab => (
+                {["New", "Preparing", "Ready", "Delivered", "Cancelled", "Reservations"].map(tab => (
                     <button
                         key={tab}
                         className={`fd-tab-btn ${subTab === tab ? "active" : ""}`}
@@ -312,20 +324,33 @@ const FoodOrders = ({ orders, setOrders }) => {
 
             <div className="fd-orders-list">
                 {filteredOrders.length > 0 ? filteredOrders.map((order) => (
-                    <div key={order._id || order.id} className="fd-order-card">
+                    <div key={order._id || order.id} className={`fd-order-card ${order.type === "Reservation" ? "reservation-card" : ""}`}>
                         <div className="fd-order-header">
-                            <h4>Order #{order.orderID || order._id || order.id}</h4>
-                            <span className="fd-time-stamp">{order.timestamp || "Just now"}</span>
+                            <h4>{order.type === "Reservation" ? `Reservation` : `Order`} #{order.orderID || (order._id ? order._id.slice(-6) : order.id)}</h4>
+                            <span className="fd-time-stamp">{order.timestamp || new Date(order.createdAt).toLocaleString()}</span>
                         </div>
                         <div className="fd-order-body">
-                            <p><strong>Customer:</strong> {order.userDetails?.name || order.customer}</p>
-                            <p><strong>Items:</strong> {Array.isArray(order.items) ? order.items.map(i => `${i.qty}x ${i.name}`).join(", ") : order.items}</p>
-                            <p className="fd-total-price">Total: Rs. {order.total}</p>
-                            {order.specialInstructions && <p className="fd-note">Note: {order.specialInstructions}</p>}
+                            {order.type === "Reservation" ? (
+                                <>
+                                    <p><strong>Customer:</strong> {order.customerName}</p>
+                                    <p><strong>Date/Time:</strong> {order.date} at {order.time}</p>
+                                    <p><strong>Guests:</strong> {order.guests}</p>
+                                    <p><strong>Contact:</strong> {order.contact}</p>
+                                    {order.specialRequest && <p className="fd-note">Request: {order.specialRequest}</p>}
+                                    <p className="fd-status-badge">Status: {order.status}</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p><strong>Customer:</strong> {order.userDetails?.name || order.customer}</p>
+                                    <p><strong>Items:</strong> {Array.isArray(order.items) ? order.items.map(i => `${i.qty}x ${i.name}`).join(", ") : order.items}</p>
+                                    <p className="fd-total-price">Total: Rs. {order.total}</p>
+                                    {order.specialInstructions && <p className="fd-note">Note: {order.specialInstructions}</p>}
+                                </>
+                            )}
                         </div>
 
                         <div className="fd-order-actions">
-                            {subTab === "New" && (
+                            {order.type !== "Reservation" && subTab === "New" && (
                                 <>
                                     <button className="fd-btn-approve" onClick={() => updateStatus(order._id || order.id, "Preparing")}><FaCheck /> Accept</button>
                                     <button className="fd-btn-reject" onClick={() => updateStatus(order._id || order.id, "Rejected")}><FaTimes /> Reject</button>
