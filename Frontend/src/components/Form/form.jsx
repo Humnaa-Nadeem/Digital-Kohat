@@ -2,35 +2,40 @@ import { useState } from "react";
 import "./form.css";
 
 const serviceFields = {
-  Education: [
+  education: [
     { label: "School/College/University Name", name: "categoryName", required: true },
     { label: "Program (if University)", name: "program", required: false },
     { label: "Address", name: "address", required: true },
   ],
-  Tourism: [
+  tourism: [
     { label: "Tourism Place Name", name: "categoryName", required: true },
     { label: "Duration of Tour", name: "duration", required: false },
   ],
-  Restaurant: [
-    { label: "Restaurant Name", name: "categoryName", required: true },
+  food: [
+    { label: "Restaurant/Food Place Name", name: "categoryName", required: true },
     { label: "Address", name: "address", required: false },
   ],
-  Hospital: [
-    { label: "Hospital Name", name: "categoryName", required: true },
+  health: [
+    { label: "Hospital/Clinic Name", name: "categoryName", required: true },
     { label: "Address", name: "address", required: true },
   ],
-  Technician: [
+  technician: [
     { label: "Technician Name", name: "categoryName", required: true },
     { label: "Service Area / Address", name: "address", required: false },
   ],
+  business: [
+    { label: "Business Name", name: "categoryName", required: true },
+    { label: "Address", name: "address", required: false },
+  ],
 };
 
-export const Form = ({ setShowform, serviceType }) => {
+export const Form = ({ setShowform, serviceType, category }) => {
+  const formType = serviceType || category; // Accept both prop names
   const [data, setData] = useState({
     name: "",
     email: "",
     phone: "",
-    service: serviceType || "",
+    service: formType || "",
   });
 
   const changeHandler = (e) => {
@@ -62,7 +67,7 @@ export const Form = ({ setShowform, serviceType }) => {
         <div className="crs" onClick={() => setShowform(false)}>
           &times;
         </div>
-        <h2 className="rgstr-frm-heading">Register for {serviceType}</h2>
+        <h2 className="rgstr-frm-heading">Register for {formType}</h2>
 
         <label className="formLabel">Name</label>
         <input name="name" type="text" value={data.name} onChange={changeHandler} required />
@@ -74,7 +79,7 @@ export const Form = ({ setShowform, serviceType }) => {
         <input name="email" type="email" value={data.email} onChange={changeHandler} required />
 
         {/* Dynamic fields */}
-        {serviceFields[serviceType]?.map((field, index) => (
+        {serviceFields[formType]?.map((field, index) => (
           <div key={index}>
             <label className="formLabel">{field.label}</label>
             <input
