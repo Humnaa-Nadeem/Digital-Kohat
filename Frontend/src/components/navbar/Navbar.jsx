@@ -79,7 +79,10 @@ const Navbar = () => {
               <button
                 type="button"
                 className="btn sign"
-                onClick={() => navigate("/form")}
+                // Menay apnay forms ura diye
+
+                
+               // onClick={() => navigate("/form")}
               >
                 Register
               </button>
