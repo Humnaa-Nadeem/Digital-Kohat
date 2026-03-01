@@ -188,7 +188,7 @@ export const Aboutus = () => {
       <div className="person-card">
         <div className="card-bar"></div>
         <img src={maleImg} alt="Saad Iqbal" />
-        <h4>Saad Iqbal</h4>
+        <h4>Saqlain Muzaffar</h4>
         <p>Manager</p>
       </div>
     </div>
