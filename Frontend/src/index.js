@@ -84,8 +84,6 @@ import { FreelancersPg } from './Pages/BusinessPage/BusinessCategoriesPg/Freelan
 
 // %%%%%%%%%%% FORMS %%%%%%%%%%%
 import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismRegistration';
-import { BusinessRegistration } from './Pages/BusinessPage/Registration/BusinessRegistration';
-import { BusinessLogin } from './Pages/BusinessPage/Login/BusinessLogin';
 import { AdminLogin } from './Pages/DashBoard/EductionDashboard/AdminLgoInForm/AdminLogin';
 import { FoodAdminLogin } from './Pages/DashBoard/FoodDashboard/FoodAdminLogin/FoodAdminLogin';
 import { SignUpForm } from './components/SignUpForm/SignUpForm';
@@ -227,10 +225,6 @@ const routes = [
       { path: "freelancers", element: <FreelancersPg /> },
     ],
   },
-
-  // Business Registration
-  { path: "/business/register", element: <BusinessRegistration /> },
-  { path: "/business/login", element: <BusinessLogin /> },
 
   // Page Not Found
   { path: "*", element: <PageNotFoundPg /> },

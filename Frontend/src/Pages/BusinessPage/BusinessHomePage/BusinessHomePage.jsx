@@ -3,7 +3,6 @@ import "../../CatagoriesHomePgs.css";
 import "./BusinessHomePage.css";
 import { useNavigate } from "react-router-dom";
 import { businessCategories } from "../../../Store/Business_store";
-import { FaUserPlus, FaSignInAlt } from "react-icons/fa";
 
 export const BusinessHomePage = () => {
 
@@ -22,16 +21,6 @@ export const BusinessHomePage = () => {
                 <div className="content-cont">
                     <h1>Connect with Top <strong>Businesses</strong> in Kohat</h1>
                     <p className="pg-desc">Find the best shops, offices, service providers, and professionals in <b>Kohat</b>. Whether you are looking for retail therapy, corporate services, or skilled freelancers, we connect you with the right businesses.</p>
-
-                    {/* Action Buttons */}
-                    <div className="business-actions-container">
-                        <button onClick={() => navigate('/business/register')} className="business-btn btn-register">
-                            <FaUserPlus /> Register Your Business
-                        </button>
-                        <button onClick={() => navigate('/business/login')} className="business-btn btn-login">
-                            <FaSignInAlt /> Business Login
-                        </button>
-                    </div>
 
                     <div className="card-Container">
                         {businessCategories.map((v, i) => {
