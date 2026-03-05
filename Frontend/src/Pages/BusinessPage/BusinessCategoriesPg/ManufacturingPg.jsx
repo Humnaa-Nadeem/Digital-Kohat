@@ -1,10 +1,10 @@
-
 import "./BusinessCategories.css";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ManufacturingData } from "../../../Store/Business_store";
-import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaIndustry } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaGlobe } from "react-icons/fa";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const ManufacturingPg = () => {
 
@@ -52,13 +52,28 @@ export const ManufacturingPg = () => {
                                     <div className="service-tags">
                                         {selectedItem.services ? selectedItem.services.map((s, i) => <span key={i}>{s}</span>) : (
                                             <>
-                                                <span>Manufacturing</span>
-                                                <span>Production</span>
-                                                <span>Supply</span>
+                                                <span>Bulk Manufacturing</span>
+                                                <span>Quality Control</span>
+                                                <span>Distribution</span>
                                             </>
                                         )}
                                     </div>
                                 </div>
+
+                                {selectedItem.products && selectedItem.products.length > 0 && (
+                                    <div className="products-section" style={{ marginTop: '30px' }}>
+                                        <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: '#333' }}>Available Products</h3>
+                                        <div className="products-grid" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                            gap: '20px'
+                                        }}>
+                                            {selectedItem.products.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="content-sidebar">

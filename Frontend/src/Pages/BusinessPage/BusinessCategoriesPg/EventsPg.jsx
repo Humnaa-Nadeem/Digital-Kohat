@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { EventsData } from "../../../Store/Business_store";
 import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaFacebook, FaInstagram, FaGlobe } from "react-icons/fa";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const EventsPg = () => {
 
@@ -57,6 +58,21 @@ export const EventsPg = () => {
                                         <span>Photography</span>
                                     </div>
                                 </div>
+
+                                {selectedItem.products && selectedItem.products.length > 0 && (
+                                    <div className="products-section" style={{ marginTop: '30px' }}>
+                                        <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: '#333' }}>Available Products</h3>
+                                        <div className="products-grid" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                            gap: '20px'
+                                        }}>
+                                            {selectedItem.products.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="content-sidebar">

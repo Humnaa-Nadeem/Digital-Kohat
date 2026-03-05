@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { OfficesData } from "../../../Store/Business_store";
 import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaGlobe } from "react-icons/fa";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const OfficesPg = () => {
 
@@ -52,13 +53,28 @@ export const OfficesPg = () => {
                                     <div className="service-tags">
                                         {selectedItem.services ? selectedItem.services.map((s, i) => <span key={i}>{s}</span>) : (
                                             <>
-                                                <span>Professional Services</span>
-                                                <span>Consultancy</span>
-                                                <span>Management</span>
+                                                <span>Corporate Services</span>
+                                                <span>Consulting</span>
+                                                <span>B2B Support</span>
                                             </>
                                         )}
                                     </div>
                                 </div>
+
+                                {selectedItem.products && selectedItem.products.length > 0 && (
+                                    <div className="products-section" style={{ marginTop: '30px' }}>
+                                        <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: '#333' }}>Available Products</h3>
+                                        <div className="products-grid" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                            gap: '20px'
+                                        }}>
+                                            {selectedItem.products.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="content-sidebar">
