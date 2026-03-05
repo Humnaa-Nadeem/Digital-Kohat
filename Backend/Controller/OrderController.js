@@ -28,14 +28,25 @@ export const PlaceOrder = async (req, res) => {
 export const GetOrdersByService = async (req, res) => {
     try {
         const { ORDERS } = getCollections(req);
+        const db = req.app.locals.db;
+        const RESERVATIONS = db.collection(process.env.RESERVATIONS_C || "Reservations");
         const { serviceId } = req.body;
 
         if (!serviceId) {
             return res.json({ success: false, message: "Service ID is required." });
         }
 
-        const orders = await ORDERS.find({ serviceId: new ObjectId(serviceId) }).sort({ createdAt: -1 }).toArray();
-        res.json({ success: true, orders });
+        const [ordersData, reservationsData] = await Promise.all([
+            ORDERS.find({ serviceId: new ObjectId(serviceId) }).toArray(),
+            RESERVATIONS.find({ serviceId: new ObjectId(serviceId) }).toArray()
+        ]);
+
+        const combined = [
+            ...ordersData.map(o => ({ ...o, type: "Order" })),
+            ...reservationsData.map(r => ({ ...r, type: "Reservation" }))
+        ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        res.json({ success: true, orders: combined });
     } catch (error) {
         console.error("GetOrdersByService error:", error);
         res.json({ success: false, message: "Failed to fetch orders." });

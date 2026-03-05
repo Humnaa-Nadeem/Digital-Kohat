@@ -59,6 +59,7 @@ export const AdminLoginFun = async (req, res) => {
       return res.json({
         success: true,
         role: "admin",
+        ServiceType: firstService.ServiceType,
         ShowSwitchTab: admin.Services.length > 1
       });
     }
@@ -104,6 +105,7 @@ export const AdminLoginFun = async (req, res) => {
     res.json({
       success: true,
       role: "manager",
+      ServiceType: matchedManager.ServiceType,
       ShowSwitchTab: false
     });
 
@@ -798,7 +800,8 @@ export const switchDashBoard = async (req, res) => {
 
     res.json({
       success: true,
-      role: "Admin",
+      role: "admin",
+      ServiceType: selectedService.ServiceType,
       ServiceDta,
       OtherServices
     });
