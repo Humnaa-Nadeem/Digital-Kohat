@@ -36,4 +36,8 @@ SARoutes.post("/ChangePaymentData", AdminMW, SPContFun.ChangePaymentPlan);
 
 SARoutes.post("/DeleteThSAManager", AdminMW, SPContFun.DeleteThSAManager);
 
+// BUSINESS MANAGEMENT ROUTES
+SARoutes.post("/GetBusinessesByStatus", AdminMW, SPContFun.GetBusinessesByStatus);
+SARoutes.post("/UpdateBusinessStatus", AdminMW, SPContFun.UpdateBusinessStatus);
+
 export default SARoutes;

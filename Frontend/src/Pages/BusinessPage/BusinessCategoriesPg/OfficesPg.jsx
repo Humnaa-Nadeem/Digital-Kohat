@@ -9,12 +9,47 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const OfficesPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(OfficesData);
+    const [Cards, setCards] = useState(OfficesData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(OfficesData);
-    let [Cards, setCards] = useState(OfficesData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/offices_companies');
+            if (res.data.success && res.data.profiles.length > 0) {
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id,
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "Read More",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email,
+                        website: p.contactInfo?.website
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "09:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "05:00 PM"
+                    },
+                    isDynamic: true
+                }));
+                setList([...dynamicProfiles, ...OfficesData]);
+                setCards([...dynamicProfiles, ...OfficesData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch office profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -22,7 +57,8 @@ export const OfficesPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? OfficesData.find(item => item.id === parseInt(id)) : null;
+
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>

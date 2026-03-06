@@ -17,6 +17,7 @@ import { EducationSection } from "../SuperAdminComponents/EductionSection/Educti
 import { VerifyTheSuperAdmin } from "../../../../ApiCalls/SuperAdminApiCall";
 import { SAAddManagerForm } from "../SuperAdminComponents/SAAddManagers/SAAddManagers";
 import { FoodSection } from "../SuperAdminComponents/FoodSection/FoodSection";
+import { BusinessSection } from "../SuperAdminComponents/BusinessSection/BusinessSection";
 
 /* ---------------- SIDEBAR CONFIG ---------------- */
 
@@ -123,7 +124,7 @@ export const SuperAdminDashboard = () => {
                 break;
 
             case "Business":
-                content = <div>Business Module</div>;
+                content = <BusinessSection />;
                 break;
 
             case "AddManagers":

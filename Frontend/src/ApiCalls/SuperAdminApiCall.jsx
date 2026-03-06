@@ -365,3 +365,39 @@ export const SAManagerDelete = (catagory, setSAManagers) => {
             console.log("err", err);
         })
 }
+
+// BUSINESS MANAGEMENT API CALLS
+export const GetBusinessesByStatus = (status, setRowData) => {
+    axios.post(`${mainURL}/GetBusinessesByStatus`, { status }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                setRowData(res.data.responseData);
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while fetching business data.");
+        });
+};
+
+export const UpdateBusinessStatus = (id, status, fromCollection, refreshData) => {
+    axios.post(`${mainURL}/UpdateBusinessStatus`, { id, status, fromCollection }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+                refreshData();
+            } else {
+                if (res.data.message === "Not authorized.") {
+                    window.location.href = "/superadmin/login";
+                } else {
+                    toast.error(res.data.message);
+                }
+            }
+        }).catch((err) => {
+            toast.error("An error occurred while updating status.");
+        });
+};

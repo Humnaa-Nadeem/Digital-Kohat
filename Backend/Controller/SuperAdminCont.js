@@ -165,7 +165,10 @@ export const RetriveSuperAdminData = async (req, res) => {
 
 export const CreateEduCataAdmin = async (req, res) => {
     try {
-        if (req.token.role === "SuperAdmin" || (req.token.role === "SAManager" && req.token.AccessTo === "Education")) {
+        const isAuth = req.token.role === "SuperAdmin" ||
+            (req.token.role === "SAManager" && (req.token.AccessTo === "Education" || req.token.AccessTo === "Business"));
+
+        if (isAuth) {
 
             const {
                 AdminName,
@@ -185,10 +188,70 @@ export const CreateEduCataAdmin = async (req, res) => {
             const { ADMINS, NRs } = getCollections(req);
             const db = req.app.locals.db;
 
+            // Handle Business category separately or via existing service collection mapping if updated
+            if (ServiceType === "BUSINESS") {
+                const reqData = await NRs.findOne({
+                    _id: new ObjectId(reqId),
+                    email: AdminEmail,
+                    catagory: "Business"
+                });
+
+                if (!reqData) {
+                    return res.json({ success: false, message: "Business request not found" });
+                }
+
+                // Create Business Admin in Business collection (already handled by common ADMINS collection in some cases, 
+                // but requirement says separate Business collection for data)
+                // However, the rule says "Save the business in the Business collection"
+
+                const Business = (await import("../Models/business/Business.js")).default;
+                const businessHashedPassword = await argon2.hash(reqData.password);
+
+                const newBusiness = new Business({
+                    businessName: ServiceName,
+                    adminEmail: AdminEmail,
+                    adminPassword: businessHashedPassword,
+                    adminName: AdminName,
+                    ownerName: AdminName,
+                    phone: reqData.phonenumber,
+                    whatsapp: reqData.whatsappnumber,
+                    idCard: AdminIDCard,
+                    address: ServiceLocation,
+                    status: "approved",
+                    verified: true,
+                    role: "BUSINESS_ADMIN"
+                });
+
+                const savedBusiness = await newBusiness.save();
+
+                // Create profile shell
+                const BusinessProfile = (await import("../Models/business/BusinessProfile.js")).default;
+                const profileShell = new BusinessProfile({
+                    businessId: savedBusiness._id,
+                    businessName: ServiceName,
+                    contactInfo: {
+                        phone: reqData.phonenumber,
+                        email: AdminEmail,
+                        location: ServiceLocation
+                    },
+                    // placeholders
+                    coverImage: "https://via.placeholder.com/1500x500",
+                    logo: "https://via.placeholder.com/200",
+                    shortDescription: "Welcome to our business",
+                    about: "About our business"
+                });
+                await profileShell.save();
+
+                await NRs.deleteOne({ _id: reqData._id });
+
+                return res.json({ success: true, message: "Business Admin created successfully" });
+            }
+
             const ServiceCollection = SERVICE_COLLECTION(db)[ServiceType];
             if (!ServiceCollection) {
                 return res.json({ success: false, message: "Invalid ServiceType" });
             }
+            // ... (rest of existing logic for Education/Food)
             let admin = await ADMINS.findOne({
                 AdminEmail,
                 IDCard: AdminIDCard,
@@ -277,16 +340,23 @@ export const CreateEduCataAdmin = async (req, res) => {
 
 export const RetriveNewReqs = async (req, res) => {
     try {
-        if (req.token.role === "SuperAdmin" || (req.token.role === "SAManager" && req.token.AccessTo === "Education")) {
+        const isAuth = req.token.role === "SuperAdmin" ||
+            (req.token.role === "SAManager" && (req.token.AccessTo === "Education" || req.token.AccessTo === "Business"));
+
+        if (isAuth) {
             const { NRs } = getCollections(req);
+            const { category } = req.query; // Expect category from frontend
+
+            const query = category ? { catagory: category } : { catagory: "Education" };
 
             const data = await NRs.find(
-                { catagory: "Education", type: "SCHOOL" },
+                query,
                 {
                     projection: {
                         fullname: 1, email: 1, whatsappnumber: 1, address: 1, IDCard: 1, type: 1,
                         language: 1,
-                        phonenumber: 1
+                        phonenumber: 1,
+                        catagory: 1
                     }
                 }
             ).toArray();
@@ -557,6 +627,59 @@ export const ChangePaymentPlan = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+// 🔹 NEW BUSINESS MANAGEMENT FUNCTIONS
+export const GetBusinessesByStatus = async (req, res) => {
+    try {
+        const isAuth = req.token.role === "SuperAdmin" ||
+            (req.token.role === "SAManager" && req.token.AccessTo === "Business");
+
+        if (!isAuth) return res.json({ success: false, message: "Not authorized." });
+
+        const { status } = req.body;
+        const { ADMINS, NRs } = getCollections(req);
+        const Business = (await import("../Models/business/Business.js")).default;
+
+        let responseData = [];
+
+        if (["approved", "suspended"].includes(status)) {
+            // Fetch from Business Collection
+            responseData = await Business.find({ status });
+        } else {
+            // Fetch from NRs Collection
+            responseData = await NRs.find({ catagory: "Business", status }).toArray();
+        }
+
+        res.json({ success: true, responseData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
+
+export const UpdateBusinessStatus = async (req, res) => {
+    try {
+        const isAuth = req.token.role === "SuperAdmin" ||
+            (req.token.role === "SAManager" && req.token.AccessTo === "Business");
+
+        if (!isAuth) return res.json({ success: false, message: "Not authorized." });
+
+        const { id, status, fromCollection } = req.body;
+        const { NRs } = getCollections(req);
+        const Business = (await import("../Models/business/Business.js")).default;
+
+        if (fromCollection === "Business") {
+            await Business.findByIdAndUpdate(id, { status });
+        } else {
+            await NRs.updateOne({ _id: new ObjectId(id) }, { $set: { status } });
+        }
+
+        res.json({ success: true, message: `Status updated to ${status}` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };
 

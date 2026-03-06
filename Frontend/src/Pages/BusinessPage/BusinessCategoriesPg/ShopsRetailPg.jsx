@@ -9,12 +9,49 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const ShopsRetailPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(ShopsData);
+    const [Cards, setCards] = useState(ShopsData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(ShopsData);
-    let [Cards, setCards] = useState(ShopsData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/shops_retail');
+            if (res.data.success && res.data.profiles.length > 0) {
+                // Map backend profiles to match the expected structure of ShopsData
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id, // Use string ID from mongo
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "Read More",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "09:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "10:00 PM"
+                    },
+                    isDynamic: true // Flag to distinguish from static
+                }));
+
+                // Combine with static data but filter out any static ones that might be "duplicates" if we wanted
+                setList([...dynamicProfiles, ...ShopsData]);
+                setCards([...dynamicProfiles, ...ShopsData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch shop profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -22,7 +59,9 @@ export const ShopsRetailPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? ShopsData.find(item => item.id === parseInt(id)) : null;
+
+    // Find item in our combined list
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>

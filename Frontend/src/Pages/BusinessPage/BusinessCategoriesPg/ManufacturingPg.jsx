@@ -8,12 +8,46 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const ManufacturingPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(ManufacturingData);
+    const [Cards, setCards] = useState(ManufacturingData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(ManufacturingData);
-    let [Cards, setCards] = useState(ManufacturingData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/manufacturing_industry');
+            if (res.data.success && res.data.profiles.length > 0) {
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id,
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "Read More",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "08:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "05:00 PM"
+                    },
+                    isDynamic: true
+                }));
+                setList([...dynamicProfiles, ...ManufacturingData]);
+                setCards([...dynamicProfiles, ...ManufacturingData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch manufacturing profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -21,7 +55,8 @@ export const ManufacturingPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? ManufacturingData.find(item => item.id === parseInt(id)) : null;
+
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>

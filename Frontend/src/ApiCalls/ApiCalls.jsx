@@ -82,6 +82,19 @@ export const NewEduCataServiceReq = (data) => {
         })
 }
 
+export const BusinessRegistrationReq = (data) => {
+    axios.post(`${mainURL}/business/auth/register-request`, data)
+        .then((res) => {
+            if (res.data.success) {
+                alert("Business registration request submitted successfully ✅.");
+            } else {
+                alert(res.data.message);
+            }
+        }).catch((err) => {
+            alert("Something went wrong with business registration.");
+        })
+}
+
 export const PlaceOrderApi = (orderData) => {
     return axios.post(`${mainURL}/placeOrder`, orderData);
 }

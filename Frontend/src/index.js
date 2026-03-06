@@ -81,6 +81,8 @@ import { OfficesPg } from './Pages/BusinessPage/BusinessCategoriesPg/OfficesPg';
 import { EventsPg } from './Pages/BusinessPage/BusinessCategoriesPg/EventsPg';
 import { ManufacturingPg } from './Pages/BusinessPage/BusinessCategoriesPg/ManufacturingPg';
 import { FreelancersPg } from './Pages/BusinessPage/BusinessCategoriesPg/FreelancersPg';
+import { BusinessAdminLogin } from './Pages/BusinessPage/BusinessAdminLogin';
+import { BusinessDashboard } from './Pages/DashBoard/BusinessDashboard/BusinessDashboard';
 
 // %%%%%%%%%%% FORMS %%%%%%%%%%%
 import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismRegistration';
@@ -223,6 +225,8 @@ const routes = [
       { path: "events", element: <EventsPg /> },
       { path: "manufacturing", element: <ManufacturingPg /> },
       { path: "freelancers", element: <FreelancersPg /> },
+      { path: "admin-login", element: <BusinessAdminLogin /> },
+      { path: "dashboard", element: <BusinessDashboard /> },
     ],
   },
 

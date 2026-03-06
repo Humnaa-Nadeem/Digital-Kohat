@@ -10,6 +10,8 @@ const handleRedirect = (res) => {
         window.location.href = "/food/fooddashboard";
     } else if (serviceType === "SCHOOL" || serviceType === "COLLEGE") {
         window.location.href = "/edu/dashboard";
+    } else if (res.data.role === "BUSINESS_ADMIN") {
+        window.location.href = "/business/dashboard";
     } else {
         // Default fallback if type is unknown
         window.location.href = "/edu/dashboard";
@@ -42,6 +44,20 @@ export const verifyFoodAdmin = (email, password) => {
         })
         .catch((err) => {
             window.location.href = "/food/admin";
+        })
+}
+
+export const businessLoginApi = (email, password) => {
+    axios.post(`${maniURL}/business/auth/login`, { email, password }, { withCredentials: true })
+        .then((res) => {
+            if (res.data.success) {
+                window.location.href = "/business/dashboard";
+            } else {
+                toast.error(res.data.message);
+            }
+        })
+        .catch((err) => {
+            toast.error("Login failed. Please check your credentials.");
         })
 }
 

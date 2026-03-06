@@ -9,12 +9,46 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const FreelancersPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(FreelancersData);
+    const [Cards, setCards] = useState(FreelancersData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(FreelancersData);
-    let [Cards, setCards] = useState(FreelancersData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/freelancers');
+            if (res.data.success && res.data.profiles.length > 0) {
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id,
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "View Profile",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "09:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "06:00 PM"
+                    },
+                    isDynamic: true
+                }));
+                setList([...dynamicProfiles, ...FreelancersData]);
+                setCards([...dynamicProfiles, ...FreelancersData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch freelancer profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -22,7 +56,8 @@ export const FreelancersPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? FreelancersData.find(item => item.id === parseInt(id)) : null;
+
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>
