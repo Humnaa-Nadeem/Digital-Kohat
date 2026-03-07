@@ -19,4 +19,5 @@ const BusinessProfileSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model("BusinessProfile", BusinessProfileSchema);
+export default mongoose.model("BusinessProfile", BusinessProfileSchema, "businessprofiles");
+

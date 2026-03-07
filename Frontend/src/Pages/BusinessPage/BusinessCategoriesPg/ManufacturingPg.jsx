@@ -1,4 +1,5 @@
 import "./BusinessCategories.css";
+import axios from "axios";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

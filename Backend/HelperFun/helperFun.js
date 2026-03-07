@@ -39,5 +39,8 @@ export const getCollections = (req) => {
         SCHOOLS: db.collection(process.env.S_C),
         FOODS: db.collection(process.env.FOOD_C || "Food"),
         ORDERS: db.collection(process.env.ORDERS_C || "Orders"),
+        BUSINESSES: db.collection(process.env.BUSINESS_C || "businesses"),
+        BUSINESS_PROFILES: db.collection(process.env.BUSINESS_CAT_C || "businessprofiles"),
+        BUSINESS_REQS: db.collection(process.env.BUSINESS_REQ_C || "NewServiceProviderRequests"),
     };
 };
