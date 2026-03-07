@@ -71,6 +71,9 @@ export const OfficesPg = () => {
                         <button className="btn-back" onClick={() => navigate(-1)}>← Back to List</button>
 
                         <div className="detail-header" style={{ backgroundImage: `url(${selectedItem.coverImage || selectedItem.img})` }}>
+                            {selectedItem.img && (
+                                <img src={selectedItem.img} alt="Business Logo" className="detail-logo" />
+                            )}
                             <div className="detail-title-block">
                                 <h1>{selectedItem.name}</h1>
                                 <div className="detail-meta">

@@ -25,7 +25,12 @@ export const BusinessProfile = () => {
     const [profile, setProfile] = useState(initialState);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [logoFile, setLogoFile] = useState(null);
+    const [coverFile, setCoverFile] = useState(null);
+    const [logoPreview, setLogoPreview] = useState("");
+    const [coverPreview, setCoverPreview] = useState("");
     const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -33,8 +38,11 @@ export const BusinessProfile = () => {
                 const res = await axios.get(`/business/profile/get-profile`, { withCredentials: true });
                 if (res.data.success && res.data.profile) {
                     setProfile(res.data.profile);
+                    setLogoPreview(res.data.profile.logo || "");
+                    setCoverPreview(res.data.profile.coverImage || "");
                 }
             } catch (err) {
+
                 toast.error("Failed to load profile");
             } finally {
                 setLoading(false);
@@ -56,15 +64,55 @@ export const BusinessProfile = () => {
         }
     };
 
+    const handleFileChange = (e, type) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (type === 'logo') {
+                setLogoFile(file);
+                setLogoPreview(URL.createObjectURL(file));
+            } else if (type === 'coverImage') {
+                setCoverFile(file);
+                setCoverPreview(URL.createObjectURL(file));
+            }
+        }
+    };
+
     const handleUpdate = async (e) => {
         e.preventDefault();
         if (!profile.category) {
             return toast.error("Please select a business category");
         }
         setSaving(true);
+
         try {
-            const res = await axios.put(`/business/profile/update-profile`, profile, { withCredentials: true });
+            const formData = new FormData();
+            formData.append('businessName', profile.businessName);
+            formData.append('category', profile.category);
+            formData.append('shortDescription', profile.shortDescription);
+            formData.append('about', profile.about);
+            formData.append('services', profile.services);
+            formData.append('openingHours', profile.openingHours);
+            formData.append('contactInfo', JSON.stringify(profile.contactInfo));
+
+            if (logoFile) {
+                formData.append('logo', logoFile);
+            } else {
+                formData.append('logo', profile.logo);
+            }
+
+            if (coverFile) {
+                formData.append('coverImage', coverFile);
+            } else {
+                formData.append('coverImage', profile.coverImage);
+            }
+
+            const res = await axios.put(`/business/profile/update-profile`, formData, {
+                withCredentials: true,
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+
             if (res.data.success) {
+
                 toast.success("Profile saved successfully");
                 // Construct the link based on category
                 const categoryLink = profile.category.split('_')[0]; // e.g., shops_retail -> shops
@@ -93,17 +141,18 @@ export const BusinessProfile = () => {
                     <h3 className="fd-form-section-title"><FiImage /> Business Images</h3>
                     <div className="fd-grid-2">
                         <div className="fd-form-group">
-                            <label>Cover Image URL</label>
-                            <input type="text" className="fd-input" name="coverImage" value={profile.coverImage} onChange={handleChange} placeholder="https://example.com/cover.jpg" required />
-                            {profile.coverImage && <div className="biz-img-preview cover"><img src={profile.coverImage} alt="Cover Preview" /></div>}
+                            <label>Cover Image</label>
+                            <input type="file" className="fd-input" accept="image/*" onChange={(e) => handleFileChange(e, 'coverImage')} />
+                            {coverPreview && <div className="biz-img-preview cover"><img src={coverPreview} alt="Cover Preview" /></div>}
                         </div>
                         <div className="fd-form-group">
-                            <label>Logo URL</label>
-                            <input type="text" className="fd-input" name="logo" value={profile.logo} onChange={handleChange} placeholder="https://example.com/logo.png" required />
-                            {profile.logo && <div className="biz-img-preview logo"><img src={profile.logo} alt="Logo Preview" /></div>}
+                            <label>Logo / Profile Photo</label>
+                            <input type="file" className="fd-input" accept="image/*" onChange={(e) => handleFileChange(e, 'logo')} />
+                            {logoPreview && <div className="biz-img-preview logo"><img src={logoPreview} alt="Logo Preview" /></div>}
                         </div>
                     </div>
                 </div>
+
 
                 {/* Section: Basic Info */}
                 <div className="fd-card">

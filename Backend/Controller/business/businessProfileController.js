@@ -2,6 +2,8 @@ import BusinessProfile from "../../Models/business/BusinessProfile.js";
 import Product from "../../Models/business/Product.js";
 import cloudinary from "../../Config/cloudinary.js";
 import { getPublicIdFromUrl } from "../../HelperFun/helperFun.js";
+import { uploadToCloudinary } from "../../utils/cloudinary.js";
+
 
 
 export const getMyBusinessProfile = async (req, res) => {
@@ -46,9 +48,48 @@ export const getBusinessProfile = async (req, res) => {
 export const updateBusinessProfile = async (req, res) => {
     try {
         const businessId = req.business.id;
-        const profileData = req.body;
+        let profileData = { ...req.body };
+
+        // Parse contactInfo if stringified by FormData
+        if (typeof profileData.contactInfo === 'string') {
+            profileData.contactInfo = JSON.parse(profileData.contactInfo);
+        }
 
         let profile = await BusinessProfile.findOne({ businessId });
+
+        // Handle Image Uploads
+        let logoUrl = profile ? profile.logo : "";
+        let coverImageUrl = profile ? profile.coverImage : "";
+
+        if (req.files) {
+            if (req.files.logo && req.files.logo.length > 0) {
+                if (profile && profile.logo) {
+                    const oldPublicId = getPublicIdFromUrl(profile.logo);
+                    if (oldPublicId) await cloudinary.uploader.destroy(oldPublicId).catch(() => { });
+                }
+                const uploadResult = await uploadToCloudinary(req.files.logo[0], "business_profiles");
+                logoUrl = uploadResult.secure_url;
+            } else if (req.body.logo) {
+                logoUrl = req.body.logo;
+            }
+
+            if (req.files.coverImage && req.files.coverImage.length > 0) {
+                if (profile && profile.coverImage) {
+                    const oldPublicId = getPublicIdFromUrl(profile.coverImage);
+                    if (oldPublicId) await cloudinary.uploader.destroy(oldPublicId).catch(() => { });
+                }
+                const uploadResult = await uploadToCloudinary(req.files.coverImage[0], "business_profiles");
+                coverImageUrl = uploadResult.secure_url;
+            } else if (req.body.coverImage) {
+                coverImageUrl = req.body.coverImage;
+            }
+        } else {
+            if (req.body.logo) logoUrl = req.body.logo;
+            if (req.body.coverImage) coverImageUrl = req.body.coverImage;
+        }
+
+        profileData.logo = logoUrl;
+        profileData.coverImage = coverImageUrl;
 
         if (profile) {
             // Update existing profile
@@ -67,6 +108,7 @@ export const updateBusinessProfile = async (req, res) => {
         }
 
         res.json({ success: true, message: "Profile updated successfully", profile });
+
     } catch (err) {
         res.status(500).json({ success: false, message: "Server error", error: err.message });
     }
