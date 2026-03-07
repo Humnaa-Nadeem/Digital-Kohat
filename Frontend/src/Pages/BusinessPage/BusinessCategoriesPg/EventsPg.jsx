@@ -34,8 +34,10 @@ export const EventsPg = () => {
                         opening: p.openingHours ? p.openingHours.split('-')[0] : "10:00 AM",
                         closing: p.openingHours ? p.openingHours.split('-')[1] : "12:00 AM"
                     },
+                    products: p.products || [],
                     isDynamic: true
                 }));
+
                 setList([...dynamicProfiles, ...EventsData]);
                 setCards([...dynamicProfiles, ...EventsData]);
             }

@@ -35,8 +35,10 @@ export const ShopsRetailPg = () => {
                         opening: p.openingHours ? p.openingHours.split('-')[0] : "09:00 AM",
                         closing: p.openingHours ? p.openingHours.split('-')[1] : "10:00 PM"
                     },
+                    products: p.products || [],
                     isDynamic: true // Flag to distinguish from static
                 }));
+
 
                 // Combine with static data but filter out any static ones that might be "duplicates" if we wanted
                 setList([...dynamicProfiles, ...ShopsData]);

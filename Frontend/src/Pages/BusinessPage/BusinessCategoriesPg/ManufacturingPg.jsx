@@ -34,8 +34,10 @@ export const ManufacturingPg = () => {
                         opening: p.openingHours ? p.openingHours.split('-')[0] : "08:00 AM",
                         closing: p.openingHours ? p.openingHours.split('-')[1] : "05:00 PM"
                     },
+                    products: p.products || [],
                     isDynamic: true
                 }));
+
                 setList([...dynamicProfiles, ...ManufacturingData]);
                 setCards([...dynamicProfiles, ...ManufacturingData]);
             }

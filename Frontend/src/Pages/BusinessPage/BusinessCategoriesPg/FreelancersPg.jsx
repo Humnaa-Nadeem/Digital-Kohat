@@ -34,8 +34,10 @@ export const FreelancersPg = () => {
                         opening: p.openingHours ? p.openingHours.split('-')[0] : "09:00 AM",
                         closing: p.openingHours ? p.openingHours.split('-')[1] : "06:00 PM"
                     },
+                    products: p.products || [],
                     isDynamic: true
                 }));
+
                 setList([...dynamicProfiles, ...FreelancersData]);
                 setCards([...dynamicProfiles, ...FreelancersData]);
             }

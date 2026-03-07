@@ -4,8 +4,9 @@ export const getBusinessOrders = async (req, res) => {
     try {
         const businessId = req.business.id;
         const orders = await Order.find({ businessId }).sort({ createdAt: -1 });
-        res.json({ success: true, data: orders });
+        res.json({ success: true, orders });
     } catch (err) {
+
         res.status(500).json({ success: false, message: "Server error", error: err.message });
     }
 };
