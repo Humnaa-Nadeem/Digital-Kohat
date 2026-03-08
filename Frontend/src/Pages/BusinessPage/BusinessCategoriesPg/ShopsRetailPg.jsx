@@ -12,6 +12,7 @@ export const ShopsRetailPg = () => {
     const [List, setList] = useState(ShopsData);
     const [Cards, setCards] = useState(ShopsData);
     const [loading, setLoading] = useState(true);
+    const [businessReviews, setBusinessReviews] = useState([]);
 
     const fetchCategoryProfiles = async () => {
         try {
@@ -20,6 +21,7 @@ export const ShopsRetailPg = () => {
                 // Map backend profiles to match the expected structure of ShopsData
                 const dynamicProfiles = res.data.profiles.map(p => ({
                     id: p._id, // Use string ID from mongo
+                    businessId: p.businessId, // needed for fetching reviews
                     name: p.businessName,
                     img: p.logo,
                     desc: p.shortDescription,
@@ -64,6 +66,25 @@ export const ShopsRetailPg = () => {
 
     // Find item in our combined list
     const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
+
+    // Fetch reviews for selected business when it's a dynamic (backend) business
+    useEffect(() => {
+        if (selectedItem && selectedItem.isDynamic && selectedItem.businessId) {
+            axios.get(`/business/reviews/public/${selectedItem.businessId}`)
+                .then(res => {
+                    if (res.data.success) setBusinessReviews(res.data.data);
+                })
+                .catch(() => setBusinessReviews([]));
+        } else {
+            setBusinessReviews([]);
+        }
+    }, [selectedItem?.id]);
+
+    // Get reviews for a specific product by name
+    const getProductReviews = (productName) => {
+        const match = businessReviews.find(p => p.productName === productName);
+        return match ? match.reviews : [];
+    };
 
     return (
         <>
@@ -115,7 +136,7 @@ export const ShopsRetailPg = () => {
                                             gap: '20px'
                                         }}>
                                             {selectedItem.products.map((product) => (
-                                                <ProductCard key={product.id} product={product} />
+                                                <ProductCard key={product.id} product={product} reviews={getProductReviews(product.title)} />
                                             ))}
                                         </div>
                                     </div>

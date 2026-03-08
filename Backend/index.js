@@ -10,8 +10,10 @@ import SACAR from "./Router/SchlAndColDshBrdRouts.js";
 import SARoutes from "./Router/SuperAdminRouter.js";
 import businessAuthRoutes from "./routes/business/businessAuthRoutes.js";
 import businessProfileRoutes from "./routes/business/businessProfileRoutes.js";
-import productRoutes from "./routes/business/productRoutes.js";
-import orderRoutes from "./routes/business/orderRoutes.js";
+import businessProductRoutes from './routes/business/productRoutes.js';
+import businessOrderRoutes from './routes/business/orderRoutes.js';
+import reviewRoutes from './routes/business/reviewRoutes.js';
+import customerAuthRoutes from './routes/business/customerAuthRoutes.js';
 import { connectMongoClient } from "./Db/mongoClient.js";
 import { connectMongoose } from "./Db/mongoose.js";
 import { ensureSuperAdmin } from "./HelperFun/initSuperAdmin.js";
@@ -41,8 +43,10 @@ app.use(SACAR);
 app.use(SARoutes);
 app.use("/business/auth", businessAuthRoutes);
 app.use("/business/profile", businessProfileRoutes);
-app.use("/business/products", productRoutes);
-app.use("/business/orders", orderRoutes);
+app.use("/business/products", businessProductRoutes);
+app.use("/business/orders", businessOrderRoutes);
+app.use("/business/reviews", reviewRoutes);
+app.use("/customer/auth", customerAuthRoutes);
 
 
 app.listen(PORT, () => {

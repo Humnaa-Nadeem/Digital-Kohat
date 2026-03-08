@@ -15,6 +15,8 @@ import {
 import { BusinessProfile } from "./BusinessProfile";
 import { BusinessProducts } from "./BusinessProducts";
 import { BusinessOrders } from "./BusinessOrders";
+import { BusinessReviews } from "./BusinessReviews";
+import { FiStar } from "react-icons/fi";
 
 export const BusinessDashboard = () => {
     const [activeTab, setActiveTab] = useState("Dashboard");
@@ -61,6 +63,8 @@ export const BusinessDashboard = () => {
                 return <BusinessProducts />;
             case "Orders":
                 return <BusinessOrders />;
+            case "Reviews":
+                return <BusinessReviews />;
             case "Settings":
                 return <div className="biz-card"><h2>Settings</h2><p>Account settings and security.</p></div>;
             default:
@@ -104,6 +108,12 @@ export const BusinessDashboard = () => {
                         onClick={() => setActiveTab("Orders")}
                     >
                         <FiShoppingBag /> <span>Orders</span>
+                    </div>
+                    <div
+                        className={`biz-nav-item ${activeTab === "Reviews" ? "active" : ""}`}
+                        onClick={() => setActiveTab("Reviews")}
+                    >
+                        <FiStar /> <span>Reviews</span>
                     </div>
                     <div
                         className={`biz-nav-item ${activeTab === "Settings" ? "active" : ""}`}

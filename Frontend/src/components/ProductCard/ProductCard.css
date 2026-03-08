@@ -34,22 +34,9 @@
 }
 
 .product-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(50, 181, 126, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display: none;
 }
 
-.product-card:hover .product-overlay {
-    opacity: 1;
-}
 
 .order-btn {
     background: #fff;
@@ -106,27 +93,35 @@
     color: #32b57e;
 }
 
-.order-btn-mobile {
-    display: none;
+.card-order-btn {
     background: #32b57e;
     color: #fff;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-@media (max-width: 768px) {
-    .product-overlay {
-        display: none;
-    }
+.card-order-btn:hover {
+    background: #289a6a;
+}
 
-    .order-btn-mobile {
-        display: block;
-    }
+.card-reviews-btn {
+    background: transparent;
+    color: #f5a623;
+    border: 1px solid #f5a623;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
 
-    .product-image {
-        height: 150px;
-    }
+.card-reviews-btn:hover {
+    background: #f5a623;
+    color: #fff;
 }

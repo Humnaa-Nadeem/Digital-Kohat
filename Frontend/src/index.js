@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
+import { CustomerAuthProvider } from './Store/CustomerAuthContext.jsx';
 
 // ================================
 //           IMPORTS
@@ -83,6 +84,9 @@ import { ManufacturingPg } from './Pages/BusinessPage/BusinessCategoriesPg/Manuf
 import { FreelancersPg } from './Pages/BusinessPage/BusinessCategoriesPg/FreelancersPg';
 import { BusinessAdminLogin } from './Pages/BusinessPage/BusinessAdminLogin';
 import { BusinessDashboard } from './Pages/DashBoard/BusinessDashboard/BusinessDashboard';
+import { TrackOrder } from './Pages/BusinessPage/TrackOrder/TrackOrder';
+import { CustomerLogin } from './components/CustomerAuth/CustomerLogin';
+import { CustomerDashboard } from './Pages/CustomerDashboard/CustomerDashboard';
 
 // %%%%%%%%%%% FORMS %%%%%%%%%%%
 import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismRegistration';
@@ -226,12 +230,32 @@ const routes = [
       { path: "manufacturing", element: <ManufacturingPg /> },
       { path: "freelancers", element: <FreelancersPg /> },
       { path: "admin-login", element: <BusinessAdminLogin /> },
-      { path: "dashboard", element: <BusinessDashboard /> },
+      {
+        path: "dashboard",
+        element: <BusinessDashboard />,
+        children: [
+          {
+            path: "track-order",
+            element: <CustomerDashboard />
+          }
+        ]
+      },
     ],
   },
 
   // Page Not Found
   { path: "*", element: <PageNotFoundPg /> },
+  {
+    path: "/customer/login",
+    element: <CustomerLogin />
+  },
+  {
+    path: "/customer/dashboard",
+    element: <CustomerDashboard />
+  },
+  {
+    path: "/api/payfast/return", element: <PageNotFoundPg />
+  },
 ];
 
 const isVercel = (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app'));
@@ -242,6 +266,10 @@ const allRoutes = isVercel ? createHashRouter(routes) : createBrowserRouter(rout
 // Render App
 // ================================
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<RouterProvider router={allRoutes} />);
+root.render(
+  <CustomerAuthProvider>
+    <RouterProvider router={allRoutes} />
+  </CustomerAuthProvider>
+);
 
 reportWebVitals();

@@ -34,7 +34,8 @@ export const getBusinessProfile = async (req, res) => {
             title: p.productName,
             description: p.shortDescription,
             price: p.price,
-            image: p.productImage
+            image: p.productImage,
+            businessId: p.businessId
         }));
 
         res.json({ success: true, data: profileObj });
@@ -128,7 +129,8 @@ export const getProfilesByCategory = async (req, res) => {
                 title: p.productName,
                 description: p.shortDescription,
                 price: p.price,
-                image: p.productImage
+                image: p.productImage,
+                businessId: p.businessId
             }));
 
             return pObj;
