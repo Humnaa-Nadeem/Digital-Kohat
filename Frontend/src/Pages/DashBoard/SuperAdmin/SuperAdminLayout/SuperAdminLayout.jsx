@@ -13,9 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../../../../components/navbar/Navbar";
 import { SuperAdminHomeSec } from "../SuperAdminComponents/HomeSection/SuprAdminHomeSec";
 import { EducationSection } from "../SuperAdminComponents/EductionSection/EductionSection";
+import { FoodSection } from "../SuperAdminComponents/FoodSection/FoodSection";
+import { BusinessSection } from "../SuperAdminComponents/BusinessSection/BusinessSection";
 import { SAAddManagerForm } from "../SuperAdminComponents/SAAddManagers/SAAddManagers";
 import { VerifyTheSuperAdmin, GetEducationNotificationCounts } from "../../../../ApiCalls/SuperAdminApiCall";
 import { socket } from "../Socket";
+
+/* ---------------- SIDEBAR CONFIG ---------------- */
 
 const SIDEBAR_ITEMS = [
     { key: "Home", title: "Home", tab: "", icon: <FiHome /> },
@@ -28,7 +32,7 @@ const SIDEBAR_ITEMS = [
 
 const getAllowedSidebarItems = (role) => {
     if (!role) return [];
-    if (role === "All") return SIDEBAR_ITEMS;
+    if (role === "SUPER_ADMIN" || role === "All") return SIDEBAR_ITEMS;
     return SIDEBAR_ITEMS.filter((item) => item.key === "Home" || item.key === role);
 };
 
@@ -46,7 +50,6 @@ export const SuperAdminDashboard = () => {
 
     useEffect(() => {
         audioRef.current.volume = 1;
-
         const unlockAudio = () => {
             audioRef.current.play().then(() => {
                 audioRef.current.pause();
@@ -55,7 +58,6 @@ export const SuperAdminDashboard = () => {
             }).catch(() => {});
             window.removeEventListener("click", unlockAudio);
         };
-
         window.addEventListener("click", unlockAudio);
         return () => window.removeEventListener("click", unlockAudio);
     }, []);
@@ -93,26 +95,20 @@ export const SuperAdminDashboard = () => {
         const notificationHandler = (payload) => {
             setNotifications((prev) => [payload, ...prev]);
 
-            let tab = "";
             if (payload?.type === "NEW_ADMISSION_REQUEST") {
-                tab = "Education";
                 setEduNotifCounts(prev => ({ ...prev, admissions: prev.admissions + 1 }));
             } else if (payload?.type === "NEW_EDU_SERVICE_REQUEST") {
-                tab = "Education";
                 setEduNotifCounts(prev => ({ ...prev, requests: prev.requests + 1 }));
             } else if (payload?.type === "NEW_DOCTOR_REQUEST") {
-                tab = "Health";
                 setTabNotifCounts((prev) => ({
                     ...prev,
-                    [tab]: (prev[tab] || 0) + 1
+                    Health: (prev.Health || 0) + 1
                 }));
             }
-
             playNotificationSound();
         };
 
         socket.on("new_notification", notificationHandler);
-
         return () => {
             socket.off("new_notification", notificationHandler);
             socket.disconnect();
@@ -128,51 +124,76 @@ export const SuperAdminDashboard = () => {
 
     const sidebarItems = getAllowedSidebarItems(role);
 
+    /* -------- CONTENT RENDERING -------- */
     let content = null;
-    switch (currentTab) {
-        case "":
-            content = <SuperAdminHomeSec />;
-            break;
-        case "Education":
-            content = <EducationSection notifCounts={eduNotifCounts} setEduNotifCounts={setEduNotifCounts} />;
-            break;
-        case "Health":
-            content = "Health Module";
-            break;
-        case "AddManagers":
-            content = (
-                <SAAddManagerForm
-                    SuperAdminEmail={superAdminEmail}
-                    SAManagers={SAManagers}
-                    setSAManagers={setSAManagers}
-                />
-            );
-            break;
-        default:
-            content = <div className="SA_empty_state">Welcome. Please select a module.</div>;
-    }
 
+    // Block unauthorized content for managers
+    const isAuthorized = role === "SUPER_ADMIN" || role === "All" || currentTab === "" || currentTab === role;
+
+    if (!isAuthorized) {
+        content = (
+            <div className="SA_empty_state">
+                You are not authorized to access this module.
+            </div>
+        );
+    } else {
+        switch (currentTab) {
+            case "":
+                content = <SuperAdminHomeSec />;
+                break;
+            case "Education":
+                content = <EducationSection notifCounts={eduNotifCounts} setEduNotifCounts={setEduNotifCounts} />;
+                break;
+            case "Restaurant":
+                content = <FoodSection />;
+                break;
+            case "Health":
+                content = <div className="SA_empty_state">Health Module Coming Soon</div>;
+                break;
+            case "Business":
+                content = <BusinessSection />;
+                break;
+            case "AddManagers":
+                content = (
+                    <SAAddManagerForm
+                        SuperAdminEmail={superAdminEmail}
+                        SAManagers={SAManagers}
+                        setSAManagers={setSAManagers}
+                    />
+                );
+                break;
+            default:
+                content = <div className="SA_empty_state">Welcome. Please select a module.</div>;
+        }
+    }
 
     return (
         <div className="SA_main_wrapper">
             <header><Navbar variant={"SuperAdmin"} /></header>
             <main className="SA_layout">
                 <aside className="SA_sidebar">
+                    <div className="SA_brand_mark" onClick={() => setCurrentTab("")}>
+                        DK
+                    </div>
                     <nav className="SA_side_nav">
-                        {sidebarItems.map((item) => (
-                            <li
-                                key={item.key}
-                                title={item.title}
-                                className={currentTab === item.tab ? "active" : ""}
-                                onClick={() => handleTabClick(item.tab)}
-                                style={{ position: "relative" }}
-                            >
-                                {item.icon}
-                                {tabNotifCounts[item.tab] > 0 && (
-                                    <span className="SA_notif_badge">{tabNotifCounts[item.tab]}</span>
-                                )}
-                            </li>
-                        ))}
+                        {sidebarItems.length > 0 ? (
+                            sidebarItems.map((item) => (
+                                <li
+                                    key={item.key}
+                                    title={item.title}
+                                    className={currentTab === item.tab ? "active" : ""}
+                                    onClick={() => handleTabClick(item.tab)}
+                                    style={{ position: "relative" }}
+                                >
+                                    {item.icon}
+                                    {tabNotifCounts[item.tab] > 0 && (
+                                        <span className="SA_notif_badge">{tabNotifCounts[item.tab]}</span>
+                                    )}
+                                </li>
+                            ))
+                        ) : (
+                            <div className="SA_sidebar_loading">...</div>
+                        )}
                     </nav>
                 </aside>
                 <div className="SA_content_main">{content}</div>
@@ -180,3 +201,4 @@ export const SuperAdminDashboard = () => {
         </div>
     );
 };
+

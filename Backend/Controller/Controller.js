@@ -1,5 +1,6 @@
 import JWT from "jsonwebtoken";
 import argon2 from "argon2";
+<<<<<<< HEAD
 import { ObjectId } from "mongodb";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 import { sendOtpEmail } from "../utils/sendOtpEmail.js";
@@ -9,6 +10,12 @@ import { Users } from "../Models/User.js";
 import { UserOtpVerifications } from "../Models/UserOTPVerification.js";
 import { selectCollection } from "../HelperFun/helperFun.js";
 import { checkPlanLimit, validatePlanFeature } from "../utils/planValidation.js";
+=======
+const schoolColl = db.collection(process.env.S_C);
+const foodColl = db.collection(process.env.FOOD_C);
+const AdmnColl = db.collection(process.env.A_C);
+const NRs = db.collection(process.env.NSPR_C); //NR => New Requests
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 
 export const RequestRegisterOtp = async (req, res) => {
     try {
@@ -130,6 +137,7 @@ export const RequestRegisterOtp = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
 export const VerifyRegisterOtp = async (req, res) => {
     try {
 
@@ -229,12 +237,72 @@ export const VerifyRegisterOtp = async (req, res) => {
         console.error("VerifyRegisterOtp error:", error);
 
         return res.json({
+=======
+// Getting all Food Card data
+export const GettingFoodCrdDta = async (req, res) => {
+    try {
+        const services = await foodColl.find(
+            { Status: true },
+            {
+                projection: {
+                    ServiceName: 1,
+                    Type: 1,
+                    aboutImage: 1,
+                    ratingData: 1,
+                    about: 1,
+                    cuisine: 1,
+                    priceRange: 1,
+                    deliveryAvailable: 1
+                }
+            }
+        ).toArray();
+        const approvedServices = [];
+
+        for (const service of services) {
+            const approvedAdmin = await AdmnColl.findOne(
+                {
+                    Verified: true,
+                    "Services.ServiceId": new ObjectId(service._id)
+                },
+                {
+                    projection: { _id: 1 }
+                }
+            );
+
+            if (approvedAdmin) {
+                approvedServices.push(service);
+            }
+        }
+
+        const serviceCards = approvedServices.map(service => ({
+            img: service.aboutImage || "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
+            InstName: service.ServiceName,
+            serviceType: service.Type,
+            Desc: service.about,
+            rating: service.ratingData ? (service.ratingData.reduce((a, b) => a + b, 0) / service.ratingData.length).toFixed(1) : "4.5",
+            id: service._id,
+            cuisine: service.cuisine || "Multi-cuisine",
+            priceRange: service.priceRange || "$$",
+            deliveryAvailable: service.deliveryAvailable || true
+        }));
+
+        res.json({
+            success: true,
+            serviceCards,
+            message: "Alhumdulilah, Food Data Fetched ......"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.json({
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
             success: false,
             message: error.message
         });
     }
 };
 
+<<<<<<< HEAD
 export const LoginUser = async (req, res) => {
     try {
 
@@ -476,6 +544,8 @@ export const GettingInstCrdDta = async (req, res) => {
     }
 };
 
+=======
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 // Getting School Whole data
 export const GettingServiceWholeData = async (req, res) => {
     try {
@@ -566,9 +636,114 @@ export const GettingServiceWholeData = async (req, res) => {
     }
 };
 
-// Changing the School Rating 
+export const GettingFoodWholeData = async (req, res) => {
+    try {
+        const { FoodId } = req.body;
+        if (!FoodId || FoodId.length !== 24) {
+            return res.json({ success: false, message: "Invalid Food ID provided." });
+        }
+
+        const adminVerified = await AdmnColl.findOne(
+            { "Services.ServiceId": new ObjectId(FoodId) },
+            { projection: { Verified: 1, Role: 1 } }
+        );
+
+        if (adminVerified?.Role === "ADMIN" && adminVerified?.Verified) {
+            let [serviceData] = await foodColl
+                .find({ _id: new ObjectId(FoodId), Status: true })
+                .toArray();
+
+            if (serviceData) {
+                res.json({
+                    success: true,
+                    serviceData: {
+                        id: serviceData._id,
+                        bannerUrl: serviceData.bannerUrl || serviceData.aboutImage,
+                        type: serviceData.Type,
+                        name: serviceData.ServiceName || serviceData.name,
+                        tagline: serviceData.tagline || "Fresh & Delicious",
+                        about: serviceData.about,
+                        aboutImage: serviceData.aboutImage,
+                        menu: serviceData.menu || [],
+                        categorizedMenu: serviceData.categorizedMenu || [],
+                        quickInfo: {
+                            basicProfile: {
+                                name: serviceData.ServiceName || serviceData.name,
+                                location: serviceData.quickInfo?.basicProfile?.location || serviceData.location || "Kohat, KPK",
+                                type: serviceData.Type || "Restaurant"
+                            },
+                            timings: serviceData.timings || serviceData.quickInfo?.timings || { opening: "10:00 AM - 11:00 PM" },
+                            facilities: serviceData.quickInfo?.facilities || serviceData.facilities || ["Dine-in", "Takeaway", "Delivery"]
+                        },
+                        contact: serviceData.contact || { phone: "N/A", email: "N/A" },
+                        deliveryAvailability: serviceData.deliveryAvailability || "Available",
+                        ratingData: serviceData.ratingData || [],
+                        detailedReviews: serviceData.detailedReviews || [],
+                        promotions: serviceData.promotions || [],
+                        reportCount: serviceData.reportCount || 0,
+                        reportStatus: serviceData.reportStatus || "Active",
+                        reports: serviceData.reports || [],
+                    },
+                    message: "Alhumdulilah Food Data Fetched ......"
+                });
+            } else {
+                res.json({
+                    success: false,
+                    serviceData: null,
+                    message: "Food service data not found"
+                });
+            }
+        } else {
+            res.json({
+                success: false,
+                serviceData: null,
+                message: "Service is under process"
+            });
+        }
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+export const ReportServiceLanding = async (req, res) => {
+    try {
+        const { id, reason, details, reporterName } = req.body;
+        const ip = (req.socket?.remoteAddress || req.ip).replace("::ffff:", "");
+
+        const report = {
+            id: new ObjectId(),
+            reporterName: reporterName || "Anonymous",
+            reason,
+            details,
+            ip,
+            timestamp: new Date(),
+            status: "Pending"
+        };
+
+        let food = await foodColl.findOne({ _id: new ObjectId(id) });
+        if (food) {
+            await foodColl.updateOne(
+                { _id: new ObjectId(id) },
+                {
+                    $push: { reports: report },
+                    $inc: { reportCount: 1 }
+                }
+            );
+            return res.json({ success: true, message: "Report submitted successfully. We will investigate." });
+        }
+        return res.json({ success: false, message: "Service not found." });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+};
+
+// Changing the Service Rating and adding Reviews
 export const ChangeRatingData = async (req, res) => {
     try {
+<<<<<<< HEAD
 
         const { rating, id, coll } = req.body;
         const userId = req.token.userId;
@@ -583,6 +758,57 @@ export const ChangeRatingData = async (req, res) => {
                 message: "Invalid data or not logged in"
             });
         }
+=======
+        let { ratingData, id } = req.body;
+        const ip = (req.socket?.remoteAddress || req.ip).replace("::ffff:", "");
+
+        // Original School Flow: If it's a school, use $set
+        let school = await schoolColl.findOne({ _id: new ObjectId(id) });
+        if (school) {
+            let OldRatedIPsArr = school.RatedIPs || [];
+            if (OldRatedIPsArr.includes(ip)) {
+                return res.json({ success: false, message: "Your rating is added already" });
+            }
+            OldRatedIPsArr.push(ip);
+            await schoolColl.updateOne(
+                { _id: new ObjectId(id) },
+                { $set: { RatedIPs: OldRatedIPsArr, ratingData } }
+            );
+            return res.json({ success: true, message: "Rating submitted successfully!" });
+        }
+
+        // New Food Flow: If it's food, use $push for multi-reviews
+        let food = await foodColl.findOne({ _id: new ObjectId(id) });
+        if (food) {
+            let OldRatedIPsArr = food.RatedIPs || [];
+            if (OldRatedIPsArr.includes(ip)) {
+                return res.json({ success: false, message: "Your review is added already." });
+            }
+            OldRatedIPsArr.push(ip);
+
+            const updateQuery = {
+                $set: { RatedIPs: OldRatedIPsArr },
+                $push: { ratingData: ratingData }
+            };
+
+            // If rating is bad (1 or 2), increment report count
+            if (ratingData.rating <= 2) {
+                updateQuery.$inc = { reportCount: 1 };
+            }
+
+            await foodColl.updateOne(
+                { _id: new ObjectId(id) },
+                updateQuery
+            );
+            return res.json({ success: true, message: "Review submitted successfully!" });
+        }
+
+        return res.json({ success: false, message: "Service not found." });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 
         const ratingNumber = Number(rating);
 
@@ -735,6 +961,7 @@ export const ChangeRatingData = async (req, res) => {
 
 export const NewEduCataServiceRequest = async (req, res) => {
     try {
+<<<<<<< HEAD
 
         const {
             email,
@@ -872,6 +1099,33 @@ export const NewEduCataServiceRequest = async (req, res) => {
             success: false,
             message: "Something went wrong."
         });
+=======
+        let RequestExsist = await NRs.findOne({ email: req.body.email, fullname: req.body.fullname, phonenumber: req.body.phonenumber, IDCard: req.body.IDCard }, { projection: { password: 1 } });
+        let sameSP = false;
+        if (RequestExsist) {
+            sameSP = await argon2.verify(RequestExsist.password, req.body.password);
+        }
+        if (sameSP) {
+            return res.json({ success: false, message: "Request already exists." });
+        }
+
+        if (!RequestExsist) {
+            let hashpassword = await argon2.hash(req.body.password);
+            req.body.password = hashpassword;
+            req.body.Status = true;
+            req.body.catagory = req.body.catagory || "Education";
+            req.body.type = req.body.type || "SCHOOL";
+            await NRs.insertOne(req.body);
+            return res.json({ success: true });
+        }
+
+        // If request exists but password doesn't match
+        return res.json({ success: false, message: "A request with these details already exists." });
+
+    } catch (error) {
+        console.error("NewEduCataServiceRequest error:", error);
+        return res.json({ success: false, message: "Something went wrong." })
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
     }
 };
 

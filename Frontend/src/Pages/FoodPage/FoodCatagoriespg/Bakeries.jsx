@@ -6,12 +6,13 @@ import { BakeriesList, BakeriesCardsData, Food_Details } from "../../../Store/Fo
 import { FoodLandingPage } from "../FoodLanding/FoodLandingPage";
 import { getMergedData, getFullMergedData } from "../../../utils/dataMerger";
 import { FaFilter, FaSortAmountDown, FaStar, FaBicycle } from "react-icons/fa";
+import { GetFoodCrdsDtaFrmDB } from "../../../ApiCalls/ApiCalls";
 
 export const BakeriesPage = () => {
     useEffect(() => { window.scrollTo(0, 0) }, []);
 
-    const [allCrds] = useState(() => getMergedData(BakeriesCardsData, "Food", "Bakeries"));
-    const [Crds, setCrds] = useState(allCrds);
+    const [allCrds, setAllCrds] = useState(BakeriesCardsData);
+    const [Crds, setCrds] = useState(BakeriesCardsData);
     const [showList, setShowlist] = useState(false);
     const [sortBy, setSortBy] = useState("rating");
     const [filterPrice, setFilterPrice] = useState("all");
@@ -20,9 +21,33 @@ export const BakeriesPage = () => {
     const navigate = useNavigate();
     const { search } = useLocation();
     const id = new URLSearchParams(search).get("id");
-    const List = getMergedData(BakeriesList, "Food", "Bakeries");
+
+    // List of names for the sidebar list
+    const [listData, setListData] = useState([]);
 
     useEffect(() => {
+        const staticList = BakeriesList.map(item => ({ name: item.name, id: item.id }));
+        setListData(staticList);
+
+        GetFoodCrdsDtaFrmDB((dbData) => {
+            if (!dbData || !Array.isArray(dbData)) return;
+            // Filter DB data for this category
+            const filteredDb = dbData.filter(item => item.serviceType === "Bakery");
+
+            // Merge with static data
+            const merged = [...BakeriesCardsData, ...filteredDb];
+            setAllCrds(merged);
+            setCrds(merged);
+
+            // Update sidebar list
+            const staticList = BakeriesList.map(item => ({ name: item.name, id: item.id }));
+            const dynamicList = filteredDb.map(item => ({ name: item.InstName, id: item.id }));
+            setListData([...staticList, ...dynamicList]);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (!allCrds || allCrds.length === 0) return;
         let results = [...allCrds];
         if (filterPrice !== "all") results = results.filter(item => item.priceRange === filterPrice);
         if (filterDelivery) results = results.filter(item => item.deliveryAvailable === true);
@@ -44,7 +69,7 @@ export const BakeriesPage = () => {
                         <div className="institute-hd-lst">
                             <h2 className="food-institute-hd">Bakeries & Sweets</h2>
                             <ul className="food-institute-lst">
-                                {List.map((v, i) => (<li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.name}</li>))}
+                                {listData.map((v, i) => (<li onClick={() => { navigate(`?id=${v.id}`); setShowlist(false) }} key={i}>{v.name}</li>))}
                             </ul>
                         </div>
                         <div className="filter-sidebar-content">

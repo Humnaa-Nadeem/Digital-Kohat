@@ -1,19 +1,57 @@
-
 import "./BusinessCategories.css";
+import axios from "axios";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { OfficesData } from "../../../Store/Business_store";
 import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaGlobe } from "react-icons/fa";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const OfficesPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(OfficesData);
+    const [Cards, setCards] = useState(OfficesData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(OfficesData);
-    let [Cards, setCards] = useState(OfficesData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/offices_companies');
+            if (res.data.success && res.data.profiles.length > 0) {
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id,
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "Read More",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email,
+                        website: p.contactInfo?.website
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "09:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "05:00 PM"
+                    },
+                    products: p.products || [],
+                    isDynamic: true
+                }));
+
+                setList([...dynamicProfiles, ...OfficesData]);
+                setCards([...dynamicProfiles, ...OfficesData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch office profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -21,7 +59,8 @@ export const OfficesPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? OfficesData.find(item => item.id === parseInt(id)) : null;
+
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>
@@ -32,6 +71,9 @@ export const OfficesPg = () => {
                         <button className="btn-back" onClick={() => navigate(-1)}>← Back to List</button>
 
                         <div className="detail-header" style={{ backgroundImage: `url(${selectedItem.coverImage || selectedItem.img})` }}>
+                            {selectedItem.img && (
+                                <img src={selectedItem.img} alt="Business Logo" className="detail-logo" />
+                            )}
                             <div className="detail-title-block">
                                 <h1>{selectedItem.name}</h1>
                                 <div className="detail-meta">
@@ -52,13 +94,28 @@ export const OfficesPg = () => {
                                     <div className="service-tags">
                                         {selectedItem.services ? selectedItem.services.map((s, i) => <span key={i}>{s}</span>) : (
                                             <>
-                                                <span>Professional Services</span>
-                                                <span>Consultancy</span>
-                                                <span>Management</span>
+                                                <span>Corporate Services</span>
+                                                <span>Consulting</span>
+                                                <span>B2B Support</span>
                                             </>
                                         )}
                                     </div>
                                 </div>
+
+                                {selectedItem.products && selectedItem.products.length > 0 && (
+                                    <div className="products-section" style={{ marginTop: '30px' }}>
+                                        <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: '#333' }}>Available Products</h3>
+                                        <div className="products-grid" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                            gap: '20px'
+                                        }}>
+                                            {selectedItem.products.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="content-sidebar">

@@ -68,7 +68,12 @@ export const ShopsData = [
         address: "Main Bazaar, Kohat",
         location: { lat: 33.5889, lng: 71.4429 },
         services: ["Home Delivery", "Fresh Vegetables", "Imported Goods"],
-        subscription: "Verified Listing"
+        subscription: "Verified Listing",
+        products: [
+            { id: 101, title: "Fresh Apples", description: "Organic apples from local farms.", price: "250/kg", image: "https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg" },
+            { id: 102, title: "Cooking Oil (5L)", description: "Premium quality refined sunflower oil.", price: "2800", image: "https://images.pexels.com/photos/1029604/pexels-photo-1029604.jpeg" },
+            { id: 103, title: "Basmati Rice (10kg)", description: "Long grain aromatic Basmati rice.", price: "4500", image: "https://images.pexels.com/photos/4110251/pexels-photo-4110251.jpeg" }
+        ]
     },
     { id: 2, name: "Fresh Greens", img: "https://images.pexels.com/photos/2255935/pexels-photo-2255935.jpeg", desc: "Fruits & Vegetables - Organic and fresh.", btn_txt: "Read More", coverImage: "https://images.pexels.com/photos/2255935/pexels-photo-2255935.jpeg", timings: { opening: "07:00 AM", closing: "09:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] } },
     { id: 3, name: "Meat Master", img: "https://images.pexels.com/photos/65175/pexels-photo-65175.jpeg", desc: "Meat & Poultry - Fresh chicken and beef.", btn_txt: "Read More", coverImage: "https://images.pexels.com/photos/65175/pexels-photo-65175.jpeg", timings: { opening: "08:00 AM", closing: "08:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] } },
@@ -114,7 +119,11 @@ export const OfficesData = [
         contact: { phone: "0300-1111111", email: "info@kohatsoft.com", website: "https://kohatsoft.com" },
         socialLinks: { linkedin: "linkedin.com/kohatsoft" },
         address: "IT Park, Kohat",
-        services: ["Web Development", "App Development", "SEO", "Digital Marketing"]
+        services: ["Web Development", "App Development", "SEO", "Digital Marketing"],
+        products: [
+            { id: 201, title: "Corporate Website", description: "Full responsive corporate website with CMS.", price: "45,000", image: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg" },
+            { id: 202, title: "Mobile App Starter", description: "Cross-platform mobile app for iOS and Android.", price: "80,000", image: "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg" }
+        ]
     },
     {
         id: 2, name: "Tech Innovators", img: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg", desc: "IT & Tech Company - Solutions provider.", btn_txt: "Read More",
@@ -147,7 +156,11 @@ export const EventsData = [
         coverImage: "https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg",
         timings: { opening: "10:00 AM", closing: "12:00 AM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
         contact: { phone: "0333-9999999", email: "info@royalhall.com" },
-        services: ["Wedding Venue", "Catering", "Event Decor"]
+        services: ["Wedding Venue", "Catering", "Event Decor"],
+        products: [
+            { id: 501, title: "Premium Theme Setup", description: "Complete stage and hall decor with premium themes.", price: "50,000", image: "https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg" },
+            { id: 502, title: "Gourmet Catering", description: "Full menu catering service for up to 500 guests.", price: "200,000", image: "https://images.pexels.com/photos/50675/banquet-lights-dinner-event-50675.jpeg" }
+        ]
     },
     { id: 2, name: "Kohat Event Planners", img: "https://images.pexels.com/photos/50675/banquet-lights-dinner-event-50675.jpeg", desc: "Complete event management services.", btn_txt: "Read More", coverImage: "https://images.pexels.com/photos/50675/banquet-lights-dinner-event-50675.jpeg", timings: { opening: "09:00 AM", closing: "08:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] }, services: ["Birthday Parties", "Corporate Events", "Wedding Planning"] },
     { id: 3, name: "Elegant Decor", img: "https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg", desc: "Decor Services for all occasions.", btn_txt: "Read More", coverImage: "https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg", timings: { opening: "10:00 AM", closing: "09:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] }, services: ["Stage Decor", "Lighting", "Floral Arrangements"] },
@@ -165,7 +178,11 @@ export const ManufacturingData = [
         coverImage: "https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg",
         timings: { opening: "08:00 AM", closing: "05:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] },
         contact: { phone: "0300-8888888", email: "info@kohatfoods.com" },
-        services: ["Food Processing", "Packaging", "Distribution"]
+        services: ["Food Processing", "Packaging", "Distribution"],
+        products: [
+            { id: 401, title: "Packed Spices Mix", description: "Authentic Kohat spice blends for your kitchen.", price: "1200", image: "https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg" },
+            { id: 402, title: "Bulk Flour (20kg)", description: "High-quality whole wheat flour directly from the mill.", price: "3200", image: "https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg" }
+        ]
     },
     { id: 2, name: "Textile Mills", img: "https://images.pexels.com/photos/236705/pexels-photo-236705.jpeg", desc: "Textile & Garments Factory.", btn_txt: "Read More", coverImage: "https://images.pexels.com/photos/236705/pexels-photo-236705.jpeg", timings: { opening: "08:00 AM", closing: "05:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] }, services: ["Fabric Production", "Garment Manufacturing", "Export"] },
     { id: 3, name: "Poly Plast", img: "https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg", desc: "Plastic Products Manufacturer.", btn_txt: "Read More", coverImage: "https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg", timings: { opening: "08:00 AM", closing: "05:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] }, services: ["Plastic Molding", "Household Plastics", "Industrial Parts"] },
@@ -188,7 +205,11 @@ export const FreelancersData = [
         coverImage: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
         timings: { opening: "10:00 AM", closing: "06:00 PM", workingDays: ["Mon", "Tue", "Wed", "Thu", "Fri"] },
         contact: { phone: "0300-7777777", email: "ali.raza@freelance.com" },
-        services: ["Logo Design", "Branding", "UI/UX Design"]
+        services: ["Logo Design", "Branding", "UI/UX Design"],
+        products: [
+            { id: 301, title: "Premium Logo Design", description: "3 professional concepts with unlimited revisions.", price: "5,000", image: "https://images.pexels.com/photos/1766604/pexels-photo-1766604.jpeg" },
+            { id: 302, title: "Full Brand Identity", description: "Logo, Business Cards, Letterhead, and Social Media kit.", price: "15,000", image: "https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg" }
+        ]
     },
     {
         id: 2, name: "Ahmed Khan", img: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg", desc: "Web Developer - Full stack.", btn_txt: "View Profile",

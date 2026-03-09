@@ -77,7 +77,6 @@ export const createInitialSuperAdmin = async (req, res) => {
 export const SuperAdminLogin = async (req, res) => {
 
     try {
-
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -87,118 +86,99 @@ export const SuperAdminLogin = async (req, res) => {
             });
         }
 
+        // 1. Get credentials from ENV for Main Super Admin
+        const envEmail = process.env.SUPER_ADMIN_EMAIL?.toLowerCase().trim();
+        const envPassword = process.env.SUPER_ADMIN_PASSWORD;
+
+        if (!envEmail || !envPassword) {
+            return res.status(500).json({ success: false, message: "System error: Security credentials not configured" });
+        }
+
         const AdminColl = selectCollection(req, "Admins");
 
-        /* =====================================================
-           Find Admin By Email ⭐ Unified Search Pattern
-        ===================================================== */
+        // 2. Fetch the SuperAdmin record from DB (needed for ID and Managers list)
+        const superAdminDoc = await AdminColl.findOne({ Role: "SUPER_ADMIN" });
 
-        let admin = await AdminColl.findOne({
-            AdminEmail: email
-        });
+        if (!superAdminDoc) {
+            return res.status(500).json({ success: false, message: "System error: Super Admin not configured" });
+        }
 
-        let role = null;
+        // 3. Direct check against ENV for Main Super Admin
+        const isSuperAdminMatch = (email.toLowerCase() === envEmail && password === envPassword);
 
-        /* =====================================================
-           Search Inside SAManagers Array If Not Found
-        ===================================================== */
+        if (isSuperAdminMatch) {
+            const token = JWT.sign(
+                {
+                    id: superAdminDoc._id,
+                    role: "SUPER_ADMIN",
+                    AccessTo: "All",
+                    sessionVersion: Date.now()
+                },
+                process.env.JWT_KEY,
+                { expiresIn: "1d" }
+            );
 
-        if (!admin) {
-
-            const doc = await AdminColl.findOne({
-                "SAManagers.email": email
+            res.cookie("adm_token", token, {
+                httpOnly: true,
+                secure: false, // true in production
+                sameSite: "lax",
+                path: "/",
+                maxAge: 24 * 60 * 60 * 1000
             });
 
-            admin = doc?.SAManagers?.find(m => m.email === email);
+            return res.json({
+                success: true,
+                role: "SUPER_ADMIN",
+                AccessTo: "All",
+                message: "Login successful (Env Auth)"
+            });
+        }
 
-            if (admin) {
-                role = "SAManager";
+        // 4. Check if it's a Manager (stored in DB)
+        // Managers are stored inside the SAManagers array of the SuperAdmin document
+        const manager = superAdminDoc.SAManagers?.find(m => m.email === email.toLowerCase());
+
+        if (manager) {
+            const isPasswordValid = await argon2.verify(manager.password, password);
+
+            if (isPasswordValid) {
+                const token = JWT.sign(
+                    {
+                        id: superAdminDoc._id,
+                        role: "SAManager",
+                        AccessTo: manager.AccessTo,
+                        sessionVersion: Date.now()
+                    },
+                    process.env.JWT_KEY,
+                    { expiresIn: "1d" }
+                );
+
+                res.cookie("adm_token", token, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "lax",
+                    path: "/",
+                    maxAge: 24 * 60 * 60 * 1000
+                });
+
+                return res.json({
+                    success: true,
+                    role: "SA_MANAGER",
+                    AccessTo: manager.AccessTo,
+                    message: "Manager Login successful"
+                });
             }
         }
 
-        if (!admin) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid credentials"
-            });
-        }
-
-        /* =====================================================
-           Normalize Role ⭐
-        ===================================================== */
-
-        const userRole = admin.Role || role;
-
-        /* =====================================================
-           Password Verification ⭐ Unified Field
-        ===================================================== */
-
-        const passwordHash =
-            admin.AdminPassword ||
-            admin.password;
-
-        if (!passwordHash) {
-            return res.status(500).json({
-                success: false,
-                message: "Authentication configuration error"
-            });
-        }
-
-        const isPasswordValid = await argon2.verify(
-            passwordHash,
-            password
-        );
-
-        if (!isPasswordValid) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid credentials"
-            });
-        }
-
-        /* =====================================================
-           JWT Payload ⭐ Secure Session Design
-        ===================================================== */
-
-        const tokenPayload = {
-            id: admin._id,
-            role: userRole,
-            AccessTo: admin.AccessTo || "All",
-            sessionVersion: Date.now()
-        };
-
-        const token = JWT.sign(
-            tokenPayload,
-            process.env.JWT_KEY,
-            { expiresIn: "1d" }
-        );
-
-        /* =====================================================
-           Cookie Configuration ⭐ Production Ready
-        ===================================================== */
-
-        res.cookie("adm_token", token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: "lax",
-            maxAge: 24 * 60 * 60 * 1000
-        });
-
-        return res.json({
-            success: true,
-            role: userRole === "SAManager" ? "SA_MANAGER" : userRole,
-            AccessTo: admin.AccessTo || "All",
-            message: "Login successful"
-        });
+        return res.status(401).json({ success: false, message: "Invalid credentials" });
 
     } catch (error) {
-
         console.error("Login error:", error);
-
         return res.status(500).json({
             success: false,
             message: "Server error"
         });
+
     }
 };
 
@@ -254,20 +234,19 @@ export const RetriveSuperAdminData = async (req, res) => {
 
 export const CreateEduCataAdmin = async (req, res) => {
     try {
+        const role = req.token.role;
+        const accessTo = req.token.AccessTo;
 
-        /* =====================================================
-           Authorization
-        ===================================================== */
+        const isAuth = role === "SUPER_ADMIN" ||
+            (role === "SAManager" && (accessTo === "Education" || accessTo === "Business"));
 
-        if (
-            req.token.role !== "SUPER_ADMIN" &&
-            !(req.token.role === "SAManager" && req.token.AccessTo === "Education")
-        ) {
+        if (!isAuth) {
             return res.json({
                 success: false,
                 message: "Not authorized."
             });
         }
+
 
         const {
             AdminName,
@@ -441,15 +420,34 @@ export const RetriveEduTabDataForSP = async (req, res) => {
         const role = req.token.role;
         const accessTo = req.token.AccessTo;
 
-        if (
-            role !== "SUPER_ADMIN" &&
-            !(role === "SAManager" && accessTo === "Education")
-        ) {
+        const isAuth = role === "SUPER_ADMIN" ||
+            (role === "SAManager" && (accessTo === "Education" || accessTo === "Business"));
+
+        if (!isAuth) {
             return res.json({
                 success: false,
                 message: "Not authorized."
             });
         }
+
+
+        const { category } = req.query; // Expect category from frontend
+
+            const query = category ? { catagory: category } : { catagory: "Education" };
+
+            const data = await NRs.find(
+                query,
+                {
+                    projection: {
+                        fullname: 1, email: 1, whatsappnumber: 1, address: 1, IDCard: 1, type: 1,
+                        language: 1,
+                        phonenumber: 1,
+                        catagory: 1
+                    }
+                }
+            ).toArray();
+
+            res.json({ success: true, ResponseData: data });
 
         const { dataOf } = req.body; // SCHOOL or COLLEGE
 
@@ -1450,6 +1448,59 @@ export const ChangePaymentPlan = async (req, res) => {
             success: false,
             message: "Internal server error"
         });
+    }
+};
+
+// 🔹 NEW BUSINESS MANAGEMENT FUNCTIONS
+export const GetBusinessesByStatus = async (req, res) => {
+    try {
+        const isAuth = req.token.role === "SuperAdmin" ||
+            (req.token.role === "SAManager" && req.token.AccessTo === "Business");
+
+        if (!isAuth) return res.json({ success: false, message: "Not authorized." });
+
+        const { status } = req.body;
+        const { ADMINS, NRs } = getCollections(req);
+        const Business = (await import("../Models/business/Business.js")).default;
+
+        let responseData = [];
+
+        if (["approved", "suspended"].includes(status)) {
+            // Fetch from Business Collection
+            responseData = await Business.find({ status });
+        } else {
+            // Fetch from NRs Collection
+            responseData = await NRs.find({ catagory: "Business", status }).toArray();
+        }
+
+        res.json({ success: true, responseData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
+
+export const UpdateBusinessStatus = async (req, res) => {
+    try {
+        const isAuth = req.token.role === "SuperAdmin" ||
+            (req.token.role === "SAManager" && req.token.AccessTo === "Business");
+
+        if (!isAuth) return res.json({ success: false, message: "Not authorized." });
+
+        const { id, status, fromCollection } = req.body;
+        const { NRs } = getCollections(req);
+        const Business = (await import("../Models/business/Business.js")).default;
+
+        if (fromCollection === "Business") {
+            await Business.findByIdAndUpdate(id, { status });
+        } else {
+            await NRs.updateOne({ _id: new ObjectId(id) }, { $set: { status } });
+        }
+
+        res.json({ success: true, message: `Status updated to ${status}` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };
 

@@ -9,7 +9,7 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
         AdminEmail: Data.email || "",
         AdminIDCard: Data.IDCard || "",
         ServiceName: "",
-        ServiceLocation: "",
+        ServiceLocation: Data.address || "",
         ServiceType: Data.type || "",
         PaymentPlan: Data.PaymentPlan || "",
         reqId: id
@@ -87,6 +87,7 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
                                 <option value={"SCHOOL"}>School</option>
                                 <option value={"COLLEGE"}>College</option>
                                 <option value={"RESTURANT"}>Resutrant</option>
+                                <option value={"BUSINESS"}>Business</option>
                             </select>
                         </div>
 

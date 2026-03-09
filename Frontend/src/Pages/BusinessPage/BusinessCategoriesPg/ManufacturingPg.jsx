@@ -1,19 +1,56 @@
-
 import "./BusinessCategories.css";
+import axios from "axios";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ManufacturingData } from "../../../Store/Business_store";
-import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaIndustry } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaGlobe } from "react-icons/fa";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const ManufacturingPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(ManufacturingData);
+    const [Cards, setCards] = useState(ManufacturingData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(ManufacturingData);
-    let [Cards, setCards] = useState(ManufacturingData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/manufacturing_industry');
+            if (res.data.success && res.data.profiles.length > 0) {
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id,
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "Read More",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "08:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "05:00 PM"
+                    },
+                    products: p.products || [],
+                    isDynamic: true
+                }));
+
+                setList([...dynamicProfiles, ...ManufacturingData]);
+                setCards([...dynamicProfiles, ...ManufacturingData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch manufacturing profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -21,7 +58,8 @@ export const ManufacturingPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? ManufacturingData.find(item => item.id === parseInt(id)) : null;
+
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>
@@ -32,6 +70,9 @@ export const ManufacturingPg = () => {
                         <button className="btn-back" onClick={() => navigate(-1)}>← Back to List</button>
 
                         <div className="detail-header" style={{ backgroundImage: `url(${selectedItem.coverImage || selectedItem.img})` }}>
+                            {selectedItem.img && (
+                                <img src={selectedItem.img} alt="Business Logo" className="detail-logo" />
+                            )}
                             <div className="detail-title-block">
                                 <h1>{selectedItem.name}</h1>
                                 <div className="detail-meta">
@@ -52,13 +93,28 @@ export const ManufacturingPg = () => {
                                     <div className="service-tags">
                                         {selectedItem.services ? selectedItem.services.map((s, i) => <span key={i}>{s}</span>) : (
                                             <>
-                                                <span>Manufacturing</span>
-                                                <span>Production</span>
-                                                <span>Supply</span>
+                                                <span>Bulk Manufacturing</span>
+                                                <span>Quality Control</span>
+                                                <span>Distribution</span>
                                             </>
                                         )}
                                     </div>
                                 </div>
+
+                                {selectedItem.products && selectedItem.products.length > 0 && (
+                                    <div className="products-section" style={{ marginTop: '30px' }}>
+                                        <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: '#333' }}>Available Products</h3>
+                                        <div className="products-grid" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                            gap: '20px'
+                                        }}>
+                                            {selectedItem.products.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="content-sidebar">

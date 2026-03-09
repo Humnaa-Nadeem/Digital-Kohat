@@ -193,7 +193,6 @@ EDUCATION / CATEGORY REGISTER FORM
 ===================================================== */
 
 export const EduRegisterForm = ({ setShowform }) => {
-
   const [step, setStep] = useState(1);
   const [UserData, setUserData] = useState(null);
 
@@ -260,27 +259,20 @@ export const EduRegisterForm = ({ setShowform }) => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-
-    if (
-      formData.phonenumber.length < 11 ||
-      formData.whatsappnumber.length < 11
-    ) {
-      alert("Invalid phone number.");
-      return;
+    if (formData.phonenumber.length < 11 || formData.whatsappnumber.length < 11) {
+      alert("Invalid Number is filled.");
+    } else if (!formData.fullname || !formData.email || !formData.password) {
+      alert("Fill the forms carefully.");
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        ["catagory"]: "Education",
+        ["type"]: "SCHOOL",
+        ["Verified"]: false
+      }));
+      NewEduCataServiceReq(formData);
     }
-
-    if (!formData.fullname || !formData.email || !formData.password) {
-      alert("Please fill all required fields.");
-      return;
-    }
-
-    const finalData = {
-      ...formData,
-      Verified: false,
-    };
-
-    NewEduCataServiceReq(finalData);
-  };
+  }
 
   return (
     <div className="page-wrapper">

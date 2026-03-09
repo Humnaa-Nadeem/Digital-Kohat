@@ -93,7 +93,12 @@ export const AdminLoginFun = async (req, res) => {
       return res.json({
         success: true,
         role: "admin",
+<<<<<<< HEAD
         ShowSwitchTab: admin.Services?.length > 1
+=======
+        ServiceType: firstService.ServiceType,
+        ShowSwitchTab: admin.Services.length > 1
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
       });
     }
 
@@ -160,6 +165,7 @@ export const AdminLoginFun = async (req, res) => {
     return res.json({
       success: true,
       role: "manager",
+      ServiceType: matchedManager.ServiceType,
       ShowSwitchTab: false
     });
 
@@ -293,9 +299,27 @@ export const AddManager = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // // ===============================================
 // // Getting the Institute data according to admin: ✅
 // // ===============================================
+=======
+// ===============================================
+// Getting the Institute data according to admin also for food section:
+// ===============================================
+export const SERVICE_COLLECTION = (db) => ({
+  SCHOOL: db.collection(process.env.S_C),
+  COLLEGE: db.collection(process.env.S_C),
+  RESTURANT: db.collection(process.env.FOOD_C || "Food"),
+  Bakery: db.collection(process.env.FOOD_C || "Food"),
+  Cafe: db.collection(process.env.FOOD_C || "Food"),
+  "Fast Food": db.collection(process.env.FOOD_C || "Food"),
+  "Fine Dining": db.collection(process.env.FOOD_C || "Food"),
+  "Local Food": db.collection(process.env.FOOD_C || "Food"),
+  "Street Food": db.collection(process.env.FOOD_C || "Food"),
+});
+
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 export const RetriveTheDashboardDta = async (req, res) => {
   try {
 
@@ -332,6 +356,7 @@ export const RetriveTheDashboardDta = async (req, res) => {
       s => s.ServiceId.toString() === ServiceId.toString()
     );
 
+<<<<<<< HEAD
     if (!activeService) {
       return res.json({
         success: false,
@@ -345,6 +370,10 @@ export const RetriveTheDashboardDta = async (req, res) => {
 
     const ServiceCollection = resolveServiceModel(req);
 
+=======
+    const servicesCollections = SERVICE_COLLECTION(db);
+    const ServiceCollection = servicesCollections[activeService.ServiceType];
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
     if (!ServiceCollection) {
       return res.json({
         success: false,
@@ -363,9 +392,22 @@ export const RetriveTheDashboardDta = async (req, res) => {
       });
     }
 
+<<<<<<< HEAD
     /* =====================================================
     🔹 Admin Role
     ===================================================== */
+=======
+    // Suspension logic: if report count > 70, suspend service
+    if (ServiceDta.reportCount > 70 && ServiceDta.reportStatus !== "Suspended") {
+      await ServiceCollection.updateOne(
+        { _id: new ObjectId(ServiceId) },
+        { $set: { reportStatus: "Suspended", Status: false } }
+      );
+      ServiceDta.reportStatus = "Suspended";
+      ServiceDta.Status = false;
+    }
+
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
     if (role === "admin") {
 
       if (!admin.Verified || !ServiceDta.Status) {
@@ -444,15 +486,20 @@ const resolveServiceModel = (req) => {
 
 export const UpdateBasicInfoToDb = async (req, res) => {
   try {
+<<<<<<< HEAD
 
     const Model = resolveServiceModel(req);
     const { ServiceId } = req.token;
 
     const { tagline, about, bannerUrl, aboutImgUrl } = req.body;
 
+=======
+    const { tagline, about, bannerUrl, aboutImgUrl, location, phone, email, deliveryAvailability, timing, name, facilities } = req.body;
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
     const bannerFile = req.files?.bannerUrl?.[0];
-    const aboutImgFile = req.files?.aboutImgUrl?.[0];
+    const aboutImgFile = req.files?.aboutImgUrl?.[0] || req.files?.aboutImage?.[0];
 
+<<<<<<< HEAD
     // ✅ Get existing document
     const Inst = await Model.findById(ServiceId).select("bannerUrl aboutImgUrl tagline about");
 
@@ -537,6 +584,150 @@ export const UpdateBasicInfoToDb = async (req, res) => {
       message: "Basic Info updated."
     });
 
+=======
+    const { ServiceId } = req.token;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    const currentData = await ServiceCollection.findOne({ _id: new ObjectId(ServiceId) });
+
+    const updateData = {};
+    if (service.ServiceType === "SCHOOL") {
+      if (tagline !== undefined) updateData.tagline = tagline;
+      if (about !== undefined) updateData.about = about;
+      if (location !== undefined) updateData.location = location;
+      if (name !== undefined) updateData.ServiceName = name;
+      if (phone !== undefined) updateData.phone = phone;
+      if (email !== undefined) updateData.email = email;
+      if (timing !== undefined) updateData.timing = timing;
+    } else {
+      // Food service structure
+      if (tagline !== undefined) updateData.tagline = tagline;
+      if (about !== undefined) updateData.about = about;
+      if (name !== undefined) updateData.ServiceName = name;
+
+      if (location !== undefined) updateData["quickInfo.basicProfile.location"] = location;
+      if (name !== undefined) updateData["quickInfo.basicProfile.name"] = name;
+
+      if (phone !== undefined) updateData["contact.phone"] = phone;
+      if (email !== undefined) updateData["contact.email"] = email;
+
+      if (timing !== undefined) {
+        updateData["timings.opening"] = timing;
+        updateData["quickInfo.timings.timing"] = timing;
+      }
+
+      if (deliveryAvailability !== undefined) updateData.deliveryAvailability = deliveryAvailability;
+      if (facilities !== undefined) {
+        const facilitiesArr = facilities.split(",").map(f => f.trim());
+        updateData["quickInfo.facilities"] = facilitiesArr;
+        updateData.facilities = facilitiesArr;
+      }
+    }
+
+    // Handle Image uploads
+    if (bannerFile) {
+      if (currentData?.bannerUrl) {
+        const oldBannerId = getPublicIdFromUrl(currentData.bannerUrl);
+        await deleteFromCloudinary(oldBannerId);
+      }
+      const bannerRes = await uploadToCloudinary(bannerFile, "dashboard/banners");
+      updateData.bannerUrl = bannerRes.secure_url;
+    }
+
+    if (aboutImgFile) {
+      const fieldToUpdate = service.ServiceType === "SCHOOL" ? "aboutImgUrl" : "aboutImage";
+      const oldUrl = currentData?.[fieldToUpdate];
+      if (oldUrl) {
+        const oldId = getPublicIdFromUrl(oldUrl);
+        await deleteFromCloudinary(oldId);
+      }
+      const aboutRes = await uploadToCloudinary(aboutImgFile, "dashboard/about");
+      updateData[fieldToUpdate] = aboutRes.secure_url;
+    } else if (req.body.aboutImage) {
+      updateData.aboutImage = req.body.aboutImage;
+    }
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId) },
+      { $set: updateData }
+    );
+
+    res.json({ success: true, message: "Profile updated successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Update failed" });
+  }
+};
+
+// ============================================
+// Saving the administration data of Institute
+// ============================================
+export const UpdateAdministrationToDb = async (req, res) => {
+  try {
+    let { administration } = req.body;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { $set: { administration } }
+    );
+    res.json({ success: true, message: "Administration updated successfully ✅." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong.", error: error.message });
+  }
+};
+
+// ==========================================
+// Saving the institute timing
+// ==========================================
+export const UpdateTimingsToDb = async (req, res) => {
+  try {
+    let { timings } = req.body;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { $set: { timings } }
+    );
+    res.json({
+      success: true,
+      message: "Timings updated successfully ✅."
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Something went wrong."
+    });
+  }
+};
+
+// ==========================================
+// Saving the Facilities data of Institute
+// ==========================================
+export const UpdateFacilitiesToDb = async (req, res) => {
+  try {
+    let { facilities } = req.body;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { $set: { facilities } }
+    );
+
+    res.json({
+      success: true,
+      message: "Facilities updated successfully ✅."
+    });
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
   } catch (error) {
 
     console.log(error);
@@ -861,13 +1052,89 @@ export const UpdateStaffData = async (req, res) => {
 
     console.log("UpdateStaffData error:", error);
 
+<<<<<<< HEAD
     return res.status(500).json({
+=======
+// ==========================================
+// Saving Result and Preformance data
+// ==========================================
+export const AddResAndPrfumncDataToDb = async (req, res) => {
+  try {
+    const { ResAndPrfrmnc } = req.body;
+    const tempstaffAndStudnt = new mongoose.Document(ResAndPrfrmnc, Schema.ResultAndPerformanceSchema);
+    const err = tempstaffAndStudnt.validateSync();
+    if (err) return res.json({ success: false, message: "Invalid Data" });
+    await schoolColl.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { ResultAndPerformance: ResAndPrfrmnc } });
+    res.json({ success: true, dataAddedOf: "Staff Tab", message: "Res & Perfumence is okay 👍😊." })
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ status: false, error: error.message });
+  }
+}
+
+// ==========================================
+// Deleting the event
+// ==========================================
+export const deleteTheEventFrmDb = async (req, res) => {
+  try {
+    let { title } = req.body;
+    let ServiceDta = await schoolColl.findOne({ _id: new ObjectId(req.token.ServiceId) });
+    let pastEvents = ServiceDta.eventData;
+    let updatedDta = pastEvents.filter((v, i) => v.title !== title);
+    await schoolColl.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { eventData: updatedDta } });
+    res.json({ success: true, message: "Event Deleted successfully ✅." })
+  } catch (error) {
+    res.json({ success: false, message: "Something went wrong." })
+  }
+}
+
+// ==========================================
+// Saving the New Event
+// ==========================================
+export const AddNewEventToDb = async (req, res) => {
+  try {
+    let { eventData } = req.body;
+    const tempNewEventData = new mongoose.Document(eventData, Schema.NewEventDataSchema);
+    const err = tempNewEventData.validateSync();
+    if (err) return res.json({ success: false, message: "Invalid Data" });
+    let ServiceDta = await schoolColl.findOne({ _id: new ObjectId(req.token.ServiceId) });
+    let pastEvents = ServiceDta.eventData;
+    let updatedDta = pastEvents ? [...pastEvents, eventData] : eventData;
+    await schoolColl.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { eventData: updatedDta } });
+    res.json({ success: true, message: "Event Added successfully ✅." })
+  } catch (error) {
+    res.json({ success: false, message: "Something went wrong." })
+  }
+}
+
+// ========================================================
+// Saving the Extra Activities data preformed at institute 
+// ========================================================
+export const UpdateExtraActivitiesToDb = async (req, res) => {
+  try {
+    let { extraActivities } = req.body;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { $set: { extraActivities } }
+    );
+    res.json({
+      success: true,
+      message: "Extra activities updated successfully ✅."
+    });
+  } catch (error) {
+    res.json({
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
       success: false,
       message: error.message || "Failed to update staff"
     });
   }
 };
 
+<<<<<<< HEAD
 // 
 export const UpdateGallery = async (req, res) => {
   try {
@@ -882,6 +1149,82 @@ export const UpdateGallery = async (req, res) => {
     const oldGallery = Inst?.gallery || [];
 
     /* ---------------- Existing Images ---------------- */
+=======
+// ==========================================
+// Saving the Fee structure
+// ==========================================
+export const AddFeeTabDataToDb = async (req, res) => {
+  try {
+    let { feeData } = req.body;
+    const tempFeeData = new mongoose.Document({ feeData }, Schema.FeesSchema);
+    const err = tempFeeData.validateSync();
+    if (err) return res.json({ success: false, message: "Invalid Data" });
+    await schoolColl.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { feeData } });
+    res.json({ success: true, dataAddedOf: "Fee Tab", message: "Alhumdulilah its okay 👍😊." })
+  } catch (error) {
+    res.json({ success: false, dataAddedOf: "Fee Tab", message: error.message })
+  }
+}
+
+// ==========================================
+// Saving the Reviews about Institute
+// ==========================================
+export const AddReviewTabDataToDb = async (req, res) => {
+  try {
+    let Reviews = req.body.Reviews;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    await ServiceCollection.updateOne({ _id: new ObjectId(req.token.ServiceId) }, { $set: { Reviews } });
+    res.json({ success: true, message: "Reviews Updated." });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+}
+
+export const ReplyToReview = async (req, res) => {
+  try {
+    const { reviewId, response } = req.body;
+    const { ServiceId } = req.token;
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    // Attempt to update in both potential review locations
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId), "ratingData.id": reviewId },
+      { $set: { "ratingData.$.response": response } }
+    );
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId), "detailedReviews.id": reviewId },
+      { $set: { "detailedReviews.$.response": response } }
+    );
+
+    res.json({ success: true, message: "Reply saved successfully ✅." });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Something went wrong while saving reply." });
+  }
+}
+
+// ================================================
+// Saving the Gallery images and remove old images 
+// ================================================
+export const UpdateGallery = async (req, res) => {
+  try {
+    const admin = await AdmnColl.findOne({ AdminEmail: req.token.AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === req.token.ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    const currentData = await ServiceCollection.findOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { projection: { gallery: 1 } }
+    );
+
+    const oldGallery = currentData?.gallery || [];
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 
     let existingImages = [];
 
@@ -927,6 +1270,7 @@ export const UpdateGallery = async (req, res) => {
       ...uploadedUrls
     ];
 
+<<<<<<< HEAD
     /* =====================================================
        Plan Feature & Limit Validation ⭐
     ===================================================== */
@@ -959,6 +1303,11 @@ export const UpdateGallery = async (req, res) => {
         new: true,
         runValidators: false
       }
+=======
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(req.token.ServiceId) },
+      { $set: { gallery: finalGalleryImages } }
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
     );
 
     res.status(200).json({
@@ -1361,6 +1710,7 @@ export const switchDashBoard = async (req, res) => {
       });
     }
 
+<<<<<<< HEAD
     /* =====================================================
        🔥 Dynamic Service Model Selection
     ===================================================== */
@@ -1368,6 +1718,13 @@ export const switchDashBoard = async (req, res) => {
     const ServiceModel = getServiceModel(
       selectedService.ServiceType
     );
+=======
+    // 3️⃣ Pick correct collection from global definition (already updated to function)
+
+
+    const ServiceCollection =
+      SERVICE_COLLECTION(db)[selectedService.ServiceType];
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 
     if (!ServiceModel) {
       return res.json({
@@ -1420,7 +1777,8 @@ export const switchDashBoard = async (req, res) => {
 
     return res.json({
       success: true,
-      role: "Admin",
+      role: "admin",
+      ServiceType: selectedService.ServiceType,
       ServiceDta,
       OtherServices
     });
@@ -1434,5 +1792,69 @@ export const switchDashBoard = async (req, res) => {
       success: false,
       message: "Something went wrong."
     });
+  }
+};
+// ==========================================
+// FOOD MENU MANAGEMENT
+// ==========================================
+export const UpdateFoodMenuToDb = async (req, res) => {
+  try {
+    const { menuItems } = req.body;
+    const { ServiceId, AdmnEmail } = req.token;
+
+    const admin = await AdmnColl.findOne({ AdminEmail: AdmnEmail });
+    const service = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const FoodCollection = SERVICE_COLLECTION(db)[service.ServiceType];
+
+    if (!FoodCollection) {
+      return res.json({ success: false, message: "Invalid Food Service type." });
+    }
+
+    await FoodCollection.updateOne(
+      { _id: new ObjectId(ServiceId) },
+      { $set: { menu: menuItems } }
+    );
+
+    res.json({ success: true, message: "Menu updated successfully ✅." });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Failed to update menu." });
+  }
+};
+
+export const Logout = (req, res) => {
+  res.clearCookie("adm_token", {
+    path: "/",
+    sameSite: "lax",
+  });
+  res.json({ success: true, message: "Logged out successfully." });
+};
+
+export const SubmitSupportTicket = async (req, res) => {
+  try {
+    const { subject, message } = req.body;
+    const { ServiceId } = req.token;
+
+    const ticket = {
+      id: new ObjectId(),
+      subject,
+      message,
+      status: "Open",
+      timestamp: new Date(),
+    };
+
+    const admin = await AdmnColl.findOne({ "Services.ServiceId": ServiceId });
+    const activeService = admin.Services.find(s => s.ServiceId.toString() === ServiceId);
+    const ServiceCollection = SERVICE_COLLECTION(db)[activeService.ServiceType];
+
+    await ServiceCollection.updateOne(
+      { _id: new ObjectId(ServiceId) },
+      { $push: { supportTickets: ticket } }
+    );
+
+    res.json({ success: true, message: "Ticket submitted successfully.", ticket });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Failed to submit ticket." });
   }
 };

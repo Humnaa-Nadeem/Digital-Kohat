@@ -38,6 +38,7 @@ export const getCollections = (req) => {
         ADMINS: db.collection(process.env.A_C),
         NRs: db.collection(process.env.NSPR_C),
         SCHOOLS: db.collection(process.env.S_C),
+<<<<<<< HEAD
         COLLEGE: db.collection(process.env.C_C),
         USER: db.collection(process.env.U_C)
     };
@@ -86,3 +87,12 @@ export const getServiceDoc = async (req) => {
     if (!service) throw new Error("Service not found");
     return service;
 };
+=======
+        FOODS: db.collection(process.env.FOOD_C || "Food"),
+        ORDERS: db.collection(process.env.ORDERS_C || "Orders"),
+        BUSINESSES: db.collection(process.env.BUSINESS_C || "businesses"),
+        BUSINESS_PROFILES: db.collection(process.env.BUSINESS_CAT_C || "businessprofiles"),
+        BUSINESS_REQS: db.collection(process.env.BUSINESS_REQ_C || "NewServiceProviderRequests"),
+    };
+};
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
