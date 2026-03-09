@@ -3,7 +3,7 @@ import "../ScholAndColDshbrdComp.css";
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { SendFeeTabDataToDb } from "../../../../../ApiCalls/DashBoardApiCalls";
+import { SendFeeTabDataToDb, SendPaymentGatewayToDb } from "../../../../../ApiCalls/DashBoardApiCalls";
 
 export const FeeStructure = ({ dashboardData }) => {
     const [CanSubmitForm, setCanSubmitForm] = useState(false);
@@ -54,6 +54,40 @@ export const FeeStructure = ({ dashboardData }) => {
         SendFeeTabDataToDb(rowsData, setCanSubmitForm);
     }
 
+
+    /* ============================= */
+    /* ===== PAYMENT GATEWAYS ====== */
+    /* ============================= */
+
+    const [canSubmitGateway, setCanSubmitGateway] = useState(false);
+
+    const [paymentData, setPaymentData] = useState(
+        dashboardData.paymentGateways || {
+            easypaisa: { accountTitle: "", accountNumber: "" },
+            jazzcash: { accountTitle: "", accountNumber: "" },
+            bank: { bankName: "", accountTitle: "", accountNumber: "", iban: "" }
+        }
+    );
+
+    const handlePaymentChange = (e, gateway) => {
+        const { name, value } = e.target;
+
+        setPaymentData(prev => ({
+            ...prev,
+            [gateway]: {
+                ...prev[gateway],
+                [name]: value
+            }
+        }));
+
+        setCanSubmitGateway(true);
+    };
+
+    const handleGatewaySubmit = (e) => {
+        e.preventDefault();
+        SendPaymentGatewayToDb(paymentData, setCanSubmitGateway);
+    };
+
     return (
         <>
             <section className="form-area Dshbrdfee-Sec">
@@ -61,7 +95,7 @@ export const FeeStructure = ({ dashboardData }) => {
                 <ToastContainer />
                 <form onSubmit={(e) => FinalFun(e)}>
                     <h2>Fee Structure</h2>
-                    <p className="addressingPara">You can remove the class 1 data and can add data that suit you.</p>
+                    <p className="addressingPara">Add the classes fee details, your institute offer.</p>
                     <table className="feeTable">
                         <thead>
                             <tr>
@@ -88,6 +122,99 @@ export const FeeStructure = ({ dashboardData }) => {
                     <div className="form-actions">
                         <button type="submit" disabled={!CanSubmitForm} className="save-btn">Save</button>
                     </div>
+                </form>
+
+                <hr className="sectionDivider" />
+
+                {/* ================= GATEWAY FORM ================= */}
+                <form onSubmit={handleGatewaySubmit}>
+
+                    <h2>Payment Gateway Details</h2>
+
+                    <div className="gatewaySection">
+
+                        {/* Easypaisa */}
+                        <div className="gatewayCard">
+                            <h3>Easypaisa</h3>
+                            <input
+                                type="text"
+                                name="accountTitle"
+                                placeholder="Account Title"
+                                value={paymentData.easypaisa.accountTitle}
+                                onChange={(e) => handlePaymentChange(e, "easypaisa")}
+                            />
+                            <input
+                                type="text"
+                                name="accountNumber"
+                                placeholder="Account Number"
+                                value={paymentData.easypaisa.accountNumber}
+                                onChange={(e) => handlePaymentChange(e, "easypaisa")}
+                            />
+                        </div>
+
+                        {/* JazzCash */}
+                        <div className="gatewayCard">
+                            <h3>JazzCash</h3>
+                            <input
+                                type="text"
+                                name="accountTitle"
+                                placeholder="Account Title"
+                                value={paymentData.jazzcash.accountTitle}
+                                onChange={(e) => handlePaymentChange(e, "jazzcash")}
+                            />
+                            <input
+                                type="text"
+                                name="accountNumber"
+                                placeholder="Account Number"
+                                value={paymentData.jazzcash.accountNumber}
+                                onChange={(e) => handlePaymentChange(e, "jazzcash")}
+                            />
+                        </div>
+
+                        {/* Bank */}
+                        <div className="gatewayCard">
+                            <h3>Bank Transfer</h3>
+                            <input
+                                type="text"
+                                name="bankName"
+                                placeholder="Bank Name"
+                                value={paymentData.bank.bankName}
+                                onChange={(e) => handlePaymentChange(e, "bank")}
+                            />
+                            <input
+                                type="text"
+                                name="accountTitle"
+                                placeholder="Account Title"
+                                value={paymentData.bank.accountTitle}
+                                onChange={(e) => handlePaymentChange(e, "bank")}
+                            />
+                            <input
+                                type="text"
+                                name="accountNumber"
+                                placeholder="Account Number"
+                                value={paymentData.bank.accountNumber}
+                                onChange={(e) => handlePaymentChange(e, "bank")}
+                            />
+                            <input
+                                type="text"
+                                name="iban"
+                                placeholder="IBAN"
+                                value={paymentData.bank.iban}
+                                onChange={(e) => handlePaymentChange(e, "bank")}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-actions">
+                        <button
+                            type="submit"
+                            disabled={!canSubmitGateway}
+                            className="save-btn"
+                        >
+                            Save Payment Gateways
+                        </button>
+                    </div>
+
                 </form>
             </section>
         </>

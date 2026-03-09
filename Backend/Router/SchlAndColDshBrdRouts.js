@@ -55,18 +55,23 @@ SACAR.post("/UpdateExtraActivities", AdminMW, SACACFun.UpdateExtraActivitiesToDb
 //FEE TAB DATA UPDATING ROUTE: 
 // ==========================================
 
-SACAR.post("/AddFeeTabData", AdminMW, SACACFun.AddFeeTabDataToDb);
+SACAR.post("/AddFeeTabData", AdminMW, SACACFun.UpdateFeesToDb);
 
 // ==========================================
 // REVIEWS TAB DATA UPDATING ROUTE:
 // ==========================================
 
-SACAR.post("/AddReviewTabData", AdminMW, SACACFun.AddReviewTabDataToDb);
+SACAR.post("/AddReviewTabData", AdminMW, SACACFun.UpdateReviewsToDb);
 
 // ==========================================
 // GALLERY TAB DATA UPDATING ROUTE:
 // ==========================================
 
 SACAR.post("/UpdateGallery", AdminMW, upload.any(), SACACFun.UpdateGallery);
+
+
+SACAR.post("/GetInstituteAdmissions", AdminMW, SACACFun.GetInstituteAdmissions);
+
+SACAR.post("/update-payment-gateways", AdminMW, SACACFun.UpdatePaymentGatewaysToDb);
 
 export default SACAR;

@@ -30,6 +30,7 @@ import { UniPage } from './Pages/EducationPage/EduCatagoriesPg/UniPg';
 import { OnlineTrainingPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineTraining';
 import { TutorsPage } from './Pages/EducationPage/EduCatagoriesPg/Tutors';
 import { OnlineCoursesPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineCourses';
+import { SingleLandingPage } from './components/SingleLandingPage/SingleLandingPage.jsx';
 
 // %%%%%%%%%%% TECHNICIANS SECTOR %%%%%%%%%%%
 import { TechniciansHomePg } from './Pages/TechniciansPage/TechniciansHomePg/TechniciansHomePg';
@@ -89,6 +90,8 @@ import { BusinessLogin } from './Pages/BusinessPage/Login/BusinessLogin';
 import { AdminLogin } from './Pages/DashBoard/EductionDashboard/AdminLgoInForm/AdminLogin';
 import { SignUpForm } from './components/SignUpForm/SignUpForm';
 import { SuperAdminLogin } from './Pages/DashBoard/SuperAdmin/SuprAdminLogIn/SuprAdminLogin.jsx';
+import { RegisterUser } from './components/Form/UserRegistration/RegisterUser.jsx';
+import { UserLogin } from './components/Form/UserLogIn/UserLogin.jsx';
 
 
 // ================================
@@ -98,6 +101,16 @@ const routes = [
   {
     path: "/",
     element: <App />
+  },
+
+  {
+    path: "/user/register",
+    element: <RegisterUser />
+  },
+
+  {
+    path: "/user/login",
+    element: <UserLogin />
   },
 
   // Authentication / User
@@ -140,7 +153,8 @@ const routes = [
       { path: "tutors", element: <TutorsPage /> },
       { path: "training", element: <OnlineTrainingPage /> },
       { path: "admin", element: <AdminLogin /> },
-      { path: "dashboard", element: <SchoolAndClgDashBoard /> }
+      { path: "dashboard", element: <SchoolAndClgDashBoard /> },
+      { path: ":catagory/:id", element: <SingleLandingPage /> }
     ],
   },
 

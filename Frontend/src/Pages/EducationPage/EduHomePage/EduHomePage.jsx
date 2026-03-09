@@ -1,57 +1,91 @@
 import { useEffect, useState } from "react";
 import "../../CatagoriesHomePgs.css";
 import "./EduHomePage.css";
-import "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { categories } from "../../../Store/Edu_store";
 import { EduRegisterForm } from "../../../components/Form/form";
-// import { Form } from "../../../components/Form/form";
-export const EduHomePage = () => {
 
-    // To show page from the top:
+export const EduHomePage = () => {
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
     }, []);
 
-    // Navigate use to redirect to other pages:
     const navigate = useNavigate();
-
-    // useState to open the Form
-    let [showForm, setShowform] = useState(false);
+    const [showForm, setShowform] = useState(false);
 
     return (
-        <>
-            {
-                // Condition
-                (showForm)
-                    ?
-                    //  Registration Form
+        <div className="EduHomePremium">
+            {showForm ? (
+                <div className="FormContainerSection">
                     <EduRegisterForm setShowform={setShowform} />
-                    :
-                    // Home Page
-                    <section className="pg-sec">
-                        {/* Registartion Button */}
-                        <button onClick={() => { setShowform(true) }} className="rsgrt-btn">Registration</button>
-                        <button onClick={() => navigate("admin")} className="AdminLogin-btn">Admin Login</button>
-                        {/* Education Institute Part like schools , colleges & Uni */}
-                        <div className="content-cont">
-                            <h1>Let's Find Best Education In <strong>Kohat</strong></h1>
-                            <p className="pg-desc">Let find the best education in a <b>Kohat</b> where students can easily find good schools, colleges, and learning centers nearby. This platform helps parents and students get clear details about courses and facilities so they can choose the right place for study with confidence.</p>
-                            <div className="card-Container">
-                                {categories.map((v, i) => {
-                                    return (
-                                        <div className="card EduHomeCard" key={i}>
-                                            <h2 className="Cata_Title">{v.title}</h2>
-                                            <span className="Edu_Home_card_Img"><img src="https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg" /></span>
-                                            <p>{v.description}</p>
-                                            <button className="pg-crd-btn" onClick={() => navigate(v.link)}>{v.btn}</button>
-                                        </div>
-                                    )
-                                })}
+                </div>
+            ) : (
+                <>
+                    {/* HERO SECTION */}
+                    <header className="EduHeroPremium">
+                        <div className="HeroOverlay">
+                            <div className="HeroContent">
+                                <span className="HeroBadge">✨ Kohat's Trusted Education Portal</span>
+                                <h1>Building Bridges to <strong>Academic Excellence</strong></h1>
+                                <p className="HeroLead">
+                                    The most comprehensive directory of schools, colleges, and professional
+                                    institutes in Kohat. Find your path to success today.
+                                </p>
+
+                                <div className="HeroBtnGroup">
+                                    <button className="btn-primary-premium" onClick={() => navigate("/edu/admin")}>
+                                        Admin Login
+                                    </button>
+                                    <button className="btn-glass" onClick={() => setShowform(true)}>
+                                        Partner With Us
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                    </header>
+
+                    {/* CATEGORIES SECTION */}
+                    <main id="categories" className="EduCategoriesPremium">
+                        <div className="SectionHeader">
+                            <span className="SubTitle">Our Directory</span>
+                            <h2>Academic <strong>Categories</strong></h2>
+                            <p>Choose your level of interest to see available options</p>
+                        </div>
+
+                        <section className="CategoriesGridPremium">
+                            {categories.map((v, i) => (
+                                <div className="CategoryCardPremium" key={i} onClick={() => (v.link === "onlineCourses") ? alert("Online Courses will launch soon") : navigate(v.link)}>
+                                    <div className="CategoryThumb">
+                                        <img src="https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg" alt={v.title} />
+                                        <div className="CardTag">{v.title}</div>
+                                    </div>
+                                    <div className="CategoryDetails">
+                                        <h3>{v.title}</h3>
+                                        <p>{v.description}</p>
+                                        <div className="CardFooter">
+                                            <span>{(v.title === "Online Courses") ? "Coming Soon" : "Explore Now"}</span>
+                                            <i className="arrow-icon">→</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </section>
+                    </main>
+
+                    {/* CTA SECTION */}
+                    <section className="PartnerCtaEdu">
+                        <div className="CtaContentWrapper">
+                            <div className="CtaText">
+                                <h2>Ready to showcase your institute?</h2>
+                                <p>Join the largest educational network in Kohat and reach thousands of prospective students.</p>
+                            </div>
+                            <button className="cta-btn-modern" onClick={() => { setShowform(true); window.scrollTo(0, 0); }}>
+                                Register Your Institute
+                            </button>
+                        </div>
                     </section>
-            }
-        </>
-    )
-}
+                </>
+            )}
+        </div>
+    );
+};

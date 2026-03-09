@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./SuperAdminLayout.css";
-
+import NotificationAudio from "../../../../Assests/whatsappAudio2.mp3";
 import { FiHome, FiUsers } from "react-icons/fi";
 import {
     MdOutlineSchool,
@@ -8,162 +8,174 @@ import {
     MdOutlineLocalHospital,
     MdOutlineRestaurant
 } from "react-icons/md";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "../../../../components/navbar/Navbar";
-
 import { SuperAdminHomeSec } from "../SuperAdminComponents/HomeSection/SuprAdminHomeSec";
 import { EducationSection } from "../SuperAdminComponents/EductionSection/EductionSection";
-
-import { VerifyTheSuperAdmin } from "../../../../ApiCalls/SuperAdminApiCall";
 import { SAAddManagerForm } from "../SuperAdminComponents/SAAddManagers/SAAddManagers";
-
-/* ---------------- SIDEBAR CONFIG ---------------- */
+import { VerifyTheSuperAdmin, GetEducationNotificationCounts } from "../../../../ApiCalls/SuperAdminApiCall";
+import { socket } from "../Socket";
 
 const SIDEBAR_ITEMS = [
-    {
-        key: "Home",
-        title: "Home",
-        tab: "",
-        icon: <FiHome />
-    },
-    {
-        key: "Education",
-        title: "Education",
-        tab: "Education",
-        icon: <MdOutlineSchool />
-    },
-    {
-        key: "Restaurant",
-        title: "Restaurant",
-        tab: "Restaurant",
-        icon: <MdOutlineRestaurant />
-    },
-    {
-        key: "Health",
-        title: "Health",
-        tab: "Health",
-        icon: <MdOutlineLocalHospital />
-    },
-    {
-        key: "Business",
-        title: "Business",
-        tab: "Business",
-        icon: <MdOutlineBusiness />
-    },
-    {
-        key: "Add Managers",
-        title: "Add Managers",
-        tab: "AddManagers",
-        icon: <FiUsers />
-
-    }
+    { key: "Home", title: "Home", tab: "", icon: <FiHome /> },
+    { key: "Education", title: "Education", tab: "Education", icon: <MdOutlineSchool /> },
+    { key: "Restaurant", title: "Restaurant", tab: "Restaurant", icon: <MdOutlineRestaurant /> },
+    { key: "Health", title: "Health", tab: "Health", icon: <MdOutlineLocalHospital /> },
+    { key: "Business", title: "Business", tab: "Business", icon: <MdOutlineBusiness /> },
+    { key: "AddManagers", title: "Add Managers", tab: "AddManagers", icon: <FiUsers /> }
 ];
-
-/* -------- ROLE → ALLOWED SIDEBAR ITEMS -------- */
 
 const getAllowedSidebarItems = (role) => {
     if (!role) return [];
-
-    // Super access
     if (role === "All") return SIDEBAR_ITEMS;
-
-    // Always allow Home + role specific module
-    return SIDEBAR_ITEMS.filter(
-        item => item.key === "Home" || item.key === role
-    );
+    return SIDEBAR_ITEMS.filter((item) => item.key === "Home" || item.key === role);
 };
-
-
-/* ---------------- COMPONENT ---------------- */
 
 export const SuperAdminDashboard = () => {
     const [currentTab, setCurrentTab] = useState("");
     const [role, setRole] = useState(null);
-    const [SuperAdminEmail, setSuperAdminEmail] = useState("");
+    const [superAdminEmail, setSuperAdminEmail] = useState("");
     const [SAManagers, setSAManagers] = useState(null);
+    const [, setNotifications] = useState([]);
+    const [tabNotifCounts, setTabNotifCounts] = useState({});
+    const [eduNotifCounts, setEduNotifCounts] = useState({ admissions: 0, requests: 0 });
+
+    const audioRef = useRef(new Audio(NotificationAudio));
+    const audioUnlocked = useRef(false);
+
+    useEffect(() => {
+        audioRef.current.volume = 1;
+
+        const unlockAudio = () => {
+            audioRef.current.play().then(() => {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+                audioUnlocked.current = true;
+            }).catch(() => {});
+            window.removeEventListener("click", unlockAudio);
+        };
+
+        window.addEventListener("click", unlockAudio);
+        return () => window.removeEventListener("click", unlockAudio);
+    }, []);
+
+    const playNotificationSound = () => {
+        if (!audioUnlocked.current) return;
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(() => {});
+    };
 
     useEffect(() => {
         VerifyTheSuperAdmin(setRole, setSuperAdminEmail, setSAManagers);
     }, []);
 
+    // Fetch initial counts for Education section
+    useEffect(() => {
+        if (role === "SUPER_ADMIN" || (role === "SAManager" && currentTab === "Education")) {
+            GetEducationNotificationCounts(setEduNotifCounts);
+        }
+    }, [role, currentTab]);
+
+    // Update total Education count in sidebar when sub-counts change
+    useEffect(() => {
+        const totalEdu = eduNotifCounts.admissions + eduNotifCounts.requests;
+        setTabNotifCounts(prev => ({
+            ...prev,
+            Education: totalEdu
+        }));
+    }, [eduNotifCounts]);
+
+    useEffect(() => {
+        socket.connect();
+        socket.emit("join_superadmin");
+
+        const notificationHandler = (payload) => {
+            setNotifications((prev) => [payload, ...prev]);
+
+            let tab = "";
+            if (payload?.type === "NEW_ADMISSION_REQUEST") {
+                tab = "Education";
+                setEduNotifCounts(prev => ({ ...prev, admissions: prev.admissions + 1 }));
+            } else if (payload?.type === "NEW_EDU_SERVICE_REQUEST") {
+                tab = "Education";
+                setEduNotifCounts(prev => ({ ...prev, requests: prev.requests + 1 }));
+            } else if (payload?.type === "NEW_DOCTOR_REQUEST") {
+                tab = "Health";
+                setTabNotifCounts((prev) => ({
+                    ...prev,
+                    [tab]: (prev[tab] || 0) + 1
+                }));
+            }
+
+            playNotificationSound();
+        };
+
+        socket.on("new_notification", notificationHandler);
+
+        return () => {
+            socket.off("new_notification", notificationHandler);
+            socket.disconnect();
+        };
+    }, []);
+
+    const handleTabClick = (tab) => {
+        setCurrentTab(tab);
+        if (tab !== "Education") {
+            setTabNotifCounts((prev) => ({ ...prev, [tab]: 0 }));
+        }
+    };
+
     const sidebarItems = getAllowedSidebarItems(role);
 
-    /* -------- CONTENT RENDERING -------- */
-
-    let content;
-
-    // Block unauthorized content
-    if (
-        role &&
-        role !== "All" &&
-        currentTab !== "" &&
-        currentTab !== role
-    ) {
-        content = (
-            <div className="SA_empty_state">
-                You are not authorized to access this module.
-            </div>
-        );
-    } else {
-        switch (currentTab) {
-            case "":
-                content = <SuperAdminHomeSec />;
-                break;
-
-            case "Education":
-                content = <EducationSection />;
-                break;
-
-            case "Restaurant":
-                content = <div>Restaurant Module</div>;
-                break;
-
-            case "Health":
-                content = <div>Health Module</div>;
-                break;
-
-            case "Business":
-                content = <div>Business Module</div>;
-                break;
-
-            case "AddManagers":
-                content = <SAAddManagerForm SuperAdminEmail={SuperAdminEmail} SAManagers={SAManagers} setSAManagers={setSAManagers} /> // SA => Super Admin
-                break;
-
-            default:
-                content = (
-                    <div className="SA_empty_state">
-                        Welcome. Please select a module.
-                    </div>
-                );
-        }
+    let content = null;
+    switch (currentTab) {
+        case "":
+            content = <SuperAdminHomeSec />;
+            break;
+        case "Education":
+            content = <EducationSection notifCounts={eduNotifCounts} setEduNotifCounts={setEduNotifCounts} />;
+            break;
+        case "Health":
+            content = "Health Module";
+            break;
+        case "AddManagers":
+            content = (
+                <SAAddManagerForm
+                    SuperAdminEmail={superAdminEmail}
+                    SAManagers={SAManagers}
+                    setSAManagers={setSAManagers}
+                />
+            );
+            break;
+        default:
+            content = <div className="SA_empty_state">Welcome. Please select a module.</div>;
     }
+
 
     return (
         <div className="SA_main_wrapper">
-            <header>
-                <Navbar />
-            </header>
-
+            <header><Navbar variant={"SuperAdmin"} /></header>
             <main className="SA_layout">
                 <aside className="SA_sidebar">
                     <nav className="SA_side_nav">
-                        {sidebarItems.map(item => (
+                        {sidebarItems.map((item) => (
                             <li
                                 key={item.key}
                                 title={item.title}
                                 className={currentTab === item.tab ? "active" : ""}
-                                onClick={() => setCurrentTab(item.tab)}
+                                onClick={() => handleTabClick(item.tab)}
+                                style={{ position: "relative" }}
                             >
                                 {item.icon}
+                                {tabNotifCounts[item.tab] > 0 && (
+                                    <span className="SA_notif_badge">{tabNotifCounts[item.tab]}</span>
+                                )}
                             </li>
                         ))}
                     </nav>
                 </aside>
-
-                <div className="SA_content_main">
-                    {content}
-                </div>
+                <div className="SA_content_main">{content}</div>
             </main>
         </div>
     );

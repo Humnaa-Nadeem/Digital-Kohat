@@ -20,7 +20,7 @@ export const GetTheDashboardDta = (setDashboardData, setLoading, setAdminOtherSe
     axios.get(`/getDashBoardDta`, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
-                setDashboardData(res.data.ServiceDta);
+                setDashboardData(res.data.data);
                 setAdminOtherServices(res.data.OtherServices);
                 setLoading(false);
             } else {
@@ -33,6 +33,24 @@ export const GetTheDashboardDta = (setDashboardData, setLoading, setAdminOtherSe
             window.location.href = "/edu/admin";
         })
 }
+
+// export const GetTheDashboardDta = (setDashboardData, setLoading, setAdminOtherServices) => {
+//     axios.get(`/getDashBoardDta`, { withCredentials: true })
+//         .then((res) => {
+//             if (res.data.success) {
+//                 setDashboardData(res.data.ServiceDta);
+//                 setAdminOtherServices(res.data.OtherServices);
+//                 setLoading(false);
+//             } else {
+//                 // console.log("Error:", res.data);
+//                 window.location.href = "/edu/admin";
+//             }
+//         })
+//         .catch((err) => {
+//             console.log("Error:", err.response?.data || err.message);
+//             window.location.href = "/edu/admin";
+//         })
+// }
 
 export const SwitchDashBoard = async (ServiceName, ServiceId, ServiceType, setDashboardData, setAdminOtherServices) => {
     try {
@@ -127,13 +145,12 @@ export const SendReviewTabDataToDb = (Reviews, setReviewSecChanged) => {
         })
 }
 
-export const AddNewEvent = (eventData, setCanSubmitForm) => {
-    setCanSubmitForm(false);
+export const AddNewEvent = (eventData, setIsSubmitting) => {
     axios.post(`${maniURL}/AddNewEvent`, { eventData }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 toast.success(res.data.message);
-                setCanSubmitForm(true);
+                setIsSubmitting(true);
             } else {
                 toast.error(res.data.message);
             }
@@ -280,3 +297,39 @@ export const AddManagerApi = (formData) => {
             toast.error("Something went wrong.");
         });
 }
+
+export const gettheNewAdmissions = async (instituteId, setState) => {
+    try {
+        const res = await axios.post(
+            `${maniURL}/GetInstituteAdmissions`,
+            { instituteId }, { withCredentials: true }
+        );
+
+        if (res.data.success) {
+            setState(res.data.data);
+        }
+
+    } catch (err) {
+        console.error("Error fetching admissions:", err);
+    }
+};
+
+export const SendPaymentGatewayToDb = async (paymentGateways, setCanSubmit) => {
+    try {
+        const res = await axios.post(
+            `${maniURL}/update-payment-gateways`,
+            { paymentGateways },
+            { withCredentials: true }
+        );
+
+        if (res.data.success) {
+            toast.success("Payment gateways updated successfully.");
+            setCanSubmit(false);
+        } else {
+            toast.error(res.data.message);
+        }
+
+    } catch (err) {
+        toast.error("Server error while updating payment gateways.");
+    }
+};

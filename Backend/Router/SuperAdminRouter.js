@@ -1,25 +1,27 @@
 import express from "express";
-import * as SPContFun from "../Controller/SuperAdminCont.js";
+import * as SAContFun from "../Controller/SuperAdminCont.js";
 import { AdminMW } from "../Middleware/AdminMW.js";
 const SARoutes = express.Router(); // SA => Super Admin;
 
-SARoutes.post("/IntializesuperAdmin", SPContFun.createInitialSuperAdmin);
-SARoutes.post("/SuperAdminLogin", SPContFun.SuperAdminLogin);
-SARoutes.get("/GetSuperAdminDashboardData", AdminMW, SPContFun.RetriveSuperAdminData);
-SARoutes.post("/CreateEduCataAdmin", AdminMW, SPContFun.CreateEduCataAdmin);
+SARoutes.post("/IntializesuperAdmin", SAContFun.createInitialSuperAdmin);
+SARoutes.post("/SuperAdminLogin", SAContFun.SuperAdminLogin);
+SARoutes.get("/GetSuperAdminDashboardData", AdminMW, SAContFun.RetriveSuperAdminData);
+SARoutes.post("/CreateEduCataAdmin", AdminMW, SAContFun.CreateEduCataAdmin);
+SARoutes.post("/CreateSAManager", AdminMW, SAContFun.CreateSAManager);
+SARoutes.post("/GetEduTabNewReqtsData", AdminMW, SAContFun.RetriveNewReqs);
+SARoutes.post("/GetEduTabNewAdnissionsData", AdminMW, SAContFun.RetriveNewAdmissionsForSP);
+SARoutes.post("/ApproveAdmissionAndForward", AdminMW, SAContFun.ApproveAdmissionAndForward);
+SARoutes.post("/getInstituteRecords", AdminMW, SAContFun.getInstituteRecords);
+SARoutes.post("/deleteAdmissionRequest", AdminMW, SAContFun.deleteAdmissionRequest);
+SARoutes.post("/deleteAdmissionRecord", AdminMW, SAContFun.deleteAdmissionRecord);
 
-
-
-SARoutes.post("/CreateSAManager", AdminMW, SPContFun.CreateSAManager);
-SARoutes.post("/GetSADEduTabData", AdminMW, SPContFun.RetriveNewReqs);
-SARoutes.post("/GetSchoolEduTabData", AdminMW, SPContFun.RetriveSchoolDataForSP); // SP => Super Admin;
-SARoutes.post("/ChangeAdminVerificationState", AdminMW, SPContFun.ChangeAdminVerificationState);
-SARoutes.post("/ChangeTheInstState", AdminMW, SPContFun.ChangeInstState);
-SARoutes.post("/DeleteTheInst", AdminMW, SPContFun.DeleteTheInst);
-SARoutes.post("/DeleteTheReq", AdminMW, SPContFun.DeleteRequest);
-SARoutes.post("/ChangePaymentData", AdminMW, SPContFun.ChangePaymentPlan);
-
-
-SARoutes.post("/DeleteThSAManager", AdminMW, SPContFun.DeleteThSAManager);
+SARoutes.post("/GetSADEduTabData", AdminMW, SAContFun.RetriveEduTabDataForSP);
+SARoutes.post("/ChangeAdminVerificationState", AdminMW, SAContFun.ChangeAdminVerificationState);
+SARoutes.post("/ChangeTheInstState", AdminMW, SAContFun.ChangeInstState);
+SARoutes.post("/DeleteTheInst", AdminMW, SAContFun.DeleteTheInst);
+SARoutes.post("/DeleteTheReq", AdminMW, SAContFun.DeleteRequest);
+SARoutes.post("/ChangePaymentData", AdminMW, SAContFun.ChangePaymentPlan);
+SARoutes.post("/DeleteThSAManager", AdminMW, SAContFun.DeleteThSAManager);
+SARoutes.get("/GetEducationNotificationCounts", AdminMW, SAContFun.GetEducationNotificationCounts);
 
 export default SARoutes;

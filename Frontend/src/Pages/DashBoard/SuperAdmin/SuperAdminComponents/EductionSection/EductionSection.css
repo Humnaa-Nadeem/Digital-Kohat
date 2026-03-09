@@ -19,6 +19,128 @@
     border: 1px solid #cbd5e1;
 }
 
+.edu-badge-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.edu-badge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.plan-badge {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+
+.expired-badge {
+    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    }
+}
+
+.btn-disable {
+    color: #dc2626 !important;
+    border-color: #fee2e2 !important;
+    background: #fef2f2 !important;
+}
+
+.btn-disable:hover {
+    background: #fee2e2 !important;
+    color: #b91c1c !important;
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.15);
+}
+
+.btn-enable {
+    color: #16a34a !important;
+    border-color: #dcfce7 !important;
+    background: #f0fdf4 !important;
+}
+
+.btn-enable:hover {
+    background: #dcfce7 !important;
+    color: #15803d !important;
+    box-shadow: 0 4px 8px rgba(22, 163, 74, 0.15);
+}
+
+/* Payment Plan Select */
+.SA_plan_badge {
+    padding: 8px 32px 8px 12px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: 1px solid #e2e8f0;
+    outline: none;
+    cursor: pointer;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.SA_plan_badge:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.SA_plan_badge:focus {
+    border-color: #108551;
+    box-shadow: 0 0 0 3px rgba(16, 133, 81, 0.1);
+}
+
+/* Color Coding for Plans */
+.SA_plan_badge.free, 
+.SA_plan_badge.free_trial {
+    color: #475569;
+    background-color: #f1f5f9;
+}
+
+.SA_plan_badge.premium {
+    color: #16a34a;
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.SA_plan_badge.enterprise {
+    color: #7c3aed;
+    background-color: #f5f3ff;
+    border-color: #ddd6fe;
+}
+
+.SA_plan_badge.basic {
+    color: #0369a1;
+    background-color: #e0f2fe;
+    border-color: #bae6fd;
+}
+
 .SA_sub_nav button {
     padding: 10px 24px;
     border-radius: 10px;
@@ -185,31 +307,56 @@
 
 /* Payment Plan Select */
 .SA_plan_badge {
-    padding: 8px 12px;
+    padding: 8px 32px 8px 12px;
     border-radius: 10px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 700;
     border: 1px solid #e2e8f0;
     outline: none;
     cursor: pointer;
     background: #ffffff;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.SA_plan_badge:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .SA_plan_badge:focus {
     border-color: #108551;
+    box-shadow: 0 0 0 3px rgba(16, 133, 81, 0.1);
+}
+
+/* Color Coding for Plans */
+.SA_plan_badge.free, 
+.SA_plan_badge.free_trial {
+    color: #475569;
+    background-color: #f1f5f9;
 }
 
 .SA_plan_badge.premium {
     color: #16a34a;
-    background: #f0fdf4;
+    background-color: #f0fdf4;
     border-color: #bbf7d0;
 }
 
 .SA_plan_badge.enterprise {
-    color: #2563eb;
-    background: #eff6ff;
-    border-color: #dbeafe;
+    color: #7c3aed;
+    background-color: #f5f3ff;
+    border-color: #ddd6fe;
+}
+
+.SA_plan_badge.basic {
+    color: #0369a1;
+    background-color: #e0f2fe;
+    border-color: #bae6fd;
 }
 
 .SA_city_text {
@@ -219,7 +366,6 @@
     font-size: 0.9rem;
 }
 
-/* No Data Placeholder */
 .no-data {
     padding: 40px;
     text-align: center;
@@ -227,16 +373,155 @@
     font-style: italic;
 }
 
+/* Admissions Record table */
 
-/* ============================= */
-/* Responsive Adjustments */
-/* ============================= */
+.records_table_wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.records_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: system-ui;
+}
+
+.records_table thead {
+    background: #111827;
+    color: white;
+}
+
+.records_table th {
+    padding: 14px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.records_row {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.records_row td {
+    padding: 16px;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.records_service {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.records_institute_name {
+    font-weight: 700;
+    color: #111827;
+    font-size: 14px;
+}
+
+.records_meta {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.records_contact_stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.records_contact_item {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 13px;
+    color: #374151;
+}
+
+.records_plan_badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    width: fit-content;
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+.records_payment {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.records_payment_img {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.records_payment_link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2563eb;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.records_no_ss {
+    color: red;
+    font-weight: 600;
+}
+
+.records_delete_btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.records_delete_btn:hover {
+    background: #dc2626;
+}
 
 /* Make table horizontally scrollable on small screens */
 @media (max-width: 1024px) {
     .SA_row_avatar {
         display: none;
     }
+}
+
+
+@media (max-width:900px) {
+
+    .records_table th,
+    .records_table td {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .records_payment_img {
+        width: 100px;
+        height: 70px;
+    }
+
+    .records_delete_btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
 }
 
 @media (max-width: 910px) {
@@ -460,4 +745,22 @@
         padding: 10px;
         overflow: visible;
     }
+}
+
+.SA_sub_nav_badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 999px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.SA_sub_nav button {
+    position: relative;
 }
