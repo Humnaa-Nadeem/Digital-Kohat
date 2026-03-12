@@ -1,0 +1,68 @@
+/* ================= GLOBAL RESET ================= */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+a {
+  color: inherit;
+}
+
+/* ================= APP STYLES ================= */
+.App {
+  text-align: center;
+  overflow: auto;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================= GOOGLE TRANSLATE FIX ================= */
+/* Hide Google Translate default UI without affecting navbar */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+.goog-logo-link,
+.goog-te-gadget,
+.goog-te-gadget span,
+.goog-te-combo {
+  display: none !important;
+}
+
+/* Only adjust body if necessary */
+body {
+  top: 0 !important;
+}

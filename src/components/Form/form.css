@@ -1,0 +1,160 @@
+/* Fullscreen Wrapper */
+.page-wrapper {
+  display: flex;
+  background: #f8fafc;
+}
+
+/* Main Card */
+.main-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Left Branding Panel */
+.branding-panel {
+  background: linear-gradient(135deg, #0d915a, #0b7b4d);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+
+.branding-content {
+  max-width: 400px;
+}
+
+.branding-content h1 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.branding-content p {
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+/* Progress */
+.progress-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.progress-step {
+  height: 6px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.progress-step.active {
+  background: white;
+}
+
+/* Right Form Panel */
+.form-panel {
+  background: white;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #0f172a;
+}
+
+/* Input Group */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.input-group input,
+.input-group select {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  color: black;
+  transition: 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #0d915a;
+  box-shadow: 0 0 0 3px rgba(13, 145, 90, 0.15);
+}
+
+/* Buttons */
+.Edu-Reg-btn-primary {
+  background: #0d915a;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 100%;
+}
+
+.Edu-Reg-btn-primary:hover {
+  background: #0b7b4d;
+}
+
+.Edu-form-btn-secondary {
+  background: #e5e7eb;
+  color: #1e293b;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.flex-grow {
+  flex: 1;
+}
+
+.back-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Animation */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,0 +1,32 @@
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.nav-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.nav-btn.primary {
+  background: #1f8e5c;
+  color: white;
+}
+
+.nav-btn.primary:hover {
+  background: #166b46;
+}
+
+.nav-btn.secondary {
+  background: #eaeaea;
+  color: black;
+}
+
+.nav-btn.secondary:hover {
+  background: #d5d5d5;
+}
