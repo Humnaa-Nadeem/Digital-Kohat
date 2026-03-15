@@ -590,3 +590,38 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
+/* Admin Login Sidebar Button */
+.admin-login-sidebar {
+    padding: 20px 25px;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+
+.admin-login-btn-sidebar {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #fbc531, #e1b12c);
+    color: #2c3e50;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(251, 197, 49, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.admin-login-btn-sidebar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(251, 197, 49, 0.4);
+    background: linear-gradient(135deg, #e1b12c, #fbc531);
+}
+
+.admin-login-btn-sidebar:active {
+    transform: translateY(0);
+}

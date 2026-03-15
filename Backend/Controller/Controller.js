@@ -1,5 +1,4 @@
-
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 const client = new MongoClient(process.env.DB_URL);
 const db = client.db();
 const EHomDtaC = db.collection(process.env.E_HOME_COLL);
@@ -57,4 +56,3 @@ export const GettingTutrsDta = async (req, res) => {
     let Tutrs_Details = await Tutors.find().toArray();
     res.json({ status: true, DtaArr: Tutrs_Details });
 }
-

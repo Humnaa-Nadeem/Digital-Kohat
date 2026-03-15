@@ -3,8 +3,9 @@ import "./SAAddManagers.css";
 import { CreateSAManager, SAManagerDelete } from "../../../../../ApiCalls/SuperAdminApiCall";
 import { ToastContainer } from "react-toastify";
 
-export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers }) => {
+export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
     const [formData, setFormData] = useState({
+        email: "",
         password: "",
         AccessTo: ""
     });
@@ -19,15 +20,18 @@ export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormData(prev => ({
-            ...prev,
-            ["email"]: SuperAdminEmail
-        }));
+
         CreateSAManager(formData, setSAManagers);
+
+        // reset form
+        setFormData({
+            email: "",
+            password: "",
+            AccessTo: ""
+        });
     };
 
     return (
-
         <section>
             <div className="SMT_wrapper">
                 <h2 className="SMT_title">Service Manager Assignment</h2>
@@ -44,7 +48,7 @@ export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers })
                     <tbody>
                         {SAManagers?.length === 0 ? (
                             <tr>
-                                <td colSpan="4" className="SMT_empty">
+                                <td colSpan="3" className="SMT_empty">
                                     No managers assigned yet
                                 </td>
                             </tr>
@@ -57,12 +61,12 @@ export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers })
                                         </span>
                                     </td>
 
-                                    <td>{SuperAdminEmail}</td>
+                                    <td>{m.email}</td>
 
                                     <td>
                                         <button
                                             className="SMT_delete_btn"
-                                            onClick={() => SAManagerDelete(m.AccessTo, setSAManagers)}
+                                            onClick={() => SAManagerDelete(m._id, setSAManagers)}
                                         >
                                             Delete
                                         </button>
@@ -73,19 +77,21 @@ export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers })
                     </tbody>
                 </table>
             </div>
+
             <div className="AM_form_wrapper">
                 <ToastContainer />
                 <h2 className="AM_title">Add Manager</h2>
 
                 <form className="AM_form" onSubmit={handleSubmit}>
+
                     <div className="AM_field">
                         <label>Email</label>
                         <input
                             type="email"
                             name="email"
                             placeholder="manager@email.com"
-                            value={SuperAdminEmail}
-                            readOnly
+                            value={formData.email}
+                            onChange={handleChange}
                             required
                         />
                     </div>
@@ -121,6 +127,7 @@ export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers })
                     <button className="AM_submit_btn" type="submit">
                         Add Manager
                     </button>
+
                 </form>
             </div>
         </section>

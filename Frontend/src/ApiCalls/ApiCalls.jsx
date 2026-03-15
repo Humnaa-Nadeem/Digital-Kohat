@@ -1,186 +1,267 @@
-// import axios from "axios";
-// const mainUrl = "http://localhost:5500";
-// // Sending data of Education home page to the the database;
-// export const SendEduHomeDtaToDb = (schools) => {
-//     axios.post(`${mainUrl}/AddEduHomeDta`, schools)
-//         .then((res) => {
-//             console.log(res.data)
-//         }).catch((err) => {
-//             console.log(err);
-//         })
-// }
+import axios from "axios";
+import { toast } from "react-toastify";
+const mainURL = "http://localhost:5500";
 
-// // Geting data of Education home page to the the database;
-// export const GetEduHomeDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetEduHomeDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
+export const RequestRegisterOtpApi = async (
+    formData,
+    setLoading,
+    setOtpSent
+) => {
+    try {
+        setLoading(true);
 
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+        const payload = {
+            fullName: formData.fullName.trim(),
+            email: formData.email.trim().toLowerCase(),
+            phone: formData.phone?.trim() || null,
+            password: formData.password,
+            address: formData.address.trim(),
+            DOB: formData.DOB,
+        };
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+        const res = await axios.post(`${mainURL}/register/user/request-otp`, payload, {
+            withCredentials: true,
+        });
 
-// // Getting Schools Data:
-// export const GetSchoolDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetSchoolDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             console.log("Aborted");
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+        if (res.data.success) {
+            toast.success("OTP sent to your email 📩");
+            setOtpSent(true);
+        } else {
+            toast.error(res.data.message || "Failed to send OTP.");
+        }
+    } catch (err) {
+        console.log("ERr ", err);
+        toast.error("Something went wrong.");
+    } finally {
+        setLoading(false);
+    }
+};
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+// 2) Verify OTP + Create User
+export const VerifyRegisterOtpApi = async (email, otp, setLoading) => {
+    try {
+        setLoading(true);
 
-// // Geting College Data;
-// export const GetClgsDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetClgDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
+        const payload = {
+            email: email.trim().toLowerCase(),
+            otp: otp.trim(),
+        };
 
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+        const res = await axios.post(`${mainURL}/register/user/verify-otp`, payload, {
+            withCredentials: true,
+        });
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+        if (res.data.success) {
+            toast.success("Account created successfully ✅");
+        } else {
+            toast.error(res.data.message || "OTP verification failed.");
+        }
+    } catch (err) {
+        toast.error("Something went wrong.");
+    } finally {
+        setLoading(false);
+    }
+};
 
-// // Geting Universities Data;
-// export const GetUnisDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetUniDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
+export const LoginUserApi = async (formData, setLoading, navigate) => {
+    try {
+        setLoading(true);
 
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+        const payload = {
+            email: formData.email.trim().toLowerCase(),
+            password: formData.password,
+        };
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+        const res = await axios.post(`/user/login`, payload);
 
-// // Getting Online Courses Data:
-// export const GetOCsDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetOCsDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
+        if (res.data.success) {
+            navigate("/");
+            localStorage.setItem("IsLoggedIn", true);
+        } else {
+            toast.error(res.data.message || "Login failed.");
+        }
+    } catch (err) {
+        toast.error("Something went wrong.");
+    } finally {
+        setLoading(false);
+    }
+};
 
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+export const GetUserData = (setUserData) => {
+    axios.get(`${mainURL}/user/data`, { withCredentials: true })
+        .then(res => {
+            if (res.data.success) {
+                setUserData(res.data.user);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            console.log("User not logged in");
+        });
+}
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+export const GetInstCrdsDtaFrmDB = (setInstCrds, coll) => {
+    axios.post(`${mainURL}/getInstCrdDta`, { coll })
+        .then((res) => {
+            if (res.data.success) {
+                setInstCrds(res.data.serviceCards);
+            } else {
+                console.log(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
 
-// // Getting Online Trainings Data:
-// export const GetOTsDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetOTsDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
+export const GetTheInstData = (InstId, setPageData, coll) => {
+    axios.post(`${mainURL}/getInstWholeDta`, { InstId, coll })
+        .then((res) => {
+            if (res.data.success) {
+                setPageData(res.data.serviceData)
+            } else {
+                toast.warn(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
 
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+<<<<<<< HEAD
+export const ChangeRatingData = async (payload, setRatingSubmitted) => {
+    try {
+        const res = await axios.post(`${mainURL}/changeRatingData`, payload, { withCredentials: true });
+        if (res.data.success) {
+            setRatingSubmitted(true);
+            toast.success("Your rating is submitted Successfully ✅");
+        } else {
+            toast.error(res.data.message || "You have already rated");
+        }
+    } catch (err) {
+        toast.error("Something went wrong");
+    }
+};
+=======
+export const GetFoodCrdsDtaFrmDB = (setFoodCrds) => {
+    axios.get(`${mainURL}/getFoodCrdDta`)
+        .then((res) => {
+            if (res.data.success) {
+                setFoodCrds(res.data.serviceCards);
+            } else {
+                console.log(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+export const GetTheFoodData = (FoodId, setPageData) => {
+    axios.post(`${mainURL}/getFoodWholeDta`, { FoodId })
+        .then((res) => {
+            if (res.data.success) {
+                setPageData(res.data.serviceData)
+            } else {
+                toast.warn(res.data.message);
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+}
 
-// // Getting Tutors Data:
-// export const GetTutorsDtaFrmDb = async (signal) => {
-//     try {
-//         const response = await axios.get(
-//             `${mainUrl}/GetTutrsDta`,
-//             {
-//                 signal: signal   // 👈 Axios listens to this
-//             }
-//         );
+export const ChangeRatingData = (ratingData, id, setRatingSubmitted) => {
+    axios.post(`${mainURL}/changeRatingData`, { ratingData, id })
+        .then((res) => {
+            if (res.data.success) {
+                setRatingSubmitted(true);
+                toast.success("Your rating is submitted Successfully ✅");
+            } else {
+                window.scrollTo(0, 0);
+                toast.error(res.data.message);
+            }
+        }).catch((err) => {
+            toast.error("Something went wrong");
+        })
+}
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089
 
-//         return response.data.DtaArr;   // 👈 return data, DO NOT set state here
-//     } 
-//     catch (error) {
-//         // 👇 VERY IMPORTANT: ignore aborted requests
-//         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-//             // Request was cancelled → do nothing
-//             return;
-//         }
+export const NewEduCataServiceReq = (data) => {
+    axios.post(`${mainURL}/NewEduCataServiceReq`, data)
+        .then((res) => {
+            if (res.data.success) {
+                alert("Your request submitted successfully ✅.");
+            } else {
+                alert(res.data.message);
+            }
+        }).catch((err) => {
+            alert("Something went wrong.");
+        })
+}
 
-//         // 👇 Real errors only
-//         console.error("API Error:", error);
-//         throw error;
-//     }
-// };
+<<<<<<< HEAD
+export const NewAdmisnForSchoolReq = (data, cata, setIsSubmitting) => {
+    const fd = new FormData();
+    fd.append("studentName", data.studentName);
+    fd.append("fatherName", data.fatherName);
+    fd.append("email", data.email);
+    fd.append("phone", data.phone);
+    fd.append("WhatsAppNum", data.WhatsAppNum);
+    fd.append("targetClass", data.targetClass);
+    fd.append("previousSchool", data.previousSchool);
+    fd.append("address", data.address);
+    fd.append("id", data.id);
+    fd.append("Coll", cata)
+
+    // IMPORTANT
+    fd.append("paymentScreenshot", data.paymentScreenshot);
+
+    axios
+        .post(`${mainURL}/NewInstAdmissionReq`, fd, {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true
+        })
+        .then((res) => {
+            if (res.data.success) {
+                alert("Your request submitted successfully ✅.");
+            } else {
+                if (res.data.message == "getaddrinfo ENOTFOUND api.cloudinary.com") {
+                    alert("No Internet")
+                } else {
+                    alert(res.data.message);
+                }
+            }
+        })
+        .catch(() => alert("Something went wrong."));
+};
+=======
+export const BusinessRegistrationReq = (data) => {
+    axios.post(`${mainURL}/business/auth/register-request`, data)
+        .then((res) => {
+            if (res.data.success) {
+                alert("Business registration request submitted successfully ✅.");
+            } else {
+                alert(res.data.message);
+            }
+        }).catch((err) => {
+            alert("Something went wrong with business registration.");
+        })
+}
+
+export const PlaceOrderApi = (orderData) => {
+    return axios.post(`${mainURL}/placeOrder`, orderData);
+}
+
+export const GetOrdersApi = (serviceId) => {
+    return axios.post(`${mainURL}/getOrders`, { serviceId });
+}
+
+export const UpdateOrderStatusApi = (orderId, status) => {
+    return axios.post(`${mainURL}/updateOrderStatus`, { orderId, status });
+}
+
+export const BookTableApi = (bookingData) => {
+    return axios.post(`${mainURL}/bookTable`, bookingData);
+}
+
+export const ReportServiceLandingApi = (reportData) => {
+    return axios.post(`${mainURL}/reportServiceLanding`, reportData);
+}
+>>>>>>> c7b38e2d4bb20aec1c47e941ded260bb08412089

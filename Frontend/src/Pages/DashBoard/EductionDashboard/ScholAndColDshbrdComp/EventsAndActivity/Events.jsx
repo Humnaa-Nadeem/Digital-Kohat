@@ -20,7 +20,7 @@ export const EventManagingForm = ({ dashboardData }) => {
     // =========================
     // Handling Event Section
     // =========================
-    const [CanSubmitForm, setCanSubmitForm] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(true);
 
     // Handling the data entry
     let [eventData, setEventData] = useState({
@@ -35,13 +35,13 @@ export const EventManagingForm = ({ dashboardData }) => {
     const handleEventChngs = (e) => {
         let { name, value } = e.target;
         setEventData({ ...eventData, [name]: value });
-        setCanSubmitForm(true);
+        setIsSubmitting(false);
     }
 
     // %%%%%% Form Submission of "EVENT" Section %%%%%%%
     const AddNewEventFun = (e) => {
         e.preventDefault();
-        AddNewEvent(eventData, setCanSubmitForm);
+        AddNewEvent(eventData, setIsSubmitting);
     }
 
     // =========================
@@ -171,7 +171,7 @@ export const EventManagingForm = ({ dashboardData }) => {
                     </div>
                 </div>
                 <div className="form-actions">
-                    <button type="submit" disabled={!CanSubmitForm} className="save-btn">Save</button>
+                    <button type="submit" disabled={isSubmitting} className="save-btn">Save</button>
                 </div>
             </form>
             <br></br>
@@ -202,36 +202,52 @@ export const EventManagingForm = ({ dashboardData }) => {
 }
 
 const EventCards = ({ eventData }) => {
+
     if (!eventData || eventData.length === 0) return null;
+
     return (
         <div className="Adm-event-cards-container">
-            {[eventData].map((event, i) => (
-                <div className="Adm-event-card" key={i}>
-                    <div className="Adm-event-card-header">
-                        <h3 className="Adm-event-title">{event.title}</h3>
-                        <button
-                            type="button"
-                            className="Adm-event-delete-btn"
-                            onClick={() => deleteTheEvent(event.title)}
-                            title="Delete Event"
-                        >
-                            <FiTrash2 />
-                        </button>
+
+            {
+                eventData.map((event, i) => (
+
+                    <div className="Adm-event-card" key={i}>
+
+                        <div className="Adm-event-card-header">
+                            <h3 className="Adm-event-title">
+                                {event.title}
+                            </h3>
+
+                            <button
+                                type="button"
+                                className="Adm-event-delete-btn"
+                                onClick={() => deleteTheEvent(event.title)}
+                            >
+                                <FiTrash2 />
+                            </button>
+                        </div>
+
+                        <p className="Adm-event-info">
+                            <strong>Location:</strong> {event.location}
+                        </p>
+
+                        <p className="Adm-event-info">
+                            <strong>Category:</strong> {event.catagory}
+                        </p>
+
+                        <p className="Adm-event-info">
+                            <strong>Time:</strong> {event.time}
+                        </p>
+
+                        <p className="Adm-event-info">
+                            <strong>Audience:</strong> {event.Audience}
+                        </p>
+
                     </div>
-                    <p className="Adm-event-info">
-                        <strong>Location:</strong> {event.location}
-                    </p>
-                    <p className="Adm-event-info">
-                        <strong>Category:</strong> {event.catagory}
-                    </p>
-                    <p className="Adm-event-info">
-                        <strong>Time:</strong> {event.time}
-                    </p>
-                    <p className="Adm-event-info">
-                        <strong>Audience:</strong> {event.Audience}
-                    </p>
-                </div>
-            ))}
+
+                ))
+            }
+
         </div>
     );
 };

@@ -16,7 +16,6 @@ SACAR.post("/Logout", SACACFun.Logout);
 SACAR.get("/getDashBoardDta", AdminMW, SACACFun.RetriveTheDashboardDta);
 SACAR.post("/AddManager", AdminMW, SACACFun.AddManager);
 SACAR.post("/switchDashBoard", AdminMW, SACACFun.switchDashBoard);
-SACAR.post("/AddManager", SACACFun.AddManager);
 
 // ==========================================
 // BASIC INFO TAB DATA UPDATING ROUTES:
@@ -57,21 +56,28 @@ SACAR.post("/UpdateExtraActivities", AdminMW, SACACFun.UpdateExtraActivitiesToDb
 //FEE TAB DATA UPDATING ROUTE: 
 // ==========================================
 
-SACAR.post("/AddFeeTabData", AdminMW, SACACFun.AddFeeTabDataToDb);
+SACAR.post("/AddFeeTabData", AdminMW, SACACFun.UpdateFeesToDb);
 
 // ==========================================
 // REVIEWS TAB DATA UPDATING ROUTE:
 // ==========================================
 
 SACAR.post("/AddReviewTabData", AdminMW, SACACFun.AddReviewTabDataToDb);
+
 SACAR.post("/ReplyToReview", AdminMW, SACACFun.ReplyToReview);
 SACAR.post("/UpdateFoodMenu", AdminMW, SACACFun.UpdateFoodMenuToDb);
 SACAR.post("/SubmitSupportTicket", AdminMW, SACACFun.SubmitSupportTicket);
+
 
 // ==========================================
 // GALLERY TAB DATA UPDATING ROUTE:
 // ==========================================
 
 SACAR.post("/UpdateGallery", AdminMW, upload.any(), SACACFun.UpdateGallery);
+
+
+SACAR.post("/GetInstituteAdmissions", AdminMW, SACACFun.GetInstituteAdmissions);
+
+SACAR.post("/update-payment-gateways", AdminMW, SACACFun.UpdatePaymentGatewaysToDb);
 
 export default SACAR;

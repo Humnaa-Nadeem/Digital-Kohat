@@ -1,5 +1,12 @@
 import cloudinary from "../Config/cloudinary.js";
 import { getPublicIdFromUrl } from "../HelperFun/helperFun.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 // Function that help to upload the images to cloudinary
 export const uploadToCloudinary = (fileOrBuffer, folder) => {
@@ -16,6 +23,24 @@ export const uploadToCloudinary = (fileOrBuffer, folder) => {
             bufferToUpload = fileOrBuffer;
         } else {
             return reject(new Error("Invalid file/buffer type for Cloudinary upload"));
+        }
+
+        if (!process.env.CLOUDINARY_CLOUD_NAME) {
+            try {
+                const uploadsDir = path.join(__dirname, '..', 'public', 'uploads', folder);
+                if (!fs.existsSync(uploadsDir)) {
+                    fs.mkdirSync(uploadsDir, { recursive: true });
+                }
+                const fileName = `${Date.now()}-${Math.round(Math.random() * 1e9)}.webp`;
+                const filePath = path.join(uploadsDir, fileName);
+                fs.writeFileSync(filePath, bufferToUpload);
+
+                return resolve({
+                    secure_url: `http://localhost:${process.env.PORT || 5500}/uploads/${folder}/${fileName}`
+                });
+            } catch (err) {
+                return reject(err);
+            }
         }
 
         cloudinary.uploader.upload_stream(

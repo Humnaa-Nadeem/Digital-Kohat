@@ -13,7 +13,7 @@ import {
 } from "react-icons/fi";
 
 import { MdAnalytics, MdManageAccounts, MdOutlineAdminPanelSettings } from "react-icons/md";
-import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { FaAddressBook, FaRegMoneyBillAlt } from "react-icons/fa";
 import { GetTheDashboardDta, SwitchDashBoard } from "../../../../ApiCalls/DashBoardApiCalls";
 import { useEffect, useState } from "react";
 import { ProfileContent } from "../ScholAndColDshbrdComp/Profile/Profile";
@@ -25,6 +25,8 @@ import { FeeStructure } from "../ScholAndColDshbrdComp/Fees/Fee";
 import { GalleryForm } from "../ScholAndColDshbrdComp/Gallery/gallery";
 import { ReviewForm } from "../ScholAndColDshbrdComp/Reviews/Review";
 import { AddManagerForm } from "../ScholAndColDshbrdComp/AddManager/AddManagerForm";
+import { NewAdmissions } from "../ScholAndColDshbrdComp/NewAdmissions/NewAdmissions";
+import planLimits from "../../../../utils/planLimits";
 
 export const SchoolAndClgDashBoard = () => {
     const [dashboardData, setDashboardData] = useState(null);
@@ -39,11 +41,10 @@ export const SchoolAndClgDashBoard = () => {
         GetTheDashboardDta(setDashboardData, setLoading, setAdminOtherServices);
     }, []);
 
-
     let content;
     switch (currentTab) {
         case "Profile":
-            content = <ProfileContent />;
+            content = <ProfileContent dashboardData={dashboardData} />;
             break;
         case "Basic Info":
             content = <BasicInfoForm dashboardData={dashboardData} />;
@@ -68,6 +69,9 @@ export const SchoolAndClgDashBoard = () => {
             break;
         case "Manager":
             content = <AddManagerForm OtherServices={AdminOtherServices} />
+            break;
+        case "Admissions":
+            content = <NewAdmissions dashboardData={dashboardData} />
             break;
         default:
             content = <ProfileContent />;
@@ -108,86 +112,114 @@ export const SchoolAndClgDashBoard = () => {
                                         <p className="DshbrdtagName">Basic Info</p>
                                     </li>
 
-                                    <li
-                                        className={currentTab === "Admin" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Admin");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><MdOutlineAdminPanelSettings className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Admin</p>
-                                    </li>
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Admin") && (
+                                        <li
+                                            className={currentTab === "Admin" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("Admin");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><MdOutlineAdminPanelSettings className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Admin</p>
+                                        </li>
+                                    )}
 
-                                    <li
-                                        className={currentTab === "Staff" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Staff");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiUsers className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Staff</p>
-                                    </li>
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Staff") && (
+                                        <li
+                                            className={currentTab === "Staff" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("Staff");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><FiUsers className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Staff</p>
+                                        </li>
+                                    )}
 
-                                    <li
-                                        className={currentTab === "EvntsAndActvty" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("EvntsAndActvty");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiCalendar className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Events</p>
-                                    </li>
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Events") && (
+                                        <li
+                                            className={currentTab === "EvntsAndActvty" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("EvntsAndActvty");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><FiCalendar className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Events</p>
+                                        </li>
+                                    )}
 
-                                    <li
-                                        className={currentTab === "Fee Structure" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Fee Structure");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FaRegMoneyBillAlt className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Fee Structure</p>
-                                    </li>
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Fee Structure") && (
+                                        <li
+                                            className={currentTab === "Fee Structure" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("Fee Structure");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><FaRegMoneyBillAlt className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Fee Structure</p>
+                                        </li>
+                                    )}
 
-                                    <li
-                                        className={currentTab === "Gallery" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Gallery");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiImage className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Gallery</p>
-                                    </li>
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Admissions") && (
+                                        <li
+                                            className={currentTab === "Admissions" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("Admissions");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><FaAddressBook className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Admissions</p>
+                                        </li>
+                                    )}
 
-                                    <li
-                                        className={currentTab === "Reviews" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Reviews");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiMessageSquare className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Reviews</p>
-                                    </li>
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Gallery") && (
+                                        <li
+                                            className={currentTab === "Gallery" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("Gallery");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><FiImage className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Gallery</p>
+                                        </li>
+                                    )}
+
+                                    {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Reviews") && (
+                                        <li
+                                            className={currentTab === "Reviews" ? "active" : ""}
+                                            onClick={() => {
+                                                setCurrentTab("Reviews");
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                        >
+                                            <i><FiMessageSquare className="DshbrdSidbrIcn" /></i>
+                                            <p className="DshbrdtagName">Reviews</p>
+                                        </li>
+                                    )}
 
                                     {
                                         (AdminOtherServices)
                                             ?
                                             <>
                                                 {/* SWITCH DASHBOARD TAB */}
-                                                <li
-                                                    className={currentTab === "Dashboard" ? "active" : ""}
-                                                    onClick={() => setIsSwitchOpen(prev => !prev)}
-                                                >
-                                                    <i>
-                                                        <MdAnalytics className="DshbrdSidbrIcn" />
-                                                    </i>
-                                                    <p className="DshbrdtagName">Switch Dashboard</p>
-                                                </li>
+                                                {/* SWITCH DASHBOARD TAB */}
+                                                {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Switch Dashboard") && (
+                                                    <li
+                                                        className={currentTab === "Dashboard" ? "active" : ""}
+                                                        onClick={() => setIsSwitchOpen(prev => !prev)}
+                                                    >
+                                                        <i>
+                                                            <MdAnalytics className="DshbrdSidbrIcn" />
+                                                        </i>
+                                                        <p className="DshbrdtagName">Switch Dashboard</p>
+                                                    </li>
+                                                )}
 
                                                 {/* DROPDOWN */}
                                                 {isSwitchOpen && Array.isArray(AdminOtherServices) && (
@@ -218,19 +250,21 @@ export const SchoolAndClgDashBoard = () => {
                                                 )}
 
                                                 {/* ADD MANAGER TAB */}
-                                                <li
-                                                    className={currentTab === "Manager" ? "active" : ""}
-                                                    onClick={() => {
-                                                        setCurrentTab("Manager");
-                                                        setIsSwitchOpen(false);
-                                                        setIsMobileMenuOpen(false);
-                                                    }}
-                                                >
-                                                    <i>
-                                                        <MdManageAccounts className="DshbrdSidbrIcn" />
-                                                    </i>
-                                                    <p className="DshbrdtagName">Add Manager</p>
-                                                </li>
+                                                {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Add Manager") && (
+                                                    <li
+                                                        className={currentTab === "Manager" ? "active" : ""}
+                                                        onClick={() => {
+                                                            setCurrentTab("Manager");
+                                                            setIsSwitchOpen(false);
+                                                            setIsMobileMenuOpen(false);
+                                                        }}
+                                                    >
+                                                        <i>
+                                                            <MdManageAccounts className="DshbrdSidbrIcn" />
+                                                        </i>
+                                                        <p className="DshbrdtagName">Add Manager</p>
+                                                    </li>
+                                                )}
                                             </>
                                             :
                                             <></>
@@ -240,57 +274,26 @@ export const SchoolAndClgDashBoard = () => {
                             </aside>
 
                             <section className="content">
-                                {(currentTab === "Profile")
-                                    ?
-                                    <></>
-                                    :
-                                    <div className="stepper">
-                                        <div className={(currentTab === "Basic Info") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">1</span>
-                                            <p>Basic Info</p>
+                                {
+                                    dashboardData?.PaymentPlan === "FREE" && (
+                                        <div className="trial-status-banner">
+                                            {
+                                                new Date() > new Date(dashboardData.PlanExpiry)
+                                                    ?
+                                                    <div className="trial-expired">
+                                                        <p>Your free trial has expired. Please contact admin to upgrade your plan.</p>
+                                                    </div>
+                                                    :
+                                                    <div className="trial-active">
+                                                        <p>
+                                                            Your free trial expires in {
+                                                                Math.ceil((new Date(dashboardData.PlanExpiry) - new Date()) / (1000 * 60 * 60 * 24))
+                                                            } days.
+                                                        </p>
+                                                    </div>
+                                            }
                                         </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Admin") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">2</span>
-                                            <p>Admin</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Staff") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">3</span>
-                                            <p>Staff</p>
-                                        </div>
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "EvntsAndActvty") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">4</span>
-                                            <p>Events</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Fee Structure") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">5</span>
-                                            <p>Fee Structure</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Gallery") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">6</span>
-                                            <p>Gallery</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Reviews") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">7</span>
-                                            <p>Reviews</p>
-                                        </div>
-                                    </div>
+                                    )
                                 }
                                 {content}
                             </section>

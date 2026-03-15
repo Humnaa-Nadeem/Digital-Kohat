@@ -1,161 +1,143 @@
-/* OVERVIEW CARDS */
+/* OVERVIEW GRID */
 .overview-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-    justify-items: center;
+    gap: 22px;
+    width: 100%;
+    margin-top: 10px;
+    align-content: start;
 }
 
+.overview-section {
+    max-width: 950px;
+    /* controls layout width */
+    margin: 0 auto;
+    /* centers content */
+    padding: 30px 0px 30px 0px;
+}
+
+.overview-header {
+    margin-bottom: 40px;
+}
+
+.overview-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0px;
+    color: #0f172a;
+    text-decoration: 4px green underline;
+}
+
+.overview-header p {
+    margin: 6px 0 0 0;
+    font-size: 14px;
+    color: rgba(15, 23, 42, 0.65);
+    font-weight: 500;
+}
+
+/* CARD */
 .Dshbrdcard {
-    width: 230px;
-    padding: 20px 25px;
-    border-radius: 15px;
-    color: white;
+    border-radius: 22px;
+    padding: 26px 24px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    transition: all 0.25s ease;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #34be82 0%, #0d915a 50%, #065838 100%);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
 }
 
-.Dshbrdcard:hover .Dshbrdcard-icon {
-    transform: rotate(20deg) scale(1.1);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+.Dshbrdcard:hover {
+    transform: translateY(-5px);
+    border-color: rgba(52, 190, 130, 0.45);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
 }
 
+/* Label */
+.label {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 0.3px;
+}
+
+/* Bottom row */
 .Dshbrdcard-bottom {
-    margin-top: 15px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+    gap: 18px;
 }
 
-.label {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+/* Value */
+.DshBrd-content {
+    font-size: 32px;
+    /* BIG */
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.2px;
+    line-height: 1;
 }
 
+/* Approved / Verified */
+.DshBrd-content.approved {
+    color: #34be82;
+}
+
+/* Icon */
 .Dshbrdcard-icon {
-    background: rgba(255, 255, 255, 0.15);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.4s ease;
-    align-self: flex-end;
+
+    background: rgba(52, 190, 130, 0.14);
+    color: #34be82;
+
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
 }
 
-.DshBrd-content {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+.Dshbrdcard:hover .Dshbrdcard-icon {
+    transform: scale(1.1) rotate(5deg);
 }
 
-/* PROFILE COMPLETION */
-.profile-completion {
-    margin-top: 40px;
-    width: 97%;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-}
-
-.pc-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.pc-percent {
-    font-weight: bold;
-    color: #0d915a;
-}
-
-/* PROGRESS BAR */
-.pc-progress {
-    height: 10px;
-    background: #e5e7eb;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.pc-bar {
-    height: 100%;
-    background: #0d915a;
-    border-radius: 10px;
-}
-
-/* CHECKLIST */
-.pc-checklist {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.pc-item {
-    font-size: 14px;
-    padding: 8px 10px;
-    border-radius: 6px;
-}
-
-.pc-item.completed {
-    background: #ecfdf5;
-    color: #166534;
-}
-
-.pc-item.pending {
-    background: #fef2f2;
-    color: #991b1b;
-}
-
-/* RESPONSIVE STYLING */
-@media (max-width: 1024px) {
+/* RESPONSIVE */
+@media (max-width: 1100px) {
     .overview-cards {
         grid-template-columns: repeat(2, 1fr);
     }
 
     .Dshbrdcard {
-        width: 90%;
-    }
-
-    .pc-checklist {
-        grid-template-columns: 1fr;
+        min-height: 155px;
     }
 }
 
 @media (max-width: 640px) {
     .overview-cards {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 16px;
+        padding: 12px;
     }
 
     .Dshbrdcard {
-        width: 100%;
-        padding: 15px 20px;
+        min-height: 140px;
+        padding: 20px;
     }
 
     .DshBrd-content {
-        font-size: 18px;
+        font-size: 28px;
     }
 
-    .label {
-        font-size: 13px;
-    }
-
-    .pc-action {
-        width: 100%;
-        text-align: center;
-    }
-
-    .pc-progress {
-        height: 8px;
+    .Dshbrdcard-icon {
+        width: 52px;
+        height: 52px;
     }
 }

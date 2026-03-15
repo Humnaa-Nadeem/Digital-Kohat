@@ -6,10 +6,10 @@ import { saveBasicInfoApi } from "../../../../../ApiCalls/DashBoardApiCalls";
 export const BasicInfoForm = ({ dashboardData }) => {
     // Setting the Db Data if any, instead of default data
     let [formData, setFormData] = useState({
-        bannerUrl: dashboardData.bannerUrl || null,
-        tagline: dashboardData.tagline || "",
-        about: dashboardData.about || "",
-        aboutImgUrl: dashboardData.aboutImgUrl || null
+        bannerUrl: dashboardData.basicInfo?.bannerUrl || null,
+        tagline: dashboardData.basicInfo?.tagline || "",
+        about: dashboardData.basicInfo?.about || "",
+        aboutImgUrl: dashboardData.basicInfo?.aboutImgUrl || null
     });
 
     // Tracking changes
@@ -17,8 +17,8 @@ export const BasicInfoForm = ({ dashboardData }) => {
 
     // Setting images of Db if any to preiew or setting default images;
     const [preview, setPreview] = useState({
-        bannerUrl: dashboardData.bannerUrl || "https://images.pexels.com/photos/18272659/pexels-photo-18272659.jpeg",
-        aboutImgUrl: dashboardData.aboutImgUrl || "https://images.pexels.com/photos/18272659/pexels-photo-18272659.jpeg"
+        bannerUrl: dashboardData.basicInfo?.bannerUrl || "https://images.pexels.com/photos/18272659/pexels-photo-18272659.jpeg",
+        aboutImgUrl: dashboardData.basicInfo?.aboutImgUrl || "https://images.pexels.com/photos/18272659/pexels-photo-18272659.jpeg"
     });
 
     // Handling the data entry
@@ -78,7 +78,7 @@ export const BasicInfoForm = ({ dashboardData }) => {
                     </label>
                 </div>
                 <div className="form-group">
-                    <label>About School</label>
+                    <label>About {dashboardData.Type || dashboardData.ServiceType}</label>
                     <div className="aboutTextareaAndImg">
                         <textarea
                             value={formData.about}

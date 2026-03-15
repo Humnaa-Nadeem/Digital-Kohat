@@ -1,19 +1,56 @@
-
 import "./BusinessCategories.css";
+import axios from "axios";
 import { SearchBar } from "../../../components/SearchBar/Searchbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { EventsData } from "../../../Store/Business_store";
 import { FaPhone, FaEnvelope, FaClock, FaMapMarkerAlt, FaFacebook, FaInstagram, FaGlobe } from "react-icons/fa";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 export const EventsPg = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, []);
+    const [List, setList] = useState(EventsData);
+    const [Cards, setCards] = useState(EventsData);
+    const [loading, setLoading] = useState(true);
 
-    let [List, setList] = useState(EventsData);
-    let [Cards, setCards] = useState(EventsData);
+    const fetchCategoryProfiles = async () => {
+        try {
+            const res = await axios.get('/business/profile/category/events_entertainment');
+            if (res.data.success && res.data.profiles.length > 0) {
+                const dynamicProfiles = res.data.profiles.map(p => ({
+                    id: p._id,
+                    name: p.businessName,
+                    img: p.logo,
+                    desc: p.shortDescription,
+                    btn_txt: "Read More",
+                    coverImage: p.coverImage,
+                    services: p.services ? p.services.split('\n') : [],
+                    address: p.contactInfo?.location,
+                    contact: {
+                        phone: p.contactInfo?.phone,
+                        email: p.contactInfo?.email
+                    },
+                    timings: {
+                        opening: p.openingHours ? p.openingHours.split('-')[0] : "10:00 AM",
+                        closing: p.openingHours ? p.openingHours.split('-')[1] : "12:00 AM"
+                    },
+                    products: p.products || [],
+                    isDynamic: true
+                }));
+
+                setList([...dynamicProfiles, ...EventsData]);
+                setCards([...dynamicProfiles, ...EventsData]);
+            }
+        } catch (err) {
+            console.error("Failed to fetch event profiles:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategoryProfiles();
+    }, []);
 
     let [showList, setShowlist] = useState(false);
     let navigate = useNavigate();
@@ -21,7 +58,8 @@ export const EventsPg = () => {
     const { search } = useLocation();
     const query = new URLSearchParams(search);
     const id = query.get("id");
-    const selectedItem = id ? EventsData.find(item => item.id === parseInt(id)) : null;
+
+    const selectedItem = id ? List.find(item => String(item.id) === String(id)) : null;
 
     return (
         <>
@@ -32,6 +70,9 @@ export const EventsPg = () => {
                         <button className="btn-back" onClick={() => navigate(-1)}>← Back to List</button>
 
                         <div className="detail-header" style={{ backgroundImage: `url(${selectedItem.coverImage || selectedItem.img})` }}>
+                            {selectedItem.img && (
+                                <img src={selectedItem.img} alt="Business Logo" className="detail-logo" />
+                            )}
                             <div className="detail-title-block">
                                 <h1>{selectedItem.name}</h1>
                                 <div className="detail-meta">
@@ -57,6 +98,21 @@ export const EventsPg = () => {
                                         <span>Photography</span>
                                     </div>
                                 </div>
+
+                                {selectedItem.products && selectedItem.products.length > 0 && (
+                                    <div className="products-section" style={{ marginTop: '30px' }}>
+                                        <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: '#333' }}>Available Products</h3>
+                                        <div className="products-grid" style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                            gap: '20px'
+                                        }}>
+                                            {selectedItem.products.map((product) => (
+                                                <ProductCard key={product.id} product={product} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="content-sidebar">

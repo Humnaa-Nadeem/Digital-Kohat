@@ -1,18 +1,83 @@
+import "dotenv/config";
 import express from "express";
-const app = express();
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import http from "http";
+import { Server } from "socket.io";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import Routes from "./Router/Router.js";
-import SAR from "./Router/DashBoardRouter.js";
+import SACAR from "./Router/SchlAndColDshBrdRouts.js";
+import SARoutes from "./Router/SuperAdminRouter.js";
+import businessAuthRoutes from "./routes/business/businessAuthRoutes.js";
+import businessProfileRoutes from "./routes/business/businessProfileRoutes.js";
+import businessProductRoutes from './routes/business/productRoutes.js';
+import businessOrderRoutes from './routes/business/orderRoutes.js';
+import reviewRoutes from './routes/business/reviewRoutes.js';
+import customerAuthRoutes from './routes/business/customerAuthRoutes.js';
+import { connectMongoClient } from "./Db/mongoClient.js";
+import { connectMongoose } from "./Db/mongoose.js";
+import { ensureSuperAdmin } from "./HelperFun/initSuperAdmin.js";
 
-const PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// ✅ Create HTTP server
+const server = http.createServer(app);
+
+// ✅ Create socket server
+export const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true
+  }
+});
+
+// ✅ Socket connection
+io.on("connection", (socket) => {
+  console.log("Socket connected:", socket.id);
+  socket.on("join_superadmin", () => {
+    socket.join("superadmin");
+    console.log("Superadmin joined room");
+  });
+  socket.on("disconnect", () => {
+    console.log("Socket disconnected");
+  });
+});
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Backend Middlewares
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// DB Connections & Initialization
+await connectMongoose();
+const db = await connectMongoClient();
+await ensureSuperAdmin(db);
+app.locals.db = db;
+
+// Routes
 app.use(Routes);
-app.use(SAR);
+app.use(SACAR);
+app.use(SARoutes);
+app.use("/business/auth", businessAuthRoutes);
+app.use("/business/profile", businessProfileRoutes);
+app.use("/business/products", businessProductRoutes);
+app.use("/business/orders", businessOrderRoutes);
+app.use("/business/reviews", reviewRoutes);
+app.use("/customer/auth", customerAuthRoutes);
 
-
-app.listen(PORT, () => {
-  console.log(`Alhumdulilah , Server is running on http://localhost:${PORT}`);
-});
+// ✅ IMPORTANT: server.listen instead of app.listen
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

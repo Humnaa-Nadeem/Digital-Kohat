@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './SuprAdminLogin.css';
 import { SuperAdminFormSubmitted } from '../../../../ApiCalls/SuperAdminApiCall';
+import { ToastContainer } from 'react-toastify';
 
 export const SuperAdminLogin = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -14,6 +15,7 @@ export const SuperAdminLogin = () => {
 
     return (
         <div className="admin-split-container">
+            <ToastContainer />
             {/* Left Side: Hidden on Mobile */}
             <div className="admin-welcome-section">
                 <div className="welcome-content">
