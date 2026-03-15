@@ -1,80 +1,22 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import "../../Forms/forms.css";
-=======
 import { useEffect, useState } from "react";
 import "./SignUpForm.css";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { GetUserData } from "../../ApiCalls/ApiCalls";
 export const SignUpForm = () => {
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
-import HealthUser from "../../Forms/User/UserForm";
-import HealthForm from "../../Forms/Admin/HealthForm";
-import BusinessForm from "../../Forms/Admin/BusinessForm";
-import TourismForm from "../../Forms/Admin/TourismForm";
-import FoodForm from "../../Forms/Admin/FoodForm";
-import TechnicianForm from "../../Forms/Admin/TechnicianForm";
-import EducationForm from "../../Forms/Admin/EducationForm";
+    // State that store data
+    let [data, setData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        Catagory: "",
+        program: "",
+        address: "",
+        duration: "",
+        catagoryTitle: ""
+    });
 
-<<<<<<< HEAD
-const SignUpForm = () => {
-  const [role, setRole] = useState(null);
-  const [domain, setDomain] = useState(null);
-
-  // To handle fade-out for role and domain selectors
-  const [hideRoleSelector, setHideRoleSelector] = useState(false);
-  const [hideDomainSelector, setHideDomainSelector] = useState(false);
-
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-    setDomain(null);
-    setHideDomainSelector(false);
-    // Trigger fade out after small delay
-    setTimeout(() => setHideRoleSelector(true), 300);
-  };
-
-  const handleDomainChange = (e) => {
-    setDomain(e.target.value);
-    // Trigger fade out after small delay
-    setTimeout(() => setHideDomainSelector(true), 300);
-  };
-
-  useEffect(() => {
-    // Reset hiding if role or domain reset
-    if (!role) setHideRoleSelector(false);
-    if (!domain) setHideDomainSelector(false);
-  }, [role, domain]);
-
-  function renderForm(role, domain) {
-    if (!role || !domain) return null;
-    if (role === "user") {
-      switch (domain) {
-        case "health":
-          return <HealthUser />;
-        default:
-          return null;
-      }
-    }
-    if (role === "admin") {
-      switch (domain) {
-        case "health":
-          return <HealthForm />;
-        case "education":
-          return <EducationForm />;
-        case "business":
-          return <BusinessForm />;
-        case "tourism":
-          return <TourismForm />;
-        case "food":
-          return <FoodForm />;
-        case "technician":
-          return <TechnicianForm />;
-        default:
-          return null;
-      }
-=======
     useEffect(() => {
         if (loggedIn) {
             GetUserData(setUserData);
@@ -106,68 +48,102 @@ const SignUpForm = () => {
         } else {
             alert("Please first select any catagory")
         }
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     }
-  }
 
-  return (
-    <div className="signup-form-container">
-      <h2>Register</h2>
-      <div
-        className={`role-selection ${hideRoleSelector ? "fade-out" : ""}`}
-        aria-label="Role selection"
-      >
-        <label htmlFor="admin">
-          <input
-            id="admin"
-            type="radio"
-            name="role"
-            value="admin"
-            checked={role === "admin"}
-            onChange={handleRoleChange}
-          />
-          Admin
-        </label>
-        <label htmlFor="user">
-          <input
-            id="user"
-            type="radio"
-            name="role"
-            value="user"
-            checked={role === "user"}
-            onChange={handleRoleChange}
-          />
-          User
-        </label>
-      </div>
+    // Clearing form;
+    const clearFun = () => {
+        setData({
+            name: "",
+            email: "",
+            phone: "",
+            Catagory: "",
+            program: "",
+            address: "",
+            duration: "",
+            catagoryTitle: ""
+        })
+    }
 
-      {role && (
-        <div
-          className={`domain-selection ${hideDomainSelector ? "fade-out" : ""}`}
-          aria-label="Domain selection"
-        >
-          <label htmlFor="domain-select">Select Domain:</label>
-          <select
-            id="domain-select"
-            value={domain || ""}
-            onChange={handleDomainChange}
-          >
-            <option value="" disabled>
-              -- Select Domain --
-            </option>
-            <option value="health">Health</option>
-            <option value="education">Education</option>
-            <option value="business">Business</option>
-            <option value="tourism">Tourism</option>
-            <option value="food">Food</option>
-            <option value="technician">Technician</option>
-          </select>
-        </div>
-      )}
+    return (
+        <>
+            <header>
+                <Navbar />
+            </header>
+            <main>
+                <section>
+                    <div className="form-cont">
+                        <form onSubmit={(e) => formSubmission(e)} className="rgstr-form">
+                            <h2 className="rgstr-frm-heading">Registration Form:</h2>
+                            {/* Permanent Fields */}
+                            <div className="label-cont">
+                                <label htmlFor="name" className="formLabel">Full name</label>
+                                <input id="name" name="name" type="text" placeholder="Jane Doe" value={data.name} onChange={(e) => changeHandler(e)} required />
+                            </div>
+                            <div className="label-cont">
+                                <label htmlFor="phone" className="formLabel">Phone</label>
+                                <input id="phone" name="phone" type="tel" min={10} placeholder="+92 300 0000000" value={data.phone} onChange={(e) => changeHandler(e)} required />
+                            </div>
 
-      <div className="form-fields">{renderForm(role, domain)}</div>
-    </div>
-  );
-};
+                            <div className="label-cont">
+                                <label htmlFor="email" className="formLabel">Email</label>
+                                <input id="email" name="email" type="email" placeholder="jane@example.com" value={data.email} onChange={(e) => changeHandler(e)} required />
+                            </div>
 
-export default SignUpForm;
+                            <div className="label-cont">
+                                <label htmlFor="payment" className="formLabel">Select Catagory</label>
+                                <select id="payment" name="Catagory" value={data.Catagory} onChange={(e) => { changeHandler(e) }}>
+                                    <option>Catagory</option>
+                                    <option>School</option>
+                                    <option>College</option>
+                                    <option>University</option>
+                                    <option>Tutor</option>
+                                    <option>Online Course</option>
+                                    <option>Online Training</option>
+                                </select>
+                            </div>
+                            {/* Dynamic Fields */}
+                            {(data.Catagory === "" || data.Catagory === "Catagory")
+                                ?
+                                <></>
+                                :
+                                <div className="label-cont">
+                                    <label htmlFor="catagoryTitle" className="formLabel">{data.Catagory} Name :</label>
+                                    <input id="catagoryTitle" name="catagoryTitle" type="text" placeholder={`${data.Catagory} name`} value={data.catagoryTitle} onChange={(e) => changeHandler(e)} required />
+                                    <br></br>
+                                    {(data.Catagory === "Online Course" || data.Catagory === "Online Training") ?
+                                        <>
+                                            {/* ONLINE COURSES AND ONLINE TRAINING (OC & OT)*/}
+                                            <label htmlFor="duration" className="formLabel">Enrolling Date :</label>
+                                            <input id="duration" name="duration" type="date" value={data.duration} onChange={(e) => changeHandler(e)} required />
+                                        </>
+                                        :
+                                        <>
+                                            {/* OTHER THAN OC & OT */}
+                                            <label htmlFor="Address" className="formLabel">Address :</label>
+                                            <input id="Address" name="address" type="text" placeholder="street , city , district, kp pakistan" value={data.address} onChange={(e) => changeHandler(e)} required />
+                                            <br></br>
+                                            {(data.Catagory === "University")
+                                                ?
+                                                <>
+                                                    {/* FOR UNIVERSITY */}
+                                                    <label htmlFor="progrm" className="formLabel">Enter the Program Name :</label>
+                                                    <input id="progrm" name="program" type="text" placeholder="Computer Science" value={data.program} onChange={(e) => changeHandler(e)} required />
+                                                </>
+                                                :
+                                                <></>
+                                            }
+                                        </>
+                                    }
+                                </div>
+                            }
+                            <div className="button-group">
+                                <button type="submit" className="rgstr-pg-sbmt-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </main>
+            <Footer />
+        </>
+    )
+}

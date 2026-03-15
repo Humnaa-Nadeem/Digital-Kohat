@@ -2,43 +2,6 @@ import { useEffect, useState } from "react";
 import "./form.css";
 import { GetUserData, NewEduCataServiceReq } from "../../ApiCalls/ApiCalls";
 
-<<<<<<< HEAD
-const serviceFields = {
-  education: [
-    { label: "School/College/University Name", name: "categoryName", required: true },
-    { label: "Program (if University)", name: "program", required: false },
-    { label: "Address", name: "address", required: true },
-  ],
-  tourism: [
-    { label: "Tourism Place Name", name: "categoryName", required: true },
-    { label: "Duration of Tour", name: "duration", required: false },
-  ],
-  food: [
-    { label: "Restaurant/Food Place Name", name: "categoryName", required: true },
-    { label: "Address", name: "address", required: false },
-  ],
-  health: [
-    { label: "Hospital/Clinic Name", name: "categoryName", required: true },
-    { label: "Address", name: "address", required: true },
-  ],
-  technician: [
-    { label: "Technician Name", name: "categoryName", required: true },
-    { label: "Service Area / Address", name: "address", required: false },
-  ],
-  business: [
-    { label: "Business Name", name: "categoryName", required: true },
-    { label: "Address", name: "address", required: false },
-  ],
-};
-
-export const Form = ({ setShowform, serviceType, category }) => {
-  const formType = serviceType || category; // Accept both prop names
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: formType || "",
-=======
 /* =====================================================
 CATEGORY → TYPE MAPPING
 ===================================================== */
@@ -244,7 +207,6 @@ export const EduRegisterForm = ({ setShowform }) => {
     IDCard: "",
     category: "",
     type: "",
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
   });
 
   /* =====================================================
@@ -313,17 +275,8 @@ export const EduRegisterForm = ({ setShowform }) => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="form-cont">
-      <form onSubmit={formSubmission} className="rgstr-form">
-        <div className="crs" onClick={() => setShowform(false)}>
-          &times;
-        </div>
-        <h2 className="rgstr-frm-heading">Register for {formType}</h2>
-=======
     <div className="page-wrapper">
       <div className="main-card">
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
         {/* LEFT SIDE */}
 
@@ -350,20 +303,6 @@ export const EduRegisterForm = ({ setShowform }) => {
               ← Go Back
             </button>
 
-<<<<<<< HEAD
-        {/* Dynamic fields */}
-        {serviceFields[formType]?.map((field, index) => (
-          <div key={index}>
-            <label className="formLabel">{field.label}</label>
-            <input
-              name={field.name}
-              type="text"
-              value={data[field.name] || ""}
-              onChange={changeHandler}
-              required={field.required}
-            />
-=======
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
           </div>
         </div>
 

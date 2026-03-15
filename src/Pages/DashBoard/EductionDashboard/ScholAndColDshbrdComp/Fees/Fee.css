@@ -78,8 +78,6 @@
     align-self: flex-start;
 }
 
-<<<<<<< HEAD
-=======
 /* Divider */
 .sectionDivider {
     margin: 40px 0 20px 0;
@@ -128,7 +126,6 @@
     margin-bottom: 10px;
 }
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 @media (max-width: 530px) {
     .Dshbrdfee-Sec {
         margin: 0;
@@ -138,11 +135,7 @@
     }
 
     .feeTable th,
-<<<<<<< HEAD
-    .feeTable td{
-=======
     .feeTable td {
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         padding: 5.5px;
         font-size: 0.8rem;
     }

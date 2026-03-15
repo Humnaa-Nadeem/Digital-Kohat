@@ -19,8 +19,6 @@
     border: 1px solid #cbd5e1;
 }
 
-<<<<<<< HEAD
-=======
 .edu-badge-group {
     display: flex;
     gap: 8px;
@@ -143,7 +141,6 @@
     border-color: #bae6fd;
 }
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 .SA_sub_nav button {
     padding: 10px 24px;
     border-radius: 10px;
@@ -310,23 +307,14 @@
 
 /* Payment Plan Select */
 .SA_plan_badge {
-<<<<<<< HEAD
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-size: 0.85rem;
-=======
     padding: 8px 32px 8px 12px;
     border-radius: 10px;
     font-size: 0.82rem;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     font-weight: 700;
     border: 1px solid #e2e8f0;
     outline: none;
     cursor: pointer;
     background: #ffffff;
-<<<<<<< HEAD
-    transition: 0.2s;
-=======
     transition: all 0.2s ease;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
@@ -339,13 +327,10 @@
     border-color: #cbd5e1;
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 }
 
 .SA_plan_badge:focus {
     border-color: #108551;
-<<<<<<< HEAD
-=======
     box-shadow: 0 0 0 3px rgba(16, 133, 81, 0.1);
 }
 
@@ -354,25 +339,15 @@
 .SA_plan_badge.free_trial {
     color: #475569;
     background-color: #f1f5f9;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 }
 
 .SA_plan_badge.premium {
     color: #16a34a;
-<<<<<<< HEAD
-    background: #f0fdf4;
-=======
     background-color: #f0fdf4;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     border-color: #bbf7d0;
 }
 
 .SA_plan_badge.enterprise {
-<<<<<<< HEAD
-    color: #2563eb;
-    background: #eff6ff;
-    border-color: #dbeafe;
-=======
     color: #7c3aed;
     background-color: #f5f3ff;
     border-color: #ddd6fe;
@@ -382,7 +357,6 @@
     color: #0369a1;
     background-color: #e0f2fe;
     border-color: #bae6fd;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 }
 
 .SA_city_text {
@@ -392,10 +366,6 @@
     font-size: 0.9rem;
 }
 
-<<<<<<< HEAD
-/* No Data Placeholder */
-=======
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 .no-data {
     padding: 40px;
     text-align: center;
@@ -403,12 +373,6 @@
     font-style: italic;
 }
 
-<<<<<<< HEAD
-
-/* ============================= */
-/* Responsive Adjustments */
-/* ============================= */
-=======
 /* Admissions Record table */
 
 .records_table_wrapper {
@@ -531,7 +495,6 @@
 .records_delete_btn:hover {
     background: #dc2626;
 }
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 /* Make table horizontally scrollable on small screens */
 @media (max-width: 1024px) {
@@ -540,8 +503,6 @@
     }
 }
 
-<<<<<<< HEAD
-=======
 
 @media (max-width:900px) {
 
@@ -563,7 +524,6 @@
 
 }
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 @media (max-width: 910px) {
     .SA_custom_table {
         text-align: center;
@@ -785,8 +745,6 @@
         padding: 10px;
         overflow: visible;
     }
-<<<<<<< HEAD
-=======
 }
 
 .SA_sub_nav_badge {
@@ -805,5 +763,4 @@
 
 .SA_sub_nav button {
     position: relative;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 }

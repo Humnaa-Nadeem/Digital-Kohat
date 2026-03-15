@@ -11,16 +11,6 @@
     --td-warning: #feca57;
 }
 
-<<<<<<< HEAD
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    color: var(--td-text);
-    background-color: var(--td-bg);
-}
-
-=======
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 .td-dashboard-container {
     display: flex;
     height: 100vh;

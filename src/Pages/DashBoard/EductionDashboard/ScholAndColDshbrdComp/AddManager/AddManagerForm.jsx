@@ -54,17 +54,10 @@ export const AddManagerForm = ({ OtherServices }) => {
                 >
                     <option value="">Select Service Type</option>
                     <option value="SCHOOL">School</option>
-<<<<<<< HEAD
-                    <option value="RESTAURANT">Restaurant</option>
-                    <option value="HOSPITAL">Hospital</option>
-                </select>
-
-=======
                     <option value="COLLEGE">College</option>
                     <option value="RESTAURANT">Restaurant</option>
                     <option value="HOSPITAL">Hospital</option>
                 </select>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 <button type="submit">Create Manager</button>
             </form>
         </section>

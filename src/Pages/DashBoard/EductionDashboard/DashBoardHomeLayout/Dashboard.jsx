@@ -13,11 +13,7 @@ import {
 } from "react-icons/fi";
 
 import { MdAnalytics, MdManageAccounts, MdOutlineAdminPanelSettings } from "react-icons/md";
-<<<<<<< HEAD
-import { FaRegMoneyBillAlt } from "react-icons/fa";
-=======
 import { FaAddressBook, FaRegMoneyBillAlt } from "react-icons/fa";
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 import { GetTheDashboardDta, SwitchDashBoard } from "../../../../ApiCalls/DashBoardApiCalls";
 import { useEffect, useState } from "react";
 import { ProfileContent } from "../ScholAndColDshbrdComp/Profile/Profile";
@@ -29,11 +25,8 @@ import { FeeStructure } from "../ScholAndColDshbrdComp/Fees/Fee";
 import { GalleryForm } from "../ScholAndColDshbrdComp/Gallery/gallery";
 import { ReviewForm } from "../ScholAndColDshbrdComp/Reviews/Review";
 import { AddManagerForm } from "../ScholAndColDshbrdComp/AddManager/AddManagerForm";
-<<<<<<< HEAD
-=======
 import { NewAdmissions } from "../ScholAndColDshbrdComp/NewAdmissions/NewAdmissions";
 import planLimits from "../../../../utils/planLimits";
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const SchoolAndClgDashBoard = () => {
     const [dashboardData, setDashboardData] = useState(null);
@@ -48,18 +41,10 @@ export const SchoolAndClgDashBoard = () => {
         GetTheDashboardDta(setDashboardData, setLoading, setAdminOtherServices);
     }, []);
 
-<<<<<<< HEAD
-
-    let content;
-    switch (currentTab) {
-        case "Profile":
-            content = <ProfileContent />;
-=======
     let content;
     switch (currentTab) {
         case "Profile":
             content = <ProfileContent dashboardData={dashboardData} />;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             break;
         case "Basic Info":
             content = <BasicInfoForm dashboardData={dashboardData} />;
@@ -85,12 +70,9 @@ export const SchoolAndClgDashBoard = () => {
         case "Manager":
             content = <AddManagerForm OtherServices={AdminOtherServices} />
             break;
-<<<<<<< HEAD
-=======
         case "Admissions":
             content = <NewAdmissions dashboardData={dashboardData} />
             break;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         default:
             content = <ProfileContent />;
     }
@@ -130,73 +112,6 @@ export const SchoolAndClgDashBoard = () => {
                                         <p className="DshbrdtagName">Basic Info</p>
                                     </li>
 
-<<<<<<< HEAD
-                                    <li
-                                        className={currentTab === "Admin" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Admin");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><MdOutlineAdminPanelSettings className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Admin</p>
-                                    </li>
-
-                                    <li
-                                        className={currentTab === "Staff" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Staff");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiUsers className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Staff</p>
-                                    </li>
-
-                                    <li
-                                        className={currentTab === "EvntsAndActvty" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("EvntsAndActvty");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiCalendar className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Events</p>
-                                    </li>
-
-                                    <li
-                                        className={currentTab === "Fee Structure" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Fee Structure");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FaRegMoneyBillAlt className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Fee Structure</p>
-                                    </li>
-
-                                    <li
-                                        className={currentTab === "Gallery" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Gallery");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiImage className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Gallery</p>
-                                    </li>
-
-                                    <li
-                                        className={currentTab === "Reviews" ? "active" : ""}
-                                        onClick={() => {
-                                            setCurrentTab("Reviews");
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                    >
-                                        <i><FiMessageSquare className="DshbrdSidbrIcn" /></i>
-                                        <p className="DshbrdtagName">Reviews</p>
-                                    </li>
-=======
                                     {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Admin") && (
                                         <li
                                             className={currentTab === "Admin" ? "active" : ""}
@@ -287,24 +202,12 @@ export const SchoolAndClgDashBoard = () => {
                                             <p className="DshbrdtagName">Reviews</p>
                                         </li>
                                     )}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
                                     {
                                         (AdminOtherServices)
                                             ?
                                             <>
                                                 {/* SWITCH DASHBOARD TAB */}
-<<<<<<< HEAD
-                                                <li
-                                                    className={currentTab === "Dashboard" ? "active" : ""}
-                                                    onClick={() => setIsSwitchOpen(prev => !prev)}
-                                                >
-                                                    <i>
-                                                        <MdAnalytics className="DshbrdSidbrIcn" />
-                                                    </i>
-                                                    <p className="DshbrdtagName">Switch Dashboard</p>
-                                                </li>
-=======
                                                 {/* SWITCH DASHBOARD TAB */}
                                                 {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Switch Dashboard") && (
                                                     <li
@@ -317,7 +220,6 @@ export const SchoolAndClgDashBoard = () => {
                                                         <p className="DshbrdtagName">Switch Dashboard</p>
                                                     </li>
                                                 )}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
                                                 {/* DROPDOWN */}
                                                 {isSwitchOpen && Array.isArray(AdminOtherServices) && (
@@ -348,21 +250,6 @@ export const SchoolAndClgDashBoard = () => {
                                                 )}
 
                                                 {/* ADD MANAGER TAB */}
-<<<<<<< HEAD
-                                                <li
-                                                    className={currentTab === "Manager" ? "active" : ""}
-                                                    onClick={() => {
-                                                        setCurrentTab("Manager");
-                                                        setIsSwitchOpen(false);
-                                                        setIsMobileMenuOpen(false);
-                                                    }}
-                                                >
-                                                    <i>
-                                                        <MdManageAccounts className="DshbrdSidbrIcn" />
-                                                    </i>
-                                                    <p className="DshbrdtagName">Add Manager</p>
-                                                </li>
-=======
                                                 {planLimits[dashboardData?.PaymentPlan || "FREE"]?.features.includes("Add Manager") && (
                                                     <li
                                                         className={currentTab === "Manager" ? "active" : ""}
@@ -378,7 +265,6 @@ export const SchoolAndClgDashBoard = () => {
                                                         <p className="DshbrdtagName">Add Manager</p>
                                                     </li>
                                                 )}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                             </>
                                             :
                                             <></>
@@ -388,59 +274,6 @@ export const SchoolAndClgDashBoard = () => {
                             </aside>
 
                             <section className="content">
-<<<<<<< HEAD
-                                {(currentTab === "Profile")
-                                    ?
-                                    <></>
-                                    :
-                                    <div className="stepper">
-                                        <div className={(currentTab === "Basic Info") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">1</span>
-                                            <p>Basic Info</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Admin") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">2</span>
-                                            <p>Admin</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Staff") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">3</span>
-                                            <p>Staff</p>
-                                        </div>
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "EvntsAndActvty") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">4</span>
-                                            <p>Events</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Fee Structure") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">5</span>
-                                            <p>Fee Structure</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Gallery") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">6</span>
-                                            <p>Gallery</p>
-                                        </div>
-
-                                        <div className="line"></div>
-
-                                        <div className={(currentTab === "Reviews") ? "DshBrdstep active" : "DshBrdstep"}>
-                                            <span className="Dshbrdcircle">7</span>
-                                            <p>Reviews</p>
-                                        </div>
-                                    </div>
-=======
                                 {
                                     dashboardData?.PaymentPlan === "FREE" && (
                                         <div className="trial-status-banner">
@@ -461,7 +294,6 @@ export const SchoolAndClgDashBoard = () => {
                                             }
                                         </div>
                                     )
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                 }
                                 {content}
                             </section>

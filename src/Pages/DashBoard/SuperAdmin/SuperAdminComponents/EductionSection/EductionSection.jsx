@@ -1,41 +1,14 @@
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import "./EductionSection.css";
-<<<<<<< HEAD
-import {
-    FiTrash2,
-    FiPlus,
-    FiPhone,
-    FiMail,
-    FiCheckCircle,
-    FiXCircle,
-    FiShield,
-    FiShieldOff,
-    FiMap
-} from "react-icons/fi";
-=======
 import { FiTrash2, FiPlus, FiPhone, FiMail, FiShield, FiShieldOff, FiMap, FiSend, FiImage, FiMapPin, FiFileText, FiXCircle, FiCheckCircle } from "react-icons/fi";
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 import { FaWhatsapp, FaIdCard } from "react-icons/fa";
 import { HiOutlineLanguage } from "react-icons/hi2";
 
 import { CreateAdminModal } from "../CreateAdminForm/CreateAdmin";
-<<<<<<< HEAD
-import {
-    ChangeAdminVerificationState,
-    ChangeInstState,
-    ChangePaymentPlan,
-    deleteRequest,
-    DeleteTheInst,
-    GetEduNewReqTabData
-} from "../../../../../ApiCalls/SuperAdminApiCall";
-
-export const EducationSection = () => {
-=======
 import * as ApiCall from "../../../../../ApiCalls/SuperAdminApiCall";
 
 export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
     const [activeTab, setActiveTab] = useState("SCHOOL");
     const [rowData, setRowData] = useState([]);
@@ -43,22 +16,6 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
     const [id, setId] = useState("");
 
     useEffect(() => {
-<<<<<<< HEAD
-        // SAD => Super Admin Dashboard
-        if (activeTab === "SCHOOL") {
-            GetEduNewReqTabData(activeTab, setRowData);
-        } if (activeTab === "COLLEGE") {
-            console.log("asdf");
-            // Fetch data for Colleges tab if needed
-        } else if (activeTab === "UNIVERSITIES") {
-            console.log("asdf");
-            // Fetch data for Universities tab if needed
-        } else if (activeTab === "NEW_REQUESTS") {
-            GetEduNewReqTabData(activeTab, setRowData);
-        }
-    }, [activeTab]);
-
-=======
         if (activeTab !== "RECORD" && activeTab !== "AdminForm") {
             ApiCall.GetTheTabData(activeTab, setRowData);
         }
@@ -74,22 +31,10 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
     }, [activeTab, notifCounts, setEduNotifCounts]);
 
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     let content = null;
 
     switch (activeTab) {
         case "SCHOOL":
-<<<<<<< HEAD
-            content = <SchoolDataTable data={rowData} setData={setRowData} />;
-            break;
-
-        case "COLLEGE":
-            content = <CollegeDataTable data={rowData} setData={setRowData} />;
-            break;
-
-        case "UNIVERSITIES":
-            content = <UniversityDataTable data={rowData} setData={setRowData} />;
-=======
             content = <SchoolDataTable data={rowData} setData={setRowData} setActiveTab={setActiveTab} />;
             break;
 
@@ -99,7 +44,6 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
 
         case "NEW_ADMISSIONS":
             content = <NewAdmissionsTable data={rowData} setData={setRowData} />;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             break;
 
         case "NEW_REQUESTS":
@@ -124,13 +68,10 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
             );
             break;
 
-<<<<<<< HEAD
-=======
         case "RECORD":
             content = <InstituteRecordsTable data={rowData} setData={setRowData} />;
             break
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         default:
             content = null;
     }
@@ -155,18 +96,11 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
                     </button>
 
                     <button
-<<<<<<< HEAD
-                        className={activeTab === "UNIVERSITIES" ? "SA_active" : ""}
-                        onClick={() => setActiveTab("UNIVERSITIES")}
-                    >
-                        Universities
-=======
                         className={activeTab === "NEW_ADMISSIONS" ? "SA_active" : ""}
                         onClick={() => setActiveTab("NEW_ADMISSIONS")}
                     >
                         New Admissions
                         {notifCounts?.admissions > 0 && <span className="SA_sub_nav_badge">{notifCounts.admissions}</span>}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                     </button>
 
                     <button
@@ -174,18 +108,12 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
                         onClick={() => setActiveTab("NEW_REQUESTS")}
                     >
                         New Requests
-<<<<<<< HEAD
-=======
                         {notifCounts?.requests > 0 && <span className="SA_sub_nav_badge">{notifCounts.requests}</span>}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                     </button>
                 </div>
             </div>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             <div className="SA_table_container">
                 {content}
             </div>
@@ -194,11 +122,6 @@ export const EducationSection = ({ notifCounts, setEduNotifCounts }) => {
     );
 };
 
-<<<<<<< HEAD
-/* ---------------- SCHOOL TABLE ---------------- */
-
-const SchoolDataTable = ({ data, setData }) => {
-=======
 // ****************************************
 // Eduction Section Sub nav's Tab's content
 // ****************************************
@@ -206,7 +129,6 @@ const SchoolDataTable = ({ data, setData }) => {
 /* ---------------- SCHOOL TABLE ---------------- */
 
 const SchoolDataTable = ({ data, setData, setActiveTab }) => {
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     if (!data || data.length === 0)
         return <p className="no-data">No active institutions found.</p>;
     return (
@@ -234,8 +156,6 @@ const SchoolDataTable = ({ data, setData, setActiveTab }) => {
                                     <span className="SA_inst_label">
                                         {admin.institutionName}
                                     </span>
-<<<<<<< HEAD
-=======
                                     <div className="edu-badge-group">
                                         <span className="edu-badge plan-badge">{admin.plan || admin.paymentPlan}</span>
                                         {admin.plan === "FREE_TRIAL" && new Date() > new Date(admin.trialEndDate) && (
@@ -250,7 +170,6 @@ const SchoolDataTable = ({ data, setData, setActiveTab }) => {
                                     >
                                         <FiFileText size={16} />
                                     </button>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                 </div>
                             </div>
                         </td>
@@ -276,12 +195,6 @@ const SchoolDataTable = ({ data, setData, setActiveTab }) => {
                         </td>
 
                         <td>
-<<<<<<< HEAD
-                            <select value={admin.paymentPlan} className={`SA_plan_badge ${admin.paymentPlan?.toLowerCase()}`} onChange={(e) => ChangePaymentPlan(admin.adminId, admin.institutionId, setData, e.target.value)}>
-                                <option>Free</option>
-                                <option>Premium</option>
-                                <option>Enterprise</option>
-=======
                             <select
                                 value={admin.paymentPlan}
                                 className={`SA_plan_badge ${admin.paymentPlan?.toLowerCase()}`}
@@ -291,22 +204,12 @@ const SchoolDataTable = ({ data, setData, setActiveTab }) => {
                                 <option value="BASIC">Basic</option>
                                 <option value="PREMIUM">Premium</option>
                                 <option value="ENTERPRISE">Enterprise</option>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                             </select>
                         </td>
 
                         <td>
                             <div className="SA_row_actions">
                                 <button
-<<<<<<< HEAD
-                                    title={admin.status ? "Institution is active" : "Institution is inactive"}
-                                    className="SA_action_icon warn"
-                                    onClick={() =>
-                                        ChangeInstState(admin.adminId, admin.institutionId, setData)
-                                    }
-                                >
-                                    {admin.status ? <FiCheckCircle /> : <FiXCircle />}
-=======
                                     title={admin.instituteStatus ? "Disable the Institution" : "Enable the Institution"}
                                     className={`SA_action_icon ${admin.instituteStatus ? "btn-enable" : "btn-disable"}`}
                                     onClick={() =>
@@ -314,17 +217,12 @@ const SchoolDataTable = ({ data, setData, setActiveTab }) => {
                                     }
                                 >
                                     {admin.instituteStatus ? <FiCheckCircle /> : <FiXCircle />}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                 </button>
 
                                 <button
                                     className="SA_action_icon danger"
                                     onClick={() =>
-<<<<<<< HEAD
-                                        DeleteTheInst(admin.adminId, admin.institutionId, setData)
-=======
                                         ApiCall.DeleteTheInst(admin.adminId, admin.institutionId, setData)
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                     }
                                 >
                                     <FiTrash2 />
@@ -334,11 +232,7 @@ const SchoolDataTable = ({ data, setData, setActiveTab }) => {
                                     title={admin.verified ? "Admin is Verified" : "Admin is not Verified"}
                                     className="SA_action_icon info"
                                     onClick={() =>
-<<<<<<< HEAD
-                                        ChangeAdminVerificationState(admin.adminId, setData)
-=======
                                         ApiCall.ChangeAdminVerificationState(admin.adminId, setData)
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                     }
                                 >
                                     {admin.verified ? <FiShield /> : <FiShieldOff />}
@@ -412,11 +306,7 @@ const NewRequestTable = ({ data, setCreateAdminFormData, setActiveTab, setId, se
                                 >
                                     <FiPlus />
                                 </button>
-<<<<<<< HEAD
-                                <button className="SA_action_icon danger" title="Reject Request" onClick={() => { deleteRequest(request._id, setData) }}>
-=======
                                 <button className="SA_action_icon danger" title="Reject Request" onClick={() => { ApiCall.deleteRequest(request._id, setData) }}>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                     <FiTrash2 />
                                 </button>
                             </div>
@@ -429,11 +319,6 @@ const NewRequestTable = ({ data, setCreateAdminFormData, setActiveTab, setId, se
     );
 };
 
-<<<<<<< HEAD
-/* ---------------- PLACEHOLDERS ---------------- */
-const CollegeDataTable = () => <p className="no-data">College data coming soon.</p>;
-const UniversityDataTable = () => <p className="no-data">University data coming soon.</p>;
-=======
 /* ---------------- NEW ADMISSIONS TABLE ---------------- */
 
 export const NewAdmissionsTable = ({ data, setData }) => {
@@ -928,4 +813,3 @@ const InstituteRecordsTable = ({ data, setData }) => {
         </div>
     );
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7

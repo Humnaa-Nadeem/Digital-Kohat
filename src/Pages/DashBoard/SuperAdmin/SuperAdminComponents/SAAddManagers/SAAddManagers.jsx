@@ -3,14 +3,9 @@ import "./SAAddManagers.css";
 import { CreateSAManager, SAManagerDelete } from "../../../../../ApiCalls/SuperAdminApiCall";
 import { ToastContainer } from "react-toastify";
 
-<<<<<<< HEAD
-export const SAAddManagerForm = ({ SuperAdminEmail, SAManagers, setSAManagers }) => {
-    const [formData, setFormData] = useState({
-=======
 export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
     const [formData, setFormData] = useState({
         email: "",
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         password: "",
         AccessTo: ""
     });
@@ -25,17 +20,6 @@ export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-<<<<<<< HEAD
-        setFormData(prev => ({
-            ...prev,
-            ["email"]: SuperAdminEmail
-        }));
-        CreateSAManager(formData, setSAManagers);
-    };
-
-    return (
-
-=======
 
         CreateSAManager(formData, setSAManagers);
 
@@ -48,7 +32,6 @@ export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
     };
 
     return (
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         <section>
             <div className="SMT_wrapper">
                 <h2 className="SMT_title">Service Manager Assignment</h2>
@@ -65,11 +48,7 @@ export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
                     <tbody>
                         {SAManagers?.length === 0 ? (
                             <tr>
-<<<<<<< HEAD
-                                <td colSpan="4" className="SMT_empty">
-=======
                                 <td colSpan="3" className="SMT_empty">
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                     No managers assigned yet
                                 </td>
                             </tr>
@@ -82,20 +61,12 @@ export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
                                         </span>
                                     </td>
 
-<<<<<<< HEAD
-                                    <td>{SuperAdminEmail}</td>
-=======
                                     <td>{m.email}</td>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
                                     <td>
                                         <button
                                             className="SMT_delete_btn"
-<<<<<<< HEAD
-                                            onClick={() => SAManagerDelete(m.AccessTo, setSAManagers)}
-=======
                                             onClick={() => SAManagerDelete(m._id, setSAManagers)}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                                         >
                                             Delete
                                         </button>
@@ -106,32 +77,21 @@ export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
                     </tbody>
                 </table>
             </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             <div className="AM_form_wrapper">
                 <ToastContainer />
                 <h2 className="AM_title">Add Manager</h2>
 
                 <form className="AM_form" onSubmit={handleSubmit}>
-<<<<<<< HEAD
-=======
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                     <div className="AM_field">
                         <label>Email</label>
                         <input
                             type="email"
                             name="email"
                             placeholder="manager@email.com"
-<<<<<<< HEAD
-                            value={SuperAdminEmail}
-                            readOnly
-=======
                             value={formData.email}
                             onChange={handleChange}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                             required
                         />
                     </div>
@@ -167,10 +127,7 @@ export const SAAddManagerForm = ({ SAManagers, setSAManagers }) => {
                     <button className="AM_submit_btn" type="submit">
                         Add Manager
                     </button>
-<<<<<<< HEAD
-=======
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 </form>
             </div>
         </section>

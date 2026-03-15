@@ -20,11 +20,7 @@ export const EventManagingForm = ({ dashboardData }) => {
     // =========================
     // Handling Event Section
     // =========================
-<<<<<<< HEAD
-    const [CanSubmitForm, setCanSubmitForm] = useState(false);
-=======
     const [isSubmitting, setIsSubmitting] = useState(true);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
     // Handling the data entry
     let [eventData, setEventData] = useState({
@@ -39,21 +35,13 @@ export const EventManagingForm = ({ dashboardData }) => {
     const handleEventChngs = (e) => {
         let { name, value } = e.target;
         setEventData({ ...eventData, [name]: value });
-<<<<<<< HEAD
-        setCanSubmitForm(true);
-=======
         setIsSubmitting(false);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     }
 
     // %%%%%% Form Submission of "EVENT" Section %%%%%%%
     const AddNewEventFun = (e) => {
         e.preventDefault();
-<<<<<<< HEAD
-        AddNewEvent(eventData, setCanSubmitForm);
-=======
         AddNewEvent(eventData, setIsSubmitting);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     }
 
     // =========================
@@ -183,11 +171,7 @@ export const EventManagingForm = ({ dashboardData }) => {
                     </div>
                 </div>
                 <div className="form-actions">
-<<<<<<< HEAD
-                    <button type="submit" disabled={!CanSubmitForm} className="save-btn">Save</button>
-=======
                     <button type="submit" disabled={isSubmitting} className="save-btn">Save</button>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 </div>
             </form>
             <br></br>
@@ -218,38 +202,6 @@ export const EventManagingForm = ({ dashboardData }) => {
 }
 
 const EventCards = ({ eventData }) => {
-<<<<<<< HEAD
-    if (!eventData || eventData.length === 0) return null;
-    return (
-        <div className="Adm-event-cards-container">
-            {[eventData].map((event, i) => (
-                <div className="Adm-event-card" key={i}>
-                    <div className="Adm-event-card-header">
-                        <h3 className="Adm-event-title">{event.title}</h3>
-                        <button
-                            type="button"
-                            className="Adm-event-delete-btn"
-                            onClick={() => deleteTheEvent(event.title)}
-                            title="Delete Event"
-                        >
-                            <FiTrash2 />
-                        </button>
-                    </div>
-                    <p className="Adm-event-info">
-                        <strong>Location:</strong> {event.location}
-                    </p>
-                    <p className="Adm-event-info">
-                        <strong>Category:</strong> {event.catagory}
-                    </p>
-                    <p className="Adm-event-info">
-                        <strong>Time:</strong> {event.time}
-                    </p>
-                    <p className="Adm-event-info">
-                        <strong>Audience:</strong> {event.Audience}
-                    </p>
-                </div>
-            ))}
-=======
 
     if (!eventData || eventData.length === 0) return null;
 
@@ -296,7 +248,6 @@ const EventCards = ({ eventData }) => {
                 ))
             }
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         </div>
     );
 };

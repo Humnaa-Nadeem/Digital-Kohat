@@ -234,11 +234,7 @@ const TourismSubscription = ({ data, onUpgrade }) => {
                 <h3 className="td-section-title">Current Plan</h3>
                 <div className="td-plan-details">
                     <div className="td-plan-info">
-<<<<<<< HEAD
-                        <strong>{data.subscriptionPlan}</strong>
-=======
                         <strong>{data.PaymentPlan || "FREE"}</strong>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                         <p>Expiry: {data.subscriptionExpiry}</p>
                     </div>
                     <span className="td-status-badge td-status-Available">Active</span>

@@ -7,112 +7,12 @@
     --text-muted: #6b7280;
 }
 
-<<<<<<< HEAD
-/* ================= STEPPER ====================== */
-.stepper {
-    max-width: 960px;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: nowrap;
-}
-
-.DshBrdstep {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    min-width: 90px;
-    position: relative;
-}
-
-.DshBrdstep p {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-}
-
-.Dshbrdcircle {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 15px;
-    color: #9ca3af;
-    box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-}
-
-.DshBrdstep.active .Dshbrdcircle {
-    background: linear-gradient(135deg, var(--primary), #33c985);
-    color: #fff;
-    border: none;
-    box-shadow: 0px 12px 30px rgba(13, 145, 90, 0.45);
-}
-
-.DshBrdstep.completed .Dshbrdcircle {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: 0 10px 26px rgba(13, 145, 90, 0.45);
-}
-
-.DshBrdstep.active p {
-    color: var(--primary);
-}
-
-.line {
-    width: 40px;
-    min-width: 40px;
-    height: 3px;
-    border-radius: 10px;
-    background: linear-gradient(90deg, rgba(13, 145, 90, 0.45), rgba(0, 0, 0, 0.18));
-    flex-shrink: 0;
-}
-
 /* ================== FORM STYLING ================== */
 .form-area {
-    max-width: 960px;
-    margin: 30px auto;
-=======
-/* ================== FORM STYLING ================== */
-.form-area {
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     padding: 35px 40px;
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-<<<<<<< HEAD
-    border-radius: 20px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
-    font-family: "Inter", "Segoe UI", sans-serif;
-}
-
-.form-area h2 {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.form-area h2::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(135deg, var(--primary), #33c985);
-    border-radius: 10px;
-=======
     font-family: Outfit;
 }
 
@@ -124,7 +24,6 @@
     margin-bottom: 30px;
     position: relative;
     text-decoration: 6px green underline;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 }
 
 .form-group {
@@ -168,30 +67,17 @@
     gap: 20px;
 }
 
-<<<<<<< HEAD
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    margin-top: 40px;
-=======
 .form-actions {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 16px;
     margin: 40px 0px 20px 0px;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 }
 
 .save-btn {
     padding: 14px 34px;
-<<<<<<< HEAD
-    border-radius: 999px;
-=======
     border-radius: 40px;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     border: none;
     background: linear-gradient(135deg, var(--primary), #33c985);
     color: #fff;
@@ -229,13 +115,6 @@
 
 /* ================== RESPONSIVE ================== */
 @media (max-width: 1100px) {
-<<<<<<< HEAD
-    .stepper {
-        display: none;
-    }
-
-=======
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     .form-area {
         margin: 0px;
     }

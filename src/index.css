@@ -1,53 +1,13 @@
-/* ================= GLOBAL RESET ================= */
-* {
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-<<<<<<< HEAD
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* ================= GOOGLE TRANSLATE FIX ================= */
-iframe.goog-te-banner-frame { display: none !important; }
-body { top: 0 !important; }
-.goog-logo-link, .goog-te-gadget, .goog-te-gadget span { display: none !important; }
-.goog-te-combo { 
-  opacity: 0; 
-  position: absolute; 
-  left: -9999px; 
-  pointer-events: none; 
-}
-.skiptranslate { display: none !important; }
-
-/* ================= NAVBAR ================= */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px; /* fix left-right gap */
-  background-color: #282c34;
-  color: white;
-}
-
-.nav-links a {
-  margin: 0 10px;
-  cursor: pointer;
-}
-
-.language-switcher select {
-  background: #1f8e5c;
-  border: none;
-  padding: 5px;
- color: white;
-  cursor: pointer;
-}
-=======
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7

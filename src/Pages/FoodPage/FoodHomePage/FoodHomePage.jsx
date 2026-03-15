@@ -6,53 +6,20 @@ import { EduRegisterForm } from "../../../components/Form/form";
 import { Food_categories } from "../../../Store/Food_store";
 
 export const FoodHomePage = () => {
-  const navigate = useNavigate();
-  const [showForm, setShowform] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    // To show page from the top:
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, []);
 
-  return (
-    <>
-      {showForm ? (
-        // ✅ FOOD SERVICE PROVIDER FORM
-        <Form setShowform={setShowform} category="food" />
-      ) : (
+    // Navigate use to redirect to other pages:
+    const navigate = useNavigate();
+
+    // useState to open the Form
+    let [showForm, setShowform] = useState(false);
+
+    return (
         <section className="FoodHomePremium">
-<<<<<<< HEAD
-          {/* HERO */}
-          <header className="FoodHeroPremium">
-            <div className="HeroOverlay">
-              <div className="HeroContent">
-                <span className="HeroBadge">KPK's Premier Food Network</span>
-                <h1>
-                  Taste the Essence of <strong>KPK Heritage</strong>
-                </h1>
-                <p className="HeroLead">
-                  Discover the best restaurants, cafes, bakeries and food spots.
-                </p>
-
-                <div className="HeroBtnGroup">
-                  <button
-                    className="btn-primary"
-                    onClick={() =>
-                      document
-                        .getElementById("categories")
-                        .scrollIntoView({ behavior: "smooth" })
-                    }
-                  >
-                    Explore Food
-                  </button>
-
-                  {/* ✅ JOIN BUTTON */}
-                  <button
-                    className="btn-secondary"
-                    onClick={() => setShowform(true)}
-                  >
-                    Join as Service Provider
-                  </button>
-=======
             {/* LUXURY HERO SECTION */}
             <header className="FoodHeroPremium">
                 <div className="HeroOverlay">
@@ -75,22 +42,9 @@ export const FoodHomePage = () => {
                             </button>
                         </div>
                     </div>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 </div>
-              </div>
-            </div>
-          </header>
+            </header>
 
-<<<<<<< HEAD
-          {/* CATEGORIES */}
-          <main id="categories" className="FoodCategoriesPremium">
-            <div className="SectionTitleCenter">
-              <h2>
-                Browse by <strong>Category</strong>
-              </h2>
-              <p>Choose your favourite food category.</p>
-            </div>
-=======
             {/* MERCHANT REGISTRATION SECTION (Conditional) */}
             {showForm && (
                 <section className="MerchantSection">
@@ -122,30 +76,48 @@ export const FoodHomePage = () => {
                     </div>
                 </section>
             )}
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
-            <section className="CategoriesGridPremium">
-              {Food_categories.map((v, i) => (
-                <div
-                  className="CategoryCardPremium"
-                  key={i}
-                  onClick={() => navigate(v.link)}
-                >
-                  <div className="CategoryThumb">
-                    <img src={v.img} alt={v.title} />
-                    <div className="CategoryIcon">{v.icon}</div>
-                  </div>
-                  <div className="CategoryDetails">
-                    <h3>{v.title}</h3>
-                    <p>{v.description}</p>
-                    <button className="explore-btn">{v.btn}</button>
-                  </div>
+            {/* BROWSE CATEGORIES */}
+            <main id="categories" className="FoodCategoriesPremium">
+                <div className="SectionTitleCenter">
+                    <h2>Browse by <strong>Expertise</strong></h2>
+                    <p>Select a category to find the best dining spots tailored to your mood.</p>
                 </div>
-              ))}
-            </section>
-          </main>
+
+                <section className="CategoriesGridPremium">
+                    {Food_categories.map((v, i) => (
+                        <div className="CategoryCardPremium" key={i} onClick={() => navigate(v.link)}>
+                            <div className="CategoryThumb">
+                                <img src={v.img} alt={v.title} />
+                                <div className="CategoryIcon">
+                                    {v.icon}
+                                </div>
+                            </div>
+                            <div className="CategoryDetails">
+                                <h3>{v.title}</h3>
+                                <p>{v.description}</p>
+                                <button className="explore-btn">{v.btn}</button>
+                            </div>
+                        </div>
+                    ))}
+                </section>
+            </main>
+
+            {/* PARTNER BANNER (If form is not open) */}
+            {!showForm && (
+                <section className="PartnerCta">
+                    <div className="CtaContent">
+                        <h2>Your Restaurant Deserves the <strong>Spotlight</strong></h2>
+                        <p>Partner with us today and take your culinary business to new heights.</p>
+                        <button className="cta-btn" onClick={() => {
+                            setShowform(true);
+                            window.scrollTo({ top: 300, behavior: 'smooth' });
+                        }}>
+                            Get Started Now
+                        </button>
+                    </div>
+                </section>
+            )}
         </section>
-      )}
-    </>
-  );
+    );
 };

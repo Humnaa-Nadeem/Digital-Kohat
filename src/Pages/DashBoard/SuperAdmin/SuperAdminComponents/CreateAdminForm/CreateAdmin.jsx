@@ -9,15 +9,9 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
         AdminEmail: Data.email || "",
         AdminIDCard: Data.IDCard || "",
         ServiceName: "",
-<<<<<<< HEAD
-        ServiceLocation: "",
-        ServiceType: Data.type || "",
-        PaymentPlan: "",
-=======
         ServiceLocation: Data.address || "",
         ServiceType: Data.type || "",
         PaymentPlan: Data.PaymentPlan || "",
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         reqId: id
     });
 
@@ -35,11 +29,7 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
         if (AdminData.ServiceType === "NULL" || AdminData.ServiceType === "" || AdminData.PaymentPlan === "NULL" || AdminData.PaymentPlan === "") {
             alert("Fill the fields first.");
         } else {
-<<<<<<< HEAD
-            CreateEduCataAdmin(AdminData, setActiveTab);
-=======
             CreateEduCataAdmin(AdminData, setActiveTab, AdminData.ServiceType);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
         }
     }
 
@@ -75,18 +65,11 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
                         <div className="SA_input_box">
                             <label>Payment Plan</label>
                             <select name="PaymentPlan" onChange={(e) => handleChange(e)}>
-<<<<<<< HEAD
-                                <option value={"NULL"}>--Select--</option>
-                                <option value={"Free"}>Free</option>
-                                <option value={"Premium"}>Premium</option>
-                                <option value={"Enterprise"}>Enterprise</option>
-=======
                                 <option value="NULL" selected={AdminData.PaymentPlan === "NULL"}>Select One</option>
                                 <option value="FREE" selected={AdminData.PaymentPlan === "FREE"}>Free</option>
                                 <option value="BASIC" selected={AdminData.PaymentPlan === "BASIC"}>Basic</option>
                                 <option value="PREMIUM" selected={AdminData.PaymentPlan === "PREMIUM"}>Premium</option>
                                 <option value="ENTERPRISE" selected={AdminData.PaymentPlan === "ENTERPRISE"}>Enterprise</option>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                             </select>
                         </div>
                     </div>
@@ -104,10 +87,7 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
                                 <option value={"SCHOOL"}>School</option>
                                 <option value={"COLLEGE"}>College</option>
                                 <option value={"RESTURANT"}>Resutrant</option>
-<<<<<<< HEAD
-=======
                                 <option value={"BUSINESS"}>Business</option>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                             </select>
                         </div>
 

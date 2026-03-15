@@ -1,16 +1,4 @@
 import axios from "axios";
-<<<<<<< HEAD
-const mainURL = "http://localhost:5500";
-import { toast } from "react-toastify";
-
-
-export const CreateEduCataAdmin = (AdminData, setActiveTab) => {
-    axios.post(`${mainURL}/CreateEduCataAdmin`, AdminData, { withCredentials: true })
-        .then((res) => {
-            if (res.data.success) {
-                toast.success(res.data.message);
-                setActiveTab("SCHOOL");
-=======
 import { toast } from "react-toastify";
 
 const mainURL = "http://localhost:5500";
@@ -90,7 +78,6 @@ export const CreateEduCataAdmin = (AdminData, setActiveTab, ServiceType) => {
             if (res.data.success) {
                 toast.success(res.data.message);
                 setActiveTab(ServiceType);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             } else {
                 if (res.data.message === "Not authorized.") {
                     window.location.href = "/superadmin/login";
@@ -100,17 +87,6 @@ export const CreateEduCataAdmin = (AdminData, setActiveTab, ServiceType) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while creating the admin.");
-<<<<<<< HEAD
-        })
-}
-
-export const GetEduNewReqTabData = (dataOf, setRowData) => {
-    let route;
-    if (dataOf === "NEW_REQUESTS") {
-        route = `${mainURL}/GetSADEduTabData`;
-    } else if (dataOf === "SCHOOL") {
-        route = `${mainURL}/GetSchoolEduTabData`;
-=======
         });
 };
 
@@ -122,7 +98,6 @@ export const GetTheTabData = (dataOf, setRowData) => {
         route = `${mainURL}/GetEduTabNewAdnissionsData`;
     } else {
         route = `${mainURL}/GetSADEduTabData`;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     }
 
     axios.post(route, { dataOf }, { withCredentials: true })
@@ -137,19 +112,11 @@ export const GetTheTabData = (dataOf, setRowData) => {
                 }
             }
         }).catch((err) => {
-<<<<<<< HEAD
-            toast.error("An error occurred while fetching the data.");
-        })
-}
-
-export const GetEduSecSchoolTabDataForSP = (dataOf, setRowData) => { // SP => Super Admin;
-=======
             window.location.href = "/superadmin/login";
         });
 };
 
 export const GetEduSecSchoolTabDataForSP = (dataOf, setRowData) => {
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     axios.post(`${mainURL}/GetSchoolEduTabData`, { dataOf }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
@@ -163,26 +130,15 @@ export const GetEduSecSchoolTabDataForSP = (dataOf, setRowData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while fetching the data.");
-<<<<<<< HEAD
-        })
-}
-=======
         });
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const ChangeAdminVerificationState = (adminId, setData) => {
     axios.post(`${mainURL}/ChangeAdminVerificationState`, { adminId }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 setData(prevData => prevData.map(admin =>
-<<<<<<< HEAD
-                    admin.adminId === adminId
-                        ? { ...admin, verified: !admin.verified }
-                        : admin
-=======
                     admin.adminId === adminId ? { ...admin, verified: !admin.verified } : admin
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 ));
                 toast.success("Admin verification state changed successfully.");
             } else {
@@ -194,32 +150,6 @@ export const ChangeAdminVerificationState = (adminId, setData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while changing admin verification state.");
-<<<<<<< HEAD
-        })
-}
-
-export const ChangeInstState = (adminId, InstId, setData) => {
-    axios.post(`${mainURL}/ChangeTheInstState`, { adminId, InstId }, { withCredentials: true })
-        .then((res) => {
-            if (res.data.success) {
-                setData(prevData => prevData.map(admin =>
-                    admin.adminId === adminId
-                        ? { ...admin, status: !admin.status }
-                        : admin
-                ));
-                toast.success("Institution state changed successfully");
-            } else {
-                if (res.data.message === "Not authorized.") {
-                    window.location.href = "/superadmin/login";
-                } else {
-                    toast.error(res.data.message);
-                }
-            }
-        }).catch((err) => {
-            toast.error("An error occurred while changing institution state.");
-        })
-}
-=======
         });
 };
 
@@ -251,17 +181,12 @@ export const ChangeInstState = async (adminId, InstId, ServiceType, setData) => 
         window.location.href = "/superadmin/login";
     }
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const DeleteTheInst = (adminId, InstId, setData) => {
     axios.post(`${mainURL}/DeleteTheInst`, { adminId, InstId }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
-<<<<<<< HEAD
-                setData(prevData => prevData.filter(admin => admin.adminId !== adminId));
-=======
                 setData(prevData => prevData.filter(admin => admin.institutionId !== InstId));
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 toast.success(res.data.message);
             } else {
                 if (res.data.message === "Not authorized.") {
@@ -271,15 +196,9 @@ export const DeleteTheInst = (adminId, InstId, setData) => {
                 }
             }
         }).catch((err) => {
-<<<<<<< HEAD
-            toast.error("An error occurred while deleting the institution.");
-        })
-}
-=======
             window.location.href = "/superadmin/login";
         });
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const deleteRequest = (reqId, setRowData) => {
     axios.post(`${mainURL}/DeleteTheReq`, { reqId }, { withCredentials: true })
@@ -296,12 +215,6 @@ export const deleteRequest = (reqId, setRowData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while deleting the request.");
-<<<<<<< HEAD
-        })
-}
-
-// FOOD API CALLS
-=======
         });
 };
 
@@ -420,7 +333,6 @@ export const GetEducationNotificationCounts = (setCounts) => {
 
 // --- FOOD MODULE ---
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 export const CreateFoodCataAdmin = (AdminData, setActiveTab) => {
     axios.post(`${mainURL}/CreateFoodCataAdmin`, AdminData, { withCredentials: true })
         .then((res) => {
@@ -436,20 +348,11 @@ export const CreateFoodCataAdmin = (AdminData, setActiveTab) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while creating the admin.");
-<<<<<<< HEAD
-        })
-}
-
-export const GetFoodNewReqTabData = (dataOf, setRowData) => {
-    let route;
-    // dataOf usually is the tab name
-=======
         });
 };
 
 export const GetFoodNewReqTabData = (dataOf, setRowData) => {
     let route;
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     if (dataOf === "NEW_REQUESTS") {
         route = `${mainURL}/GetSADFoodTabData`;
     } else if (dataOf === "RESTAURANT") {
@@ -469,26 +372,15 @@ export const GetFoodNewReqTabData = (dataOf, setRowData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while fetching the data.");
-<<<<<<< HEAD
-        })
-}
-=======
         });
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const ChangeFoodAdminVerificationState = (adminId, setData) => {
     axios.post(`${mainURL}/ChangeFoodAdminVerificationState`, { adminId }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 setData(prevData => prevData.map(admin =>
-<<<<<<< HEAD
-                    admin.adminId === adminId
-                        ? { ...admin, verified: !admin.verified }
-                        : admin
-=======
                     admin.adminId === adminId ? { ...admin, verified: !admin.verified } : admin
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 ));
                 toast.success("Admin verification state changed successfully.");
             } else {
@@ -500,26 +392,15 @@ export const ChangeFoodAdminVerificationState = (adminId, setData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while changing admin verification state.");
-<<<<<<< HEAD
-        })
-}
-=======
         });
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const ChangeFoodInstState = (adminId, InstId, setData) => {
     axios.post(`${mainURL}/ChangeTheFoodInstState`, { adminId, InstId }, { withCredentials: true })
         .then((res) => {
             if (res.data.success) {
                 setData(prevData => prevData.map(admin =>
-<<<<<<< HEAD
-                    admin.adminId === adminId
-                        ? { ...admin, status: !admin.status }
-                        : admin
-=======
                     admin.adminId === adminId ? { ...admin, status: !admin.status } : admin
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                 ));
                 toast.success("Food Service state changed successfully");
             } else {
@@ -531,13 +412,8 @@ export const ChangeFoodInstState = (adminId, InstId, setData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while changing Food Service state.");
-<<<<<<< HEAD
-        })
-}
-=======
         });
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const DeleteTheFoodInst = (adminId, InstId, setData) => {
     axios.post(`${mainURL}/DeleteTheFoodInst`, { adminId, InstId }, { withCredentials: true })
@@ -554,13 +430,8 @@ export const DeleteTheFoodInst = (adminId, InstId, setData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while deleting the Food Service.");
-<<<<<<< HEAD
-        })
-}
-=======
         });
 };
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const deleteFoodRequest = (reqId, setRowData) => {
     axios.post(`${mainURL}/DeleteTheFoodReq`, { reqId }, { withCredentials: true })
@@ -577,82 +448,6 @@ export const deleteFoodRequest = (reqId, setRowData) => {
             }
         }).catch((err) => {
             toast.error("An error occurred while deleting the request.");
-<<<<<<< HEAD
-        })
-}
-
-export const ChangePaymentPlan = (adminId, InstId, setData, newPlan) => {
-    axios.post(`${mainURL}/ChangePaymentData`, { adminId, InstId, newPlan }, { withCredentials: true })
-        .then((res) => {
-            if (res.data.success) {
-                setData(prevData => prevData.map(admin =>
-                    admin.adminId === adminId
-                        ? { ...admin, paymentPlan: res.data.newPlan }
-                        : admin
-                ));
-                toast.success("Payment plan updated successfully");
-            } else {
-                if (res.data.message === "Not authorized.") {
-                    window.location.href = "/superadmin/login";
-                } else {
-                    toast.error(res.data.message);
-                }
-            }
-        }).catch((err) => {
-            toast.error("An error occurred while updating the payment plan.");
-        }
-        );
-}
-
-export const VerifyTheSuperAdmin = (setRole, setSuperAdminEmail, setSAManagers) => {
-    axios.get(
-        `${mainURL}/GetSuperAdminDashboardData`, { withCredentials: true }
-    )
-        .then((res) => {
-            if (!res.data.success) {
-                window.location.href = "/superadmin/login";
-            } else {
-                setRole(res.data.AccessTo);
-                if (res.data.SAMail) {
-                    setSAManagers(res.data.data.SAManagers)
-                    setSuperAdminEmail(res.data.SAMail);
-                }
-            }
-        })
-        .catch(() => {
-            window.location.href = "/superadmin/login";
-        });
-};
-
-export const SuperAdminFormSubmitted = (formData, setIsLoading) => {
-    axios.post(`${mainURL}/SuperAdminLogin`, formData, { withCredentials: true })
-        .then((res) => {
-            if (res.data.success) {
-                window.location.href = "/superadmin/dashboard";
-            }
-            else {
-                setIsLoading(false);
-                toast.error(res.data.message);
-            }
-        }).catch((err) => {
-            toast.error("An error occurred during login.");
-        }
-        );
-}
-
-export const CreateSAManager = (formData, setSAManagers) => {
-    axios.post(`${mainURL}/CreateSAManager`, formData, { withCredentials: true })
-        .then((res) => {
-            if (res.data.success) {
-                setSAManagers(prev => ([
-                    ...prev,
-                    {
-                        AccessTo: formData.AccessTo
-                    }
-                ]));
-
-                toast.success(res.data.message);
-=======
         });
 };
 
@@ -663,7 +458,6 @@ export const GetBusinessesByStatus = (status, setRowData) => {
         .then((res) => {
             if (res.data.success) {
                 setRowData(res.data.responseData);
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             } else {
                 if (res.data.message === "Not authorized.") {
                     window.location.href = "/superadmin/login";
@@ -672,28 +466,6 @@ export const GetBusinessesByStatus = (status, setRowData) => {
                 }
             }
         }).catch((err) => {
-<<<<<<< HEAD
-            console.log(err);
-            toast.error("something went wrong.")
-        });
-}
-
-export const SAManagerDelete = (catagory, setSAManagers) => {
-    axios.post(`${mainURL}/DeleteThSAManager`, { catagory }, { withCredentials: true })
-        .then((res) => {
-            if (res.data.success) {
-                setSAManagers(prev =>
-                    prev.filter(m => m.AccessTo !== catagory)
-                );
-                toast.success(res.data.message || "Manager deleted successfully");
-            } else {
-                toast.error(res.data.message);
-            }
-        }).catch((err) => {
-            console.log("err", err);
-        })
-}
-=======
             toast.error("An error occurred while fetching business data.");
         });
 };
@@ -716,4 +488,3 @@ export const UpdateBusinessStatus = (id, status, fromCollection, refreshData) =>
         });
 };
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7

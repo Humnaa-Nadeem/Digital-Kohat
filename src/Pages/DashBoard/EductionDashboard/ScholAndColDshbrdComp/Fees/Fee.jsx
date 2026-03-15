@@ -3,11 +3,7 @@ import "../ScholAndColDshbrdComp.css";
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-<<<<<<< HEAD
-import { SendFeeTabDataToDb } from "../../../../../ApiCalls/DashBoardApiCalls";
-=======
 import { SendFeeTabDataToDb, SendPaymentGatewayToDb } from "../../../../../ApiCalls/DashBoardApiCalls";
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 export const FeeStructure = ({ dashboardData }) => {
     const [CanSubmitForm, setCanSubmitForm] = useState(false);
@@ -58,8 +54,6 @@ export const FeeStructure = ({ dashboardData }) => {
         SendFeeTabDataToDb(rowsData, setCanSubmitForm);
     }
 
-<<<<<<< HEAD
-=======
 
     /* ============================= */
     /* ===== PAYMENT GATEWAYS ====== */
@@ -94,7 +88,6 @@ export const FeeStructure = ({ dashboardData }) => {
         SendPaymentGatewayToDb(paymentData, setCanSubmitGateway);
     };
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
     return (
         <>
             <section className="form-area Dshbrdfee-Sec">
@@ -102,11 +95,7 @@ export const FeeStructure = ({ dashboardData }) => {
                 <ToastContainer />
                 <form onSubmit={(e) => FinalFun(e)}>
                     <h2>Fee Structure</h2>
-<<<<<<< HEAD
-                    <p className="addressingPara">You can remove the class 1 data and can add data that suit you.</p>
-=======
                     <p className="addressingPara">Add the classes fee details, your institute offer.</p>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
                     <table className="feeTable">
                         <thead>
                             <tr>
@@ -134,8 +123,6 @@ export const FeeStructure = ({ dashboardData }) => {
                         <button type="submit" disabled={!CanSubmitForm} className="save-btn">Save</button>
                     </div>
                 </form>
-<<<<<<< HEAD
-=======
 
                 <hr className="sectionDivider" />
 
@@ -229,7 +216,6 @@ export const FeeStructure = ({ dashboardData }) => {
                     </div>
 
                 </form>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
             </section>
         </>
     )

@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Navbar.css";
 import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
-import LanguageSwitcher from "../LanguageSwitcher";
 
 const Navbar = ({ variant }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,9 +20,7 @@ const Navbar = ({ variant }) => {
   };
 
   const handleDropdownEnter = () => setDropdownOpen(true);
-  const handleDropdownLeave = () =>
-    setTimeout(() => setDropdownOpen(false), 200);
-
+  const handleDropdownLeave = () => setTimeout(() => setDropdownOpen(false), 200);
   const toggleDropdownClick = (e) => {
     e.preventDefault();
     setDropdownOpen((prev) => !prev);
@@ -31,7 +28,7 @@ const Navbar = ({ variant }) => {
 
   return (
     <>
-      <nav className="navbar notranslate">
+      <nav className="navbar">
         <div className="nav-container">
           {/* LOGO */}
           <div className="nav-logo">
@@ -42,6 +39,7 @@ const Navbar = ({ variant }) => {
           {/* LINKS */}
           <div className={`nav-links ${isOpen ? "open" : ""}`}>
             <a onClick={() => { navigate("/"); closeMenu(); }}>Home</a>
+
             <a onClick={() => { navigate("/AboutUs"); closeMenu(); }}>About us</a>
 
             {/* SERVICES DROPDOWN */}
@@ -59,38 +57,24 @@ const Navbar = ({ variant }) => {
               </a>
 
               {dropdownOpen && (
-                <div className="dropdown-menu">
-                  <a onClick={() => { navigate("/edu"); closeMenu(); }}>Education</a>
-                  <a onClick={() => { navigate("/food"); closeMenu(); }}>Food</a>
+                <div
+                  className="dropdown-menu"
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <a onClick={() => { navigate("/Edu"); closeMenu(); }}>Education</a>
+                  <a onClick={() => { navigate("/food"); closeMenu(); }}>food</a>
                   <a onClick={() => { navigate("/hospital"); closeMenu(); }}>Health</a>
                   <a onClick={() => { navigate("/business"); closeMenu(); }}>Business</a>
-                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>Technicians</a>
-                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism</a>
+                  <a onClick={() => { navigate("/tech"); closeMenu(); }}>Technicians/Labours</a>
+                  <a onClick={() => { navigate("/tourism"); closeMenu(); }}>Tourism/Traveling</a>
+                  <a onClick={() => { navigate("/brands"); closeMenu(); }}>Our Brands</a>
                 </div>
               )}
             </div>
 
-            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>
-              Contact Us
-            </a>
+            <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>Contact Us</a>
 
-<<<<<<< HEAD
-            {/* REGISTER + LANGUAGE */}
-            <div className="nav-buttons">
-              <button
-                type="button"
-                className="btn sign"
-                // Menay apnay forms ura diye
-
-                
-               // onClick={() => navigate("/form")}
-              >
-                Register
-              </button>
-
-              <LanguageSwitcher />
-            </div>
-=======
             {
               (variant === "dashboard") ?
                 <div className="nav-buttons">
@@ -106,17 +90,11 @@ const Navbar = ({ variant }) => {
                     <button className="btn log" onClick={() => { closeMenu(); navigate("/user/login") }}>Log in</button>
                   </div>
             }
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
           </div>
 
           {/* HAMBURGER */}
-          <div
-            className={`hamburger ${isOpen ? "active" : ""}`}
-            onClick={toggleMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
+          <div className={`hamburger ${isOpen ? "active" : ""}`} onClick={toggleMenu}>
+            <span></span><span></span><span></span>
           </div>
         </div>
       </nav>

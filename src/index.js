@@ -1,36 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from 'react-dom/client';
 import "leaflet/dist/leaflet.css";
-<<<<<<< HEAD
-import "./index.css";
-import "./styles/commonform.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
-
-// 🌍 Language Context
-import { LanguageProvider } from "./context/LanguageContext";
-
-// ================================
-// LAYOUTS
-import { TourismLayout } from "./Layouts/TourismLayout";
-import { EduLayout } from "./Layouts/EduLayout";
-import { TechLayout } from "./Layouts/TechLayout";
-import { FoodLayout } from "./Layouts/FoodLayout";
-import HospitalLayout from "./Layouts/HospitalLayout";
-import { BusinessLayout } from "./Layouts/BusinessLayout";
-import FormsLayout from "./Layouts/FormsLayout";
-
-// ================================
-// COMMON PAGES
-import SignUpForm from "./components/SignUpForm/SignUpForm";
-import { PageNotFoundPg } from "./Pages/404Page/404Page";
-import { Aboutus } from "./Pages/AboutUsPage/Aboutus";
-import Contactus from "./Pages/ContactUs/ContactUs";
-=======
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -129,117 +98,11 @@ import { SuperAdminLogin } from './Pages/DashBoard/SuperAdmin/SuprAdminLogIn/Sup
 import { RegisterUser } from './components/Form/UserRegistration/RegisterUser.jsx';
 import { UserLogin } from './components/Form/UserLogIn/UserLogin.jsx';
 
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 
 // ================================
-// EDUCATION
-import { EduHomePage } from "./Pages/EducationPage/EduHomePage/EduHomePage";
-import { SchoolPage } from "./Pages/EducationPage/EduCatagoriesPg/SchoolPg";
-import { CollegesPage } from "./Pages/EducationPage/EduCatagoriesPg/CollegesPg";
-import { UniPage } from "./Pages/EducationPage/EduCatagoriesPg/UniPg";
-import { OnlineCoursesPage } from "./Pages/EducationPage/EduCatagoriesPg/OnlineCourses";
-import { TutorsPage } from "./Pages/EducationPage/EduCatagoriesPg/Tutors";
-import { OnlineTrainingPage } from "./Pages/EducationPage/EduCatagoriesPg/OnlineTraining";
-
+// ROUTING SYSTEM
 // ================================
-// TECHNICIANS
-import { TechniciansHomePg } from "./Pages/TechniciansPage/TechniciansHomePg/TechniciansHomePg";
-import { ElectronicCata } from "./Pages/TechniciansPage/TechniciansCatagoriesPg/Electronics";
-import { PlumbingGasCata } from "./Pages/TechniciansPage/TechniciansCatagoriesPg/PlumAndGas";
-import { PaintingConstructCata } from "./Pages/TechniciansPage/TechniciansCatagoriesPg/ConstAndPaint";
-import { CarpFurnitureCata } from "./Pages/TechniciansPage/TechniciansCatagoriesPg/Carpentry&Furniture";
-import { CleanMaintCata } from "./Pages/TechniciansPage/TechniciansCatagoriesPg/Cleaning&Maintaining";
-import { GardOutdoorCata } from "./Pages/TechniciansPage/TechniciansCatagoriesPg/Gardening&Outdoor";
-
-// ================================
-// TOURISM
-import { TourismHome } from "./Pages/TourismPage/TourismHomepg/TourismHome";
-import { Places } from "./Pages/TourismPage/TourismCategoriespg/Places";
-import { Hotels } from "./Pages/TourismPage/TourismCategoriespg/Hotels";
-import { Restaurants } from "./Pages/TourismPage/TourismCategoriespg/Restaurants";
-import { Parks } from "./Pages/TourismPage/TourismCategoriespg/Parks";
-import { Guide } from "./Pages/TourismPage/TourismCategoriespg/Guide";
-import { Gallery } from "./Pages/TourismPage/TourismCategoriespg/Gallery";
-import { TourGuides } from "./Pages/TourismPage/TourismCategoriespg/TourGuides";
-import { TourismLandingPage } from "./Pages/TourismPage/Landingpage/TourismLandingpage";
-
-// ================================
-// FOOD
-import { FoodHomePage } from "./Pages/FoodPage/FoodHomePage/FoodHomePage";
-import { FineDiningPage } from "./Pages/FoodPage/FoodCatagoriespg/FineDining";
-import { CafesPage } from "./Pages/FoodPage/FoodCatagoriespg/Cafes";
-import { FastFoodPage } from "./Pages/FoodPage/FoodCatagoriespg/FastFood";
-import { LocalFoodPage } from "./Pages/FoodPage/FoodCatagoriespg/LocalFood";
-import { BakeriesPage } from "./Pages/FoodPage/FoodCatagoriespg/Bakeries";
-import { StreetFoodPage } from "./Pages/FoodPage/FoodCatagoriespg/StreetFood";
-
-// ================================
-// HOSPITAL
-import { HospHomePage } from "./Pages/HospitalPage/HospHomePg/HospHomePg";
-import { HospitalsPage } from "./Pages/HospitalPage/HosCategoriesPg/Hospitals";
-import { ClinicsPage } from "./Pages/HospitalPage/HosCategoriesPg/Clinics";
-import { PharmaciesPage } from "./Pages/HospitalPage/HosCategoriesPg/Pharmacies";
-import { DiagnosticsPage } from "./Pages/HospitalPage/HosCategoriesPg/Diagnostics";
-import { AmbulancePage } from "./Pages/HospitalPage/HosCategoriesPg/Ambulance";
-import { SpecialistsPage } from "./Pages/HospitalPage/HosCategoriesPg/Specialists";
-
-// ================================
-// DASHBOARD
-import { DashBoard } from "./Pages/DashBoard/DashBoardHomeLayout/Dashboard";
-import { FoodDashboard } from "./Pages/DashBoard/FoodDashboard/FoodDashboard";
-import ProviderDashboard from "./Pages/DashBoard/ProviderDashboard/ProviderDashboard";
-import { ProviderOverview } from "./Pages/DashBoard/ProviderDashboard/ProviderOverview";
-import CustomerRequests from "./Pages/DashBoard/ProviderDashboard/Components/CustomerRequests";
-import BusinessProfile from "./Pages/DashBoard/ProviderDashboard/Components/BusinessProfile";
-import ProviderServices from "./Pages/DashBoard/ProviderDashboard/Components/ProviderServices";
-import ProviderReviews from "./Pages/DashBoard/ProviderDashboard/Components/ProviderReviews";
-import ProviderSubscription from "./Pages/DashBoard/ProviderDashboard/Components/ProviderSubscription";
-import ProviderSupport from "./Pages/DashBoard/ProviderDashboard/Components/ProviderSupport";
-
-// ================================
-// BUSINESS
-import { BusinessHomePage } from "./Pages/BusinessPage/BusinessHomePage/BusinessHomePage";
-import { ShopsRetailPg } from "./Pages/BusinessPage/BusinessCategoriesPg/ShopsRetailPg";
-import { OfficesPg } from "./Pages/BusinessPage/BusinessCategoriesPg/OfficesPg";
-import { EventsPg } from "./Pages/BusinessPage/BusinessCategoriesPg/EventsPg";
-import { ManufacturingPg } from "./Pages/BusinessPage/BusinessCategoriesPg/ManufacturingPg";
-import { FreelancersPg } from "./Pages/BusinessPage/BusinessCategoriesPg/FreelancersPg";
-import { BusinessRegistration } from "./Pages/BusinessPage/Registration/BusinessRegistration";
-import { BusinessLogin } from "./Pages/BusinessPage/Login/BusinessLogin";
-
-// ================================
-// ROUTES
 const routes = [
-<<<<<<< HEAD
-  { path: "/", element: <App /> },
-  {
-    path: "/form",
-    element: <FormsLayout />,
-    children: [
-      { index: true, element: <SignUpForm /> },
-    ]
-  },
-  { path: "/AboutUs", element: <Aboutus /> },
-  { path: "/ContactUs", element: <Contactus /> },
-
-  { path: "/dashboard", element: <DashBoard /> },
-  { path: "/dashboard/fooddashboard", element: <FoodDashboard /> },
-
-  {
-    path: "/dashboard/provider",
-    element: <ProviderDashboard />,
-    children: [
-      { index: true, element: <ProviderOverview /> },
-      { path: "requests", element: <CustomerRequests /> },
-      { path: "profile", element: <BusinessProfile /> },
-      { path: "services", element: <ProviderServices /> },
-      { path: "reviews", element: <ProviderReviews /> },
-      { path: "subscription", element: <ProviderSubscription /> },
-      { path: "support", element: <ProviderSupport /> },
-    ],
-  },
-
-=======
   {
     path: "/",
     element: <App />
@@ -283,7 +146,6 @@ const routes = [
     element: <Contactus />
   },
   // Education Sector
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
   {
     path: "/edu",
     element: <EduLayout />,
@@ -301,6 +163,7 @@ const routes = [
     ],
   },
 
+  // Technicians Sector
   {
     path: "/tech",
     element: <TechLayout />,
@@ -315,6 +178,7 @@ const routes = [
     ],
   },
 
+  // Tourism Sector
   {
     path: "/tourism",
     element: <TourismLayout />,
@@ -328,18 +192,15 @@ const routes = [
       { path: "parks", element: <Parks /> },
 
       { path: "guides", element: <TourGuides /> },
-<<<<<<< HEAD
-      { path: "gallery", element: <Gallery /> },
-=======
       { path: "bazar", element: <Bazar /> },
 
       { path: "landing", element: <TourismLandingPage /> },
       // Dynamic route for individual service provider
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
       { path: ":id", element: <TourismLandingPage /> },
     ],
   },
 
+  // Food Sector
   {
     path: "/food",
     element: <FoodLayout />,
@@ -356,6 +217,7 @@ const routes = [
     ],
   },
 
+  // Hospital / Health Sector
   {
     path: "/hospital",
     element: <HospitalLayout />,
@@ -370,6 +232,7 @@ const routes = [
     ],
   },
 
+  // Business Sector
   {
     path: "/business",
     element: <BusinessLayout />,
@@ -394,12 +257,7 @@ const routes = [
     ],
   },
 
-<<<<<<< HEAD
-  { path: "/business/register", element: <BusinessRegistration /> },
-  { path: "/business/login", element: <BusinessLogin /> },
-=======
   // Page Not Found
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
   { path: "*", element: <PageNotFoundPg /> },
   {
     path: "/customer/login",
@@ -414,21 +272,11 @@ const routes = [
   },
 ];
 
-// ================================
-// ROUTER
-const router = createBrowserRouter(routes);
+const isVercel = (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app'));
+
+const allRoutes = isVercel ? createHashRouter(routes) : createBrowserRouter(routes);
 
 // ================================
-<<<<<<< HEAD
-// RENDER
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <LanguageProvider>
-      <RouterProvider router={router} />
-    </LanguageProvider>
-  </React.StrictMode>
-=======
 // Render App
 // ================================
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -436,7 +284,6 @@ root.render(
   <CustomerAuthProvider>
     <RouterProvider router={allRoutes} />
   </CustomerAuthProvider>
->>>>>>> 63ae032d7e029e799230b93ae5b4ee6835864db7
 );
 
 reportWebVitals();
