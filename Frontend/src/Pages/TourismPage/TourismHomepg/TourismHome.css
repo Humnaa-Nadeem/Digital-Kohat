@@ -1,142 +1,236 @@
-/* ================= TOURISM HOME ONLY ================= */
+/* ================= TOURISM HOME REDESIGN ================= */
+
+:root {
+  --primary-color: #00a86b;
+  --primary-dark: #007f53;
+  --primary-light: #e6f7f0;
+  --text-main: #2d3436;
+  --text-muted: #636e72;
+  --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
 
 .tourism-home {
   min-height: 100vh;
   width: 100%;
-  background: #ffffff !important;
-  color: #000;
-  padding: 40px 20px;
-}
-
-/* registration button */
-.tourism-register-btn {
-  background: #00a86b;
-  color: #fff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 20px;
+  background: #f8fafc !important;
+  color: var(--text-main);
+  padding: 80px 20px;
+  font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* content wrapper */
 .tourism-content {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
-/* heading */
-.tourism-content h1 {
+/* header section */
+.tourism-header {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 60px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.tourism-content h1 strong {
-  color: #00a86b;
+.tourism-badge {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 20px;
 }
 
-/* description */
+.tourism-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.tourism-header h1 strong {
+  color: var(--primary-color);
+  position: relative;
+}
+
+.tourism-header h1 strong::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: var(--primary-color);
+  opacity: 0.15;
+  z-index: -1;
+}
+
 .tourism-description {
-  width: 80%;
-  margin: 0 auto 30px;
-  text-align: center;
-  color: #555;
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
 /* cards grid */
 .tourism-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
 }
 
-/* card */
+/* card core */
 .tourism-card {
   position: relative;
-  min-height: 320px;
-  padding: 20px;
-  border-radius: 10px;
+  height: 450px;
+  border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+  background: #000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-
-  transition: transform 0.3s ease;
 }
 
-/* overlay */
+.tourism-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* background image with zoom */
+.tourism-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 0;
+}
+
+.tourism-card:hover .tourism-card-bg {
+  transform: scale(1.1);
+}
+
+/* overlay gradient */
 .tourism-card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.4) 40%,
+      rgba(0, 0, 0, 0.1) 100%);
   z-index: 1;
+  transition: var(--transition);
 }
 
-/* icon wrapper */
-/* .tourism-icon-box {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 12px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease, background 0.3s ease;
-} */
-
-
+.tourism-card:hover .tourism-card-overlay {
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.2) 100%);
+}
 
 /* card content */
-.tourism-card-title,
-.tourism-card-desc,
-.tourism-card-btn {
+.tourism-card-content {
   position: relative;
   z-index: 2;
-  text-align: center;
+  padding: 35px;
+  color: #fff;
+  transition: var(--transition);
 }
 
-/* title */
+.tourism-card-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--primary-color);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 15px rgba(0, 168, 107, 0.3);
+  transition: var(--transition);
+}
+
+.tourism-card:hover .tourism-card-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
 .tourism-card-title {
-  color: #fff;
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-}
-
-/* description text */
-.tourism-card-desc {
-  color: #f1f1f1;
-  font-size: 0.95rem;
+  font-size: 1.8rem;
+  font-weight: 700;
   margin-bottom: 12px;
+  letter-spacing: -0.5px;
 }
 
-/* button */
-.tourism-card-btn {
-  align-self: center;
-  background: #00a86b;
+.tourism-card-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 25px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.tourism-card:hover .tourism-card-desc {
   color: #fff;
-  padding: 8px 14px;
-  border-radius: 6px;
+}
+
+/* interactive button */
+.tourism-card-btn {
+  background: #fff;
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 12px;
   border: none;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
+  width: fit-content;
 }
 
-.tourism-card-btn:hover {
-  background: #007f53;
+.btn-icon {
+  transition: transform 0.3s ease;
 }
 
-/* hover effect */
-.tourism-card:hover {
-  transform: translateY(-4px);
+.tourism-card:hover .tourism-card-btn {
+  background: var(--primary-color);
+  color: #fff;
 }
 
+.tourism-card:hover .btn-icon {
+  transform: translateX(5px);
+}
+
+/* responsive adjustments */
+@media (max-width: 768px) {
+  .tourism-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .tourism-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tourism-card {
+    height: 400px;
+  }
+}

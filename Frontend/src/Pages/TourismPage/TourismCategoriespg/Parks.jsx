@@ -99,7 +99,7 @@ export const Parks = () => {
                       onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
                       className="tr-explore-btn"
                     >
-                      Explore Destination
+                      Explore Destination <i className="fa fa-arrow-right" style={{ marginLeft: '10px', fontSize: '10px' }}></i>
                     </button>
                   </div>
                 </div>

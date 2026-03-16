@@ -102,6 +102,12 @@ export const Places = () => {
                     <p className="tr-card-short-desc">
                       {place.commonInfo?.basicInfo?.shortIntroduction || "Discover the beauty and history of this amazing spot in Kohat."}
                     </p>
+                    <button
+                      onClick={() => navigate(`/tourism/landing`, { state: { listing: place } })}
+                      className="tr-explore-btn"
+                    >
+                      Explore Place <i className="fa fa-arrow-right" style={{ marginLeft: '10px', fontSize: '10px' }}></i>
+                    </button>
                   </div>
                 </div>
               ))}

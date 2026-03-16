@@ -99,6 +99,12 @@ export const Hotels = () => {
                     </div>
 
                     <p className="tr-card-short-desc">{hotel.commonInfo?.basicInfo?.shortIntroduction || "Luxury stay experience in the heart of the city."}</p>
+                    <button
+                      onClick={() => navigate(`/tourism/landing`, { state: { listing: hotel } })}
+                      className="tr-explore-btn"
+                    >
+                      Explore Stay <i className="fa fa-arrow-right" style={{ marginLeft: '10px', fontSize: '10px' }}></i>
+                    </button>
                   </div>
                 </div>
               ))}

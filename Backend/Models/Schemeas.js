@@ -443,9 +443,315 @@ export const SuperAdminSchema = new mongoose.Schema({
         default: null
     },
 
+
     passwordChangedAt: {
         type: Date,
         default: null
+    }
+}, {
+    timestamps: true,
+    versionKey: false
+});
+
+// ==========================================
+// FOOD SECTION SCHEMAS
+// ==========================================
+
+// MenuItem Schema
+const MenuItemSchema = new mongoose.Schema({
+    id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
+    name: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string" && v.trim().length > 0,
+            message: "Item name is required"
+        }
+    },
+    price: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => !isNaN(v) && Number(v) >= 0,
+            message: "Price must be a valid number"
+        }
+    },
+    desc: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    img: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    isAvailable: {
+        type: mongoose.Schema.Types.Mixed,
+        default: true
+    },
+    category: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "General"
+    },
+    prepTime: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    sku: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    tags: {
+        type: [String],
+        default: []
+    }
+}, { _id: true });
+
+// Food Menu Schema
+export const FoodMenuSchema = new mongoose.Schema({
+    menuItems: {
+        type: [MenuItemSchema],
+        default: []
+    }
+}, { _id: false });
+
+// Food Promotion/Deal Schema
+export const FoodPromotionSchema = new mongoose.Schema({
+    id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
+    title: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string" && v.trim().length > 0,
+            message: "Promotion title is required"
+        }
+    },
+    code: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    value: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string" && v.trim().length > 0,
+            message: "Discount value is required"
+        }
+    },
+    type: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Discount"
+    },
+    status: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Active",
+        validate: {
+            validator: v => ["Active", "Expired", "Upcoming"].includes(v),
+            message: "Invalid promotion status"
+        }
+    }
+}, { _id: true });
+
+// Food Report Schema
+export const FoodReportSchema = new mongoose.Schema({
+    id: { type: mongoose.Schema.Types.ObjectId },
+    reporterName: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Anonymous"
+    },
+    reason: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string" && v.trim().length > 0,
+            message: "Report reason is required"
+        }
+    },
+    details: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    ip: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
+    },
+    status: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Pending",
+        validate: {
+            validator: v => ["Pending", "Reviewed", "Resolved"].includes(v),
+            message: "Invalid report status"
+        }
+    }
+}, { _id: false });
+
+// Food Reservation Schema
+export const FoodReservationSchema = new mongoose.Schema({
+    customerName: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string" && v.trim().length > 0,
+            message: "Customer name is required"
+        }
+    },
+    date: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string",
+            message: "Reservation date is required"
+        }
+    },
+    time: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string",
+            message: "Reservation time is required"
+        }
+    },
+    guests: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => !isNaN(v) && Number(v) > 0,
+            message: "Number of guests must be at least 1"
+        }
+    },
+    contact: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+        validate: {
+            validator: v => typeof v === "string" && v.trim().length > 0,
+            message: "Contact information is required"
+        }
+    },
+    specialRequest: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    status: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Pending",
+        validate: {
+            validator: v => ["Pending", "Confirmed", "Cancelled"].includes(v),
+            message: "Invalid reservation status"
+        }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+}, { _id: true });
+
+// Main Food Schema (For the collection where restaurant data is stored)
+export const FoodSchema = new mongoose.Schema({
+    ServiceName: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true
+    },
+    Type: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true, // "Restaurant", "Bakery", "Cafe", etc.
+    },
+    Status: {
+        type: Boolean,
+        default: true
+    },
+    tagline: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Fresh & Delicious"
+    },
+    about: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    aboutImage: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    bannerUrl: {
+        type: mongoose.Schema.Types.Mixed,
+        default: ""
+    },
+    // Using the previously defined sub-schemas or compatible Mixed types
+    menu: {
+        type: [mongoose.Schema.Types.Mixed],
+        default: []
+    },
+    categorizedMenu: {
+        type: [mongoose.Schema.Types.Mixed],
+        default: []
+    },
+    quickInfo: {
+        basicProfile: {
+            name: String,
+            location: String,
+            type: { type: String }
+        },
+        timings: {
+            opening: String,
+            timing: String
+        },
+        facilities: [String],
+        administration: {
+            owner: String
+        }
+    },
+    contact: {
+        phone: String,
+        email: String
+    },
+    deliveryAvailability: {
+        type: mongoose.Schema.Types.Mixed,
+        default: "Available"
+    },
+    offersReservation: {
+        type: Boolean,
+        default: false
+    },
+    ratingData: {
+        type: [Number],
+        default: []
+    },
+    detailedReviews: {
+        type: [mongoose.Schema.Types.Mixed],
+        default: []
+    },
+    promotions: {
+        type: [FoodPromotionSchema],
+        default: []
+    },
+    gallery: {
+        type: [String],
+        default: []
+    },
+    reportCount: {
+        type: Number,
+        default: 0
+    },
+    reportStatus: {
+        type: String,
+        default: "Active",
+        enum: ["Active", "Warning", "Suspended"]
+    },
+    reports: {
+        type: [FoodReportSchema],
+        default: []
+    },
+    PaymentPlan: {
+        type: String,
+        default: "Free"
+    },
+    finance: {
+        balance: { type: Number, default: 0 },
+        pendingPayout: { type: Number, default: 0 },
+        subscriptionPlan: { type: String, default: "Standard (Free)" },
+        subscriptionStatus: { type: String, default: "Active" }
     }
 }, {
     timestamps: true,

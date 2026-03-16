@@ -100,6 +100,12 @@ export const TourGuides = () => {
                                         </div>
 
                                         <p className="tr-card-short-desc">{guide.commonInfo?.basicInfo?.shortIntroduction || "Experienced local guide specializing in cultural and adventure tours."}</p>
+                                        <button
+                                            onClick={() => navigate(`/tourism/landing`, { state: { listing: guide } })}
+                                            className="tr-explore-btn"
+                                        >
+                                            Hire Guide <i className="fa fa-arrow-right" style={{ marginLeft: '10px', fontSize: '10px' }}></i>
+                                        </button>
                                     </div>
                                 </div>
                             ))}

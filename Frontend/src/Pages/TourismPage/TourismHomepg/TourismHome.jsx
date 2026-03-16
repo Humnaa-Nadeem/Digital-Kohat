@@ -14,7 +14,7 @@ export const TourismHome = () => {
 
     const userListings = JSON.parse(localStorage.getItem("tourismListings")) || [];
 
-    
+
     setAllCategories([...tourismCategories, ...userListings]);
   }, [showForm]);
 
@@ -31,26 +31,16 @@ export const TourismHome = () => {
         <SignUpForm setShowform={setShowform} />
       ) : ( */}
       <section className="tourism-home">
-        {/* Registration Buttons - Commented for direct access
-          <div style={{ display: "flex", gap: "10px", justifyContent: "center", marginBottom: "20px" }}>
-            <button
-              className="tourism-register-btn"
-              onClick={() => {
-                setShowform(true);
-              }}
-            >
-              Registration
-            </button>
-          </div>
-          */}
-
         <div className="tourism-content">
-          <h1>
-            Let's Explore Best Tourism In <strong>Kohat</strong>
-          </h1>
-          <p className="tourism-description">
-            Discover beautiful places, historical sites, hotels, restaurants, and parks in Kohat.
-          </p>
+          <div className="tourism-header">
+            <span className="tourism-badge">Explore Kohat</span>
+            <h1>
+              Let's Explore Best Tourism In <strong>Kohat</strong>
+            </h1>
+            <p className="tourism-description">
+              Discover beautiful places, historical sites, hotels, restaurants, and parks in Kohat.
+            </p>
+          </div>
 
           <div className="tourism-card-grid">
             {allCategories.map((v, i) => (
@@ -58,19 +48,26 @@ export const TourismHome = () => {
                 className="tourism-card"
                 key={i}
                 onClick={() => handleCardClick(v)}
-                style={{
-                  backgroundImage: `url(${v.bgImage || v.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
               >
+                <div
+                  className="tourism-card-bg"
+                  style={{
+                    backgroundImage: `url(${v.bgImage || v.image})`,
+                  }}
+                ></div>
                 <div className="tourism-card-overlay"></div>
 
-
-
-                <h2 className="tourism-card-title">{v.title}</h2>
-                <p className="tourism-card-desc">{v.description}</p>
-                <button className="tourism-card-btn">{v.btn}</button>
+                <div className="tourism-card-content">
+                  <div className="tourism-card-icon">
+                    <i className={v.icon}></i>
+                  </div>
+                  <h2 className="tourism-card-title">{v.title}</h2>
+                  <p className="tourism-card-desc">{v.description}</p>
+                  <button className="tourism-card-btn">
+                    {v.btn}
+                    <span className="btn-icon">→</span>
+                  </button>
+                </div>
               </div>
             ))}
           </div>

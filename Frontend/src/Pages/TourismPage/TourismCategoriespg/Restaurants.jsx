@@ -100,7 +100,7 @@ export const Restaurants = () => {
                       onClick={() => navigate(`/tourism/landing`, { state: { listing: restaurant } })}
                       className="tr-explore-btn"
                     >
-                      Explore Destination
+                      Explore Dining <i className="fa fa-arrow-right" style={{ marginLeft: '10px', fontSize: '10px' }}></i>
                     </button>
                   </div>
                 </div>

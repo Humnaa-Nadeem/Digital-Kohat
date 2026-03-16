@@ -148,7 +148,7 @@ export const Bazar = () => {
                       <button className="tr-explore-btn" onClick={(e) => {
                         e.stopPropagation();
                         handleBazarClick(bazar.id);
-                      }}>Explore Full Data</button>
+                      }}>Explore Bazar <i className="fa fa-arrow-right" style={{ marginLeft: '10px', fontSize: '10px' }}></i></button>
                     </div>
                   </div>
                 ))
