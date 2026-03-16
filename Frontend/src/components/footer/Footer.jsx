@@ -1,8 +1,13 @@
 import "./Footer.css";
-import { FaFacebookF, FaInstagram, FaYoutube, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import { FaFacebookF,FaWhatsapp ,  FaInstagram,FaLinkedin,  FaTiktok  , FaYoutube, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import footerlogo from "../imgs/footerlogo.jpg"; // replace with your actual logo path
+import { Link } from "react-router-dom";
+
+
 
 const Footer = () => {
+
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -31,17 +36,29 @@ const Footer = () => {
             <h4>Company</h4>
             <ul>
               <li>Features</li>
-              <li>About Us</li>
-              <li>Contact</li>
+              <li>
+  <Link to="/AboutUs">About Us</Link>
+</li>
+
+<li>
+  <Link to="/ContactUs">Contact Us</Link>
+</li>
+
 
             </ul>
           </div>
           <div>
             <h4>Help</h4>
             <ul>
-              <li>FAQ</li>
-              <li>Help Center</li>
-              <li>Support</li>
+              <li>
+                <Link to="/Freq">FAQ</Link>
+              </li>
+              <li>
+                <Link to="/ContactUs">Help Center</Link>
+              </li>
+              <li>
+                <Link to="/ContactUs">Support</Link>
+                </li>
             </ul>
           </div>
         </div>
@@ -54,12 +71,65 @@ const Footer = () => {
             <button>Subscribe</button>
           </div>
 
-          <div className="social-icons">
-            <FaFacebookF />
-            <FaInstagram />
-            <FaYoutube />
-            <FaFacebookF />
-          </div>
+   <div className="social-icons">
+
+  {/* Facebook */}
+  <a 
+    href="https://www.facebook.com/" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <FaFacebookF />
+  </a>
+
+  {/* Instagram */}
+  <a 
+    href="https://www.instagram.com/the.dsc.hub" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <FaInstagram />
+  </a>
+
+  {/* LinkedIn */}
+  <a 
+    href="https://www.linkedin.com/company/digital-smart-cities-hub/" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <FaLinkedin />
+  </a>
+
+  {/* YouTube */}
+  <a 
+    href="https://youtube.com/@digitalsmartcitiyshub?si=f8XwheNW9IL_PrXg" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <FaYoutube />
+  </a>
+
+  {/* TikTok (still using Facebook icon unless you want FaTiktok) */}
+  <a 
+    href="https://www.tiktok.com/@the.dsch" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <FaTiktok />
+  </a>
+
+  {/* WhatsApp */}
+  <a 
+    href="https://chat.whatsapp.com/Eo8fEtQPejrEV58pfnPhWK" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <FaWhatsapp />
+  </a>
+
+</div>
+
+
         </div>
       </div>
 

@@ -2,24 +2,25 @@ import { useEffect, useState } from "react";
 import "./TourismHome.css";
 import { useNavigate } from "react-router-dom";
 import { tourismCategories } from "../../../Store/Tourism_store";
-import { SignUpForm } from "../../../components/SignUpForm/SignUpForm";
+import { Form } from "../../../components/Form/form";
 
 export const TourismHome = () => {
   const navigate = useNavigate();
+
   const [showForm, setShowform] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const userListings = JSON.parse(localStorage.getItem("tourismListings")) || [];
-
+    const userListings =
+      JSON.parse(localStorage.getItem("tourismListings")) || [];
 
     setAllCategories([...tourismCategories, ...userListings]);
   }, [showForm]);
 
   const handleCardClick = (category) => {
-    //direct access
     navigate(category.link || `/tourism/${category.id}`, {
       state: { category },
     });
@@ -73,7 +74,6 @@ export const TourismHome = () => {
           </div>
         </div>
       </section>
-      {/* )} */}
     </>
   );
 };

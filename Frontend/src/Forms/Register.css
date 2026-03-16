@@ -1,0 +1,90 @@
+.register-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.register-card {
+  background: #ffffff;
+  width: 420px;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  animation: scaleIn 0.4s ease;
+  text-align: center;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.register-card h2 {
+  margin-bottom: 20px;
+  color: #111;
+}
+
+/* buttons */
+.primary-btn,
+.secondary-btn {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background: #1f8e5c;
+  color: white;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: #166d47;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background: #f0f0f0;
+  color: #111;
+  border: 1px solid #ddd;
+}
+
+.secondary-btn:hover {
+  background: #e6e6e6;
+}
+
+/* category grid */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.category-grid button {
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-grid button:hover {
+  background: #1f8e5c;
+  color: white;
+  transform: translateY(-2px);
+}

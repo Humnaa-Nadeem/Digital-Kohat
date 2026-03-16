@@ -3,7 +3,7 @@ import "./Navbar.css";
 import navlogo from "../imgs/navlogo.jpg";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ variant }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -75,10 +75,21 @@ const Navbar = () => {
 
             <a onClick={() => { navigate("/ContactUs"); closeMenu(); }}>Contact Us</a>
 
-            <div className="nav-buttons">
-              <button className="btn sign" onClick={() => { closeMenu(); navigate("/form"); }}>Sign Up</button>
-              <button className="btn log" onClick={closeMenu}>Log in</button>
-            </div>
+            {
+              (variant === "dashboard") ?
+                <div className="nav-buttons">
+                  <button className="btn sign" onClick={() => { closeMenu(); alert("You can access by upgrading your payment plan.") }}>Managment System</button>
+                </div>
+                :
+                (variant === "SuperAdmin")
+                  ?
+                  <></>
+                  :
+                  <div className="nav-buttons">
+                    <button className="btn sign" onClick={() => { closeMenu(); navigate("/user/register"); }}>Sign Up</button>
+                    <button className="btn log" onClick={() => { closeMenu(); navigate("/user/login") }}>Log in</button>
+                  </div>
+            }
           </div>
 
           {/* HAMBURGER */}

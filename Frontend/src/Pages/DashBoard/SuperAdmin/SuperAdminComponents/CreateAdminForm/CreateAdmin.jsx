@@ -9,9 +9,9 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
         AdminEmail: Data.email || "",
         AdminIDCard: Data.IDCard || "",
         ServiceName: "",
-        ServiceLocation: "",
+        ServiceLocation: Data.address || "",
         ServiceType: Data.type || "",
-        PaymentPlan: "",
+        PaymentPlan: Data.PaymentPlan || "",
         reqId: id
     });
 
@@ -29,7 +29,7 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
         if (AdminData.ServiceType === "NULL" || AdminData.ServiceType === "" || AdminData.PaymentPlan === "NULL" || AdminData.PaymentPlan === "") {
             alert("Fill the fields first.");
         } else {
-            CreateEduCataAdmin(AdminData, setActiveTab);
+            CreateEduCataAdmin(AdminData, setActiveTab, AdminData.ServiceType);
         }
     }
 
@@ -65,10 +65,11 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
                         <div className="SA_input_box">
                             <label>Payment Plan</label>
                             <select name="PaymentPlan" onChange={(e) => handleChange(e)}>
-                                <option value={"NULL"}>--Select--</option>
-                                <option value={"Free"}>Free</option>
-                                <option value={"Premium"}>Premium</option>
-                                <option value={"Enterprise"}>Enterprise</option>
+                                <option value="NULL" selected={AdminData.PaymentPlan === "NULL"}>Select One</option>
+                                <option value="FREE" selected={AdminData.PaymentPlan === "FREE"}>Free</option>
+                                <option value="BASIC" selected={AdminData.PaymentPlan === "BASIC"}>Basic</option>
+                                <option value="PREMIUM" selected={AdminData.PaymentPlan === "PREMIUM"}>Premium</option>
+                                <option value="ENTERPRISE" selected={AdminData.PaymentPlan === "ENTERPRISE"}>Enterprise</option>
                             </select>
                         </div>
                     </div>
@@ -86,6 +87,7 @@ export const CreateAdminModal = ({ id, setActiveTab, Data }) => {
                                 <option value={"SCHOOL"}>School</option>
                                 <option value={"COLLEGE"}>College</option>
                                 <option value={"RESTURANT"}>Resutrant</option>
+                                <option value={"BUSINESS"}>Business</option>
                             </select>
                         </div>
 

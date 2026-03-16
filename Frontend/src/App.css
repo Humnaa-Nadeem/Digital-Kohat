@@ -1,3 +1,4 @@
+/* ================= GLOBAL RESET ================= */
 * {
   padding: 0;
   margin: 0;
@@ -9,6 +10,7 @@ a {
   color: inherit;
 }
 
+/* ================= APP STYLES ================= */
 .App {
   text-align: center;
   overflow: auto;
@@ -44,8 +46,23 @@ a {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
+}
+
+/* ================= GOOGLE TRANSLATE FIX ================= */
+/* Hide Google Translate default UI without affecting navbar */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+.goog-logo-link,
+.goog-te-gadget,
+.goog-te-gadget span,
+.goog-te-combo {
+  display: none !important;
+}
+
+/* Only adjust body if necessary */
+body {
+  top: 0 !important;
 }

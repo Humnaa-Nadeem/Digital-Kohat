@@ -80,6 +80,7 @@ export const AdminManagingForm = ({ dashboardData }) => {
     // %%%%%% Form Submission of "ADMINISTARTION" Section %%%%%%%
     const saveAdministration = (e) => {
         e.preventDefault();
+        console.log("Data = ", adminFormData);
         UpdateAdministration(adminFormData, setAdminSecChanged);
     };
 

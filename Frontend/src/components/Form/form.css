@@ -1,167 +1,160 @@
-/* Container & Background */
+/* Fullscreen Wrapper */
 .page-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #28e07a 0%, #009393 100%);
+  display: flex;
+  background: #f8fafc;
 }
 
+/* Main Card */
 .main-card {
-    display: flex;
-    width: 90%;
-    align-items: center;
-    min-height: 550px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-/* Left Branding Side */
+/* Left Branding Panel */
 .branding-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    padding: 40px;
-    text-align: center;
+  background: linear-gradient(135deg, #0d915a, #0b7b4d);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
 }
 
-.branding-panel h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+.branding-content {
+  max-width: 400px;
 }
 
-.progress-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
+.branding-content h1 {
+  font-size: 36px;
+  margin-bottom: 12px;
 }
 
-.dot-pill {
-    width: 30px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 10px;
+.branding-content p {
+  opacity: 0.9;
+  margin-bottom: 30px;
 }
 
-.dot-circle {
-    width: 10px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
+/* Progress */
+.progress-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
-.SuprAEduFormactive {
-    background: white;
+.progress-step {
+  height: 6px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
-/* Right Form Side */
+.progress-step.active {
+  background: white;
+}
+
+/* Right Form Panel */
 .form-panel {
-    background: white;
-    border-radius: 40px;
-    padding: 20px 0px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background: white;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form-title {
-    font-size: 2rem;
-    margin-bottom: 25px;
-    color: #333;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #0f172a;
 }
 
-.form-content {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    gap: 15px;
+/* Input Group */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
 }
 
-.pill-input {
-    background: #f1f1f1;
-    border: none;
-    border-radius: 50px;
-    padding: 15px 25px;
-    font-size: 1rem;
-    outline: none;
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.input-group input,
+.input-group select {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  color: black;
+  transition: 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #0d915a;
+  box-shadow: 0 0 0 3px rgba(13, 145, 90, 0.15);
+}
+
+/* Buttons */
+.Edu-Reg-btn-primary {
+  background: #0d915a;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 100%;
+}
+
+.Edu-Reg-btn-primary:hover {
+  background: #0b7b4d;
+}
+
+.Edu-form-btn-secondary {
+  background: #e5e7eb;
+  color: #1e293b;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .button-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
 }
 
 .flex-grow {
-    flex-grow: 1;
+  flex: 1;
 }
 
-.btn-black {
-    background: #1a1a1a;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-gray {
-    background: #e0e0e0;
-    color: #666;
-    border: none;
-    border-radius: 50px;
-    padding: 15px 25px;
-    cursor: pointer;
-}
-
-.or-divider {
-    text-align: center;
-    margin: 20px 0;
-    color: #999;
-    font-size: 0.9rem;
+.back-btn {
+  margin-top: 20px;
+  width: 100%;
 }
 
 /* Animation */
 .fade-in {
-    animation: fadeIn 0.4s ease-in-out;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(10px);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Mobile Responsive */
-@media (max-width: 850px) {
-    .main-card {
-        flex-direction: column;
-        margin-bottom: 30px;
-    }
-
-    .branding-panel {
-        padding: 30px;
-    }
-
-    .form-panel {
-        border-radius: 40px;
-        padding: 40px;
-    }
-}
-
-@media (max-width: 430px) {
-    .form-panel {
-        width: 100%;
-        padding: 15px;
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

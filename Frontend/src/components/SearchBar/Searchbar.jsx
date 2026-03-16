@@ -1,80 +1,156 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import "./SearchBar.css";
+
 export const SearchBar = ({ SearchedInst, AllInst }) => {
 
-    // Storing Data:
-    let [AllInstitute, setAllInstitute] = useState(AllInst);
-    let [filteredItem, setFiltereditem] = useState();
-    let [inputValue, setInputValue] = useState("");
-    let pastRes = ["It's okay", "Coding is fun", "Let's Code together", "Why It is", "CSS", "JavaScript", "Kust 1"];
-    let [PastResArr, setPastResArr] = useState(pastRes);
+    /* ===============================
+       Local State
+    =============================== */
 
-    useEffect(() => {
-        setAllInstitute(AllInst);
-    }, [AllInst]);
+    const [filteredItem, setFiltereditem] = useState(null);
+    const [inputValue, setInputValue] = useState("");
 
-    // Filtering keywords from past history according to user Search;
+    /* ⭐ Prevent undefined crash */
+    const AllInstitute = useMemo(() => AllInst || [], [AllInst]);
+
+    /* ===============================
+       Past Suggestion List
+    =============================== */
+
+    const PastResArr = useMemo(() => [
+        "School",
+        "Sports",
+        "Arts",
+        "Science",
+        "Event",
+        "Education",
+        "College"
+    ], []);
+
+    /* ===============================
+       Filter Suggestions
+    =============================== */
+
     const filterSearch = (search) => {
-        if (search) {
-            const result = PastResArr.filter((v) =>
-                v.toLowerCase().includes(search.toLowerCase())
-            );
-            setFiltereditem(result);
-        } else {
-            setFiltereditem(undefined)
+
+        if (!search) {
+            setFiltereditem(null);
+            return;
         }
+
+        const result = PastResArr.filter(v =>
+            v.toLowerCase().includes(search.toLowerCase())
+        );
+
+        setFiltereditem(result);
     };
 
-    // Displaying Filtered Result:
-    const OptionSlctd = (option) => {
-        setInputValue(option);
-        let SearchedRes = AllInstitute.filter((v) => {
-            const itemName = v.InstName || v.name || v.title || "";
-            if (itemName.toLowerCase().includes(option.toLowerCase())) {
-                return v;
-            }
-        });
-        SearchedInst(SearchedRes);
-        setFiltereditem(undefined);
-    }
+    /* ===============================
+       Select Search Option
+    =============================== */
 
-    // Handling Enter key Event:
+    const OptionSlctd = (option) => {
+
+        if (!option) return;
+
+        const searchText =
+            typeof option === "string"
+                ? option
+                : option.serviceName ||
+                option.name ||
+                option.title ||
+                "";
+
+        setInputValue(searchText);
+        setFiltereditem(null);
+
+        const SearchedRes = AllInstitute.filter(v => {
+
+            const itemName =
+                v.serviceName ||
+                v.name ||
+                v.title ||
+                "";
+
+            return itemName.toLowerCase().includes(
+                searchText.toLowerCase()
+            );
+        });
+
+        SearchedInst(SearchedRes);
+    };
+
+    /* ===============================
+       Enter Key Handler
+    =============================== */
+
     const HandEnterKeyPress = (e) => {
         if (e.key === "Enter") {
             OptionSlctd(inputValue);
-        };
-    }
+        }
+    };
 
-    // 
+    /* ===============================
+       Reset List When Input Empty ⭐
+    =============================== */
+
     useEffect(() => {
         if (inputValue === "") {
             SearchedInst(AllInstitute);
         }
-    }, [inputValue]);
+    }, [inputValue, AllInstitute, SearchedInst]);
+
+    /* ===============================
+       UI Render
+    =============================== */
 
     return (
-        <>
-            <div className="Search-Area">
-                <div className="Search-bar">
-                    <input placeholder="Search here" name="SearchBar" value={inputValue} onChange={(e) => { filterSearch(e.target.value); setInputValue(e.target.value) }} autoComplete="none" onKeyDown={(e) => { HandEnterKeyPress(e) }} />
-                    <button className="search-btn" onClick={() => { OptionSlctd(inputValue) }}>🔍</button>
-                </div>
-                {/* Results */}
-                {(filteredItem)
-                    ?
-                    <ul className="result-cont">
-                        {filteredItem.length > 0 ? (
-                            filteredItem.map((item, index) => (
-                                <li key={index} onClick={() => { OptionSlctd(item) }}>{item}</li>
-                            ))
-                        ) : (
-                            <li onClick={() => { OptionSlctd(inputValue) }}>{inputValue}</li>
-                        )}
-                    </ul>
-                    :
-                    <></>
-                }
+        <div className="Search-Area">
+
+            <div className="Search-bar">
+
+                <input
+                    placeholder="Search here"
+                    value={inputValue}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        setInputValue(val);
+                        filterSearch(val);
+                    }}
+                    onKeyDown={HandEnterKeyPress}
+                    autoComplete="off"
+                />
+
+                <button
+                    className="search-btn"
+                    onClick={() => OptionSlctd(inputValue)}
+                    type="button"
+                >
+                    🔍
+                </button>
+
             </div>
-        </>
-    )
-}
+
+            {/* Suggestions List */}
+
+            {
+                filteredItem &&
+                filteredItem.length > 0 && (
+                    <ul className="result-cont">
+
+                        {filteredItem.map((item, index) => (
+                            <li
+                                key={index}
+                                onClick={() => OptionSlctd(item)}
+                            >
+                                {item}
+                            </li>
+                        ))}
+
+                    </ul>
+                )
+            }
+
+        </div>
+    );
+}; 

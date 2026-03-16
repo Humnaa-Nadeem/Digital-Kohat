@@ -188,7 +188,7 @@ export const Aboutus = () => {
       <div className="person-card">
         <div className="card-bar"></div>
         <img src={maleImg} alt="Saad Iqbal" />
-        <h4>Saad Iqbal</h4>
+        <h4>Saqlain Muzaffar</h4>
         <p>Manager</p>
       </div>
     </div>
@@ -224,7 +224,7 @@ export const Aboutus = () => {
 
   {/* LEVEL 4 - 4 frontend developers */}
  <div className="org-node four">
-  {["Humna Nadeem", "Awais Anwar", "Syed Sahil Shah", "Syed Bilal Ahmed"].map((name, i) => (
+  {["Humna Nadeem", "Awais Anwar", "Syed Sahil Shah", "Saqlain Muzaffar"].map((name, i) => (
     <div key={i} className="child-block">
       <div className="line-vertical tall"></div>
       <div className="person-card">
@@ -245,7 +245,7 @@ export const Aboutus = () => {
 
   {/* LEVEL 5 - 4 backend developers */}
   <div className="org-node four">
-    {["Awais Anwar", "Sadiq Shah", "Sahil Shah", "Saqlain"].map((name, i) => (
+    {["Awais Anwar", "Sadiq Shah", "Sahil Shah", "Saqlain Muzaffar"].map((name, i) => (
       <div key={i} className="child-block">
         <div className="line-vertical tall"></div>
         <div className="person-card">
@@ -295,7 +295,6 @@ export const Aboutus = () => {
               className={hub.className}
             />
           ))}
-
           <span className="hub-line l1"></span>
           <span className="hub-line l2"></span>
           <span className="hub-line l3"></span>

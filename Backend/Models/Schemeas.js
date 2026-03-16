@@ -1,387 +1,189 @@
 import mongoose from "mongoose";
 
-// Schema for dynamic roles
-const DynamicRoleSchema = new mongoose.Schema({
-    key: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Dynamic role key must be a non-empty string"
-        }
-    },
-    label: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Dynamic role label must be a non-empty string"
-        }
-    },
-    value: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "",
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Dynamic role value must be a string"
-        }
-    }
-}, { _id: true });
+/* =========================================================
+   🔹 Reusable Small Schemas
+========================================================= */
 
-// Basic info Schema
-export const BasicInfoSchema = new mongoose.Schema({
+const KeyValueSchema = new mongoose.Schema({
+    key: { type: String, trim: true },
+    value: { type: String, trim: true },
+    label: { type: String, trim: true }
+}, { _id: false });
+
+/* =========================================================
+   🔹 Basic Info
+========================================================= */
+
+const BasicInfoSchema = new mongoose.Schema({
+
     tagline: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid data is entered for tagline."
-        }
+        type: String,
+        trim: true,
+        default: ""
     },
+
     about: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid data is entered for about us section."
-        }
+        type: String,
+        trim: true,
+        default: ""
     },
+
     bannerUrl: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid banner Image uploaded."
-        }
+        type: String,
+        trim: true,
+        default: ""
     },
+
     aboutImgUrl: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid About Us Image uploaded."
-        }
+        type: String,
+        trim: true,
+        default: ""
     }
-}, { id: true });
 
-// Administration schema
-export const AdministrationSchema = new mongoose.Schema({
-    principal: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Principal must be a non-empty string"
-        }
-    },
-    vice_principal: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Vice Principal must be a non-empty string"
-        }
-    },
-    managing_director: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Managing Director must be a non-empty string"
-        }
-    },
-    others: {
-        type: [DynamicRoleSchema],
-        default: []
-    }
 }, { _id: false });
 
-// Timing Schema
-export const TimingSchema = new mongoose.Schema({
-    opening: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Opening time must be a string"
-        }
-    },
-    closing: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Closing time must be a string"
-        }
-    },
-    break: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Break time must be a string"
-        }
-    },
-    office: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Office time must be a string"
-        }
-    }
+/* =========================================================
+   🔹 Administration
+========================================================= */
+
+const AdministrationSchema = new mongoose.Schema({
+    principal: { type: String, trim: true },
+    vice_principal: { type: String, trim: true },
+    managing_director: { type: String, trim: true },
+    others: { type: [KeyValueSchema], default: [] }
 }, { _id: false });
 
-// Facilities Schema
-export const FacilitiesSchema = new mongoose.Schema({
-    facilities: {
-        type: [mongoose.Schema.Types.Mixed],
-        required: true,
-        validate: {
-            validator: arr =>
-                Array.isArray(arr) &&
-                arr.length > 0 &&
-                arr.every(v => typeof v === "string"),
-            message: "Facilities must be a non-empty array of strings"
-        }
-    }
+/* =========================================================
+   🔹 Timings
+========================================================= */
+
+const TimingsSchema = new mongoose.Schema({
+    opening: String,
+    closing: String,
+    break: String,
+    office: String
 }, { _id: false });
 
-// Schema for staff object:
-const StaffObjSchema = new mongoose.Schema({
+/* =========================================================
+   🔹 Staff
+========================================================= */
+
+const StaffSchema = new mongoose.Schema({
+
     name: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid Staff Name."
-        }
+        type: String,
+        trim: true,
+        default: ""
     },
+
     description: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid description for staff."
-        }
+        type: String,
+        default: ""
     },
+
     image: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Invalid image."
-        }
+        type: String,
+        default: ""
     }
+
 }, { _id: true });
 
-// Staff Schema:
-export const StaffSchema = new mongoose.Schema({
-    finalStaff: {
-        type: [StaffObjSchema],
-        default: []
-    }
+/* =========================================================
+   🔹 Staff & Student
+========================================================= */
+
+const StaffAndStudentSchema = new mongoose.Schema({
+    Total_Students: String,
+    Total_Teachers: String,
+    Qualification: String,
+    Ratio: String,
+    Medium: String,
+    others: { type: [KeyValueSchema], default: [] }
 }, { _id: false });
 
-// Staff and Student data Schema:
-export const StaffAndStudentSchema = new mongoose.Schema({
-    Total_Students: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Total_Students must be a non-empty string"
-        }
-    },
-    Total_Teachers: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Total_Teachers must be a non-empty string"
-        }
-    },
-    Qualification: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Qualification must be a non-empty string"
-        }
-    },
-    Ratio: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Ratio must be a non-empty string"
-        }
-    },
-    Medium: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Medium must be a non-empty string"
-        }
-    },
-    others: {
-        type: [DynamicRoleSchema],
-        default: []
-    }
+/* =========================================================
+   🔹 Result & Performance
+========================================================= */
+
+const ResultAndPerformanceSchema = new mongoose.Schema({
+    Pass_Precentage: String,
+    Top_Achievers: String,
+    Board_Result: String,
+    MDCAT_Performance: String,
+    others: { type: [KeyValueSchema], default: [] }
 }, { _id: false });
 
-// Extra Activitiees
-export const ExtraActivitiesSchema = new mongoose.Schema({
-    extraActivities: {
-        type: [mongoose.Schema.Types.Mixed],
-        required: true,
-        validate: {
-            validator: arr =>
-                Array.isArray(arr) &&
-                arr.length > 0 &&
-                arr.every(v => typeof v === "string"),
-            message: "Select atleast three extra activities"
-        }
-    }
-}, { id: false });
+/* =========================================================
+   🔹 Events
+========================================================= */
 
-// Result and Performance:
-export const ResultAndPerformanceSchema = new mongoose.Schema({
-    Pass_Precentage: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Pass_Precentage must be a non-empty string"
-        }
-    },
-    Top_Achievers: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Top_Achievers must be a non-empty string"
-        }
-    },
-    Board_Result: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Board_Result must be a non-empty string"
-        }
-    },
-    MDCAT_Performance: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "MDCAT_Performance must be a non-empty string"
-        }
-    },
-    others: {
-        type: [DynamicRoleSchema],
-        default: []
-    }
-}, { _id: false });
+const EventSchema = new mongoose.Schema({
+    title: String,
+    catagory: String,
+    location: String,
+    time: String,
+    Audience: String
+}, { _id: true });
 
+/* =========================================================
+   🔹 Fee Structure
+========================================================= */
 
-// NEW Event data
-export const NewEventDataSchema = new mongoose.Schema({
-    title: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Title must be a non-empty string"
-        }
-    },
-    catagory: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Catagory must be a non-empty string"
-        }
-    },
-    location: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Location must be a non-empty string"
-        }
-    },
-    time: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Time must be a non-empty string"
-        }
-    }
-}, { _id: false });
+const FeeSchema = new mongoose.Schema({
+    Class: Number,
+    MonthlyFee: Number,
+    AnnualFee: Number,
+    AdmissionFee: Number
+}, { _id: true });
 
-// FEE TAB DATA
-export const FeeItemSchema = new mongoose.Schema({
-    Class: {
+/* =========================================================
+   🔹 Rating System
+========================================================= */
+
+const RatingSchema = new mongoose.Schema({
+
+    totalStars: {
         type: Number,
-        required: true
+        default: 0
     },
-    MonthlyFee: {
-        type: Number,
-        required: true
-    },
-    AnnualFee: {
-        type: Number,
-        required: true
-    },
-    AdmissionFee: {
-        type: Number,
-        required: true
-    }
-});
 
-export const FeesSchema = new mongoose.Schema({
-    feeData: {
-        type: [FeeItemSchema], // array of fee items
-        required: true,
-        validate: {
-            validator: function (v) {
-                return Array.isArray(v) && v.length > 0;
-            },
-            message: "feeData must be a non-empty array"
-        }
-    }
-});
+    totalReviews: {
+        type: Number,
+        default: 0
+    },
 
-// Review Schema
-export const ReviewSchema = new mongoose.Schema({
-    Reviews: {
-        type: [mongoose.Schema.Types.Mixed],
-        required: true,
-        validate: {
-            validator: arr =>
-                Array.isArray(arr) &&
-                arr.length > 0 &&
-                arr.every(v => typeof v === "string"),
-            message: "Invalid Data"
-        }
+    average: {
+        type: Number,
+        default: 0
+    },
+
+    // userId → rating mapping
+    userRatings: {
+        type: Map,
+        of: Number,
+        default: {}
     }
+
 }, { _id: false });
 
-// Gallery Schema
-export const GallerySchema = new mongoose.Schema({
-    finalGalleryImages: {
-        type: [String],
-        default: [],
-        validate: {
-            validator: arr =>
-                Array.isArray(arr) &&
-                arr.every(v => typeof v === "string"),
-            message: "Invalid Data"
-        }
+/* =========================================================
+   🔹 Payment Gateway
+========================================================= */
+
+const PaymentGatewaySchema = new mongoose.Schema({
+    easypaisa: {
+        accountTitle: String,
+        accountNumber: String
+    },
+    jazzcash: {
+        accountTitle: String,
+        accountNumber: String
+    },
+    bank: {
+        bankName: String,
+        accountTitle: String,
+        accountNumber: String,
+        iban: String
     }
 }, { _id: false });
 
@@ -443,315 +245,9 @@ export const SuperAdminSchema = new mongoose.Schema({
         default: null
     },
 
-
     passwordChangedAt: {
         type: Date,
         default: null
-    }
-}, {
-    timestamps: true,
-    versionKey: false
-});
-
-// ==========================================
-// FOOD SECTION SCHEMAS
-// ==========================================
-
-// MenuItem Schema
-const MenuItemSchema = new mongoose.Schema({
-    id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
-    name: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Item name is required"
-        }
-    },
-    price: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => !isNaN(v) && Number(v) >= 0,
-            message: "Price must be a valid number"
-        }
-    },
-    desc: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    img: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    isAvailable: {
-        type: mongoose.Schema.Types.Mixed,
-        default: true
-    },
-    category: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "General"
-    },
-    prepTime: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    sku: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    tags: {
-        type: [String],
-        default: []
-    }
-}, { _id: true });
-
-// Food Menu Schema
-export const FoodMenuSchema = new mongoose.Schema({
-    menuItems: {
-        type: [MenuItemSchema],
-        default: []
-    }
-}, { _id: false });
-
-// Food Promotion/Deal Schema
-export const FoodPromotionSchema = new mongoose.Schema({
-    id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
-    title: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Promotion title is required"
-        }
-    },
-    code: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    value: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Discount value is required"
-        }
-    },
-    type: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Discount"
-    },
-    status: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Active",
-        validate: {
-            validator: v => ["Active", "Expired", "Upcoming"].includes(v),
-            message: "Invalid promotion status"
-        }
-    }
-}, { _id: true });
-
-// Food Report Schema
-export const FoodReportSchema = new mongoose.Schema({
-    id: { type: mongoose.Schema.Types.ObjectId },
-    reporterName: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Anonymous"
-    },
-    reason: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Report reason is required"
-        }
-    },
-    details: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    ip: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    timestamp: {
-        type: Date,
-        default: Date.now
-    },
-    status: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Pending",
-        validate: {
-            validator: v => ["Pending", "Reviewed", "Resolved"].includes(v),
-            message: "Invalid report status"
-        }
-    }
-}, { _id: false });
-
-// Food Reservation Schema
-export const FoodReservationSchema = new mongoose.Schema({
-    customerName: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Customer name is required"
-        }
-    },
-    date: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Reservation date is required"
-        }
-    },
-    time: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string",
-            message: "Reservation time is required"
-        }
-    },
-    guests: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => !isNaN(v) && Number(v) > 0,
-            message: "Number of guests must be at least 1"
-        }
-    },
-    contact: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        validate: {
-            validator: v => typeof v === "string" && v.trim().length > 0,
-            message: "Contact information is required"
-        }
-    },
-    specialRequest: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    status: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Pending",
-        validate: {
-            validator: v => ["Pending", "Confirmed", "Cancelled"].includes(v),
-            message: "Invalid reservation status"
-        }
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-}, { _id: true });
-
-// Main Food Schema (For the collection where restaurant data is stored)
-export const FoodSchema = new mongoose.Schema({
-    ServiceName: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true
-    },
-    Type: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true, // "Restaurant", "Bakery", "Cafe", etc.
-    },
-    Status: {
-        type: Boolean,
-        default: true
-    },
-    tagline: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Fresh & Delicious"
-    },
-    about: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    aboutImage: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    bannerUrl: {
-        type: mongoose.Schema.Types.Mixed,
-        default: ""
-    },
-    // Using the previously defined sub-schemas or compatible Mixed types
-    menu: {
-        type: [mongoose.Schema.Types.Mixed],
-        default: []
-    },
-    categorizedMenu: {
-        type: [mongoose.Schema.Types.Mixed],
-        default: []
-    },
-    quickInfo: {
-        basicProfile: {
-            name: String,
-            location: String,
-            type: { type: String }
-        },
-        timings: {
-            opening: String,
-            timing: String
-        },
-        facilities: [String],
-        administration: {
-            owner: String
-        }
-    },
-    contact: {
-        phone: String,
-        email: String
-    },
-    deliveryAvailability: {
-        type: mongoose.Schema.Types.Mixed,
-        default: "Available"
-    },
-    offersReservation: {
-        type: Boolean,
-        default: false
-    },
-    ratingData: {
-        type: [Number],
-        default: []
-    },
-    detailedReviews: {
-        type: [mongoose.Schema.Types.Mixed],
-        default: []
-    },
-    promotions: {
-        type: [FoodPromotionSchema],
-        default: []
-    },
-    gallery: {
-        type: [String],
-        default: []
-    },
-    reportCount: {
-        type: Number,
-        default: 0
-    },
-    reportStatus: {
-        type: String,
-        default: "Active",
-        enum: ["Active", "Warning", "Suspended"]
-    },
-    reports: {
-        type: [FoodReportSchema],
-        default: []
-    },
-    PaymentPlan: {
-        type: String,
-        default: "Free"
-    },
-    finance: {
-        balance: { type: Number, default: 0 },
-        pendingPayout: { type: Number, default: 0 },
-        subscriptionPlan: { type: String, default: "Standard (Free)" },
-        subscriptionStatus: { type: String, default: "Active" }
     }
 }, {
     timestamps: true,

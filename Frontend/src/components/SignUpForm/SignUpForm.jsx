@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./SignUpForm.css";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
+import { GetUserData } from "../../ApiCalls/ApiCalls";
 export const SignUpForm = () => {
 
     // State that store data
@@ -15,6 +16,12 @@ export const SignUpForm = () => {
         duration: "",
         catagoryTitle: ""
     });
+
+    useEffect(() => {
+        if (loggedIn) {
+            GetUserData(setUserData);
+        }
+    }, []);
 
     // Storing data while typing:
     const changeHandler = (e) => {
@@ -30,19 +37,12 @@ export const SignUpForm = () => {
             if (data.Catagory === "Online Course" || data.Catagory === "Online Training") {
                 data.address = "";
                 data.program = "";
-                console.log("OC & OT Data");
-                console.log(data);
                 clearFun();
             } else if (data.Catagory !== "University") {
-                console.log(data.Catagory);
                 data.duration = ""
                 data.program = ""
-                console.log("School, college etc");
-                console.log(data);
                 clearFun();
             } else {
-                console.log("Uni Data")
-                console.log(data);
                 clearFun();
             }
         } else {

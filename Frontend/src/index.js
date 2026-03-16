@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
+import { CustomerAuthProvider } from './Store/CustomerAuthContext.jsx';
 
 // ================================
 //           IMPORTS
@@ -30,6 +31,7 @@ import { UniPage } from './Pages/EducationPage/EduCatagoriesPg/UniPg';
 import { OnlineTrainingPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineTraining';
 import { TutorsPage } from './Pages/EducationPage/EduCatagoriesPg/Tutors';
 import { OnlineCoursesPage } from './Pages/EducationPage/EduCatagoriesPg/OnlineCourses';
+import { SingleLandingPage } from './components/SingleLandingPage/SingleLandingPage.jsx';
 
 // %%%%%%%%%%% TECHNICIANS SECTOR %%%%%%%%%%%
 import { TechniciansHomePg } from './Pages/TechniciansPage/TechniciansHomePg/TechniciansHomePg';
@@ -81,15 +83,20 @@ import { OfficesPg } from './Pages/BusinessPage/BusinessCategoriesPg/OfficesPg';
 import { EventsPg } from './Pages/BusinessPage/BusinessCategoriesPg/EventsPg';
 import { ManufacturingPg } from './Pages/BusinessPage/BusinessCategoriesPg/ManufacturingPg';
 import { FreelancersPg } from './Pages/BusinessPage/BusinessCategoriesPg/FreelancersPg';
+import { BusinessAdminLogin } from './Pages/BusinessPage/BusinessAdminLogin';
+import { BusinessDashboard } from './Pages/DashBoard/BusinessDashboard/BusinessDashboard';
+import { TrackOrder } from './Pages/BusinessPage/TrackOrder/TrackOrder';
+import { CustomerLogin } from './components/CustomerAuth/CustomerLogin';
+import { CustomerDashboard } from './Pages/CustomerDashboard/CustomerDashboard';
 
 // %%%%%%%%%%% FORMS %%%%%%%%%%%
 import { TourismRegistration } from './Pages/DashBoard/TourismDashboard/TourismRegistration';
-import { BusinessRegistration } from './Pages/BusinessPage/Registration/BusinessRegistration';
-import { BusinessLogin } from './Pages/BusinessPage/Login/BusinessLogin';
 import { AdminLogin } from './Pages/DashBoard/EductionDashboard/AdminLgoInForm/AdminLogin';
 import { FoodAdminLogin } from './Pages/DashBoard/FoodDashboard/FoodAdminLogin/FoodAdminLogin';
 import { SignUpForm } from './components/SignUpForm/SignUpForm';
 import { SuperAdminLogin } from './Pages/DashBoard/SuperAdmin/SuprAdminLogIn/SuprAdminLogin.jsx';
+import { RegisterUser } from './components/Form/UserRegistration/RegisterUser.jsx';
+import { UserLogin } from './components/Form/UserLogIn/UserLogin.jsx';
 
 
 // ================================
@@ -99,6 +106,16 @@ const routes = [
   {
     path: "/",
     element: <App />
+  },
+
+  {
+    path: "/user/register",
+    element: <RegisterUser />
+  },
+
+  {
+    path: "/user/login",
+    element: <UserLogin />
   },
 
   // Authentication / User
@@ -141,7 +158,8 @@ const routes = [
       { path: "tutors", element: <TutorsPage /> },
       { path: "training", element: <OnlineTrainingPage /> },
       { path: "admin", element: <AdminLogin /> },
-      { path: "dashboard", element: <SchoolAndClgDashBoard /> }
+      { path: "dashboard", element: <SchoolAndClgDashBoard /> },
+      { path: ":catagory/:id", element: <SingleLandingPage /> }
     ],
   },
 
@@ -225,15 +243,33 @@ const routes = [
       { path: "events", element: <EventsPg /> },
       { path: "manufacturing", element: <ManufacturingPg /> },
       { path: "freelancers", element: <FreelancersPg /> },
+      { path: "admin-login", element: <BusinessAdminLogin /> },
+      {
+        path: "dashboard",
+        element: <BusinessDashboard />,
+        children: [
+          {
+            path: "track-order",
+            element: <CustomerDashboard />
+          }
+        ]
+      },
     ],
   },
 
-  // Business Registration
-  { path: "/business/register", element: <BusinessRegistration /> },
-  { path: "/business/login", element: <BusinessLogin /> },
-
   // Page Not Found
   { path: "*", element: <PageNotFoundPg /> },
+  {
+    path: "/customer/login",
+    element: <CustomerLogin />
+  },
+  {
+    path: "/customer/dashboard",
+    element: <CustomerDashboard />
+  },
+  {
+    path: "/api/payfast/return", element: <PageNotFoundPg />
+  },
 ];
 
 const isVercel = (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app'));
@@ -244,6 +280,10 @@ const allRoutes = isVercel ? createHashRouter(routes) : createBrowserRouter(rout
 // Render App
 // ================================
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<RouterProvider router={allRoutes} />);
+root.render(
+  <CustomerAuthProvider>
+    <RouterProvider router={allRoutes} />
+  </CustomerAuthProvider>
+);
 
 reportWebVitals();
